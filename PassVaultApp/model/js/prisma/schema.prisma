@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = "file:../data/dev.db"
 }
 
 model USER {
@@ -26,6 +26,7 @@ model USER {
 
 model CREDENTIAL {
   CREDENTIAL_ID            Int      @id @default(autoincrement())
+  CREDENTIAL_SOFTWARENAME  String
   CREDENTIAL_TITLE         String
   CREDENTIAL_USERNAME      String?
   CREDENTIAL_EMAIL         String?
