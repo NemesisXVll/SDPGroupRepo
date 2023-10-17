@@ -11,17 +11,17 @@ datasource db {
 }
 
 model USER {
-  USER_ID              Int                @id @default(autoincrement())
-  USER_MASTERPASSWORD  String //USING BCRYPT
-  USER_FNAME           String
-  USER_LNAME           String
-  USER_EMAIL           String             @unique
-  USER_SALT            String //NEEDS DISCUSSION
-  USER_CREATEDDATE     DateTime           @default(now())
-  USER_LASTUPDATEDDATE DateTime?          @updatedAt
-  USER_PICTURE         Bytes? // (not sure this works) (Picture of the user)
-  CREDENTIALS          CREDENTIAL[]
-  SECURITYQUESTION     SECURITYQUESTION[]
+  USER_ID             Int                @id @default(autoincrement())
+  USER_MASTERPASSWORD String //USING BCRYPT
+  USER_FNAME          String
+  USER_LNAME          String
+  USER_EMAIL          String             @unique
+  USER_SALT           String //NEEDS DISCUSSION
+  USER_DATECREATED    DateTime           @default(now())
+  USER_DATEUPDATED    DateTime?          @updatedAt
+  USER_PICTURE        Bytes? // (Picture of the user)
+  CREDENTIALS         CREDENTIAL[]
+  SECURITYQUESTION    SECURITYQUESTION[]
 }
 
 model CREDENTIAL {
@@ -30,6 +30,7 @@ model CREDENTIAL {
   CREDENTIAL_TITLE         String
   CREDENTIAL_USERNAME      String?
   CREDENTIAL_EMAIL         String?
+  CREDENTIAL_SALT          String //NEEDS DISCUSSION
   CREDENTIAL_PASSWORD      String //USING ENCRYPTION
   CREDENTIAL_KEY           String   @unique //MAY NOT BE REQUIRED (Might be the Master Password)
   CREDENTIAL_URL           String?
@@ -37,10 +38,11 @@ model CREDENTIAL {
   CREDENTIAL_STRENGTHMETER Int //MAY NOT BE REQUIRED
   CREDENTIAL_DATECREATED   DateTime @default(now())
   CREDENTIAL_DATEUPDATED   DateTime @updatedAt
-  CREDENTIAL_MEDIATYPE     String   @default("General") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
-  CRDENTIAL_PICTURE        Bytes? // (not sure this works) (Picture of the website)"
+  CREDENTIAL_MEDIATYPE     String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  CREDENTIAL_PICTURE       Bytes? // (not sure this works) (Picture of the website)"
   CREDENTIAL_ISFAVOURITE   Boolean  @default(false)
-  TRASH                    TRASH[]
+  TRASH                    TRASH    @relation(fields: [TRASH_ID], references: [TRASH_ID])
+  TRASH_ID                 Int
   USER                     USER     @relation(fields: [USER_ID], references: [USER_ID])
   USER_ID                  Int
 }
@@ -55,8 +57,7 @@ model SECURITYQUESTION {
 }
 
 model TRASH {
-  TRASH_ID            Int        @id @default(autoincrement())
-  TRASH_ISRECOVERED   Boolean    @default(false) //If yes then it isnt deleted, else it is deleted.
-  CREDENTIAL          CREDENTIAL @relation(fields: [CREDENTIAL_ID], references: [CREDENTIAL_ID])
-  CREDENTIAL_ID       Int
+  TRASH_ID          Int          @id @default(autoincrement())
+  TRASH_ISRECOVERED Boolean      @default(false) //If yes then it isnt deleted, else it is deleted.
+  CREDENTIAL        CREDENTIAL[]
 }
