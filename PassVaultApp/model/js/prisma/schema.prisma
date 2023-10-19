@@ -7,57 +7,52 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../data/dev.db"
+  url      = "file:../data/dev.db" //change location
 }
-
+//(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
 model USER {
-  USER_ID             Int                @id @default(autoincrement())
-  USER_MASTERPASSWORD String //USING BCRYPT
-  USER_FNAME          String
-  USER_LNAME          String
-  USER_EMAIL          String             @unique
-  USER_SALT           String //NEEDS DISCUSSION
-  USER_DATECREATED    DateTime           @default(now())
-  USER_DATEUPDATED    DateTime?          @updatedAt
-  USER_PICTURE        Bytes? // (Picture of the user)
+  USER_ID             Int    @id @default(autoincrement())  //(DN)        @id @default(autoincrement())
+  USER_MASTERPASSWORD String //USING BCRYPT (HASHEDY)
+  USER_FNAME          String //(Y)
+  USER_LNAME          String //(Y)
+  USER_EMAIL          String  @unique //(Y)
+  USER_SALT           String //NEEDS DISCUSSION (N)
+  USER_DATECREATED    DateTime           @default(now()) //(N)
+  USER_DATEUPDATED    DateTime?          @updatedAt //(N)
+  USER_PICTURE        Bytes? // (Picture of the user) //(N)
   CREDENTIALS         CREDENTIAL[]
   SECURITYQUESTION    SECURITYQUESTION[]
 }
 
 model CREDENTIAL {
-  CREDENTIAL_ID            Int      @id @default(autoincrement())
-  CREDENTIAL_SOFTWARENAME  String
-  CREDENTIAL_TITLE         String
-  CREDENTIAL_USERNAME      String?
-  CREDENTIAL_EMAIL         String?
-  CREDENTIAL_SALT          String //NEEDS DISCUSSION
-  CREDENTIAL_PASSWORD      String //USING ENCRYPTION
-  CREDENTIAL_KEY           String   @unique //MAY NOT BE REQUIRED (Might be the Master Password)
-  CREDENTIAL_URL           String?
-  CREDENTIAL_NOTES         String? //"Like Security Questions, PINs, Hints, etc."
-  CREDENTIAL_STRENGTHMETER Int //MAY NOT BE REQUIRED
-  CREDENTIAL_DATECREATED   DateTime @default(now())
-  CREDENTIAL_DATEUPDATED   DateTime @updatedAt
-  CREDENTIAL_MEDIATYPE     String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
-  CREDENTIAL_PICTURE       Bytes? // (not sure this works) (Picture of the website)"
-  CREDENTIAL_ISFAVOURITE   Boolean  @default(false)
-  TRASH                    TRASH    @relation(fields: [TRASH_ID], references: [TRASH_ID])
-  TRASH_ID                 Int
+  CREDENTIAL_ID            Int      @id @default(autoincrement()) //(DN)
+  CREDENTIAL_SERVICE       String //(N)
+  CREDENTIAL_TITLE         String //(N)
+  CREDENTIAL_USERNAME      String //(Y)
+  CREDENTIAL_PASSWORD      String //USING ENCRYPTION (Y)
+  CREDENTIAL_URL           String? //(N)
+  CREDENTIAL_STRENGTH Int // (N)
+  CREDENTIAL_DATECREATED   DateTime @default(now()) //(N)
+  CREDENTIAL_DATEUPDATED   DateTime @updatedAt //(N)
+  CREDENTIAL_TYPE          String   @default("Personal") // (N)"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  CREDENTIAL_PICTURE       Bytes? // (N)
+  CREDENTIAL_ISFAVOURITE   Boolean  @default(false) //(N)
+  TRASH                    TRASH?    @relation(fields: [TRASH_ID], references: [TRASH_ID])
+  TRASH_ID                 Int?
   USER                     USER     @relation(fields: [USER_ID], references: [USER_ID])
   USER_ID                  Int
 }
 
 model SECURITYQUESTION {
   SECURITYQUESTION_ID         Int    @id @default(autoincrement())
-  SECURITYQUESTION_QUESTION   String
-  SECURITYQUESTION_ANSWERSALT String
-  SECURITYQUESTION_ANSWERHASH String
+  SECURITYQUESTION_QUESTION   String //(Y)
+  SECURITYQUESTION_ANSWERHASH String //(Y)
   USER                        USER   @relation(fields: [USER_ID], references: [USER_ID])
   USER_ID                     Int //foreign key
 }
 
 model TRASH {
-  TRASH_ID          Int          @id @default(autoincrement())
-  TRASH_ISRECOVERED Boolean      @default(false) //If yes then it isnt deleted, else it is deleted.
-  CREDENTIAL        CREDENTIAL[]
+  TRASH_ID              Int          @id @default(autoincrement())
+  TRASH_DATETEMPDELETED DateTime  //If yes then it isnt deleted, else it is deleted.
+  CREDENTIAL            CREDENTIAL[] //(make it 1-1=0)
 }
