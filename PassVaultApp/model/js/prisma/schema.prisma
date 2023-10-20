@@ -9,50 +9,46 @@ datasource db {
   provider = "sqlite"
   url      = "file:../data/dev.db" //change location
 }
+
 //(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
 model USER {
-  USER_ID             Int    @id @default(autoincrement())  //(DN)        @id @default(autoincrement())
-  USER_MASTERPASSWORD String //USING BCRYPT (HASHEDY)
-  USER_FNAME          String //(Y)
-  USER_LNAME          String //(Y)
-  USER_EMAIL          String  @unique //(Y)
-  USER_SALT           String //NEEDS DISCUSSION (N)
-  USER_DATECREATED    DateTime           @default(now()) //(N)
-  USER_DATEUPDATED    DateTime?          @updatedAt //(N)
-  USER_PICTURE        Bytes? // (Picture of the user) //(N)
-  CREDENTIALS         CREDENTIAL[]
-  SECURITYQUESTION    SECURITYQUESTION[]
+  USER_ID          Int                @id @default(autoincrement()) //(D)
+  USER_DATA        String             @unique //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
+  USER_SALT        String
+  USER_DATECREATED DateTime           @default(now())
+  USER_DATEUPDATED DateTime           @updatedAt
+  USER_PICTURE     Bytes? //(Picture of the user)
+  CREDENTIALS      CREDENTIAL[]
+  SECURITYQUESTION SECURITYQUESTION[]
 }
 
 model CREDENTIAL {
-  CREDENTIAL_ID            Int      @id @default(autoincrement()) //(DN)
-  CREDENTIAL_SERVICE       String //(N)
-  CREDENTIAL_TITLE         String //(N)
-  CREDENTIAL_USERNAME      String //(Y)
-  CREDENTIAL_PASSWORD      String //USING ENCRYPTION (Y)
-  CREDENTIAL_URL           String? //(N)
-  CREDENTIAL_STRENGTH Int // (N)
-  CREDENTIAL_DATECREATED   DateTime @default(now()) //(N)
-  CREDENTIAL_DATEUPDATED   DateTime @updatedAt //(N)
-  CREDENTIAL_TYPE          String   @default("Personal") // (N)"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
-  CREDENTIAL_PICTURE       Bytes? // (N)
-  CREDENTIAL_ISFAVOURITE   Boolean  @default(false) //(N)
-  TRASH                    TRASH?    @relation(fields: [TRASH_ID], references: [TRASH_ID])
-  TRASH_ID                 Int?
-  USER                     USER     @relation(fields: [USER_ID], references: [USER_ID])
-  USER_ID                  Int
+  CREDENTIAL_ID          Int      @id @default(autoincrement()) //(D)
+  CREDENTIAL_SERVICE     String
+  CREDENTIAL_TITLE       String
+  CREDENTIAL_DATA        String   @unique //Username, Password (As An Encrypted JSON)
+  CREDENTIAL_URL         String?
+  CREDENTIAL_STRENGTH    Int
+  CREDENTIAL_DATECREATED DateTime @default(now())
+  CREDENTIAL_DATEUPDATED DateTime @updatedAt
+  CREDENTIAL_TYPE        String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  CREDENTIAL_PICTURE     Bytes? //(Picture of the service)
+  CREDENTIAL_ISFAVOURITE Boolean  @default(false)
+  TRASH                  TRASH?
+  USER                   USER     @relation(fields: [USER_ID], references: [USER_ID])
+  USER_ID                Int      @unique //Foreign key
 }
 
 model SECURITYQUESTION {
-  SECURITYQUESTION_ID         Int    @id @default(autoincrement())
-  SECURITYQUESTION_QUESTION   String //(Y)
-  SECURITYQUESTION_ANSWERHASH String //(Y)
-  USER                        USER   @relation(fields: [USER_ID], references: [USER_ID])
-  USER_ID                     Int //foreign key
+  SECURITYQUESTION_ID   Int    @id @default(autoincrement())
+  SECURITYQUESTION_DATA String //Question, HashedAnswer (As An Encrypted JSON)
+  USER                  USER   @relation(fields: [USER_ID], references: [USER_ID])
+  USER_ID               Int    @unique //Foreign key
 }
 
 model TRASH {
-  TRASH_ID              Int          @id @default(autoincrement())
-  TRASH_DATETEMPDELETED DateTime  //If yes then it isnt deleted, else it is deleted.
-  CREDENTIAL            CREDENTIAL[] //(make it 1-1=0)
+  TRASH_ID              Int        @id @default(autoincrement())
+  TRASH_DATETEMPDELETED DateTime   @default(now())
+  CREDENTIAL            CREDENTIAL @relation(fields: [CREDENTIAL_ID], references: [CREDENTIAL_ID])
+  CREDENTIAL_ID         Int        @unique //Foreign Key
 }
