@@ -14,5 +14,6 @@
   },
   "dependencies": {
     "@prisma/client": "^5.4.2"
-  }
+  },
+  "type": "module"
 }
