@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/dev.db" //change location
+}
+
+//(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
+model USER {
+  USER_ID          Int                @id @default(autoincrement()) //(D)
+  USER_DATA        String             @unique //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
+  USER_SALT        String
+  USER_DATECREATED DateTime           @default(now())
+  USER_DATEUPDATED DateTime           @updatedAt
+  USER_PICTURE     Bytes? //(Picture of the user)
+  CREDENTIALS      CREDENTIAL[]
+  SECURITYQUESTION SECURITYQUESTION[]
+}
+
+model CREDENTIAL {
+  CREDENTIAL_ID          Int      @id @default(autoincrement()) //(D)
+  CREDENTIAL_SERVICE     String
+  CREDENTIAL_TITLE       String
+  CREDENTIAL_DATA        String   @unique //Username, Password (As An Encrypted JSON)
+  CREDENTIAL_URL         String?
+  CREDENTIAL_STRENGTH    Int
+  CREDENTIAL_DATECREATED DateTime @default(now())
+  CREDENTIAL_DATEUPDATED DateTime @updatedAt
+  CREDENTIAL_TYPE        String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  CREDENTIAL_PICTURE     Bytes? //(Picture of the service)
+  CREDENTIAL_ISFAVOURITE Boolean  @default(false)
+  TRASH                  TRASH?
+  USER                   USER     @relation(fields: [USER_ID], references: [USER_ID])
+  USER_ID                Int      @unique //Foreign key
+}
+
+model SECURITYQUESTION {
+  SECURITYQUESTION_ID   Int    @id @default(autoincrement())
+  SECURITYQUESTION_DATA String //Question, HashedAnswer (As An Encrypted JSON)
+  USER                  USER   @relation(fields: [USER_ID], references: [USER_ID])
+  USER_ID               Int    @unique //Foreign key
+}
+
+model TRASH {
+  TRASH_ID              Int        @id @default(autoincrement())
+  TRASH_DATETEMPDELETED DateTime   @default(now())
+  CREDENTIAL            CREDENTIAL @relation(fields: [CREDENTIAL_ID], references: [CREDENTIAL_ID])
+  CREDENTIAL_ID         Int        @unique //Foreign Key
+}
