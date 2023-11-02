@@ -6,7 +6,46 @@ export default class UserManagementService {
 
     //Add Methods Here for Reading 
     //Use this example signature --> async getUsers() {}
+  // Find a user by USER_ID
+  async findUserById(userId) {
+    return prisma.user.findUnique({
+      where: { USER_ID: userId },
+    });
+  }
+  // Find a user by USER_DATA
+  async findUserByUserData(userData) {
+    return prisma.user.findUnique({
+      where: { USER_DATA: userData },
+    });
+  }
 
+    // Find a security question by SECURITYQUESTION_ID
+    async findSecurityQuestionById(questionId) {
+        return prisma.securityQuestion.findUnique({
+          where: { SECURITYQUESTION_ID: questionId },
+        });
+      }
+
+     // Find a security question by user's USER_ID
+  async findSecurityQuestionByUserId(userId) {
+    return prisma.securityQuestion.findFirst({
+      where: { USER_ID: userId },
+    });
+  }
+
+    // List all users
+    async listUsers() {
+        return prisma.user.findMany();
+      }
+
+     // List all security questions for a user
+  async listSecurityQuestionsByUserId(userId) {
+    return prisma.user
+      .findUnique({
+        where: { USER_ID: userId },
+      })
+      .securityQuestion();
+  }
     
     //get user credentials by user id
     async getCredentialsByUserId(userId) {
