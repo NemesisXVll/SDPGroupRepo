@@ -7,7 +7,7 @@ type NavbarProps = {
     isactive: boolean;
 }
 const NavbarContext = createContext<any>(null);
-const Navbar: React.FC<NavbarProps> = (props) => { 
+const Navbar: React.FC<NavbarProps> = () => { 
     const [expanded, setExpanded] = useState(true);
     return (
         <aside className="h-screen">
