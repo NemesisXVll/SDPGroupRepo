@@ -1,5 +1,5 @@
 import appLogo from "../assets/icons/navbar/appLogo.svg";
-import { ChevronFirst, ChevronLast, MoreVertical } from 'lucide-react';
+import { ChevronFirst, ChevronLast, Divide, MoreVertical } from 'lucide-react';
 import navbarItems from '../data/navbarItems';
 import React, { createContext, useState } from "react";
 
