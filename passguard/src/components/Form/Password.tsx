@@ -22,7 +22,7 @@ const PasswordStrength = (props: PasswordProps) => {
     // Use the zxcvbn library to estimate the password strength
     const result = zxcvbn(newPassword);
     setScore(result.score);
-    setFeedback(result.feedback.suggestions.join(" "));
+    setFeedback(result.feedback.suggestions.join(", "));
   };
 
   return (
@@ -95,9 +95,11 @@ const PasswordStrength = (props: PasswordProps) => {
             : ""}
         </span>
       </div>
-      {feedback && <div className="text-xs text-gray-500 mt-1">{feedback}</div>}
+      {feedback && (
+        <li className="text-xs text-gray-500 mt-1 w-80">{feedback}</li>
+      )}
 
-      <div className=" -mx-1">
+      <div className="-mx-1">
         <div className="w-96 px-1 grid grid-cols-5 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (
             <div

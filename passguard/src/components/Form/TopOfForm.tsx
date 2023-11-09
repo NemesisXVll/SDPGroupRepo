@@ -4,7 +4,7 @@ import starLogo from "../../assets/icons/form/yellowstar.svg";
 function TopOfForm() {
   return (
     <>
-      <div className="flex justify-between place-items-center box-border p-1 shadow-sm bg-neutral-100 h-min ">
+      <div className="flex justify-between place-items-center p-1 box-border shadow-sm bg-neutral-100 h-min rounded-tr-3xl">
         <div className="mr-3 w-20">
           <img
             className="hex w-20 h-24 shadow-2xl"
@@ -27,7 +27,6 @@ function TopOfForm() {
           </i>
         </div>
       </div>
-      
     </>
   );
 }
