@@ -11,13 +11,17 @@
   "dependencies": {
     "@prisma/client": "^5.5.2",
     "lucide-react": "^0.292.0",
+    "primeflex": "^3.3.1",
+    "primereact": "^10.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "@types/zxcvbn": "^4.4.4",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "@vitejs/plugin-react": "^4.0.4",
@@ -35,5 +39,10 @@
     "vite-plugin-electron": "^0.14.0",
     "vite-plugin-electron-renderer": "^0.14.5"
   },
+  "keywords": [
+    "primereact",
+    "react",
+    "starter"
+  ],
   "main": "dist-electron/main.js"
 }
