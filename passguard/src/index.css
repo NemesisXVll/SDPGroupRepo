@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  padding:0;
-  left:0;
+
+* {
+  padding: 0;
+  left: 0;
   box-sizing: border-box;
+}
+
+/* Polygon */
+@layer utilities {
+  .hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
 }
