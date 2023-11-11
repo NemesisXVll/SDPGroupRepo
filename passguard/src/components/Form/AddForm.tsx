@@ -3,7 +3,8 @@ import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
-// import Credential from "../../../model/Credential.ts";
+import Credential from "../../../model/Credential.ts";
+// import UserManagementService from "../../../model/repository/UserManagementService.js";
 
 const handleSubmit = (e: any) => {
   e.preventDefault();
@@ -22,14 +23,17 @@ const handleSubmit = (e: any) => {
     data.get("loginPageUrl") === "" ? "" : "https://" + data.get("loginPageUrl")
   );
 
-  const JSONObj = Object.fromEntries(data.entries());
-
-  const stringObj = JSON.stringify(JSONObj);
-
-  const credentialObj: object = JSON.parse(stringObj);
+  const credentialObj = JSON.parse(
+    JSON.stringify(Object.fromEntries(data.entries()))
+  );
 
   console.log(credentialObj);
 
+  const credential = new Credential(credentialObj);
+
+  // const userManagementService = new UserManagementService();
+
+  // userManagementService.createCredential(credential);
 };
 
 function AddForm() {

@@ -1,7 +1,7 @@
 export default class CredentialClass {
   private credentialServiceName: string;
   private credentialTitle: string;
-  private credentialData: string;
+  public credentialData: string;
   private credentialUrl: string;
   private credentialIsWeak: boolean | null;
   private credentialServiceType: string;
@@ -9,18 +9,18 @@ export default class CredentialClass {
   private credentialIsFavourite: boolean;
 
   constructor(credential: {
-    credentialTitle: string;
-    isWeak: string;
-    loginPageUrl: string;
-    password: string;
     serviceName: string;
+    credentialTitle: string;
+    userName: any;
+    password: any;
+    loginPageUrl: string;
+    isWeak: string;
     serviceType: string;
-    username: string;
   }) {
     this.credentialServiceName = credential.serviceName;
     this.credentialTitle = credential.credentialTitle;
     this.credentialData = JSON.stringify({
-      username: credential.username,
+      userName: credential.userName,
       password: credential.password,
     });
     this.credentialUrl = credential.loginPageUrl;
@@ -39,5 +39,18 @@ export default class CredentialClass {
       // Handle invalid cases or return undefined
       return null;
     }
+  }
+
+  toString(): string {
+    return `CredentialClass {
+  Service Name: ${this.credentialServiceName},
+  Credential Title: ${this.credentialTitle},
+  Credential Data: ${this.credentialData},
+  Credential URL: ${this.credentialUrl},
+  Is Weak: ${this.credentialIsWeak},
+  Service Type: ${this.credentialServiceType},
+  Credential Picture: ${this.credentialPicture},
+  Is Favourite: ${this.credentialIsFavourite}
+}`;
   }
 }
