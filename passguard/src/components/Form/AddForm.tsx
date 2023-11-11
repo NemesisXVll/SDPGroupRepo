@@ -3,6 +3,43 @@ import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
+import UserManagementService from "../../../model/Credential.ts";
+
+const handleSubmit = (e: any) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+
+  /*Here u should do something like this to not get actual password value.
+  const password = data.get('password');
+  const hashedPassword = /* perform your encryption or hashing here;
+
+  Replace the original password with the hashed version
+  data.set('password', hashedPassword);
+  */
+
+  data.set(
+    "loginPageUrl",
+    data.get("loginPageUrl") === "" ? "" : "https://" + data.get("loginPageUrl")
+  );
+
+  data.set(
+    "isWeak",
+    data.get("passwordScore") === "0" || data.get("passwordScore") === "1"
+      ? "true"
+      : "false"
+  );
+
+  const JSONObj = Object.fromEntries(data.entries());
+  console.log(JSONObj);
+
+  const stringObj = JSON.stringify(JSONObj);
+
+  const credentialObj = JSON.parse(stringObj);
+
+  // const cred = new UserManagementService(credentialObj);
+
+  // console.log(cred);
+};
 
 function AddForm() {
   return (
@@ -10,19 +47,21 @@ function AddForm() {
       <aside className="flex flex-col h-screen origin-top-left border-l border-zinc-800 border-opacity-30">
         <TopOfForm></TopOfForm>
 
-        <form className="box-border shadow-sm h-screen bg-neutral-100 min-w-max p-1 border-t border-zinc-800 border-opacity-30 rounded-br-3xl">
+        <form
+          onSubmit={handleSubmit}
+          className="box-border shadow-sm h-screen bg-neutral-100 min-w-max p-1 border-t border-zinc-800 border-opacity-30 rounded-br-3xl"
+        >
           <LabelInput
             type="text"
-            required
             value="Credential Title"
-            id="credential-title"
+            id="credentialTitle"
             onChange="handleOnChange"
             placeholder="main x account"
           ></LabelInput>
 
           <LabelDropDown
             type="text"
-            id="service-name"
+            id="serviceName"
             list="serviceNames"
             placeholder="X (Dropdown list and custom)"
             value="Service Name"
@@ -31,7 +70,7 @@ function AddForm() {
 
           <LabelDropDown
             type="text"
-            id="service-type"
+            id="serviceType"
             list="serviceTypes"
             placeholder="Social Media (Dropdown list and custom)"
             value="Service Type"
@@ -40,9 +79,8 @@ function AddForm() {
 
           <LabelInput
             type="text"
-            required
             value="Username / Email"
-            id="user-name"
+            id="userName"
             onChange="handleOnChange"
             placeholder="abc@123.com"
           ></LabelInput>
@@ -63,9 +101,9 @@ function AddForm() {
           </div>
 
           <LabelInput
-            type="url"
+            type="text"
             value="Login Page URL"
-            id="login-page-url"
+            id="loginPageUrl"
             onChange="handleOnChange"
             placeholder="https://www.x.com/login"
           ></LabelInput>
@@ -84,7 +122,9 @@ function AddForm() {
           >
             Save
           </button> */}
-            <Button value="Save">Save</Button>
+            <Button value="Save" type="submit">
+              Save
+            </Button>
           </div>
         </form>
       </aside>

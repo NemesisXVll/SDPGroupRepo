@@ -11,6 +11,7 @@ function App() {
         <Navbar isactive={false}></Navbar>
         <AddForm></AddForm>
       </div>
+
     </>
   );
 }

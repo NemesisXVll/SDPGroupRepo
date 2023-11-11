@@ -9,8 +9,14 @@ type LabelDropDownProps = {
   placeholder?: string;
   value?: string;
 };
+
 const LabelDropDown = (props: LabelDropDownProps) => {
   const [value, setValue] = useState("");
+
+  const handleOnChange = (e: any) => {
+    setValue(e.target.value);
+  };
+
   return (
     <div className="mt-1 relative hover:text-blue-300  border-b-2 border-gray-300">
       <input
@@ -19,10 +25,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         list={props.list}
         value={value}
         type={props.type}
-        onChange={(e) => {
-          setValue(e.target.value);
-          console.log(value);
-        }}
+        onChange={handleOnChange}
         className="pl-2 mt-5 peer h-10 w-full text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
         placeholder={props.placeholder}
       />

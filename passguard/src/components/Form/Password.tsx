@@ -7,7 +7,9 @@ import clipboardLogo from "../../assets/icons/form/clipboard.svg";
 type PasswordProps = {
   type?: string;
   value?: string;
+  hidden?: boolean;
   id?: string;
+  placeholder?: string;
 };
 
 const PasswordStrength = (props: PasswordProps) => {
@@ -22,7 +24,8 @@ const PasswordStrength = (props: PasswordProps) => {
     // Use the zxcvbn library to estimate the password strength
     const result = zxcvbn(newPassword);
     setScore(result.score);
-    setFeedback(result.feedback.suggestions.join(", "));
+
+    setFeedback(result.feedback.suggestions.join(" "));
   };
 
   return (
@@ -30,7 +33,6 @@ const PasswordStrength = (props: PasswordProps) => {
       <div className="mb-6 flex mt-1 relative hover:text-blue-300  border-b-2 border-gray-300">
         <input
           type={props.type}
-          required
           name={props.id}
           id={props.id}
           onChange={handlePasswordChange}
@@ -38,6 +40,7 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.value}
           className="pl-2 mt-5 peer h-10 w-full  text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
         />
+        <input type="hidden" name="passwordScore" value={score} />
 
         <label
           htmlFor={props.id}
@@ -82,8 +85,8 @@ const PasswordStrength = (props: PasswordProps) => {
               : ""
           }`}
         >
-          {score <= 0
-            ? ""
+          {score <= 0 && password.length > 0
+            ? "Very Weak"
             : score === 1
             ? "Weak"
             : score === 2
