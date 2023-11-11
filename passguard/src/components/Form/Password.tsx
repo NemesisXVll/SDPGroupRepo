@@ -25,6 +25,8 @@ const PasswordStrength = (props: PasswordProps) => {
     const result = zxcvbn(newPassword);
     setScore(result.score);
 
+    console.log(score);
+
     setFeedback(result.feedback.suggestions.join(" "));
   };
 
@@ -40,7 +42,7 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.value}
           className="pl-2 mt-5 peer h-10 w-full  text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
         />
-        <input type="hidden" name="passwordScore" value={score} />
+        <input type="hidden" name="isWeak" value={(score === 0 || score === 1) ? "true" : "false"} />
 
         <label
           htmlFor={props.id}
