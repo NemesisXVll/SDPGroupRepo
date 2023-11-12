@@ -78,7 +78,7 @@ function AddForm() {
             id="password"
           ></PasswordStrength>
 
-          <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
+          <div className="generatePasswordBTN flex place-content-center justify-end mt-2 w-80">
             {/* <button className="bg-blue-500 flex hover:bg-blue-700 text-white font-bold rounded-full p-2">
             <img src={keyLogo} alt="" />
             Generate Password
@@ -95,7 +95,7 @@ function AddForm() {
             placeholder="https://www.x.com/login"
           ></LabelInput>
 
-          <div className="cancelAndSaveBTN flex mt-10 justify-evenly pb-2 ">
+          <div className="cancelAndSaveBTN flex mt-10 justify-evenly pb-2 w-80">
             {/* <button
             type="submit"
             className="bg-gray-950 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full w-32"

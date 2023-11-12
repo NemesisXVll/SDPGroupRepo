@@ -26,12 +26,15 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         value={value}
         type={props.type}
         onChange={handleOnChange}
-        className="pl-2 mt-5 peer h-10 w-full text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
+        className="pl-2 mt-5 peer h-10 w-full
+         text-gray-900 placeholder-transparent
+         rounded justify-start items-start gap-14 inline-flex
+          focus:outline-none focus:border-blue-600"
         placeholder={props.placeholder}
       />
       <label
         htmlFor={props.id}
-        className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all"
+        className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
       >
         {props.value}
       </label>

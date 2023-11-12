@@ -23,7 +23,7 @@ function TopOfForm() {
           </h2>
         </div>
 
-        <div className="flex flex-col pl-14">
+        <div className="flex flex-col pl-7">
           <i className="pb-5">
             <img src={trashLogo} alt="trashlogo.svg" />
           </i>
