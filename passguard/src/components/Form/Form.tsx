@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./Button.tsx";
 import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
@@ -9,42 +9,34 @@ import Credential from "../../../model/Credential.ts";
 const handleSubmit = (e: any) => {
   e.preventDefault();
   const data = new FormData(e.target);
-
   /*Here u should do something like this to not get actual password value.
   const password = data.get('password');
   const hashedPassword = /* perform your encryption or hashing here;
-
   Replace the original password with the hashed version
   data.set('password', hashedPassword);
   */
-
   data.set(
     "loginPageUrl",
     data.get("loginPageUrl") === "" ? "" : "https://" + data.get("loginPageUrl")
   );
-
   const credentialObj = JSON.parse(
     JSON.stringify(Object.fromEntries(data.entries()))
   );
-
-  console.log(credentialObj);
-
   const credential = new Credential(credentialObj);
-
+  console.log(credential);
   // const userManagementService = new UserManagementService();
-
   // userManagementService.createCredential(credential);
 };
 
 function AddForm() {
   return (
     <>
-      <aside className="flex flex-col h-screen origin-top-left border-l border-zinc-800 border-opacity-30">
+      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 overflow-x-hidden overflow-y-scroll">
         <TopOfForm></TopOfForm>
 
         <form
           onSubmit={handleSubmit}
-          className="box-border shadow-sm h-screen bg-neutral-100 min-w-max p-1 border-t border-zinc-800 border-opacity-30 rounded-br-3xl"
+          className="h-full bg-neutral-100 min-w-max p-1 border-t border-zinc-800 border-opacity-30"
         >
           <LabelInput
             type="text"

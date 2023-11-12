@@ -25,8 +25,6 @@ const PasswordStrength = (props: PasswordProps) => {
     const result = zxcvbn(newPassword);
     setScore(result.score);
 
-    console.log(score);
-
     setFeedback(result.feedback.suggestions.join(" "));
   };
 
@@ -42,11 +40,15 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.value}
           className="pl-2 mt-5 peer h-10 w-full  text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
         />
-        <input type="hidden" name="isWeak" value={(score === 0 || score === 1) ? "true" : "false"} />
+        <input
+          type="hidden"
+          name="isWeak"
+          value={score === 0 || score === 1 ? "true" : "false"}
+        />
 
         <label
           htmlFor={props.id}
-          className="p-1 mt-2 absolute left-1 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-blue-600 transition-all"
+          className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all"
         >
           {props.value}
         </label>
@@ -100,12 +102,10 @@ const PasswordStrength = (props: PasswordProps) => {
             : ""}
         </span>
       </div>
-      {feedback && (
-        <li className="text-xs text-gray-500 mt-1 w-80">{feedback}</li>
-      )}
+      {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
 
       <div className="-mx-1">
-        <div className="w-96 px-1 grid grid-cols-5 gap-1">
+        <div className="px-1 grid grid-cols-5 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
