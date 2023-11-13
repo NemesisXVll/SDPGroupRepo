@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </NavbarContext.Provider>
                 
                 <div className="border-t flex p-3">
-                    <img src="https://source.unsplash.com/100x100/?portrait"
+                    <img src="https://source.unsplash.com/100x100/?Rock"
                         alt="profile picture"
                         className="w-10 h-10 rounded-md" />
                     <div className={`

@@ -3,13 +3,14 @@ import "primereact/resources/primereact.css"; // core css
 import TopOfForm from "./Form/TopOfForm.tsx";
 import AddForm from "./Form/Form.tsx";
 import Navbar from "./Navbar.tsx";
+import Stats from "./Stats.tsx";
 
 function App() {
   return (
     <>
-      <div className="app-container justify-between">
-        <Navbar isactive={false}></Navbar>
-        <AddForm></AddForm>
+      <div className="app-container">
+        <Stats></Stats>
+        
       </div>
     </>
   );
