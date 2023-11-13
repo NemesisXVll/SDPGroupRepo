@@ -7,6 +7,7 @@ type LabelInputProps = {
   onChange?: string;
   id?: string;
   placeholder?: string;
+  children?: React.ReactNode;
 };
 const LabelInput = (props: LabelInputProps) => {
   const [value, setValue] = useState("");
@@ -23,7 +24,7 @@ const LabelInput = (props: LabelInputProps) => {
         value={value}
         required={props.id === "credentialTitle" ? true : false}
         type={props.type}
-        className="pl-2 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50
+        className="pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50
         rounded justify-start items-start gap-14 inline-flex
          placeholder-transparent focus:outline-none focus:border-blue-600"
         placeholder={props.placeholder}
@@ -38,6 +39,7 @@ const LabelInput = (props: LabelInputProps) => {
       >
         {props.value}
       </label>
+      {props.children}
     </div>
   );
 };

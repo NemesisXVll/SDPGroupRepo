@@ -38,11 +38,26 @@ const PasswordStrength = (props: PasswordProps) => {
           onChange={handlePasswordChange}
           placeholder="*************"
           autoComplete={props.value}
-          className="pl-2 mt-5 peer h-10 w-full 
+          className={`pl-2 mt-5 peer h-10 w-full 
            text-gray-900 placeholder-transparent 
            rounded justify-start items-start gap-14 inline-flex
-           focus:outline-none focus:border-blue-600"
+           focus:outline-none
+           ${
+             score <= 0 && password.length > 0
+               ? "border border-red-500"
+               : score === 1
+               ? "border border-yellow-500"
+               : score === 2
+               ? "border border-orange-500"
+               : score === 3
+               ? "border border-lime-500"
+               : score === 4
+               ? "border border-green-500"
+               : ""
+           }
+           `}
         />
+
         <input
           type="hidden"
           name="isWeak"
@@ -60,18 +75,10 @@ const PasswordStrength = (props: PasswordProps) => {
           <img
             src={infoLogo}
             alt="info.png"
-            className="ml-4 col-start-2 w-3 h-6 dark:text-black font-bold bg-neutral-100"
+            className="ml-4 col-start-2 w-3 h-6"
           />
-          <img
-            src={eyeLogo}
-            alt="eye.png"
-            className="w-6 h-6 ml-1 dark:text-black font-bold"
-          />
-          <img
-            src={clipboardLogo}
-            alt="clipboard.png"
-            className="w-6 h-6 ml-1 pb-1 text-gray-800 dark:text-black font-bold border-none outline-none"
-          />
+          <img src={eyeLogo} alt="eye.png" className="w-4 h-5 ml-1" />
+          <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" />
         </div>
       </div>
 

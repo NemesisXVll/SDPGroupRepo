@@ -4,6 +4,9 @@ import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
 import Credential from "../../../model/Credential.ts";
+import clipboardLogo from "../../assets/icons/form/clipboard.svg";
+import link from "../../assets/icons/form/externallink.svg";
+
 // import UserManagementService from "../../../model/repository/UserManagementService.js";
 
 const handleSubmit = (e: any) => {
@@ -70,7 +73,13 @@ function AddForm() {
             id="userName"
             onChange="handleOnChange"
             placeholder="abc@123.com"
-          ></LabelInput>
+          >
+            <img
+              src={clipboardLogo}
+              alt="clipboard.png"
+              className="absolute translate-x-72 top-8 left-2 w-4 h-4"
+            />
+          </LabelInput>
 
           <PasswordStrength
             type="password"
@@ -79,11 +88,6 @@ function AddForm() {
           ></PasswordStrength>
 
           <div className="generatePasswordBTN flex place-content-center justify-end mt-2 w-80">
-            {/* <button className="bg-blue-500 flex hover:bg-blue-700 text-white font-bold rounded-full p-2">
-            <img src={keyLogo} alt="" />
-            Generate Password
-          </button> */}
-
             <Button value="Generate Password">Generate Password</Button>
           </div>
 
@@ -93,22 +97,17 @@ function AddForm() {
             id="loginPageUrl"
             onChange="handleOnChange"
             placeholder="https://www.x.com/login"
-          ></LabelInput>
+          >
+            <img
+              src={link}
+              alt="link.png"
+              className="absolute translate-x-72 top-8 left-2 "
+            />
+          </LabelInput>
 
-          <div className="cancelAndSaveBTN flex mt-10 justify-evenly pb-2 w-80">
-            {/* <button
-            type="submit"
-            className="bg-gray-950 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full w-32"
-          >
-            Cancel
-          </button> */}
+          <div className="cancelAndSaveBTN flex mt-3 justify-evenly pb-2 w-80">
             <Button value="Cancel">Cancel</Button>
-            {/* <button
-            type="reset"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-32"
-          >
-            Save
-          </button> */}
+
             <Button value="Save" type="submit">
               Save
             </Button>
