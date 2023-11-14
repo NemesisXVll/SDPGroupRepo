@@ -6,6 +6,7 @@ import TopOfForm from "./TopOfForm.tsx";
 import Credential from "../../../model/Credential.ts";
 import clipboardLogo from "../../assets/icons/form/clipboard.svg";
 import link from "../../assets/icons/form/externallink.svg";
+import { useState } from "react";
 
 // import UserManagementService from "../../../model/repository/UserManagementService.js";
 
@@ -31,10 +32,21 @@ const handleSubmit = (e: any) => {
   // userManagementService.createCredential(credential);
 };
 
+
 function Form() {
+  const [showForm, setShowForm] = useState(false);
+
+  const handleCancelBTN = (e: any) => {
+    e.preventDefault();
+    setShowForm(true);
+  };
   return (
     <>
-      <aside className="items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden min-w-fit">
+      <aside
+        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden min-w-fit ${
+          showForm ? "hidden" : ""
+        }`}
+      >
         <TopOfForm></TopOfForm>
 
         <form
@@ -87,8 +99,6 @@ function Form() {
             id="password"
           ></PasswordStrength>
 
-        
-
           <LabelInput
             type="text"
             value="Login Page URL"
@@ -104,8 +114,10 @@ function Form() {
           </LabelInput>
 
           <div className="flex mt-16 justify-between px-1">
-            <Button value="Cancel">Cancel</Button>
-             <Button value="Save" type="submit">
+            <Button value="Cancel" onClick={handleCancelBTN}>
+              Cancel
+            </Button>
+            <Button value="Save" type="submit">
               Save
             </Button>
           </div>
