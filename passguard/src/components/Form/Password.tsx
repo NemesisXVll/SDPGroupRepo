@@ -29,8 +29,8 @@ const PasswordStrength = (props: PasswordProps) => {
   };
 
   return (
-    <div className="mb-6">
-      <div className="mb-6 flex mt-1 relative hover:text-blue-300  border-b-2 border-gray-300 w-80">
+    <div className="mb-3">
+      <div className="mb-3 flex mt-1 relative hover:text-blue-300 border-b-2 border-gray-300 w-80">
         <input
           type={props.type}
           name={props.id}
@@ -38,7 +38,7 @@ const PasswordStrength = (props: PasswordProps) => {
           onChange={handlePasswordChange}
           placeholder="*************"
           autoComplete={props.value}
-          className={`pl-2 mt-5 peer h-10 w-full 
+          className={`mt-5 peer h-10 w-full pl-2 pr-1
            text-gray-900 placeholder-transparent 
            rounded justify-start items-start gap-14 inline-flex
            focus:outline-none
@@ -82,7 +82,7 @@ const PasswordStrength = (props: PasswordProps) => {
         </div>
       </div>
 
-      <div className="text-sm text-gray-600 mt-2">
+      <div className="text-sm text-gray-600 pl-2">
         Status:{" "}
         <span
           className={`${
@@ -114,12 +114,12 @@ const PasswordStrength = (props: PasswordProps) => {
       </div>
       {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
 
-      <div className="-mx-1">
+      <div className="-mx-1 pl-1 w-80">
         <div className="px-1 grid grid-cols-5 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className={`h-2 mt-2 rounded-xl transition-colors ${
+              className={`h-2 mt-1 rounded-xl transition-colors ${
                 i < score
                   ? score <= 0
                     ? "bg-red-500"

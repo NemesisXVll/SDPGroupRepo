@@ -7,11 +7,7 @@ function TopOfForm() {
     <>
       <div className="flex place-items-center pt-4 box-border shadow-sm bg-neutral-100 h-min min-w-max">
         <div className="w-28 h-27">
-          <img
-            className="hex shadow-2xl"
-            src={servicelogo}
-            alt="image description"
-          />
+          <img className="" src={servicelogo} alt="image description" />
         </div>
 
         <div className="pl-2">
@@ -23,7 +19,7 @@ function TopOfForm() {
           </h2>
         </div>
 
-        <div className="flex flex-col pl-7">
+        <div className="flex flex-col pl-5">
           <i className="pb-5">
             <img src={trashLogo} alt="trashlogo.svg" />
           </i>

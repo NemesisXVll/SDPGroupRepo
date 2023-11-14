@@ -31,15 +31,15 @@ const handleSubmit = (e: any) => {
   // userManagementService.createCredential(credential);
 };
 
-function AddForm() {
+function Form() {
   return (
     <>
-      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 overflow-x-hidden overflow-y-scroll">
+      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 min-w-fit overflow-x-hidden overflow-y-auto">
         <TopOfForm></TopOfForm>
 
         <form
           onSubmit={handleSubmit}
-          className="h-full bg-neutral-100 min-w-max p-1 border-t border-zinc-800 border-opacity-30"
+          className="h-full bg-neutral-100 p-1 border-t border-zinc-800 border-opacity-30"
         >
           <LabelInput
             type="text"
@@ -105,7 +105,7 @@ function AddForm() {
             />
           </LabelInput>
 
-          <div className="cancelAndSaveBTN flex mt-3 justify-evenly pb-2 w-80">
+          <div className="flex mt-3 justify-between px-2 w-80">
             <Button value="Cancel">Cancel</Button>
 
             <Button value="Save" type="submit">
@@ -118,4 +118,4 @@ function AddForm() {
   );
 }
 
-export default AddForm;
+export default Form;
