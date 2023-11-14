@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import CredentialClass from "../Credential";
+import Credential from "../Credential.ts";
 
 const prisma = new PrismaClient();
 
@@ -91,18 +91,26 @@ export default class UserManagementService {
   }
 
   //add a new credential to the database
-  async createCredential(credential: CredentialClass) {
-    return await prisma.CREDENTIAL.create({
-      data: credential,
-    });
+  async createCredential(credential: Credential) {
+    try {
+      const newCredential = await prisma.CREDENTIAL.create({
+        data: credential,
+      });
+      return newCredential;
+    } catch (error) {
+      throw error;
+    }
   }
 
   //delete a credential by credential id
   async deleteCredentialById(credentialId: any) {
-    return await prisma.CREDENTIAL.delete({
-      where: {
-        CREDENTIAL_ID: credentialId,
-      },
-    });
+    try {
+      const deletedCredential = await prisma.CREDENTIAL.delete({
+        where: { CREDENTIAL_ID: credentialId },
+      });
+      return deletedCredential;
+    } catch (error) {
+      throw error;
+    }
   }
 }
