@@ -34,7 +34,7 @@ const handleSubmit = (e: any) => {
 function Form() {
   return (
     <>
-      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 overflow-x-hidden overflow-y-auto">
+      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 overflow-x-hidden overflow-y-auto min-w-fit">
         <TopOfForm></TopOfForm>
 
         <form
