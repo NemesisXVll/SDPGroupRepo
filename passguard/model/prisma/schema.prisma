@@ -11,44 +11,44 @@ datasource db {
 }
 
 //(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
-model USER {
-  USER_ID          Int                @id @default(autoincrement()) @map("userId") //(D) 
-  USER_DATA        String             @unique @map("userData") //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
-  USER_SALT        String             @map("userSalt")
-  USER_DATECREATED DateTime           @default(now()) @map("userDataCreated")
-  USER_DATEUPDATED DateTime           @updatedAt @map("userDataUpdated")
-  USER_PICTURE     Bytes?             @map("userPicture") //(Picture of the user)
-  CREDENTIALS      CREDENTIAL[]
-  SECURITYQUESTION SECURITYQUESTION[]
+model User {
+  userId           Int                @id @default(autoincrement()) //(D) 
+  data             String             @unique //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
+  salt             String
+  dateCreated      DateTime           @default(now())
+  dateUpdated      DateTime           @updatedAt
+  picture          Bytes? //(Picture of the user)
+  credentials      Credential[]
+  securityQuestion SecurityQuestion[]
 }
 
-model CREDENTIAL {
-  CREDENTIAL_ID          Int      @id @default(autoincrement()) @map("credentialId") //(D)
-  CREDENTIAL_SERVICENAME String   @map("credentialServiceName")
-  CREDENTIAL_TITLE       String   @map("credentialTitle")
-  CREDENTIAL_DATA        String   @unique @map("credentialData") //Username, Password (As An Encrypted JSON)
-  CREDENTIAL_URL         String?  @map("credentialUrl")
-  CREDENTIAL_ISWEAK      Boolean  @map("credentialIsWeak")
-  CREDENTIAL_DATECREATED DateTime @default(now()) @map("credentialDateCreated")
-  CREDENTIAL_DATEUPDATED DateTime @updatedAt @map("credentialDateUpdated")
-  CREDENTIAL_SERVICETYPE String   @default("Personal") @map("credentialServiceType") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
-  CREDENTIAL_PICTURE     Bytes?   @map("credentialPicture") //(Picture of the service)
-  CREDENTIAL_ISFAVOURITE Boolean  @default(false) @map("credentialIsFavourite")
-  TRASH                  TRASH?
-  USER                   USER     @relation(fields: [USER_ID], references: [USER_ID])
-  USER_ID                Int      @unique @map("userId") //Foreign key
+model Credential {
+  credentialId Int      @id @default(autoincrement()) //(D)
+  serviceName  String
+  title        String
+  data         String   @unique //Username, Password (As An Encrypted JSON)
+  url          String?
+  isWeak       Boolean
+  dateCreated  DateTime @default(now())
+  dateUpdated  DateTime @updatedAt
+  serviceType  String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  picture      Bytes? //(Picture of the service)
+  isFavourite  Boolean  @default(false)
+  trash        Trash?
+  User         User     @relation(fields: [userId], references: [userId])
+  userId       Int      @unique //Foreign key
 }
 
-model SECURITYQUESTION {
-  SECURITYQUESTION_ID   Int    @id @default(autoincrement()) @map("securityQuestionId")
-  SECURITYQUESTION_DATA String @map("securityQuestionData") //Question, HashedAnswer (As An Encrypted JSON)
-  USER                  USER   @relation(fields: [USER_ID], references: [USER_ID])
-  USER_ID               Int    @unique @map("userId") //Foreign key
+model SecurityQuestion {
+  securityQuestionId Int    @id @default(autoincrement())
+  data               String //Question, HashedAnswer (As An Encrypted JSON)
+  User               User   @relation(fields: [userId], references: [userId])
+  userId             Int    @unique //Foreign key
 }
 
-model TRASH {
-  TRASH_ID              Int        @id @default(autoincrement()) @map("trashId")
-  TRASH_DATETEMPDELETED DateTime   @default(now()) @map("trashDateTempDeleted")
-  CREDENTIAL            CREDENTIAL @relation(fields: [CREDENTIAL_ID], references: [CREDENTIAL_ID])
-  CREDENTIAL_ID         Int        @unique @map("credentialId") //Foreign Key
+model Trash {
+  trashId         Int        @id @default(autoincrement()) @map("trashId")
+  dateTempDeleted DateTime   @default(now()) @map("trashDateTempDeleted")
+  Credential      Credential @relation(fields: [credentialId], references: [credentialId])
+  credentialId    Int        @unique @map("credentialId") //Foreign Key
 }
