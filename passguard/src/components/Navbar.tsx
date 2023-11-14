@@ -14,7 +14,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             <nav className="h-full flex flex-col bg-black shadow-sm rounded-tr-2xl">
                 <div className="p-4 pb-2 flex justify-between items-center">
                     <img src={appLogo}
-                        className={`overflow-hidden transition-all ${expanded ? "p-2 w-40" : "w-0"}`}
+                        className={`overflow-hidden transition-all ${expanded ? "p-2 w-50" : "w-0"}`}
                         alt="app logo" />
                     <button onClick={() => setExpanded(curr => !curr)} className="p-1.5 rounded-lg text-white hover:bg-yellow-400 hover:text-black transition-all duration-300 cursor-pointer">
                         {expanded? <ChevronFirst /> : <ChevronLast />}
@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         relative flex items-center py-3 px-3 my-1
                         font-medium rounded-md cursor-pointer
                         text-white
-                        hover:bg-yellow-400 transition-colors duration-300 ease-in-out hover:text-black
+                        hover:bg-yellow-400 hover:text-black
                           group
                         `}>
                             <img src={item.icon} alt={item.name} className="w-6 h-6" />
