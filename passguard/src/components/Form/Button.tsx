@@ -20,9 +20,10 @@ const Button = (props: FormProps) => {
       type={props.type}
       value={props.value}
       onClick={props.onClick}
-      className={`inline-flex items-center group relative text-white bg-gradient-to-r rounded-3xl
-         hover:bg-gradient-to-bl focus:outline-none hover:text-black
-         font-medium text-sm px-6 py-2 text-center transition-all duration-200 ease-out pt-2 pb-1.5 justify-center
+      className={`inline-flex items-center text-white bg-gradient-to-r rounded-3xl 
+         hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
+         leading-normal tracking-tight font-semibold font-['Roboto'] text-center mb-1
+          transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem]
          ${
            props.value === "Cancel"
              ? "bg-black hover:text-black hover:bg-yellow-400"
@@ -38,10 +39,7 @@ const Button = (props: FormProps) => {
           ""
         )
       )}
-
-      <span className="text-center text-white text-base font-semibold font-['Roboto'] leading-normal tracking-tight">
         {props.children}
-      </span>
     </button>
   );
 };

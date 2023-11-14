@@ -18,7 +18,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
   };
 
   return (
-    <div className="mt-1 relative hover:text-blue-300  border-b-2 border-gray-300 w-80">
+    <div className="mt-1 relative hover:text-blue-300  border-b-2 border-gray-300">
       <input
         id={props.id}
         name={props.id}
