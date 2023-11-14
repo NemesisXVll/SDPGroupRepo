@@ -20,6 +20,8 @@ model USER {
   USER_PICTURE     Bytes?             @map("userPicture") //(Picture of the user)
   CREDENTIALS      CREDENTIAL[]
   SECURITYQUESTION SECURITYQUESTION[]
+
+  @@map("user")
 }
 
 model CREDENTIAL {
@@ -37,6 +39,8 @@ model CREDENTIAL {
   TRASH                  TRASH?
   USER                   USER     @relation(fields: [USER_ID], references: [USER_ID])
   USER_ID                Int      @unique @map("userId") //Foreign key
+
+  @@map("credential")
 }
 
 model SECURITYQUESTION {
@@ -44,6 +48,8 @@ model SECURITYQUESTION {
   SECURITYQUESTION_DATA String @map("securityQuestionData") //Question, HashedAnswer (As An Encrypted JSON)
   USER                  USER   @relation(fields: [USER_ID], references: [USER_ID])
   USER_ID               Int    @unique @map("userId") //Foreign key
+
+  @@map("securityQuestion")
 }
 
 model TRASH {
@@ -51,4 +57,6 @@ model TRASH {
   TRASH_DATETEMPDELETED DateTime   @default(now()) @map("trashDateTempDeleted")
   CREDENTIAL            CREDENTIAL @relation(fields: [CREDENTIAL_ID], references: [CREDENTIAL_ID])
   CREDENTIAL_ID         Int        @unique @map("credentialId") //Foreign Key
+
+  @@map("trash")
 }
