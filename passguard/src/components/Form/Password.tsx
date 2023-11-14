@@ -3,6 +3,7 @@ import zxcvbn from "zxcvbn"; // A library for estimating password strength
 import infoLogo from "../../assets/icons/form/info.svg";
 import eyeLogo from "../../assets/icons/form/eye.svg";
 import clipboardLogo from "../../assets/icons/form/clipboard.svg";
+import Button from "./Button";
 
 type PasswordProps = {
   type?: string;
@@ -29,8 +30,8 @@ const PasswordStrength = (props: PasswordProps) => {
   };
 
   return (
-    <div className="mb-3">
-      <div className="mb-3 flex mt-1 relative hover:text-blue-300 border-b-2 border-gray-300">
+    <div className="">
+      <div className="mb-3 flex mt-1 relative hover:text-blue-300">
         <input
           type={props.type}
           name={props.id}
@@ -40,7 +41,7 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.value}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
            text-gray-900 placeholder-transparent 
-           rounded justify-start items-start gap-14 inline-flex
+           rounded-lg border-2 justify-start items-start gap-14 inline-flex
            focus:outline-none
            ${
              score <= 0 && password.length > 0
@@ -80,6 +81,10 @@ const PasswordStrength = (props: PasswordProps) => {
           <img src={eyeLogo} alt="eye.png" className="w-4 h-5 ml-1" />
           <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" />
         </div>
+      </div>
+
+      <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
+        <Button value="Generate Password">Generate Password</Button>
       </div>
 
       <div className="text-sm text-gray-600 pl-2">

@@ -18,7 +18,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
   };
 
   return (
-    <div className="mt-1 relative hover:text-blue-300  border-b-2 border-gray-300">
+    <div className="mt-1 relative hover:text-blue-300">
       <input
         id={props.id}
         name={props.id}
@@ -27,9 +27,9 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         type={props.type}
         onChange={handleOnChange}
         className="pl-2 mt-5 peer h-10 w-full
-         text-gray-900 placeholder-transparent
-         rounded justify-start items-start gap-14 inline-flex
-          focus:outline-none focus:border-blue-600"
+         text-gray-900 text-xs placeholder-transparent
+         rounded-lg justify-start items-start gap-14 inline-flex
+          focus:outline-none focus:border-blue-600 border-2"
         placeholder={props.placeholder}
       />
       <label
