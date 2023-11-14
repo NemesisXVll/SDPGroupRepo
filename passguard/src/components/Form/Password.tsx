@@ -30,7 +30,7 @@ const PasswordStrength = (props: PasswordProps) => {
 
   return (
     <div className="mb-3">
-      <div className="mb-3 flex mt-1 relative hover:text-blue-300 border-b-2 border-gray-300 w-80">
+      <div className="mb-3 flex mt-1 relative hover:text-blue-300 border-b-2 border-gray-300">
         <input
           type={props.type}
           name={props.id}
@@ -114,7 +114,7 @@ const PasswordStrength = (props: PasswordProps) => {
       </div>
       {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
 
-      <div className="-mx-1 pl-1 w-80">
+      <div className="-mx-1 pl-1 w-full">
         <div className="px-1 grid grid-cols-5 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (
             <div

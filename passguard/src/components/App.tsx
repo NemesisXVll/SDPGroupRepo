@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="app-container justify-between">
         <Navbar isactive={false}></Navbar>
-        <Stats></Stats>
+        {/* <Stats></Stats> */}
         <Form></Form>
       </div>
       {/* <AddButton></AddButton> */}

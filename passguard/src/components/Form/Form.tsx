@@ -34,12 +34,12 @@ const handleSubmit = (e: any) => {
 function Form() {
   return (
     <>
-      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 min-w-fit overflow-x-hidden overflow-y-auto">
+      <aside className="flex flex-col h-screen border-l border-zinc-800 border-opacity-30 overflow-x-hidden overflow-y-auto">
         <TopOfForm></TopOfForm>
 
         <form
           onSubmit={handleSubmit}
-          className="h-full bg-neutral-100 p-1 border-t border-zinc-800 border-opacity-30"
+          className="h-full bg-neutral-100 p-1 border-t border-zinc-800 border-opacity-30 w-80"
         >
           <LabelInput
             type="text"
@@ -77,7 +77,7 @@ function Form() {
             <img
               src={clipboardLogo}
               alt="clipboard.png"
-              className="absolute translate-x-72 top-8 left-2 w-4 h-4"
+              className="absolute translate-x-72 top-8 w-4 h-4"
             />
           </LabelInput>
 
@@ -87,7 +87,7 @@ function Form() {
             id="password"
           ></PasswordStrength>
 
-          <div className="generatePasswordBTN flex place-content-center justify-end mt-2 w-80">
+          <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
             <Button value="Generate Password">Generate Password</Button>
           </div>
 
@@ -101,16 +101,16 @@ function Form() {
             <img
               src={link}
               alt="link.png"
-              className="absolute translate-x-72 top-8 left-2 "
+              className="absolute translate-x-72 top-8"
             />
           </LabelInput>
 
-          <div className="flex mt-3 justify-between px-2 w-80">
-            <Button value="Cancel">Cancel</Button>
-
+          <div className="flex mt-3 justify-between px-1">
             <Button value="Save" type="submit">
               Save
             </Button>
+
+            <Button value="Cancel">Cancel</Button>
           </div>
         </form>
       </aside>

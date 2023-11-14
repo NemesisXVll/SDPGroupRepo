@@ -5,8 +5,8 @@ import servicelogo from "../../assets/icons/form/servicelogo.svg";
 function TopOfForm() {
   return (
     <>
-      <div className="flex place-items-center pt-4 box-border shadow-sm bg-neutral-100 h-min min-w-max">
-        <div className="w-28 h-27">
+      <div className="flex place-items-center pt-4 box-border shadow-sm bg-neutral-100 h-min w-80">
+        <div className="w-28">
           <img className="" src={servicelogo} alt="image description" />
         </div>
 
