@@ -103,7 +103,7 @@ function Form() {
             />
           </LabelInput>
 
-          <div className="flex mt-20 justify-between px-1">
+          <div className="flex mt-16 justify-between px-1">
             <Button value="Cancel">Cancel</Button>
              <Button value="Save" type="submit">
               Save
