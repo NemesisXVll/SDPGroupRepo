@@ -77,7 +77,7 @@ function Form() {
             <img
               src={clipboardLogo}
               alt="clipboard.png"
-              className="absolute translate-x-64 top-8 w-4 h-4"
+              className="absolute translate-x-60 top-8 w-4 h-4"
             />
           </LabelInput>
 
@@ -99,7 +99,7 @@ function Form() {
             <img
               src={link}
               alt="link.png"
-              className="absolute translate-x-64 top-8"
+              className="absolute translate-x-60 top-8"
             />
           </LabelInput>
 
