@@ -1,15 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import Credential from "../Credential.ts";
 
 const prisma = new PrismaClient();
 
 export default class UserManagementService {
   //Add Methods Here for Creating, Updating, and Deleting
   //Use this example signature --> async createUser() {}
-  async signUp(userData: any, userSalt: any) {
+  async signUp(userData, userSalt) {
     try {
       // Check if a user with the provided USER_DATA already exists
-      const existingUser = await prisma.user.findUnique({
+      const existingUser = await prisma.USER.findUnique({
         where: { USER_DATA: userData },
       });
 
@@ -18,7 +17,7 @@ export default class UserManagementService {
       }
 
       // Create the new user with the provided USER_DATA, USER_SALT, and a default USER_PICTURE
-      const user = await prisma.user.create({
+      const user = await prisma.USER.create({
         data: {
           USER_DATA: userData,
           USER_SALT: userSalt,
@@ -31,10 +30,10 @@ export default class UserManagementService {
       throw error;
     }
   }
-  async checkSecurityAnswer(userData: any, securityAnswer: any) {
+  async checkSecurityAnswer(userData, securityAnswer) {
     try {
       // Find the user by USER_DATA and include the SECURITYQUESTION
-      const user = await prisma.user.findUnique({
+      const user = await prisma.USER.findUnique({
         where: { USER_DATA: userData },
         include: {
           SECURITYQUESTION: true,
@@ -47,8 +46,7 @@ export default class UserManagementService {
 
       // Check if there is a matching security answer
       const matchingSecurityAnswer = user.SECURITYQUESTION.find(
-        (question: { SECURITYQUESTION_DATA: any }) =>
-          question.SECURITYQUESTION_DATA === securityAnswer
+        (question) => question.SECURITYQUESTION_DATA === securityAnswer
       );
 
       if (!matchingSecurityAnswer) {
@@ -60,10 +58,10 @@ export default class UserManagementService {
       throw error;
     }
   }
-  async login(userData: any, securityAnswer: any) {
+  async login(userData, securityAnswer) {
     try {
       // Find the user by USER_DATA and include the SECURITYQUESTION
-      const user = await prisma.user.findUnique({
+      const user = await prisma.USER.findUnique({
         where: { USER_DATA: userData },
         include: {
           SECURITYQUESTION: true,
@@ -76,8 +74,7 @@ export default class UserManagementService {
 
       // Check if there is a matching security answer
       const matchingSecurityAnswer = user.SECURITYQUESTION.find(
-        (question: { SECURITYQUESTION_DATA: any }) =>
-          question.SECURITYQUESTION_DATA === securityAnswer
+        (question) => question.SECURITYQUESTION_DATA === securityAnswer
       );
 
       if (!matchingSecurityAnswer) {
@@ -91,7 +88,7 @@ export default class UserManagementService {
   }
 
   //add a new credential to the database
-  async createCredential(credential: Credential) {
+  async createCredential(credential) {
     try {
       const newCredential = await prisma.CREDENTIAL.create({
         data: credential,
@@ -103,7 +100,7 @@ export default class UserManagementService {
   }
 
   //delete a credential by credential id
-  async deleteCredentialById(credentialId: any) {
+  async deleteCredentialById(credentialId) {
     try {
       const deletedCredential = await prisma.CREDENTIAL.delete({
         where: { CREDENTIAL_ID: credentialId },
