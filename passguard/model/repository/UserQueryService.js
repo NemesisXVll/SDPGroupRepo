@@ -2,48 +2,46 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export default class UserManagementService {
+export default class UserQueryService {
   //Add Methods Here for Reading
   //Use this example signature --> async getUsers() {}
   // Find a user by USER_ID
   async findUserById(userId) {
-    return prisma.user.findUnique({
+    return prisma.USER.findUnique({
       where: { USER_ID: userId },
     });
   }
   // Find a user by USER_DATA
   async findUserByUserData(userData) {
-    return prisma.user.findUnique({
+    return prisma.USER.findUnique({
       where: { USER_DATA: userData },
     });
   }
 
   // Find a security question by SECURITYQUESTION_ID
   async findSecurityQuestionById(questionId) {
-    return prisma.securityQuestion.findUnique({
+    return prisma.SECURITYQUESTION.findUnique({
       where: { SECURITYQUESTION_ID: questionId },
     });
   }
 
   // Find a security question by user's USER_ID
   async findSecurityQuestionByUserId(userId) {
-    return prisma.securityQuestion.findFirst({
+    return prisma.SECURITYQUESTION.findFirst({
       where: { USER_ID: userId },
     });
   }
 
   // List all users
   async listUsers() {
-    return prisma.user.findMany();
+    return prisma.USER.findMany();
   }
 
   // List all security questions for a user
   async listSecurityQuestionsByUserId(userId) {
-    return prisma.user
-      .findUnique({
-        where: { USER_ID: userId },
-      })
-      .securityQuestion();
+    return prisma.USER.findUnique({
+      where: { USER_ID: userId },
+    }).securityQuestion();
   }
 
   //get user credentials by user id
