@@ -7,28 +7,6 @@ import { useState } from "react";
 
 // import UserManagementService from "../../../model/repository/UserManagementService.js";
 
-const handleSubmit = (e: any) => {
-  e.preventDefault();
-  const data = new FormData(e.target);
-
-  /*Here u should do something like this to not get actual password value.
-  const password = data.get('password');
-  const hashedPassword = /* perform your encryption or hashing here;
-  Replace the original password with the hashed version
-  data.set('password', hashedPassword);
-  */
-  data.set(
-    "loginPageUrl",
-    data.get("loginPageUrl") === "" ? "" : "https://" + data.get("loginPageUrl")
-  );
-  const credentialObj = JSON.parse(
-    JSON.stringify(Object.fromEntries(data.entries()))
-  );
-
-  // const userManagementService = new UserManagementService();
-  // userManagementService.createCredential(credential);
-};
-
 function Form() {
   const [showForm, setShowForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -36,12 +14,35 @@ function Form() {
 
   const handleCancelBTN = (e: any) => {
     e.preventDefault();
-    setShowForm(true);
+    setShowForm(!showForm);
   };
 
   const handleSaveBTN = (e: any) => {
     e.preventDefault();
+    const data = new FormData(e.target);
+
+    /*Here u should do something like this to not get actual password value.
+    const password = data.get('password');
+    const hashedPassword = /* perform your encryption or hashing here;
+    Replace the original password with the hashed version
+    data.set('password', hashedPassword);
+    */
+    data.set(
+      "loginPageUrl",
+      data.get("loginPageUrl") === ""
+        ? ""
+        : "https://" + data.get("loginPageUrl")
+    );
+    const credentialObj = JSON.parse(
+      JSON.stringify(Object.fromEntries(data.entries()))
+    );
+
+    console.log(credentialObj);
+
+    // const userManagementService = new UserManagementService();
+    // userManagementService.createCredential(credential);
     setFormValues(!formValues);
+    setShowForm(true);
   };
 
   return (
@@ -54,7 +55,7 @@ function Form() {
         <TopOfForm></TopOfForm>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSaveBTN}
           className=" flex-col p-3 border-t border-opacity-30"
         >
           <LabelInput
@@ -89,8 +90,7 @@ function Form() {
             id="userName"
             onChange="handleOnChange"
             placeholder="abc@123.com"
-          >
-          </LabelInput>
+          ></LabelInput>
 
           <PasswordStrength
             type={showPassword ? "text" : "password"}
@@ -104,14 +104,13 @@ function Form() {
             id="loginPageUrl"
             onChange="handleOnChange"
             placeholder="https://www.x.com/login"
-          >
-          </LabelInput>
+          ></LabelInput>
 
           <div className="flex mt-16 justify-between px-1">
             <Button value="Cancel" onClick={handleCancelBTN}>
               Cancel
             </Button>
-            <Button value="Save" type="submit" onClick={handleSaveBTN}>
+            <Button value="Save" type="submit">
               Save
             </Button>
           </div>

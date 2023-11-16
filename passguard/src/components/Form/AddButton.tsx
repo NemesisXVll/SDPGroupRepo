@@ -1,12 +1,16 @@
 //import { useState } from "react";
 //import "../App.css";
 
-function AddButton() {
+type AddButtonProps = {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+const AddButton = (props: AddButtonProps) => {
   return (
     <>
       <div className="flex w-fit items-center">
         <i
-          onClick={() => console.log("clicked")}
+          onClick={props.onClick}
           className=" text-white font-bold p-0 m-0 rounded-full"
         >
           <svg
@@ -23,6 +27,6 @@ function AddButton() {
       </div>
     </>
   );
-}
+};
 
 export default AddButton;

@@ -15,15 +15,11 @@ type FormProps = {
 // }
 
 const Button = (props: FormProps) => {
-  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    
-  };
-
   return (
     <button
       type={props.type}
       value={props.value}
-      onClick={handleOnClick}
+      onClick={props.onClick}
       className={`inline-flex items-center text-white bg-gradient-to-r rounded-3xl 
          hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
          leading-normal tracking-tight font-semibold text-center
