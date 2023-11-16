@@ -1,4 +1,4 @@
-import facebook from "../assets/facebookHexa.svg";
+import facebook from "../assets/icons/common/facebookHexa.svg";
 
 
  const FacebookCard = 
