@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { Link } from "react-router-dom"
 
 type LabelInputProps = {
   type?: string;
@@ -58,9 +57,7 @@ const LabelInput = (props: LabelInputProps) => {
           className="absolute translate-x-60 top-8 text-black"
           onClick={() => {
             const location = "https://" + value;
-            <a href="https://herewecode.io/">
-              Click to open HereWeCode (current tab)
-            </a>;
+            window.location.assign(location);
           }}
         />
       ) : (
