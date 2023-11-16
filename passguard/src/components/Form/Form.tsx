@@ -3,9 +3,6 @@ import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
-// import Credential from "../../../model/Credential.ts";
-import clipboardLogo from "../../assets/icons/form/clipboard.svg";
-import link from "../../assets/icons/form/externallink.svg";
 import { useState } from "react";
 
 // import UserManagementService from "../../../model/repository/UserManagementService.js";
@@ -13,6 +10,7 @@ import { useState } from "react";
 const handleSubmit = (e: any) => {
   e.preventDefault();
   const data = new FormData(e.target);
+
   /*Here u should do something like this to not get actual password value.
   const password = data.get('password');
   const hashedPassword = /* perform your encryption or hashing here;
@@ -26,20 +24,26 @@ const handleSubmit = (e: any) => {
   const credentialObj = JSON.parse(
     JSON.stringify(Object.fromEntries(data.entries()))
   );
-  // const credential = new Credential(credentialObj);
-  // console.log(credential);
+
   // const userManagementService = new UserManagementService();
   // userManagementService.createCredential(credential);
 };
 
-
 function Form() {
   const [showForm, setShowForm] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState(false);
 
   const handleCancelBTN = (e: any) => {
     e.preventDefault();
     setShowForm(true);
   };
+
+  const handleSaveBTN = (e: any) => {
+    e.preventDefault();
+    setFormValues(!formValues);
+  };
+
   return (
     <>
       <aside
@@ -86,15 +90,10 @@ function Form() {
             onChange="handleOnChange"
             placeholder="abc@123.com"
           >
-            <img
-              src={clipboardLogo}
-              alt="clipboard.png"
-              className="absolute translate-x-60 top-8 w-4 h-4"
-            />
           </LabelInput>
 
           <PasswordStrength
-            type="password"
+            type={showPassword ? "text" : "password"}
             value="Password"
             id="password"
           ></PasswordStrength>
@@ -106,18 +105,13 @@ function Form() {
             onChange="handleOnChange"
             placeholder="https://www.x.com/login"
           >
-            <img
-              src={link}
-              alt="link.png"
-              className="absolute translate-x-60 top-8"
-            />
           </LabelInput>
 
           <div className="flex mt-16 justify-between px-1">
             <Button value="Cancel" onClick={handleCancelBTN}>
               Cancel
             </Button>
-            <Button value="Save" type="submit">
+            <Button value="Save" type="submit" onClick={handleSaveBTN}>
               Save
             </Button>
           </div>

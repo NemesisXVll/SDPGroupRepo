@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { HiOutlineClipboardDocument } from "react-icons/hi2";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import { Link } from "react-router-dom"
 
 type LabelInputProps = {
   type?: string;
@@ -25,7 +28,7 @@ const LabelInput = (props: LabelInputProps) => {
         required={props.id === "credentialTitle" ? true : false}
         type={props.type}
         className="pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-xs bg-opacity-50
-        rounded-lg justify-start items-start gap-14 inline-flex
+        rounded-lg justify-start items-start gap-14 inline-flex 
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2"
         placeholder={props.placeholder}
         onChange={handleOnChange}
@@ -39,7 +42,30 @@ const LabelInput = (props: LabelInputProps) => {
       >
         {props.value}
       </label>
-      {props.children}
+      {props.children ? (
+        props.children
+      ) : props.id === "userName" ? (
+        <HiOutlineClipboardDocument
+          size="1.3em"
+          className="absolute translate-x-60 top-8 text-black"
+          onClick={() => {
+            navigator.clipboard.writeText(value);
+          }}
+        />
+      ) : props.id === "loginPageUrl" ? (
+        <HiOutlineExternalLink
+          size="1.3em"
+          className="absolute translate-x-60 top-8 text-black"
+          onClick={() => {
+            const location = "https://" + value;
+            <a href="https://herewecode.io/">
+              Click to open HereWeCode (current tab)
+            </a>;
+          }}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

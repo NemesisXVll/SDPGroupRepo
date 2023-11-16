@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import zxcvbn from "zxcvbn"; // A library for estimating password strength
 import infoLogo from "../../assets/icons/form/info.svg";
-import eyeLogo from "../../assets/icons/form/eye.svg";
-import clipboardLogo from "../../assets/icons/form/clipboard.svg";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import Button from "./Button";
 
 type PasswordProps = {
@@ -17,6 +17,12 @@ const PasswordStrength = (props: PasswordProps) => {
   const [password, setPassword] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -33,7 +39,7 @@ const PasswordStrength = (props: PasswordProps) => {
     <div className="">
       <div className="mb-3 flex mt-1 relative hover:text-blue-300">
         <input
-          type={props.type}
+          type={showPassword ? "password" : "text"}
           name={props.id}
           id={props.id}
           onChange={handlePasswordChange}
@@ -78,8 +84,29 @@ const PasswordStrength = (props: PasswordProps) => {
             alt="info.png"
             className="ml-4 col-start-2 w-3 h-6"
           />
-          <img src={eyeLogo} alt="eye.png" className="w-4 h-5 ml-1" />
-          <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" />
+
+          {showPassword ? (
+            <FiEye
+              onClick={handleShowPassword}
+              size="1.3em"
+              className="ml-1 text-black"
+            />
+          ) : (
+            <FiEyeOff
+              onClick={handleShowPassword}
+              size="1.3em"
+              className="ml-1 text-black"
+            />
+          )}
+          {/* <img src={props.type === "password" ? <FiEyeOff size="1.3em" /> : <FiEyeOff size="1.3em" />} alt="eye.png" className="w-4 h-5 ml-1" /> */}
+          <HiOutlineClipboardDocument
+            size="1.3em"
+            className="ml-1 text-black"
+            onClick={() => {
+              navigator.clipboard.writeText(password);
+            }}
+          />
+          {/* <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" /> */}
         </div>
       </div>
 

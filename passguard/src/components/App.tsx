@@ -16,7 +16,7 @@ function App() {
         <Navbar isactive={false}></Navbar>
         <Stats></Stats>
         <Form></Form>
-        <Grid></Grid>
+        {/* <Grid></Grid> */}
       </div>
       {/* <AddButton></AddButton> */}
     </>
