@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import Credential from "../Credential.ts";
+// import Credential from "../Credential.ts";
 
 const prisma = new PrismaClient();
 

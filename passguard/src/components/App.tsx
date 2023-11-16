@@ -5,14 +5,18 @@ import Form from "./Form/Form.tsx";
 import Navbar from "./Navbar.tsx";
 import Stats from "./Stats.tsx";
 import AddButton from "./Form/AddButton.tsx";
-
+import Login from "./Login"
+import Signup from "./Signup";
 function App() {
   return (
     <>
+      {/* <Login></Login> */}
+      <Signup></Signup>
       <div className="app-container justify-between">
-        <Navbar isactive={false}></Navbar>
+        {/* <Navbar isactive={false}></Navbar>
         <Stats></Stats>
-        <Form></Form>
+        <Form></Form> */}
+
       </div>
       {/* <AddButton></AddButton> */}
     </>

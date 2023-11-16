@@ -50,7 +50,7 @@ const Stats = () => {
             <div className="flex">
               <img src={redinfo} alt="info-icon" className="w-3" />
               <p className="text-xs font-nunito font-bold p-1">
-                201 Weak Passwords
+                50 Weak Passwords
               </p>
             </div>
             <p className="text-xs font-nunito font-light">
@@ -61,7 +61,7 @@ const Stats = () => {
             <div className="flex">
               <img src={blueinfo} alt="info-icon" className="w-3" />
               <p className="text-xs font-nunito font-bold p-1">
-                201 Reused Passwords
+                40 Reused Passwords
               </p>
             </div>
             <p className="text-xs font-nunito font-light">
@@ -72,7 +72,7 @@ const Stats = () => {
             <div className="flex">
               <img src={yellowinfo} alt="info-icon" className="w-3" />
               <p className="text-xs font-nunito font-bold p-1">
-                201 Old Passwords
+                10 Old Passwords
               </p>
             </div>
             <p className="text-xs font-nunito font-light">
