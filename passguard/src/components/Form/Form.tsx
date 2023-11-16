@@ -3,7 +3,7 @@ import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
-import Credential from "../../../model/Credential.ts";
+// import Credential from "../../../model/Credential.ts";
 import clipboardLogo from "../../assets/icons/form/clipboard.svg";
 import link from "../../assets/icons/form/externallink.svg";
 import { useState } from "react";
@@ -26,8 +26,8 @@ const handleSubmit = (e: any) => {
   const credentialObj = JSON.parse(
     JSON.stringify(Object.fromEntries(data.entries()))
   );
-  const credential = new Credential(credentialObj);
-  console.log(credential);
+  // const credential = new Credential(credentialObj);
+  // console.log(credential);
   // const userManagementService = new UserManagementService();
   // userManagementService.createCredential(credential);
 };
