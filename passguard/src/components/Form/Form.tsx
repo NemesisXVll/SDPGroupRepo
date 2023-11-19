@@ -27,7 +27,6 @@ function Form() {
     Replace the original password with the hashed version
     data.set('password', hashedPassword);
     */
-
     data.set(
       "loginPageUrl",
       data.get("loginPageUrl") === ""
@@ -38,22 +37,7 @@ function Form() {
       JSON.stringify(Object.fromEntries(data.entries()))
     );
 
-    // data.set("userId", "GET USERID WHEN LOGGED IN");
-
-    const credential = {
-      CREDENTIAL_SERVICENAME: credentialObj.serviceName,
-      CREDENTIAL_TITLE: credentialObj.credentialTitle,
-      CREDENTIAL_DATA: {
-        userName: credentialObj.userName,
-        password: credentialObj.password,
-      },
-      CREDENTIAL_URL: credentialObj.loginPageUrl,
-      CREDENTIAL_ISWEAK: credentialObj.isWeak,
-      CREDENTIAL_SERVICETYPE: credentialObj.serviceType,
-      USER_ID: 1,
-    };
-
-    console.log(credential);
+    console.log(credentialObj);
 
     // const userManagementService = new UserManagementService();
     // userManagementService.createCredential(credential);

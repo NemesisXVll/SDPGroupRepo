@@ -26,7 +26,7 @@ model CREDENTIAL {
   CREDENTIAL_ID          Int      @id @default(autoincrement()) //(D)
   CREDENTIAL_SERVICENAME String
   CREDENTIAL_TITLE       String
-  CREDENTIAL_DATA        String //Username, Password (As An Encrypted JSON)
+  CREDENTIAL_DATA        String   @unique //Username, Password (As An Encrypted JSON)
   CREDENTIAL_URL         String?
   CREDENTIAL_ISWEAK      Boolean
   CREDENTIAL_DATECREATED DateTime @default(now())
@@ -36,7 +36,7 @@ model CREDENTIAL {
   CREDENTIAL_ISFAVOURITE Boolean  @default(false)
   TRASH                  TRASH?
   USER                   USER     @relation(fields: [USER_ID], references: [USER_ID])
-  USER_ID                Int //Foreign key
+  USER_ID                Int      @unique //Foreign key
 }
 
 model SECURITYQUESTION {
