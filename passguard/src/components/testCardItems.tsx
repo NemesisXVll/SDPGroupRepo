@@ -1,14 +1,14 @@
-import facebook from "../assets/icons/common/facebookHexa.svg";
+import twitter from "../assets/icons/common/twitterHexa.svg";
 
 
- const FacebookCard = 
+ const TwitterCard = 
     {
-        appname:'Facebook',
-        accountName:'myFacebook',
-        logo:facebook,
-        dateCreated:'25 Sept 2023',
-        lastDateUpdated:'10 Nov 2023',
-        heath:'green'
+        appname:'main X account',
+        accountName:'testaccount',
+        logo:twitter,
+        dateCreated:'13/10/2023',
+        lastDateUpdated:'10/11/2023',
+        health:'green'
     }
  
-export default FacebookCard;
+export default TwitterCard;

@@ -25,7 +25,7 @@ function createWindow() {
     //set the default window size
     width: 1124,
     height: 680,
-    autoHideMenuBar: true,
+    // autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       zoomFactor: 0.9,
