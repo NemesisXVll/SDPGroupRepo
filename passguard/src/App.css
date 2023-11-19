@@ -1,5 +1,29 @@
 .app-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 150px 670px;
+    grid-template-areas: 
+    "navbar stats form"
+    "navbar gridCard form";
     
 }
 
+.gridClass{
+    /* background-color: red; */
+    grid-area: gridCard;
+    overflow: auto;
+}
+
+.navbar{
+    grid-area:navbar;
+
+}
+
+.stats{
+    grid-area: stats;
+}
+
+.form{
+    grid-area: form;
+    display: flex;
+}

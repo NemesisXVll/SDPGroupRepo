@@ -21,10 +21,25 @@ function App() {
   return (
     <>
       <div className="app-container justify-between">
+
+        <div className="navbar">
         <Navbar isactive={false}></Navbar>
+        </div>
+
+        <div className="stats">
         <Stats></Stats>
+        </div>
+
+        <div className="form">
         <AddButton onClick={handleOnClickBTN}></AddButton>
         {showAddForm ? <Form></Form> : ""}
+        </div>
+
+        <div className="gridClass ">
+        <Grid></Grid>
+        </div>
+       
+
       </div>
     </>
   );
