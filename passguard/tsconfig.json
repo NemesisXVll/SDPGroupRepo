@@ -30,6 +30,6 @@
     "utilities" : ["./src/data/utils"]
   },
 
-  "include": ["src", "electron"],
+  "include": ["src", "electron", "hello.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
