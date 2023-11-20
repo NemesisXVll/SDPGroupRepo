@@ -8,7 +8,7 @@ type AddButtonProps = {
 const AddButton = (props: AddButtonProps) => {
   return (
     <>
-      <div className="flex w-fit items-center">
+      <div className="h-min w-min">
         <i
           onClick={props.onClick}
           className=" text-white font-bold p-0 m-0 rounded-full"

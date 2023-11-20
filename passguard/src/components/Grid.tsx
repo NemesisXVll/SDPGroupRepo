@@ -11,10 +11,10 @@ const Grid = ()=> {
 
   return (
     <>
-      <div className="">
+      <div className="sticky top-0 bg-white z-10">
         <h3 className="text-xl font-medium p-1">Credentials (5)</h3>
       </div>
-      <div className="flex flex-wrap gap-4 p-4">
+      <div className="flex flex-wrap gap-4 p-4 overflow-auto">
         <Card></Card>
         <Card></Card>
 
