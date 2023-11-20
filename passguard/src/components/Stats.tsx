@@ -10,7 +10,7 @@ const Stats = () => {
   const width3 = (1 / total) * 1000;
 
   return (
-    <div className="w-full p-2 h-fit">
+    <div className="w-full p-2 h-fit m-3">
       <div className="flex">
         <h5 className="p-1 text-xl font-medium">Password Analysis </h5>
         <img src={refresh} alt="refresh-icon" />

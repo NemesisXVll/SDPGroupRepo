@@ -10,21 +10,19 @@ import Card from './Card'
 const Grid = ()=> {
 
   return (
-
-
-      <div className="cards grid auto-cols-200px w-full">
-        {/* <div className="card card1"> */}
-        <Card></Card>
-        <Card></Card>
-
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-
-        {/* </div> */}
-
+    <>
+      <div className="">
+        <h3 className="text-xl font-medium p-1">Credentials (5)</h3>
       </div>
-     
+      <div className="flex flex-wrap gap-4 p-4">
+        <Card></Card>
+        <Card></Card>
+
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+      </div>
+    </>
   );
 };
 

@@ -20,26 +20,23 @@ function App() {
 
   return (
     <>
-      <div className="app-container justify-between">
-
+      <div className="app-container h-screen">
         <div className="navbar">
-        <Navbar isactive={false}></Navbar>
+          <Navbar isactive={false}></Navbar>
         </div>
 
         <div className="stats">
-        <Stats></Stats>
+          <Stats></Stats>
         </div>
 
         <div className="form">
-        <AddButton onClick={handleOnClickBTN}></AddButton>
-        {showAddForm ? <Form></Form> : ""}
+          <AddButton onClick={handleOnClickBTN}></AddButton>
+          {showAddForm ? <Form></Form> : ""}
         </div>
 
-        <div className="gridClass ">
-        <Grid></Grid>
+        <div className="card-container ml-4 overflow-auto">
+          <Grid></Grid>
         </div>
-       
-
       </div>
     </>
   );
