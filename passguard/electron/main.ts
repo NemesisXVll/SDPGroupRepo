@@ -39,7 +39,6 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       zoomFactor: 0.9,
-      nodeIntegration: true,
     },
   });
 
@@ -77,3 +76,10 @@ app.on("activate", () => {
 app.whenReady().then(createWindow);
 
 registerIPCMainHandlers();
+
+app.on("before-quit", () => {
+  prisma.$disconnect();
+});
+
+app.disableHardwareAcceleration();
+
