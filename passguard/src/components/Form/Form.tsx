@@ -54,14 +54,14 @@ function Form() {
             value="Credential Title"
             id="credentialTitle"
             onChange="handleOnChange"
-            placeholder="main x account"
+            placeholder=""
           ></LabelInput>
 
           <LabelDropDown
             type="text"
             id="serviceName"
             list="serviceNames"
-            placeholder="X (Dropdown list and custom)"
+            placeholder=""
             value="Service Name"
             onChange="handleOnChange"
           ></LabelDropDown>
@@ -70,7 +70,7 @@ function Form() {
             type="text"
             id="serviceType"
             list="serviceTypes"
-            placeholder="Social Media (Dropdown list and custom)"
+            placeholder=""
             value="Service Type"
             onChange="handleOnChange"
           ></LabelDropDown>
@@ -94,7 +94,7 @@ function Form() {
             value="Login Page URL"
             id="loginPageUrl"
             onChange="handleOnChange"
-            placeholder="https://www.x.com/login"
+            placeholder=""
           ></LabelInput>
 
           <div className="flex mt-16 justify-between px-1">
