@@ -1,0 +1,55 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native", "windows"]
+}
+
+//(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
+model User {
+  userId            Int                @id @default(autoincrement()) //(D) 
+  data              String             @unique //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
+  salt              String
+  dateCreated       DateTime           @default(now())
+  dateUpdated       DateTime           @updatedAt
+  picture           String? //(Picture of the user)
+  credentials       Credential[]
+  securityquestions SecurityQuestion[]
+}
+
+model Credential {
+  credentialId Int      @id @default(autoincrement()) //(D)
+  serviceName  String
+  title        String
+  data         String //Username, Password (As An Encrypted JSON)
+  url          String?
+  isWeak       Boolean
+  isReused     Boolean
+  isOld        Boolean  @default(false)
+  dateCreated  DateTime @default(now())
+  dateUpdated  DateTime @updatedAt
+  serviceType  String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
+  picture      String? //(Picture of the service)
+  isFavourite  Boolean  @default(false)
+  trash        Trash?
+  User         User     @relation(fields: [userId], references: [userId])
+  userId       Int //Foreign key
+}
+
+model SecurityQuestion {
+  securityQuestionId Int    @id @default(autoincrement())
+  data               String //Question, HashedAnswer (As An Encrypted JSON)
+  User               User   @relation(fields: [userId], references: [userId])
+  userId             Int //Foreign key
+}
+
+model Trash {
+  trashId         Int        @id @default(autoincrement())
+  dateTempDeleted DateTime   @default(now())
+  Credential      Credential @relation(fields: [credentialId], references: [credentialId])
+  credentialId    Int        @unique //Foreign Key
+}
