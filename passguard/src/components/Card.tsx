@@ -5,7 +5,7 @@ import dots from "../assets/icons/common/verticalDots.svg";
 
 const  Card = () =>{
 return (
-    <div className="flex bg-black h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 hover:scale-105 transition-all duration-350 flex-grow">
+    <div className="flex bg-black h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 hover:scale-105 transition-all duration-350">
     <div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl">
             <div className="flex items-center justify-evenly">
             

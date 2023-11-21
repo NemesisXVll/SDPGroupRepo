@@ -4,13 +4,12 @@
     grid-template-rows: auto 4fr;
     grid-template-areas: 
     "navbar stats form"
-    "navbar gridCard form";
+    "navbar credentials form";
     
 }
 
-.card-container{
-    grid-area: gridCard;
-    min-height: 100%;
+.credentials{
+    grid-area: credentials;
 }
 
 .navbar{
