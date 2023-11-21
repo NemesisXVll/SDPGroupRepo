@@ -34,7 +34,7 @@ function App() {
           {showAddForm ? <Form></Form> : ""}
         </div>
 
-        <div className="card-container ml-4 overflow-auto">
+        <div className="credentials overflow-auto">
           <Grid></Grid>
         </div>
       </div>
