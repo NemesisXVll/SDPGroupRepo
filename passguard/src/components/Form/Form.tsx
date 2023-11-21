@@ -80,7 +80,7 @@ function Form() {
             value="Username / Email"
             id="userName"
             onChange="handleOnChange"
-            placeholder="abc@123.com"
+            placeholder=""
           ></LabelInput>
 
           <PasswordStrength
