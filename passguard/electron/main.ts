@@ -39,7 +39,6 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       zoomFactor: 0.9,
-      nodeIntegration: true,
     },
   });
 
