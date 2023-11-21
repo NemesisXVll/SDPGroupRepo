@@ -36,20 +36,20 @@ export default class CredentialService {
     window.ipcRenderer.send("createCredential", data);
   }
 
-  async findUserById(userId: any) {
-    return new Promise((resolve) => {
-      window.ipcRenderer.send("findUserByIdRequest", userId);
-      window.ipcRenderer.once("findUserByIdResponse", (event, arg) => {
-        const parsedData = JSON.parse(arg);
-        resolve(parsedData);
-      });
-    });
-  }
+  // async findUserById(userId: any) {
+  //   return new Promise((resolve) => {
+  //     window.ipcRenderer.send("findUserByIdRequest", userId);
+  //     window.ipcRenderer.once("findUserByIdResponse", (event, arg) => {
+  //       const parsedData = JSON.parse(arg);
+  //       resolve(parsedData);
+  //     });
+  //   });
+  // }
 
-  async findCredentialsById(credentialId: any): Promise<any> {
+  async findCredentialsByUserId(userId: any): Promise<any> {
     return new Promise((resolve) => {
-      window.ipcRenderer.send("findCredentialsByIdRequest", credentialId);
-      window.ipcRenderer.once("findCredentialsByIdResponse", (event, arg) => {
+      window.ipcRenderer.send("findCredentialsByUserIdRequest", userId);
+      window.ipcRenderer.once("findCredentialsByUserIdResponse", (event, arg) => {
         const parsedData = JSON.parse(arg);
         resolve(parsedData);
       });

@@ -17,9 +17,9 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-  ipcMain.on("findCredentialsByIdRequest", async (event, arg) => {
+  ipcMain.on("findCredentialsByUserIdRequest", async (event, arg) => {
     event.sender.send(
-      "findCredentialsByIdResponse",
+      "findCredentialsByUserIdResponse",
       JSON.stringify(await userQueryService.getCredentialsByUserId(arg))
     );
   });
