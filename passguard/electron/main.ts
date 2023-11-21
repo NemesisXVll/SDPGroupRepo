@@ -76,3 +76,10 @@ app.on("activate", () => {
 app.whenReady().then(createWindow);
 
 registerIPCMainHandlers();
+
+app.on("before-quit", () => {
+  prisma.$disconnect();
+});
+
+app.disableHardwareAcceleration();
+

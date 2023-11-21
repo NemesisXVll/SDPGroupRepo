@@ -25,7 +25,7 @@ function App() {
           <Navbar isactive={false}></Navbar>
         </div>
 
-        <div className="stats">
+        <div className="stats mb-5">
           <Stats></Stats>
         </div>
 
@@ -34,7 +34,7 @@ function App() {
           {showAddForm ? <Form></Form> : ""}
         </div>
 
-        <div className="credentials overflow-auto">
+        <div className="credentials overflow-auto ml-4 mt-3">
           <Grid></Grid>
         </div>
       </div>
