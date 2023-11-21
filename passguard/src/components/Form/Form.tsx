@@ -4,8 +4,9 @@ import LabelDropDown from "./LabelDropDown.tsx";
 import PasswordStrength from "./Password.tsx";
 import TopOfForm from "./TopOfForm.tsx";
 import { useState } from "react";
+import CredentialService from "../../utils/credentialService.ts";
 
-// import UserManagementService from "../../../model/repository/UserManagementService.js";
+const credentialService = new CredentialService();
 
 function Form() {
   const [showForm, setShowForm] = useState(false);
@@ -17,30 +18,20 @@ function Form() {
     setShowForm(!showForm);
   };
 
-  const handleSaveBTN = (e: any) => {
+  const handleSaveBTN = async (e: any) => {
     e.preventDefault();
-    const data = new FormData(e.target);
 
-    /*Here u should do something like this to not get actual password value.
-    const password = data.get('password');
-    const hashedPassword = /* perform your encryption or hashing here;
-    Replace the original password with the hashed version
-    data.set('password', hashedPassword);
-    */
-    data.set(
-      "loginPageUrl",
-      data.get("loginPageUrl") === ""
-        ? ""
-        : "https://" + data.get("loginPageUrl")
-    );
-    const credentialObj = JSON.parse(
-      JSON.stringify(Object.fromEntries(data.entries()))
-    );
+    const formData = new FormData(e.target);
 
-    console.log(credentialObj);
+    // /*Here u should do something like this to not get actual password value.
+    // const password = data.get('password');
+    // const hashedPassword = /* perform your encryption or hashing here;
+    // Replace the original password with the hashed version
+    // data.set('password', hashedPassword);
+    // */
 
-    // const userManagementService = new UserManagementService();
-    // userManagementService.createCredential(credential);
+    credentialService.createCredential(formData);
+
     setFormValues(!formValues);
     setShowForm(true);
   };

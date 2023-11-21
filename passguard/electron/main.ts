@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from "electron";
+import { PrismaClient } from "@prisma/client";
+import { registerIPCMainHandlers } from "./ipcMainHandlers";
 import path from "node:path";
 
 // The built directory structure
@@ -19,6 +21,14 @@ let win: BrowserWindow | null;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
+let prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: `file:../prisma/dev.db`,
+    },
+  },
+});
+
 function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
@@ -29,6 +39,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       zoomFactor: 0.9,
+      nodeIntegration: true,
     },
   });
 
@@ -64,3 +75,5 @@ app.on("activate", () => {
 });
 
 app.whenReady().then(createWindow);
+
+registerIPCMainHandlers();
