@@ -5,11 +5,12 @@
     grid-template-areas: 
     "navbar stats form"
     "navbar credentials form";
-    
-}
+        background-color: #F5F5F5;
+}   
 
 .credentials{
     grid-area: credentials;
+
 }
 
 .navbar{
