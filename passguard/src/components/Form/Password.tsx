@@ -47,24 +47,25 @@ const PasswordStrength = (props: PasswordProps) => {
           name={props.id}
           id={props.id}
           onChange={handlePasswordChange}
-          placeholder="*************"
+          placeholder=""
           autoComplete={props.value}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
            text-gray-900 placeholder-transparent 
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
            focus:outline-none
-           ${score <= 0 && password.length > 0
-              ? "border border-red-500"
-              : score === 1
-                ? "border border-yellow-500"
-                : score === 2
-                  ? "border border-orange-500"
-                  : score === 3
-                    ? "border border-lime-500"
-                    : score === 4
-                      ? "border border-green-500"
-                      : ""
-            }
+           ${
+             score <= 0 && password.length > 0
+               ? "border border-red-500"
+               : score === 1
+               ? "border border-yellow-500"
+               : score === 2
+               ? "border border-orange-500"
+               : score === 3
+               ? "border border-lime-500"
+               : score === 4
+               ? "border border-green-500"
+               : ""
+           }
            `}
         />
 
@@ -120,30 +121,31 @@ const PasswordStrength = (props: PasswordProps) => {
       <div className="text-sm text-gray-600 pl-2">
         Status:{" "}
         <span
-          className={`${score <= 0
-            ? "text-red-500"
-            : score === 1
+          className={`${
+            score <= 0
+              ? "text-red-500"
+              : score === 1
               ? "text-yellow-500"
               : score === 2
-                ? "text-orange-500"
-                : score === 3
-                  ? "text-lime-500"
-                  : score === 4
-                    ? "text-green-500"
-                    : ""
-            }`}
+              ? "text-orange-500"
+              : score === 3
+              ? "text-lime-500"
+              : score === 4
+              ? "text-green-500"
+              : ""
+          }`}
         >
           {score <= 0 && password.length > 0
             ? "Very Weak"
             : score === 1
-              ? "Weak"
-              : score === 2
-                ? "Moderate"
-                : score === 3
-                  ? "Strong"
-                  : score === 4
-                    ? "Very Strong"
-                    : ""}
+            ? "Weak"
+            : score === 2
+            ? "Moderate"
+            : score === 3
+            ? "Strong"
+            : score === 4
+            ? "Very Strong"
+            : ""}
         </span>
       </div>
       {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
@@ -153,20 +155,21 @@ const PasswordStrength = (props: PasswordProps) => {
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className={`h-2 mt-1 rounded-xl transition-colors ${i < score
-                ? score <= 0
-                  ? "bg-red-500"
-                  : score === 1
+              className={`h-2 mt-1 rounded-xl transition-colors ${
+                i < score
+                  ? score <= 0
+                    ? "bg-red-500"
+                    : score === 1
                     ? "bg-yellow-500"
                     : score === 2
-                      ? "bg-orange-500"
-                      : score === 3
-                        ? "bg-lime-500"
-                        : score === 4
-                          ? "bg-green-500"
-                          : "bg-red-800"
-                : "bg-gray-200"
-                }`}
+                    ? "bg-orange-500"
+                    : score === 3
+                    ? "bg-lime-500"
+                    : score === 4
+                    ? "bg-green-500"
+                    : "bg-red-800"
+                  : "bg-gray-200"
+              }`}
             ></div>
           ))}
         </div>

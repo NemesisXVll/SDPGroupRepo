@@ -1,18 +1,18 @@
-import '../grid.css'
-import Card from './Card'
+import "../grid.css";
+import Card from "./Card";
 import { useState, useEffect } from "react";
-import CredentialService from "../utils/credentialService"; 
+import CredentialService from "../utils/credentialService";
 
 const credentialService = new CredentialService();
 
-const Grid = ()=> {
+const Grid = () => {
   const [credentials, setCredentials] = useState<any>([]);
   let result;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        result = await credentialService.findCredentialsById(1);
+        result = await credentialService.findCredentialsByUserId(1);
         setCredentials(result);
       } catch (error) {
         console.error("Error fetching credentials:", error);
