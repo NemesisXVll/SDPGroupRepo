@@ -107,4 +107,16 @@ export default class UserManagementService {
       throw error;
     }
   }
+
+  async updateCredentialById(credentialId: any, credential: any) {
+    try {
+      const updatedCredential = await prisma.credential.update({
+        where: { credentialId: credentialId },
+        data: credential,
+      });
+      return updatedCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
