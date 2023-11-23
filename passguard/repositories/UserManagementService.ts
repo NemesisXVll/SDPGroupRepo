@@ -47,7 +47,7 @@ export default class UserManagementService {
 
       // Check if there is a matching security answer
       const matchingSecurityAnswer = user.securityquestions.find(
-        (question) => question.data === securityAnswer
+        (question: { data: any }) => question.data === securityAnswer
       );
 
       if (!matchingSecurityAnswer) {
@@ -75,7 +75,7 @@ export default class UserManagementService {
 
       // Check if there is a matching security answer
       const matchingSecurityAnswer = user.securityquestions.find(
-        (question) => question.data === securityAnswer
+        (question: { data: any }) => question.data === securityAnswer
       );
 
       if (!matchingSecurityAnswer) {
@@ -107,7 +107,6 @@ export default class UserManagementService {
       throw error;
     }
   }
-
   async updateCredentialById(credentialId: any, credential: any) {
     try {
       const updatedCredential = await prisma.credential.update({
@@ -115,6 +114,16 @@ export default class UserManagementService {
         data: credential,
       });
       return updatedCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async createUser (user : any) {
+    try {
+      const newUser = await prisma.user.create({
+        data: user,
+      });
+      return newUser;
     } catch (error) {
       throw error;
     }
