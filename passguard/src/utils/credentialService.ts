@@ -49,10 +49,13 @@ export default class CredentialService {
   async findCredentialsByUserId(userId: any): Promise<any> {
     return new Promise((resolve) => {
       window.ipcRenderer.send("findCredentialsByUserIdRequest", userId);
-      window.ipcRenderer.once("findCredentialsByUserIdResponse", (event, arg) => {
-        const parsedData = JSON.parse(arg);
-        resolve(parsedData);
-      });
+      window.ipcRenderer.once(
+        "findCredentialsByUserIdResponse",
+        (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        }
+      );
     });
   }
 

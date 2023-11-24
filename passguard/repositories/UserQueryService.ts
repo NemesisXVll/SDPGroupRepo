@@ -5,30 +5,18 @@ const prisma = new PrismaClient();
 export default class UserQueryService {
   //Add Methods Here for Reading
   //Use this example signature --> async getUsers() {}
-  // Find a user by USER_ID
+
+  //-------------------------User Model--------------------------------------//
+  // Find a user by Id
   async findUserById(userId: any) {
     return prisma.user.findUnique({
       where: { userId: userId },
     });
   }
-  // Find a user by USER_DATA
+  // Find a user by Data
   async findUserByUserData(userData: any) {
     return prisma.user.findUnique({
-      where: { data: userData },
-    });
-  }
-
-  // Find a security question by SECURITYQUESTION_ID
-  async findSecurityQuestionById(questionId: any) {
-    return prisma.securityQuestion.findUnique({
-      where: { securityQuestionId: questionId },
-    });
-  }
-
-  // Find a security question by user's USER_ID
-  async findSecurityQuestionByUserId(userId: any) {
-    return prisma.securityQuestion.findFirst({
-      where: { userId: userId },
+      where: { data: JSON.stringify(userData) },
     });
   }
 
@@ -37,13 +25,23 @@ export default class UserQueryService {
     return prisma.user.findMany();
   }
 
-  //   // List all security questions for a user
-  //   async listSecurityQuestionsByUserId(userId) {
-  //     return prisma.user.findUnique({
-  //       where: { userId: userId},
-  //     }).securityQuestion();
-  //   }
+  //-------------------------Security Question Model-------------------------//
 
+  // Find a security question by SECURITYQUESTION_ID
+  async findSecurityQuestionById(questionId: any) {
+    return prisma.securityQuestion.findUnique({
+      where: { securityQuestionId: questionId },
+    });
+  }
+
+  //List All Security Questions for a user id
+  async listSecurityQuestionsByUserId(userId: any) {
+    return prisma.securityQuestion.findMany({
+      where: { userId: userId },
+    });
+  }
+
+  //-------------------------Credential Model-------------------------//
   //get user credentials by user id
   async getCredentialsByUserId(userId: any) {
     return await prisma.credential.findMany({
@@ -98,6 +96,34 @@ export default class UserQueryService {
     });
   }
 
+  //get credentials with weak passwords
+  async getCredentialsWithWeakPasswords() {
+    return await prisma.credential.findMany({
+      where: {
+        isWeak: true,
+      },
+    });
+  }
+
+  //get credentials with reused passwords
+  async getCredentialsWithReusedPasswords() {
+    return await prisma.credential.findMany({
+      where: {
+        isReused: true,
+      },
+    });
+  }
+
+  //get credentials with old passwords
+  async getCredentialsWithOldPasswords() {
+    return await prisma.credential.findMany({
+      where: {
+        isOld: true,
+      },
+    });
+  }
+
+  //-------------------------Trash Model-------------------------//
   //get trash by trash id
   async getTrashById(trashId: any) {
     return await prisma.trash.findUnique({

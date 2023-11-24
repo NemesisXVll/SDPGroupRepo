@@ -6,6 +6,7 @@ export default class UserManagementService {
   //Add Methods Here for Creating, Updating, and Deleting
   //Use this example signature --> async createUser() {}
 
+  //-------------------------User Model-------------------------//
   async signUp(userData: any, userSalt: any) {
     try {
       // Check if a user with the provided USER_DATA already exists
@@ -31,6 +32,7 @@ export default class UserManagementService {
       throw error;
     }
   }
+
   async checkSecurityAnswer(userData: any, securityAnswer: any) {
     try {
       // Find the user by USER_DATA and include the SECURITYQUESTION
@@ -59,6 +61,7 @@ export default class UserManagementService {
       throw error;
     }
   }
+
   async login(userData: any, securityAnswer: any) {
     try {
       // Find the user by USER_DATA and include the SECURITYQUESTION
@@ -87,6 +90,42 @@ export default class UserManagementService {
       throw error;
     }
   }
+
+  async createUser(user: any) {
+    try {
+      const newUser = await prisma.user.create({
+        data: user,
+      });
+      return newUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUserById(userId: any) {
+    try {
+      const deletedUser = await prisma.user.delete({
+        where: { userId: userId },
+      });
+      return deletedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateUserById(userId: any, user: any) {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { userId: userId },
+        data: user,
+      });
+      return updatedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //-------------------------Credential Model-------------------------//
   async createCredential(credential: any) {
     try {
       const newCredential = await prisma.credential.create({
@@ -97,6 +136,7 @@ export default class UserManagementService {
       throw error;
     }
   }
+
   async deleteCredentialById(credentialId: any) {
     try {
       const deletedCredential = await prisma.credential.delete({
@@ -107,6 +147,7 @@ export default class UserManagementService {
       throw error;
     }
   }
+
   async updateCredentialById(credentialId: any, credential: any) {
     try {
       const updatedCredential = await prisma.credential.update({
@@ -118,12 +159,75 @@ export default class UserManagementService {
       throw error;
     }
   }
-  async createUser (user : any) {
+
+  //-------------------------Security Question Model-------------------------//
+  async createSecurityQuestion(securityQuestion: any) {
     try {
-      const newUser = await prisma.user.create({
-        data: user,
+      const newSecurityQuestion = await prisma.securityQuestion.create({
+        data: securityQuestion,
       });
-      return newUser;
+      return newSecurityQuestion;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteSecurityQuestionById(securityQuestionId: any) {
+    try {
+      const deletedSecurityQuestion = await prisma.securityQuestion.delete({
+        where: { securityQuestionId: securityQuestionId },
+      });
+      return deletedSecurityQuestion;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateSecurityQuestionById(
+    securityQuestionId: any,
+    securityQuestion: any
+  ) {
+    try {
+      const updatedSecurityQuestion = await prisma.securityQuestion.update({
+        where: { securityQuestionId: securityQuestionId },
+        data: securityQuestion,
+      });
+      return updatedSecurityQuestion;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //-------------------------Trash Model-------------------------//
+  async createTrash(trash: any) {
+    try {
+      const newTrash = await prisma.trash.create({
+        data: trash,
+      });
+      return newTrash;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteTrashById(trashId: any) {
+    try {
+      const deletedTrash = await prisma.trash.delete({
+        where: { trashId: trashId },
+      });
+      return deletedTrash;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateTrashById(trashId: any, trash: any) {
+    try {
+      const updatedTrash = await prisma.trash.update({
+        where: { trashId: trashId },
+        data: trash,
+      });
+      return updatedTrash;
     } catch (error) {
       throw error;
     }
