@@ -85,7 +85,7 @@ test("Should Properly Create a New Credential", async () => {
 });
 
 test("Should Properly Throw an Error When Trying to Create a Credential with a Non-Existing User", async () => {
-  const nonExistingUserId = 100;
+  const nonExistingUserId = 100; //Non Existing User
 
   const credential = {
     credentialId: 10,
@@ -111,7 +111,7 @@ test("Should Properly Throw an Error When Trying to Create a Credential with a N
 
   await expect(
     userManagementService.createCredential(credential)
-  ).rejects.toThrowError();
+  ).rejects.toThrowError("User Doesnt Exist");
 });
 
 test("Should Properly Update an Existing Credential", async () => {
@@ -119,19 +119,19 @@ test("Should Properly Update an Existing Credential", async () => {
 
   const updatedCredentialData = {
     credentialId: credentialId,
-    serviceName: "Blackboard",
-    title: "My Blackboard Account",
+    serviceName: "Facebook",
+    title: "My Facebook Account",
     data: JSON.stringify({
       userName: "ea2004969",
       password: "newpassword",
     }),
-    url: "https://elearning.qu.edu.qa/",
+    url: "https://facebook.com",
     isWeak: true,
     isReused: true,
     isOld: false,
     dateCreated: new Date(),
     dateUpdated: new Date(),
-    serviceType: "Education",
+    serviceType: "Social Media",
     picture: "C:/Users/Essa/Mypicture.png",
     isFavourite: true,
     userId: 3,
@@ -152,19 +152,19 @@ test("Should Properly Delete an Existing Credential", async () => {
 
   const deletedCredentialData = {
     credentialId: credentialIdToDelete,
-    serviceName: "Blackboard",
-    title: "My Blackboard Account",
+    serviceName: "Facebook",
+    title: "My Facebook Account",
     data: JSON.stringify({
       userName: "ea2004969",
       password: "newpassword",
     }),
-    url: "https://elearning.qu.edu.qa/",
+    url: "https://facebook.com",
     isWeak: true,
     isReused: true,
     isOld: false,
     dateCreated: new Date(),
     dateUpdated: new Date(),
-    serviceType: "Education",
+    serviceType: "Social Media",
     picture: "C:/Users/Essa/Mypicture.png",
     isFavourite: true,
     userId: 3,
@@ -209,7 +209,7 @@ test("Should Properly Throw an Error When Trying to Update a Non-Existing Creden
       nonExistingCredentialId,
       nonExistingCredential
     )
-  ).rejects.toThrowError();
+  ).rejects.toThrowError("Credential Doesnt Exist");
 });
 
 test("Should Properly Throw an Error When Trying to Delete a Non-Existing Credential", async () => {
@@ -239,5 +239,5 @@ test("Should Properly Throw an Error When Trying to Delete a Non-Existing Creden
 
   await expect(
     userManagementService.deleteCredentialById(nonExistingCredentialId)
-  ).rejects.toThrowError();
+  ).rejects.toThrowError("Credential Doesnt Exist");
 });

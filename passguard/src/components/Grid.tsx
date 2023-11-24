@@ -38,7 +38,7 @@ const Grid = () => {
   return (
     <>
       <div className="sticky top-0 bg-neutral-100 z-10">
-        <h3 className="text-xl font-medium p-1">Credentials (5)</h3>
+        <h3 className="text-xl font-medium p-1">Credentials (0)</h3>
       </div>
       <div className="cards p-2 gap-5 ml-4">
       {injectCard}
