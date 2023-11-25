@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from "electron";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../client";
 import { registerIPCMainHandlers } from "./ipcMainHandlers";
 import path from "node:path";
 
@@ -20,14 +20,6 @@ process.env.VITE_PUBLIC = app.isPackaged
 let win: BrowserWindow | null;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
-
-let prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: `file:../prisma/dev.db`,
-    },
-  },
-});
 
 function createWindow() {
   win = new BrowserWindow({
@@ -82,4 +74,3 @@ app.on("before-quit", () => {
 });
 
 app.disableHardwareAcceleration();
-
