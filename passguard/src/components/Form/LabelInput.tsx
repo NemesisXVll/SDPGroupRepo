@@ -5,6 +5,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 type LabelInputProps = {
   type?: string;
   required?: boolean;
+  label?: string;
   value?: string;
   onChange?: string;
   id?: string;
@@ -39,7 +40,7 @@ const LabelInput = (props: LabelInputProps) => {
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
           peer-focus:-top-6 peer-focus:text-blue-600 transition-all"
       >
-        {props.value}
+        {props.label}
       </label>
       {props.children ? (
         props.children

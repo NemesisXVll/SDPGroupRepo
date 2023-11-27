@@ -1,5 +1,6 @@
 import twitterCard from "./testCardItems";
 import dots from "../../assets/icons/common/verticalDots.svg";
+import { MouseEventHandler } from "react";
 
 type CardProps = {
   key: React.Key;
@@ -9,11 +10,13 @@ type CardProps = {
   username: string;
   dateCreated: string;
   dateUpdated: string;
+  onClick: MouseEventHandler<HTMLDivElement>;
 };
 
 const Card = (props: CardProps) => {
   return (
     <div
+      onClick={props.onClick}
       id={props.id}
       className="flex bg-black h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 hover:scale-105 transition-all duration-350"
     >
@@ -30,7 +33,7 @@ const Card = (props: CardProps) => {
         </div>
         <div className=" flex flex-col text-center gap-1">
           <p className="text-xs font-medium font-nunito break-words">
-            {props.username}@gmail.com
+            {props.username}
           </p>
           <p className="text-xs font-nunito font-light break-words">
             Created: {props.dateCreated}

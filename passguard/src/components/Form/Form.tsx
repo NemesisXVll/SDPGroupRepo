@@ -51,7 +51,7 @@ function Form() {
         >
           <LabelInput
             type="text"
-            value="Credential Title"
+            label="Credential Title"
             id="credentialTitle"
             onChange="handleOnChange"
             placeholder=""
@@ -62,7 +62,7 @@ function Form() {
             id="serviceName"
             list="serviceNames"
             placeholder=""
-            value="Service Name"
+            label="Service Name"
             onChange="handleOnChange"
           ></LabelDropDown>
 
@@ -71,13 +71,13 @@ function Form() {
             id="serviceType"
             list="serviceTypes"
             placeholder=""
-            value="Service Type"
+            label="Service Type"
             onChange="handleOnChange"
           ></LabelDropDown>
 
           <LabelInput
             type="text"
-            value="Username / Email"
+            label="Username / Email"
             id="userName"
             onChange="handleOnChange"
             placeholder=""
@@ -85,13 +85,13 @@ function Form() {
 
           <PasswordStrength
             type={showPassword ? "text" : "password"}
-            value="Password"
+            label="Password"
             id="password"
           ></PasswordStrength>
 
           <LabelInput
             type="text"
-            value="Login Page URL"
+            label="Login Page URL"
             id="loginPageUrl"
             onChange="handleOnChange"
             placeholder=""

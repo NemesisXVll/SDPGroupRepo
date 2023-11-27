@@ -8,6 +8,7 @@ type LabelDropDownProps = {
   list?: string;
   placeholder?: string;
   value?: string;
+  label?: string;
 };
 
 const LabelDropDown = (props: LabelDropDownProps) => {
@@ -36,7 +37,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         htmlFor={props.id}
         className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
       >
-        {props.value}
+        {props.label}
       </label>
       <datalist
         id={props.list}

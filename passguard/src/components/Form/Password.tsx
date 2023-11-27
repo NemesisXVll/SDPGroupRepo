@@ -10,6 +10,7 @@ type PasswordProps = {
   value?: string;
   hidden?: boolean;
   id?: string;
+  label?: string;
   placeholder?: string;
 };
 
@@ -48,7 +49,7 @@ const PasswordStrength = (props: PasswordProps) => {
           id={props.id}
           onChange={handlePasswordChange}
           placeholder=""
-          autoComplete={props.value}
+          autoComplete={props.label}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
            text-gray-900 placeholder-transparent 
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
@@ -79,7 +80,7 @@ const PasswordStrength = (props: PasswordProps) => {
           htmlFor={props.id}
           className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
         >
-          {props.value}
+          {props.label}
         </label>
 
         <div className="grid grid-rows-2 grid-cols-2 pr-1">

@@ -9,6 +9,10 @@ const Grid = () => {
   const [credentials, setCredentials] = useState<any>([]);
   let result;
 
+  const handleCardClick = (credentialId: string) => {
+    console.log("Card clicked:", credentialId);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,12 +30,13 @@ const Grid = () => {
 
   const injectCard = credentials.map((item: any, index: any) => (
     <Card
+      onClick={() => handleCardClick(item.credentialId)}
       key={index}
       id={item.credentialId.toString()}
       title={item.title}
       username={JSON.parse(item.data).userName}
-      dateCreated={item.dateCreated}
-      dateUpdated={item.dateUpdated}
+      dateCreated={item.dateCreated.toString().slice(0, 10)}
+      dateUpdated={item.dateUpdated.toString().slice(0, 10)}
     ></Card>
   ));
 
