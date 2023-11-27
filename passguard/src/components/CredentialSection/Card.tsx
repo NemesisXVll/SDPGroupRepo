@@ -1,5 +1,5 @@
 import twitterCard from "./testCardItems";
-import dots from "../assets/icons/common/verticalDots.svg";
+import dots from "../../assets/icons/common/verticalDots.svg";
 
 type CardProps = {
   key: React.Key;
