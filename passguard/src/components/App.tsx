@@ -7,7 +7,7 @@ import Stats from "./Stats.tsx";
 import AddButton from "./Form/AddButton.tsx";
 import Login from "./Login";
 import Signup from "./Signup";
-import Grid from "./Grid";
+import Grid from "./CredentialSection/Grid.tsx";
 import { useState } from "react";
 
 function App() {

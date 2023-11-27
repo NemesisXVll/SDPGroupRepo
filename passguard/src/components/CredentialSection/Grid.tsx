@@ -1,7 +1,7 @@
-import "../grid.css";
+import "./grid.css";
 import Card from "./Card";
 import { useState, useEffect } from "react";
-import CredentialService from "../utils/credentialService";
+import CredentialService from "../../utils/credentialService";
 
 const credentialService = new CredentialService();
 
@@ -40,9 +40,7 @@ const Grid = () => {
       <div className="sticky top-0 bg-neutral-100 z-10">
         <h3 className="text-xl font-medium p-1">Credentials (0)</h3>
       </div>
-      <div className="cards p-2 gap-5 ml-4">
-      {injectCard}
-      </div>
+      <div className="cards p-2 gap-5 ml-4">{injectCard}</div>
     </>
   );
 };

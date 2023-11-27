@@ -1,4 +1,4 @@
-import twitter from "../assets/icons/common/twitterHexa.svg";
+import twitter from "../../assets/icons/common/twitterHexa.svg";
 
 
  const TwitterCard = 
