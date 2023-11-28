@@ -12,6 +12,7 @@ type PasswordProps = {
   id?: string;
   label?: string;
   placeholder?: string;
+  viewOnly?: boolean;
 };
 
 const PasswordStrength = (props: PasswordProps) => {
@@ -44,9 +45,11 @@ const PasswordStrength = (props: PasswordProps) => {
     <div className="">
       <div className="mb-3 flex mt-1 relative hover:text-blue-300">
         <input
+          readOnly={props.viewOnly}
           type={showPassword ? "text" : "password"}
           name={props.id}
           id={props.id}
+          value={props.value ? props.value : password}
           onChange={handlePasswordChange}
           placeholder=""
           autoComplete={props.label}
@@ -108,7 +111,11 @@ const PasswordStrength = (props: PasswordProps) => {
             size="1.3em"
             className="ml-1 text-black"
             onClick={() => {
-              navigator.clipboard.writeText(password);
+              {
+                props.value
+                  ? navigator.clipboard.writeText(props.value)
+                  : navigator.clipboard.writeText(password);
+              }
             }}
           />
           {/* <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" /> */}
