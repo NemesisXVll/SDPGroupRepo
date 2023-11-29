@@ -5,16 +5,23 @@ import Card from "./Card";
 import CredentialService from "../../utils/credentialService";
 
 const credentialService = new CredentialService();
-
+export interface CredentialData {
+  credentialId: string;
+  credentialTitle: string;
+  credentialUsername: string;
+  dateCreated: string;
+  dateUpdated: string;
+}
 type GridProps = {
-  onCardClick: (credentialId: string) => void;
+  onCardClick: (credentialData: CredentialData) => void;
 };
 
 const Grid = (props: GridProps) => {
   const [credentials, setCredentials] = useState<any>([]);
 
-  const handleCardClick = (credentialId: string) => {
-    props.onCardClick(credentialId);
+  const handleCardClick = (credentialData: CredentialData) => {
+    
+    props.onCardClick(credentialData);
   };
 
   useEffect(() => {
@@ -34,7 +41,7 @@ const Grid = (props: GridProps) => {
 
   const injectCard = credentials.map((item: any, index: any) => (
     <Card
-      onClick={() => handleCardClick(item.credentialId)}
+      onClick={() => handleCardClick(item)}
       key={index}
       id={item.credentialId.toString()}
       title={item.title}
@@ -49,7 +56,7 @@ const Grid = (props: GridProps) => {
       <div className="sticky top-0 bg-neutral-100 z-10">
         <h3 className="text-xl font-medium p-1">Credentials (0)</h3>
       </div>
-      <div className="cards p-2 gap-5 ml-4">{injectCard}</div>
+      <div className="cards p-3 gap-5">{injectCard}</div>
     </>
   );
 };

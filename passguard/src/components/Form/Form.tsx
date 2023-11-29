@@ -50,8 +50,8 @@ function Form(props: FormProps) {
   return (
     <>
       <aside
-        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden min-w-fit ${
-          showForm ? "hidden" : ""
+        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen ${
+          showForm ? "hidden " : ""
         }`}
       >
         <TopOfForm></TopOfForm>

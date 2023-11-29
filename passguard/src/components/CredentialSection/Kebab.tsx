@@ -31,7 +31,7 @@ const Kebab: React.FC = () => {
   }, []);
 
   return (
-    <div ref={kebabRef}>
+    <div id="kebab" ref={kebabRef}>
       <div className="kebab z-10" onClick={handleOnClick}>
         <figure></figure>
         <figure
@@ -47,7 +47,7 @@ const Kebab: React.FC = () => {
           <li key="1" id="1" className="text-xs">
             <p>Update</p>
           </li>
-          <li key="1" id="2" className="text-xs">
+          <li key="2" id="2" className="text-xs">
             <p>Delete</p>
           </li>
         </ul>

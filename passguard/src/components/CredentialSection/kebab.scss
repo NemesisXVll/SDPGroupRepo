@@ -27,7 +27,7 @@ $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
     filter: blur(.1px);
 }
 
-.middle-active {
+.middle.active {
     transform: scale(5);
     transition: all 0.25s $cubic-out;
     box-shadow: 0 0.1px 0.1px 0 rgba(0, 0, 0, 0.16), 0 0.1px 0.3px 0 rgba(0, 0, 0, 0.12);
@@ -39,6 +39,7 @@ $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     margin-top: -1px;
+    color: white;
     transition: all 0.2s $cubic-in;
     font-size: 22px;
     user-select: none;
@@ -50,9 +51,10 @@ $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
 }
 .dropdown {
     position: absolute;
+    left: -250%;
+    top: 1.9em;
     transition: all 0.25s ease-out;
     transform: scale(0);
-    transform-origin: 100% 0;
     box-shadow: $shadow;
 
     li {

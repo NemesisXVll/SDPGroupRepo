@@ -8,9 +8,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Grid from "./CredentialSection/Grid.tsx";
 import { useState } from "react";
-import CredentialService from "../utils/credentialService.ts";
-
-const credentialService = new CredentialService();
+import { CredentialData } from "./CredentialSection/Grid.tsx";
 
 function App() {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -24,12 +22,9 @@ function App() {
   };
 
   // Callback function to be passed to Grid
-  const handleCardClickInApp = async (credentialId: string) => {
-    const result = await credentialService.findCredentialByCredentialId(
-      credentialId
-    );
-    setCredential(result);
-    setShowAddForm(!showAddForm);
+  const handleCardClickInApp = (credentialData: CredentialData) => {
+    setCredential(credentialData);
+    setShowAddForm(true);
     setEditInput(false);
   };
 
@@ -44,8 +39,8 @@ function App() {
           <Stats></Stats>
         </div>
 
+        <AddButton onClick={handleOnClickBTN}></AddButton>
         <div className="form">
-          <AddButton onClick={handleOnClickBTN}></AddButton>
           {showAddForm ? (
             <Form credentialObj={credential} editable={editInput}></Form>
           ) : (
