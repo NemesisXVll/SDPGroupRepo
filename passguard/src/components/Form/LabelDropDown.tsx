@@ -9,6 +9,7 @@ type LabelDropDownProps = {
   placeholder?: string;
   value?: string;
   label?: string;
+  viewOnly?: boolean;
 };
 
 const LabelDropDown = (props: LabelDropDownProps) => {
@@ -24,8 +25,9 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         id={props.id}
         name={props.id}
         list={props.list}
-        value={value}
+        value={props.value ? props.value : value}
         type={props.type}
+        readOnly={props.viewOnly}
         onChange={handleOnChange}
         className="pl-2 mt-5 peer h-10 w-full
          text-gray-900 text-xs placeholder-transparent

@@ -8,7 +8,18 @@ import CredentialService from "../../utils/credentialService.ts";
 
 const credentialService = new CredentialService();
 
-function Form() {
+type FormProps = {
+  editable?: boolean;
+  credentialObj?: {
+    title: string;
+    serviceName: string;
+    serviceType: string;
+    data: string;
+    url: string;
+  };
+};
+
+function Form(props: FormProps) {
   const [showForm, setShowForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState(false);
@@ -53,6 +64,12 @@ function Form() {
             type="text"
             label="Credential Title"
             id="credentialTitle"
+            value={
+              props.credentialObj?.title && !props.editable
+                ? props.credentialObj.title
+                : ""
+            }
+            viewOnly={!props.editable}
             onChange="handleOnChange"
             placeholder=""
           ></LabelInput>
@@ -60,7 +77,13 @@ function Form() {
           <LabelDropDown
             type="text"
             id="serviceName"
+            value={
+              props.credentialObj?.serviceName && !props.editable
+                ? props.credentialObj.serviceName
+                : ""
+            }
             list="serviceNames"
+            viewOnly={!props.editable}
             placeholder=""
             label="Service Name"
             onChange="handleOnChange"
@@ -69,7 +92,13 @@ function Form() {
           <LabelDropDown
             type="text"
             id="serviceType"
+            value={
+              props.credentialObj?.serviceType && !props.editable
+                ? props.credentialObj.serviceType
+                : ""
+            }
             list="serviceTypes"
+            viewOnly={!props.editable}
             placeholder=""
             label="Service Type"
             onChange="handleOnChange"
@@ -78,6 +107,12 @@ function Form() {
           <LabelInput
             type="text"
             label="Username / Email"
+            value={
+              props.credentialObj?.data && !props.editable
+                ? JSON.parse(props.credentialObj.data).userName
+                : ""
+            }
+            viewOnly={!props.editable}
             id="userName"
             onChange="handleOnChange"
             placeholder=""
@@ -86,13 +121,25 @@ function Form() {
           <PasswordStrength
             type={showPassword ? "text" : "password"}
             label="Password"
+            viewOnly={!props.editable}
+            value={
+              props.credentialObj?.data && !props.editable
+                ? JSON.parse(props.credentialObj.data).password
+                : ""
+            }
             id="password"
           ></PasswordStrength>
 
           <LabelInput
             type="text"
             label="Login Page URL"
+            value={
+              props.credentialObj?.url && !props.editable
+                ? props.credentialObj.url
+                : ""
+            }
             id="loginPageUrl"
+            viewOnly={!props.editable}
             onChange="handleOnChange"
             placeholder=""
           ></LabelInput>

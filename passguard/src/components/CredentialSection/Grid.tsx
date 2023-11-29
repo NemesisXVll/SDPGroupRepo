@@ -1,22 +1,26 @@
+// Grid.tsx
 import "./grid.css";
-import Card from "./Card";
 import { useState, useEffect } from "react";
+import Card from "./Card";
 import CredentialService from "../../utils/credentialService";
 
 const credentialService = new CredentialService();
 
-const Grid = () => {
+type GridProps = {
+  onCardClick: (credentialId: string) => void;
+};
+
+const Grid = (props: GridProps) => {
   const [credentials, setCredentials] = useState<any>([]);
-  let result;
 
   const handleCardClick = (credentialId: string) => {
-    console.log("Card clicked:", credentialId);
+    props.onCardClick(credentialId);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        result = await credentialService.findCredentialsByUserId(1);
+        const result = await credentialService.findCredentialsByUserId(1);
         setCredentials(result);
       } catch (error) {
         console.error("Error fetching credentials:", error);

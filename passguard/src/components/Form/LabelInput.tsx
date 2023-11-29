@@ -11,6 +11,7 @@ type LabelInputProps = {
   id?: string;
   placeholder?: string;
   children?: React.ReactNode;
+  viewOnly?: boolean;
 };
 const LabelInput = (props: LabelInputProps) => {
   const [value, setValue] = useState("");
@@ -24,7 +25,7 @@ const LabelInput = (props: LabelInputProps) => {
       <input
         id={props.id}
         name={props.id}
-        value={value}
+        value={props.value ? props.value : value}
         required={props.id === "credentialTitle" ? true : false}
         type={props.type}
         className="pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-xs bg-opacity-50
@@ -32,6 +33,7 @@ const LabelInput = (props: LabelInputProps) => {
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2"
         placeholder={props.placeholder}
         onChange={handleOnChange}
+        readOnly={props.viewOnly}
       />
       <label
         htmlFor={props.id}
@@ -49,7 +51,11 @@ const LabelInput = (props: LabelInputProps) => {
           size="1.3em"
           className="absolute translate-x-60 top-8 text-black"
           onClick={() => {
-            navigator.clipboard.writeText(value);
+            {
+              props.value
+                ? navigator.clipboard.writeText(props.value)
+                : navigator.clipboard.writeText(value);
+            }
           }}
         />
       ) : props.id === "loginPageUrl" ? (
@@ -57,7 +63,9 @@ const LabelInput = (props: LabelInputProps) => {
           size="1.3em"
           className="absolute translate-x-60 top-8 text-black"
           onClick={() => {
-            const location = "https://" + value;
+            const location = props.value
+              ? "https://" + props.value
+              : "https://" + value;
             window.location.assign(location);
           }}
         />

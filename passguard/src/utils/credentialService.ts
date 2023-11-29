@@ -59,6 +59,22 @@ export default class CredentialService {
     });
   }
 
+  async findCredentialByCredentialId(credentialId: any): Promise<any> {
+    return new Promise((resolve) => {
+      window.ipcRenderer.send(
+        "findCredentialByCredentialIdRequest",
+        credentialId
+      );
+      window.ipcRenderer.once(
+        "findCredentialByCredentialIdResponse",
+        (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        }
+      );
+    });
+  }
+
   stringToBoolean(value: string): boolean | null {
     const lowerCaseValue = value.toLowerCase();
     if (lowerCaseValue === "true") {
