@@ -1,6 +1,6 @@
 import twitterCard from "./testCardItems";
-import dots from "../../assets/icons/common/verticalDots.svg";
 import { MouseEventHandler } from "react";
+import Kebab from "./Kebab";
 
 type CardProps = {
   key: React.Key;
@@ -24,12 +24,12 @@ const Card = (props: CardProps) => {
         <div className="flex items-center justify-evenly">
           <img
             src={twitterCard.logo}
-            className="-translate-y-7 translate-x-32 w-16"
+            className=""
           />
-          <h3 className="-m-10 font-nunito font-medium break-words">
+          <h3 className="font-nunito font-medium break-words">
             {props.title}
           </h3>
-          <img src={dots} alt="options point" className="w-8 h-5 ml-auto" />
+          <Kebab></Kebab>
         </div>
         <div className=" flex flex-col text-center gap-1">
           <p className="text-xs font-medium font-nunito break-words">
