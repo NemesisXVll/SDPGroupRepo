@@ -26,9 +26,7 @@ function App() {
 
   // Callback function to be passed to Grid
   const handleCardClickInApp = async (credentialId: string) => {
-    const result = await credentialService.findCredentialByCredentialId(
-      credentialId
-    );
+    const result = await credentialService.findCredentialById(credentialId);
     setCredential(result);
     setShowAddForm(!showAddForm);
     setEditInput(false);
