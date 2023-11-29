@@ -51,11 +51,12 @@ $shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
 }
 .dropdown {
     position: absolute;
-    left: -250%;
+    left: -550%;
     top: 1.9em;
     transition: all 0.25s ease-out;
     transform: scale(0);
     box-shadow: $shadow;
+    z-index: 100;
 
     li {
         display: block;
