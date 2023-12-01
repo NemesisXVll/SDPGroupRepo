@@ -3,7 +3,7 @@ import { MouseEventHandler } from "react";
 import Kebab from "./Kebab";
 
 type CardProps = {
-  key: React.Key;
+  index: React.Key;
   id: string;
   picture?: string;
   title: string;
@@ -11,6 +11,7 @@ type CardProps = {
   dateCreated: string;
   dateUpdated: string;
   onClick: MouseEventHandler<HTMLDivElement>;
+  onUpdateClick: (key: React.Key) => void;
 };
 
 const Card = (props: CardProps) => {
@@ -23,7 +24,7 @@ const Card = (props: CardProps) => {
         <div className="flex items-center justify-evenly">
           <img src={twitterCard.logo} className="" />
           <h3 className="font-nunito font-medium break-words">{props.title}</h3>
-          <Kebab></Kebab>
+          <Kebab onUpdateClick={() => props.onUpdateClick(props.index)}></Kebab>
         </div>
         <div
           className=" flex flex-col text-center gap-1 cursor-pointer"

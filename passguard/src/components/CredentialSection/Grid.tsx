@@ -13,15 +13,17 @@ export interface CredentialData {
   dateUpdated: string;
 }
 type GridProps = {
-  onCardClick: (credentialData: CredentialData) => void;
+  onCardClick: (credentialData: CredentialData, updateClicked: boolean) => void;
 };
 
 const Grid = (props: GridProps) => {
   const [credentials, setCredentials] = useState<any>([]);
 
-  const handleCardClick = (credentialData: CredentialData) => {
-    
-    props.onCardClick(credentialData);
+  const handleCardClick = (
+    credentialData: CredentialData,
+    updateClicked: boolean
+  ) => {
+    props.onCardClick(credentialData, updateClicked);
   };
 
   useEffect(() => {
@@ -41,8 +43,10 @@ const Grid = (props: GridProps) => {
 
   const injectCard = credentials.map((item: any, index: any) => (
     <Card
-      onClick={() => handleCardClick(item)}
+      onClick={() => handleCardClick(item, false)}
+      onUpdateClick={() => handleCardClick(item, true)}
       key={index}
+      index={index}
       id={item.credentialId.toString()}
       title={item.title}
       username={JSON.parse(item.data).userName}

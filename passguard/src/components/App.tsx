@@ -22,10 +22,14 @@ function App() {
   };
 
   // Callback function to be passed to Grid
-  const handleCardClickInApp = (credentialData: CredentialData) => {
-    setCredential(credentialData);
+  const handleCardClickInApp = (
+    credentialData: CredentialData,
+    updateClicked: boolean
+  ) => {
     setShowAddForm(true);
-    setEditInput(false);
+    setCredential(credentialData);
+    console.log(updateClicked);
+    setEditInput(updateClicked);
   };
 
   return (
