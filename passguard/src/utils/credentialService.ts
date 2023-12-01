@@ -36,6 +36,30 @@ export default class CredentialService {
     window.ipcRenderer.send("createCredential", data);
   }
 
+  async updateCredential(credentialId: any, formData: any) {
+    const credentialObj = JSON.parse(
+      JSON.stringify(Object.fromEntries(formData.entries()))
+    );
+
+    const data = {
+      id: this.convertStringToInt(credentialObj.credentialId),
+      serviceName: credentialObj.serviceName,
+      title: credentialObj.credentialTitle,
+      data: JSON.stringify({
+        userName: credentialObj.userName,
+        password: credentialObj.password,
+      }),
+      url: credentialObj.loginPageUrl,
+      isWeak: this.stringToBoolean(credentialObj.isWeak),
+      isReused: false,
+      serviceType: credentialObj.serviceType,
+      picture: "https://via.placeholder.com/150",
+      userId: this.convertStringToInt(credentialObj.userId),
+    };
+
+    window.ipcRenderer.send("updateCredential", data);
+  }
+
   async findCredentialsByUserId(userId: any): Promise<any> {
     return new Promise((resolve) => {
       window.ipcRenderer.send("findCredentialsByUserIdRequest", userId);

@@ -9,6 +9,7 @@ import CredentialService from "../../utils/credentialService.ts";
 const credentialService = new CredentialService();
 
 type FormProps = {
+  onBTNClick: (showForm: boolean) => void;
   editable?: boolean;
   credentialObj?: {
     title: string;
@@ -20,39 +21,37 @@ type FormProps = {
 };
 
 function Form(props: FormProps) {
-  const [showForm, setShowForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState(false);
 
   const handleCancelBTN = (e: any) => {
     e.preventDefault();
-    setShowForm(!showForm);
+    props.onBTNClick(false);
+  };
+
+  const handleUpdateBTN = (e: any) => {
+    e.preventDefault();
+    console.log(e.target);
+    // const formData = new FormData(e.target);
+    // credentialService.updateCredential(formData);
+    // setFormValues(!formValues);
+    // props.onBTNClick(false);
   };
 
   const handleSaveBTN = async (e: any) => {
     e.preventDefault();
-
+    console.log(e.target);
     const formData = new FormData(e.target);
-
-    // /*Here u should do something like this to not get actual password value.
-    // const password = data.get('password');
-    // const hashedPassword = /* perform your encryption or hashing here;
-    // Replace the original password with the hashed version
-    // data.set('password', hashedPassword);
-    // */
-
+    console.log(formData);
     credentialService.createCredential(formData);
-
     setFormValues(!formValues);
-    setShowForm(true);
+    props.onBTNClick(false);
   };
 
   return (
     <>
       <aside
-        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen ${
-          showForm ? "hidden " : ""
-        }`}
+        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen`}
       >
         <TopOfForm></TopOfForm>
 
@@ -64,11 +63,7 @@ function Form(props: FormProps) {
             type="text"
             label="Credential Title"
             id="credentialTitle"
-            value={
-              props.credentialObj?.title && !props.editable
-                ? props.credentialObj.title
-                : ""
-            }
+            value={props.credentialObj ? props.credentialObj.title : ""}
             viewOnly={!props.editable}
             onChange="handleOnChange"
             placeholder=""
@@ -77,11 +72,7 @@ function Form(props: FormProps) {
           <LabelDropDown
             type="text"
             id="serviceName"
-            value={
-              props.credentialObj?.serviceName && !props.editable
-                ? props.credentialObj.serviceName
-                : ""
-            }
+            value={props.credentialObj ? props.credentialObj.serviceName : ""}
             list="serviceNames"
             viewOnly={!props.editable}
             placeholder=""
@@ -92,11 +83,7 @@ function Form(props: FormProps) {
           <LabelDropDown
             type="text"
             id="serviceType"
-            value={
-              props.credentialObj?.serviceType && !props.editable
-                ? props.credentialObj.serviceType
-                : ""
-            }
+            value={props.credentialObj ? props.credentialObj.serviceType : ""}
             list="serviceTypes"
             viewOnly={!props.editable}
             placeholder=""
@@ -108,8 +95,8 @@ function Form(props: FormProps) {
             type="text"
             label="Username / Email"
             value={
-              props.credentialObj?.data && !props.editable
-                ? JSON.parse(props.credentialObj.data).userName
+              props.credentialObj?.data
+                ? JSON.parse(props.credentialObj?.data).userName
                 : ""
             }
             viewOnly={!props.editable}
@@ -123,8 +110,8 @@ function Form(props: FormProps) {
             label="Password"
             viewOnly={!props.editable}
             value={
-              props.credentialObj?.data && !props.editable
-                ? JSON.parse(props.credentialObj.data).password
+              props.credentialObj?.data
+                ? JSON.parse(props.credentialObj?.data).password
                 : ""
             }
             id="password"
@@ -133,11 +120,7 @@ function Form(props: FormProps) {
           <LabelInput
             type="text"
             label="Login Page URL"
-            value={
-              props.credentialObj?.url && !props.editable
-                ? props.credentialObj.url
-                : ""
-            }
+            value={props.credentialObj ? props.credentialObj.url : ""}
             id="loginPageUrl"
             viewOnly={!props.editable}
             onChange="handleOnChange"
@@ -148,9 +131,15 @@ function Form(props: FormProps) {
             <Button value="Cancel" onClick={handleCancelBTN}>
               Cancel
             </Button>
-            <Button value="Save" type="submit">
-              Save
-            </Button>
+            {props.credentialObj?.title ? (
+              <Button value="Update" type="submit" onClick={handleUpdateBTN}>
+                Update
+              </Button>
+            ) : (
+              <Button value="Save" type="submit">
+                Save
+              </Button>
+            )}
           </div>
         </form>
       </aside>

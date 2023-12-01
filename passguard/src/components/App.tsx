@@ -11,13 +11,14 @@ import { useState } from "react";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
 
 function App() {
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [editInput, setEditInput] = useState(false);
   const [credential, setCredential] = useState<any>([]);
 
   const handleOnClickBTN = (e: any) => {
     e.preventDefault();
-    setShowAddForm(!showAddForm);
+    setCredential({});
+    setShowForm(true);
     setEditInput(true);
   };
 
@@ -26,10 +27,17 @@ function App() {
     credentialData: CredentialData,
     updateClicked: boolean
   ) => {
-    setShowAddForm(true);
     setCredential(credentialData);
-    console.log(updateClicked);
-    setEditInput(updateClicked);
+    setShowForm(true);
+    if (updateClicked) {
+      setEditInput(true);
+    } else {
+      setEditInput(false);
+    }
+  };
+
+  const handleFormBTN = (showForm: boolean) => {
+    setShowForm(showForm);
   };
 
   return (
@@ -45,8 +53,12 @@ function App() {
 
         <AddButton onClick={handleOnClickBTN}></AddButton>
         <div className="form">
-          {showAddForm ? (
-            <Form credentialObj={credential} editable={editInput}></Form>
+          {showForm ? (
+            <Form
+              credentialObj={credential}
+              editable={editInput}
+              onBTNClick={handleFormBTN}
+            ></Form>
           ) : (
             ""
           )}
