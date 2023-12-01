@@ -12,6 +12,7 @@ type FormProps = {
   onBTNClick: (showForm: boolean) => void;
   editable?: boolean;
   credentialObj?: {
+    credentialId: string;
     title: string;
     serviceName: string;
     serviceType: string;
@@ -29,21 +30,19 @@ function Form(props: FormProps) {
     props.onBTNClick(false);
   };
 
-  const handleUpdateBTN = (e: any) => {
-    e.preventDefault();
-    console.log(e.target);
-    // const formData = new FormData(e.target);
-    // credentialService.updateCredential(formData);
-    // setFormValues(!formValues);
-    // props.onBTNClick(false);
-  };
-
-  const handleSaveBTN = async (e: any) => {
+  const handleSubmitForm = async (e: any) => {
     e.preventDefault();
     console.log(e.target);
     const formData = new FormData(e.target);
-    console.log(formData);
-    credentialService.createCredential(formData);
+    if (props.credentialObj?.title) {
+      credentialService.updateCredential(
+        props.credentialObj.credentialId,
+        formData
+      );
+    } else {
+      console.log("create");
+      credentialService.createCredential(formData);
+    }
     setFormValues(!formValues);
     props.onBTNClick(false);
   };
@@ -56,7 +55,7 @@ function Form(props: FormProps) {
         <TopOfForm></TopOfForm>
 
         <form
-          onSubmit={handleSaveBTN}
+          onSubmit={handleSubmitForm}
           className=" flex-col p-3 border-t border-opacity-30"
         >
           <LabelInput
@@ -132,7 +131,7 @@ function Form(props: FormProps) {
               Cancel
             </Button>
             {props.credentialObj?.title ? (
-              <Button value="Update" type="submit" onClick={handleUpdateBTN}>
+              <Button value="Update" type="submit">
                 Update
               </Button>
             ) : (
