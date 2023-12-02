@@ -13,7 +13,7 @@ type LabelDropDownProps = {
 };
 
 const LabelDropDown = (props: LabelDropDownProps) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(props.value ? props.value : "");
 
   const handleOnChange = (e: any) => {
     setValue(e.target.value);
@@ -25,7 +25,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         id={props.id}
         name={props.id}
         list={props.list}
-        value={props.value ? props.value : value}
+        value={value}
         type={props.type}
         readOnly={props.viewOnly}
         onChange={handleOnChange}

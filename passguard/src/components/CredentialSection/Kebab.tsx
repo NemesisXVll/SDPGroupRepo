@@ -5,7 +5,11 @@ interface KebabState {
   Kebab: boolean;
 }
 
-const Kebab: React.FC = () => {
+type KebabProps = {
+  onUpdateClick: () => void;
+};
+
+const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   const [isOpen, setIsOpen] = useState<KebabState>({
     Kebab: false,
   });
@@ -16,6 +20,11 @@ const Kebab: React.FC = () => {
       Kebab: !isOpen.Kebab,
     });
   };
+
+  const handleClickOnUpdate = () => {
+    props.onUpdateClick();
+  };
+
   const handleClickOutside = (event: MouseEvent) => {
     if (kebabRef.current && !kebabRef.current.contains(event.target as Node)) {
       setIsOpen({
@@ -44,7 +53,7 @@ const Kebab: React.FC = () => {
             isOpen.Kebab ? "dropdown active" : "dropdown"
           }`}
         >
-          <li key="1" id="1" className="text-xs">
+          <li key="1" id="1" className="text-xs" onClick={handleClickOnUpdate}>
             <p>Update</p>
           </li>
           <li key="2" id="2" className="text-xs">

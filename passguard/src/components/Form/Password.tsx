@@ -16,7 +16,7 @@ type PasswordProps = {
 };
 
 const PasswordStrength = (props: PasswordProps) => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(props.value ? props.value : "");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +49,7 @@ const PasswordStrength = (props: PasswordProps) => {
           type={showPassword ? "text" : "password"}
           name={props.id}
           id={props.id}
-          value={props.value ? props.value : password}
+          value={password}
           onChange={handlePasswordChange}
           placeholder=""
           autoComplete={props.label}

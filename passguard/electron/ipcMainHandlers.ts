@@ -10,6 +10,10 @@ export const registerIPCMainHandlers = () => {
     await userManagementService.createCredential(arg);
   });
 
+  ipcMain.on("updateCredential", async (event, arg) => {
+    await userManagementService.updateCredentialById(arg.credentialId, arg);
+  });
+
   ipcMain.on("findUserByIdRequest", async (event, arg) => {
     event.sender.send(
       "findUserByIdResponse",

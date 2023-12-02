@@ -14,7 +14,7 @@ type LabelInputProps = {
   viewOnly?: boolean;
 };
 const LabelInput = (props: LabelInputProps) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(props.value ? props.value : "");
 
   const handleOnChange = (e: any) => {
     setValue(e.target.value);
@@ -25,7 +25,7 @@ const LabelInput = (props: LabelInputProps) => {
       <input
         id={props.id}
         name={props.id}
-        value={props.value ? props.value : value}
+        value={value}
         required={props.id === "credentialTitle" ? true : false}
         type={props.type}
         className="pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-xs bg-opacity-50

@@ -11,21 +11,35 @@ import { useState } from "react";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
 
 function App() {
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [editInput, setEditInput] = useState(false);
   const [credential, setCredential] = useState<any>([]);
 
   const handleOnClickBTN = (e: any) => {
     e.preventDefault();
-    setShowAddForm(!showAddForm);
+    setCredential({});
+    setShowForm(true);
     setEditInput(true);
   };
 
   // Callback function to be passed to Grid
-  const handleCardClickInApp = (credentialData: CredentialData) => {
-    setCredential(credentialData);
-    setShowAddForm(true);
-    setEditInput(false);
+  const handleCardClickInApp = (
+    credentialData: CredentialData,
+    updateClicked: boolean
+  ) => {
+    setShowForm(false);
+    setShowForm(false);
+
+    // Introduce a delay before setting ShowForm to true
+    setTimeout(() => {
+      setCredential(credentialData);
+      setShowForm(true);
+      setEditInput(updateClicked);
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
+  };
+
+  const handleFormBTN = (showForm: boolean) => {
+    setShowForm(showForm);
   };
 
   return (
@@ -40,9 +54,12 @@ function App() {
         </div>
 
         <div className="form">
-          <AddButton onClick={handleOnClickBTN}></AddButton>
-          {showAddForm ? (
-            <Form credentialObj={credential} editable={editInput}></Form>
+          {showForm ? (
+            <Form
+              credentialObj={credential}
+              editable={editInput}
+              onBTNClick={handleFormBTN}
+            ></Form>
           ) : (
             ""
           )}

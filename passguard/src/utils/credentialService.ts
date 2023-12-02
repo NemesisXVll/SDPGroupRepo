@@ -33,7 +33,49 @@ export default class CredentialService {
       userId: this.convertStringToInt(credentialObj.userId),
     };
 
+    console.log(data);
+
     window.ipcRenderer.send("createCredential", data);
+  }
+
+  async updateCredential(credentialId: string, formData: any) {
+    /*Here u should do something like this to not get actual password value.
+      const password = data.get('password');
+      const hashedPassword = /* perform your encryption or hashing here;
+      Replace the original password with the hashed version
+      data.set('password', hashedPassword);
+      */
+
+      formData.set(
+        "loginPageUrl",
+        formData.get("loginPageUrl") === ""
+          ? ""
+          : "https://" + formData.get("loginPageUrl")
+      );
+      formData.set("userId", "1");
+      const credentialObj = JSON.parse(
+        JSON.stringify(Object.fromEntries(formData.entries()))
+      );
+  
+      const data = {
+        credentialId: credentialId,
+        serviceName: credentialObj.serviceName,
+        title: credentialObj.credentialTitle,
+        data: JSON.stringify({
+          userName: credentialObj.userName,
+          password: credentialObj.password,
+        }),
+        url: credentialObj.loginPageUrl,
+        isWeak: this.stringToBoolean(credentialObj.isWeak),
+        isReused: false,
+        serviceType: credentialObj.serviceType,
+        picture: "https://via.placeholder.com/150",
+        userId: this.convertStringToInt(credentialObj.userId),
+      };
+  
+      console.log(data);
+  
+      window.ipcRenderer.send("updateCredential", data);
   }
 
   async findCredentialsByUserId(userId: any): Promise<any> {
