@@ -29,10 +29,11 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         type={props.type}
         readOnly={props.viewOnly}
         onChange={handleOnChange}
-        className="pl-2 mt-5 peer h-10 w-full
+        className={`pl-2 mt-5 peer h-10 w-full
          text-gray-900 text-xs placeholder-transparent
+         ${props.viewOnly ? "bg-slate-100" : ""}
          rounded-lg justify-start items-start gap-14 inline-flex
-          focus:outline-none focus:border-blue-600 border-2"
+          focus:outline-none focus:border-blue-600 border-2`}
         placeholder={props.placeholder}
       />
       <label

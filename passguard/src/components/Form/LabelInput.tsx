@@ -28,9 +28,10 @@ const LabelInput = (props: LabelInputProps) => {
         value={value}
         required={props.id === "credentialTitle" ? true : false}
         type={props.type}
-        className="pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-xs bg-opacity-50
+        className={`pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-xs bg-opacity-50
+        ${props.viewOnly ? "bg-slate-100" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex 
-         placeholder-transparent focus:outline-none focus:border-blue-600 border-2"
+         placeholder-transparent focus:outline-none focus:border-blue-600 border-2`}
         placeholder={props.placeholder}
         onChange={handleOnChange}
         readOnly={props.viewOnly}

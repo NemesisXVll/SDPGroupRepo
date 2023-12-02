@@ -55,6 +55,7 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.label}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
            text-gray-900 placeholder-transparent 
+           ${props.viewOnly ? "bg-slate-100" : ""}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
            focus:outline-none
            ${

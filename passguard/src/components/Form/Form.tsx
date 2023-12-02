@@ -132,7 +132,7 @@ function Form(props: FormProps) {
             </Button>
             {props.credentialObj?.title ? (
               <Button value="Update" type="submit">
-                Update
+                {props.editable ? "Update" : "Edit"}
               </Button>
             ) : (
               <Button value="Save" type="submit">

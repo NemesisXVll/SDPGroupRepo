@@ -18,7 +18,13 @@ function App() {
   const handleOnClickBTN = (e: any) => {
     e.preventDefault();
     setCredential({});
-    setShowForm(true);
+    setShowForm(false);
+
+    // Introduce a delay before setting ShowForm to true
+    setTimeout(() => {
+      setShowForm(true);
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
+
     setEditInput(true);
   };
 
@@ -28,14 +34,13 @@ function App() {
     updateClicked: boolean
   ) => {
     setShowForm(false);
-    setShowForm(false);
 
     // Introduce a delay before setting ShowForm to true
     setTimeout(() => {
-      setCredential(credentialData);
       setShowForm(true);
-      setEditInput(updateClicked);
     }, 0); // Adjust the delay time (in milliseconds) according to your needs
+    setCredential(credentialData);
+    setEditInput(updateClicked);
   };
 
   const handleFormBTN = (showForm: boolean) => {
