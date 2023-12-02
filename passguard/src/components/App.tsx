@@ -27,13 +27,15 @@ function App() {
     credentialData: CredentialData,
     updateClicked: boolean
   ) => {
-    setCredential(credentialData);
-    setShowForm(true);
-    if (updateClicked) {
-      setEditInput(true);
-    } else {
-      setEditInput(false);
-    }
+    setShowForm(false);
+    setShowForm(false);
+
+    // Introduce a delay before setting ShowForm to true
+    setTimeout(() => {
+      setCredential(credentialData);
+      setShowForm(true);
+      setEditInput(updateClicked);
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
   };
 
   const handleFormBTN = (showForm: boolean) => {
