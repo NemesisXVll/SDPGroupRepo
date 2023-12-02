@@ -57,8 +57,9 @@ const Grid = (props: GridProps) => {
 
   return (
     <>
-      <div className="sticky top-0 bg-neutral-100 z-10">
+      <div className="sticky top-0 bg-neutral-100 z-10 flex items-center">
         <h3 className="text-xl font-medium p-1">Credentials (0)</h3>
+        <input type="text" placeholder="search" className="border-2 rounded-xl text-left p-1 ml-1 h-8" />
       </div>
       <div className="cards p-3 gap-5">{injectCard}</div>
     </>

@@ -58,8 +58,8 @@ function App() {
           <Stats></Stats>
         </div>
 
-        <AddButton onClick={handleOnClickBTN}></AddButton>
         <div className="form">
+          <AddButton onClick={handleOnClickBTN}></AddButton>
           {showForm ? (
             <Form
               credentialObj={credential}
