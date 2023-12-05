@@ -12,24 +12,32 @@ type CardProps = {
   dateUpdated: string;
   onClick: MouseEventHandler<HTMLDivElement>;
   onUpdateClick: (key: React.Key) => void;
+  onDeleteClick: (key: React.Key) => void;
 };
 
 const Card = (props: CardProps) => {
   return (
     <div
       id={props.id}
-      className="flex bg-black h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 hover:scale-105 transition-all duration-350"
+      className="flex cursor-pointer bg-black h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 transition-all duration-300"
+      onClick={props.onClick}
     >
+      <img
+        src={twitterCard.logo}
+        className="w-16 translate-x-32 translate-y-10"
+        alt="logo"
+      />
       <div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl">
-        <div className="flex items-center justify-evenly">
-          <img src={twitterCard.logo} className="" />
-          <h3 className="font-nunito font-medium break-words">{props.title}</h3>
-          <Kebab onUpdateClick={() => props.onUpdateClick(props.index)}></Kebab>
+        <div className="flex items-center justify-between p-4 h-12">
+          <h3 className="font-nunito font-medium break-words text-sm">
+            {props.title}
+          </h3>
+          <Kebab
+            onUpdateClick={() => props.onUpdateClick(props.index)}
+            onDeleteClick={() => props.onDeleteClick(props.index)}
+          ></Kebab>
         </div>
-        <div
-          className=" flex flex-col text-center gap-1 cursor-pointer"
-          onClick={props.onClick}
-        >
+        <div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">
           <p className="text-xs font-medium font-nunito break-words">
             {props.username}
           </p>

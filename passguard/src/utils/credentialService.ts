@@ -38,6 +38,11 @@ export default class CredentialService {
     window.ipcRenderer.send("createCredential", data);
   }
 
+  async deleteCredential(credentialId: number) {
+
+    window.ipcRenderer.send("deleteCredential", { credentialId } );
+  }
+
   async updateCredential(credentialId: string, formData: any) {
     /*Here u should do something like this to not get actual password value.
       const password = data.get('password');

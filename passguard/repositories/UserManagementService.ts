@@ -135,7 +135,7 @@ export default class UserManagementService {
     }
   }
 
-  async deleteCredentialById(credentialId: any) {
+  async deleteCredentialById(credentialId: number) {
     try {
       const deletedCredential = await prisma.credential.delete({
         where: { credentialId: credentialId },

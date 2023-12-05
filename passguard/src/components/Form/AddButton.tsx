@@ -14,7 +14,7 @@ const AddButton = (props: AddButtonProps) => {
           className=" text-white font-bold p-0 m-0 rounded-full"
         >
           <svg
-            className="w-10 h-10 text-blue-800"
+            className="w-10 h-10 text-blue-800 hover:text-yellow-400 transition-all duration-300 cursor-pointer"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"

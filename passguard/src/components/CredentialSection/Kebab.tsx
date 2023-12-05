@@ -1,12 +1,15 @@
 import "./kebab.scss";
 import { useState, useEffect, useRef } from "react";
 
+
+
 interface KebabState {
   Kebab: boolean;
 }
 
 type KebabProps = {
   onUpdateClick: () => void;
+  onDeleteClick: () => void;
 };
 
 const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
@@ -15,7 +18,8 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   });
   const kebabRef = useRef<HTMLDivElement>(null);
 
-  const handleOnClick = () => {
+  const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsOpen({
       Kebab: !isOpen.Kebab,
     });
@@ -24,6 +28,9 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   const handleClickOnUpdate = () => {
     props.onUpdateClick();
   };
+  const handleClickOnDelete = () => {
+    props.onDeleteClick();
+  }
 
   const handleClickOutside = (event: MouseEvent) => {
     if (kebabRef.current && !kebabRef.current.contains(event.target as Node)) {
@@ -40,8 +47,10 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   }, []);
 
   return (
-    <div id="kebab" ref={kebabRef}>
-      <div className="kebab z-10" onClick={handleOnClick}>
+    <div id="kebab"
+      ref={kebabRef}
+    >
+      <div className="kebab" onClick={handleOnClick}>
         <figure></figure>
         <figure
           className={`${isOpen.Kebab ? "middle active" : "middle"}`}
@@ -56,7 +65,7 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
           <li key="1" id="1" className="text-xs" onClick={handleClickOnUpdate}>
             <p>Update</p>
           </li>
-          <li key="2" id="2" className="text-xs">
+          <li key="2" id="2" className="text-xs" onClick={handleClickOnDelete}>
             <p>Delete</p>
           </li>
         </ul>

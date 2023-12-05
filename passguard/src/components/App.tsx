@@ -16,19 +16,14 @@ function App() {
   const [editInput, setEditInput] = useState(false);
   const [credential, setCredential] = useState<any>([]);
 
-  const handleOnClickBTN = (e: any) => {
-    e.preventDefault();
-    setCredential({});
-    setShowForm(false);
-
-    // Introduce a delay before setting ShowForm to true
-    setTimeout(() => {
-      setShowForm(true);
-    }, 0); // Adjust the delay time (in milliseconds) according to your needs
-
+  const handleAddClick = () => {
+    if (showForm) {
+      return;
+    }
+    console.log("clicked")
+    setShowForm(true);
     setEditInput(true);
   };
-
   // Callback function to be passed to Grid
   const handleCardClickInApp = (
     credentialData: CredentialData,
@@ -39,7 +34,7 @@ function App() {
     // Introduce a delay before setting ShowForm to true
     setTimeout(() => {
       setShowForm(true);
-    }, 0); // Adjust the delay time (in milliseconds) according to your needs
+    }, 200); // Adjust the delay time (in milliseconds) according to your needs
     setCredential(credentialData);
     setEditInput(updateClicked);
   };
@@ -60,7 +55,6 @@ function App() {
         </div>
 
         <div className="form">
-          <AddButton onClick={handleOnClickBTN}></AddButton>
           {showForm ? (
             <Form
               credentialObj={credential}
@@ -73,7 +67,7 @@ function App() {
         </div>
 
         <div className="credentials overflow-auto ml-4 mt-3">
-          <Grid onCardClick={handleCardClickInApp}></Grid>
+          <Grid onCardClick={handleCardClickInApp} onAddClick={handleAddClick}></Grid>
         </div>
       </div> */}
       <DarkMode></DarkMode>
