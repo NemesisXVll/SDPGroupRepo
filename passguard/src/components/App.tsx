@@ -9,6 +9,7 @@ import Signup from "./Signup";
 import Grid from "./CredentialSection/Grid.tsx";
 import { useState } from "react";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
+import DarkMode from "./DarkMode.tsx";
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -49,7 +50,7 @@ function App() {
 
   return (
     <>
-      <div className="app-container h-screen">
+      {/* <div className="app-container h-screen">
         <div className="navbar">
           <Navbar isactive={false}></Navbar>
         </div>
@@ -74,7 +75,8 @@ function App() {
         <div className="credentials overflow-auto ml-4 mt-3">
           <Grid onCardClick={handleCardClickInApp}></Grid>
         </div>
-      </div>
+      </div> */}
+      <DarkMode></DarkMode>
     </>
   );
 }
