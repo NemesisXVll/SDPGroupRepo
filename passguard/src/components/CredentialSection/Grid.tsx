@@ -16,6 +16,7 @@ export interface CredentialData {
 type GridProps = {
   onCardClick: (credentialData: CredentialData, updateClicked: boolean) => void;
   onAddClick: () => void;
+  onFormSubmit: boolean;
 };
 
 const Grid = (props: GridProps) => {
@@ -29,9 +30,12 @@ const Grid = (props: GridProps) => {
   };
   const handleDeleteClick = (credentialId: number) => {
     credentialService.deleteCredential(credentialId);
-    setCredentials(credentials.filter((credential: any) => credential.credentialId !== credentialId));
-    
-  }
+    setCredentials(
+      credentials.filter(
+        (credential: any) => credential.credentialId !== credentialId
+      )
+    );
+  };
   const handleSearch = () => {
     const input = document.getElementById("searchInput");
     if (input) {
@@ -39,17 +43,15 @@ const Grid = (props: GridProps) => {
         const inputElement = e.target as HTMLInputElement;
         const searchString = inputElement.value.toLowerCase();
         const filteredCredentials = credentials.filter((credential: any) => {
-          return (
-            credential.title.toLowerCase().includes(searchString)
-          );
-
+          return credential.title.toLowerCase().includes(searchString);
         });
         setCredentials(filteredCredentials);
       });
     }
-  }
+  };
 
-  useEffect(() => {  
+  useEffect(() => {
+    console.log("useEffect");
     const fetchData = async () => {
       try {
         const result = await credentialService.findCredentialsByUserId(1);
@@ -59,11 +61,12 @@ const Grid = (props: GridProps) => {
       }
     };
     fetchData();
+    
     return () => {
       window.ipcRenderer.removeAllListeners("findCredentialsByIdResponse");
     };
-  }, []);
-  
+  }, [props.onFormSubmit]);
+
   const injectCard = credentials.map((item: any, index: any) => (
     <Card
       onClick={() => handleCardClick(item, false)}

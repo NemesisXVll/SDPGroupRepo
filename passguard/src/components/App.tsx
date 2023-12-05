@@ -15,14 +15,16 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [editInput, setEditInput] = useState(false);
   const [credential, setCredential] = useState<any>([]);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleAddClick = () => {
-    if (showForm) {
-      return;
-    }
-    console.log("clicked")
-    setShowForm(true);
+    setCredential({});
+    setShowForm(false);
     setEditInput(true);
+    // Introduce a delay before setting ShowForm to true
+    setTimeout(() => {
+      setShowForm(true);
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
   };
   // Callback function to be passed to Grid
   const handleCardClickInApp = (
@@ -34,7 +36,7 @@ function App() {
     // Introduce a delay before setting ShowForm to true
     setTimeout(() => {
       setShowForm(true);
-    }, 200); // Adjust the delay time (in milliseconds) according to your needs
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
     setCredential(credentialData);
     setEditInput(updateClicked);
   };
@@ -43,9 +45,13 @@ function App() {
     setShowForm(showForm);
   };
 
+  function handleFormSubmitted(): void {
+    setFormSubmitted((formSubmitted) => !formSubmitted);
+  }
+
   return (
     <>
-      {/* <div className="app-container h-screen">
+      <div className="app-container h-screen">
         <div className="navbar">
           <Navbar isactive={false}></Navbar>
         </div>
@@ -57,6 +63,7 @@ function App() {
         <div className="form">
           {showForm ? (
             <Form
+              formSubmitted={handleFormSubmitted}
               credentialObj={credential}
               editable={editInput}
               onBTNClick={handleFormBTN}
@@ -67,10 +74,13 @@ function App() {
         </div>
 
         <div className="credentials overflow-auto ml-4 mt-3">
-          <Grid onCardClick={handleCardClickInApp} onAddClick={handleAddClick}></Grid>
+          <Grid
+            onCardClick={handleCardClickInApp}
+            onAddClick={handleAddClick}
+            onFormSubmit={formSubmitted}
+          ></Grid>
         </div>
-      </div> */}
-      <DarkMode></DarkMode>
+      </div>
     </>
   );
 }
