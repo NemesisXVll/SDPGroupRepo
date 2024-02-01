@@ -7,7 +7,6 @@ import Tailwind from "primereact/passthrough/tailwind";
 import "primereact/resources/primereact.css"; // core css
 
 
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
