@@ -25,10 +25,6 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-  // ipcMain.on("updateCredential", async (event, arg) => {
-  //   await userManagementService.updateCredentialById(arg.credentialId, arg);
-  // });
-
   ipcMain.on("findCredentialsByUserIdRequest", async (event, arg) => {
     event.sender.send(
       "findCredentialsByUserIdResponse",
@@ -41,5 +37,9 @@ export const registerIPCMainHandlers = () => {
       "findCredentialByIdResponse",
       JSON.stringify(await userQueryService.getCredentialById(arg))
     );
+  });
+
+  ipcMain.on("createUser", async (event, arg) => {
+    await userManagementService.createUser(arg);
   });
 };
