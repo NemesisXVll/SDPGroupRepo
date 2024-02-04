@@ -12,7 +12,8 @@ generator client {
 //(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
 model User {
   userId            Int                @id @default(autoincrement()) //(D) 
-  data              String             @unique //MasterPassword, FName, LName, Email. (As an Encrypted JSON)
+  email             String             @unique
+  data              String             @unique //MasterPassword, FName, LName. (As an Encrypted JSON)
   salt              String
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt

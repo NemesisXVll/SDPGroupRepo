@@ -17,12 +17,12 @@ export const SignUp = (data: SignUpData): boolean => {
   }
 
   const filteredData = {
+    email: email,
     data: JSON.stringify({
-      email: email,
       masterPassword: masterPassword,
       firstName: rest.firstName,
       lastName: rest.lastName,
-    }), 
+    }),
     salt: crypto.randomUUID(),
     picture: "https://via.placeholder.com/150",
   };
@@ -44,29 +44,33 @@ type LoginData = {
   password: string;
 };
 
-export const login = ({ email, password }: LoginData): boolean => {
+export const login = async ({ email, password }: LoginData): Promise<any> => {
+  const user = new Promise((resolve) => {
+    window.ipcRenderer.send("findUserByEmailRequest", email);
+    window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
+      const parsedData = JSON.parse(arg);
+      resolve(parsedData);
+    });
+  });
 
-  const userDataString = localStorage.getItem(email);
+  try {
+    const userData: any = await user;
 
-  // new Promise((resolve) => {
-  //   window.ipcRenderer.send("findCredentialByIdRequest", credentialId);
-  //   window.ipcRenderer.once("findCredentialByIdResponse", (event, arg) => {
-  //     const parsedData = JSON.parse(arg);
-  //     resolve(parsedData);
-  //   });
-  // });
-
-  if (userDataString) {
-    const userData = JSON.parse(userDataString);
-    if (userData.password === password) {
-      console.log("Logged in successfully!");
-      return true;
+    if (userData) {
+      const parsedData = JSON.parse(userData.data);
+      if (parsedData.masterPassword === password) {
+        console.log("Login successful!");
+        return userData;
+      } else {
+        console.log("Incorrect password");
+        return false;
+      }
     } else {
-      console.log("Incorrect password. Please try again.");
+      console.log("User not found");
+      return false;
     }
-  } else {
-    console.log("No account found with this email. Please sign up.");
+  } catch (error) {
+    console.error("Error during login:", error);
+    return false;
   }
-  return false;
 };
-

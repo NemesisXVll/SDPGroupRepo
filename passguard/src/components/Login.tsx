@@ -12,20 +12,17 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleLoginSubmit = (event: any) => {
+  const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
     // Call the login function from authService
-    const isLoggedIn = login({ email, password });
-    if (isLoggedIn) {
-      // User is logged in. Here you can redirect or handle the logged-in state
-      console.log("User is logged in");
-      navigate("/home");
-      // Redirect to dashboard or other appropriate page
+    const user = await login({ email, password });
+    if (user) {
+      console.log("User logged in");
+      navigate("/home", { state: { user } });
     } else {
       console.log("Login failed");
       setErrorMessage("Incorrect email or password. Please try again.");
     }
-
   };
 
   function handleCreateAccount(): void {

@@ -5,6 +5,7 @@ import Navbar from "./Navbar.tsx";
 import Stats from "./Stats.tsx";
 import Grid from "./CredentialSection/Grid.tsx";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
 
 function Home() {
@@ -12,6 +13,9 @@ function Home() {
   const [editInput, setEditInput] = useState(false);
   const [credential, setCredential] = useState<any>([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const location = useLocation();
+  const user = location.state.user;
 
   const handleAddClick = () => {
     setCredential({});
@@ -59,6 +63,7 @@ function Home() {
         <div className="form">
           {showForm ? (
             <Form
+              userId={user.userId}
               formSubmitted={handleFormSubmitted}
               credentialObj={credential}
               editable={editInput}
@@ -71,6 +76,7 @@ function Home() {
 
         <div className="credentials overflow-auto ml-4 mt-3">
           <Grid
+            userId={user.userId}
             onCardClick={handleCardClickInApp}
             onAddClick={handleAddClick}
             onFormSubmit={formSubmitted}

@@ -18,6 +18,13 @@ export default class UserQueryService {
     });
   }
 
+  // Find a user by Email
+  async findUserByEmail(email: any) {
+    return prisma.user.findUnique({
+      where: { email: email },
+    });
+  }
+
   // List all users
   async listUsers() {
     return prisma.user.findMany();

@@ -10,6 +10,10 @@ export const registerIPCMainHandlers = () => {
     await userManagementService.createCredential(arg);
   });
 
+  ipcMain.on("createUser", async (event, arg) => {
+    await userManagementService.createUser(arg);
+  });
+
   ipcMain.on("updateCredential", async (event, arg) => {
     await userManagementService.updateCredentialById(arg.credentialId, arg);
   });
@@ -25,6 +29,13 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
+  ipcMain.on("findUserByEmailRequest", async (event, arg) => {
+    event.sender.send(
+      "findUserByEmailResponse",
+      JSON.stringify(await userQueryService.findUserByEmail(arg))
+    );
+  });
+
   ipcMain.on("findCredentialsByUserIdRequest", async (event, arg) => {
     event.sender.send(
       "findCredentialsByUserIdResponse",
@@ -37,9 +48,5 @@ export const registerIPCMainHandlers = () => {
       "findCredentialByIdResponse",
       JSON.stringify(await userQueryService.getCredentialById(arg))
     );
-  });
-
-  ipcMain.on("createUser", async (event, arg) => {
-    await userManagementService.createUser(arg);
   });
 };

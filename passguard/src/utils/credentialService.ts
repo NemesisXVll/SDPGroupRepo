@@ -1,5 +1,5 @@
 export default class CredentialService {
-  async createCredential(formData: any) {
+  async createCredential(formData: any, userId: number) {
     /*Here u should do something like this to not get actual password value.
       const password = data.get('password');
       const hashedPassword = /* perform your encryption or hashing here;
@@ -14,7 +14,7 @@ export default class CredentialService {
         : "https://" + formData.get("loginPageUrl")
     );
 
-    formData.set("userId", "1"); //Need to change this to the actual user id
+    formData.set("userId", userId.toString()); //Need to change this to the actual user id
     const credentialObj = JSON.parse(
       JSON.stringify(Object.fromEntries(formData.entries()))
     );

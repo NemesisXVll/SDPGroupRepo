@@ -14,6 +14,7 @@ export interface CredentialData {
   dateUpdated: string;
 }
 type GridProps = {
+  userId: number;
   onCardClick: (credentialData: CredentialData, updateClicked: boolean) => void;
   onAddClick: () => void;
   onFormSubmit: boolean;
@@ -53,7 +54,9 @@ const Grid = (props: GridProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await credentialService.findCredentialsByUserId(1);
+        const result = await credentialService.findCredentialsByUserId(
+          props.userId
+        );
         setCredentials(result);
       } catch (error) {
         console.error("Error fetching credentials:", error);

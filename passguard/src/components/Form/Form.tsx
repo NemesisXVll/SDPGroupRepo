@@ -9,6 +9,7 @@ import CredentialService from "../../utils/credentialService.ts";
 const credentialService = new CredentialService();
 
 type FormProps = {
+  userId: number;
   formSubmitted: () => void;
   onBTNClick: (showForm: boolean) => void;
   editable?: boolean;
@@ -42,7 +43,7 @@ function Form(props: FormProps) {
       );
     } else {
       console.log("create");
-      credentialService.createCredential(formData);
+      credentialService.createCredential(formData, props.userId);
     }
     setFormValues(!formValues);
     props.formSubmitted();
