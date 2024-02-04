@@ -2,35 +2,25 @@ import React, { useState } from "react";
 import loginImg from "../assets/icons/login/login.jpg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { login } from "../utils/authService"; // Adjust the import path as needed
-import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleLoginSubmit = (event: any) => {
+  const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Call the login function from authService
     const isLoggedIn = login({ email, password });
     if (isLoggedIn) {
       // User is logged in. Here you can redirect or handle the logged-in state
       console.log("User is logged in");
-      navigate("/home");
       // Redirect to dashboard or other appropriate page
     } else {
+      // Handle login failure. You could set an error message in state and display it
       console.log("Login failed");
-      setErrorMessage("Incorrect email or password. Please try again.");
     }
-
   };
-
-  function handleCreateAccount(): void {
-    navigate("/signup");
-  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
@@ -78,23 +68,15 @@ const Login: React.FC = () => {
               )}
             </button>
           </div>
-          {errorMessage && (
-            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-          )}
           <button
             type="submit"
-            onSubmit={handleLoginSubmit}
             className="w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
           >
             Login
           </button>
           <p className="text-center mt-8">
             Don't have an account?
-            <a
-              onClick={handleCreateAccount}
-              href="#"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
+            <a href="#" className="text-indigo-600 hover:text-indigo-500">
               Create an account
             </a>
           </p>

@@ -13,8 +13,7 @@ export default class CredentialService {
         ? ""
         : "https://" + formData.get("loginPageUrl")
     );
-
-    formData.set("userId", "1"); //Need to change this to the actual user id
+    formData.set("userId", "1");
     const credentialObj = JSON.parse(
       JSON.stringify(Object.fromEntries(formData.entries()))
     );
@@ -40,7 +39,8 @@ export default class CredentialService {
   }
 
   async deleteCredential(credentialId: number) {
-    window.ipcRenderer.send("deleteCredential", { credentialId });
+
+    window.ipcRenderer.send("deleteCredential", { credentialId } );
   }
 
   async updateCredential(credentialId: string, formData: any) {
@@ -51,36 +51,36 @@ export default class CredentialService {
       data.set('password', hashedPassword);
       */
 
-    formData.set(
-      "loginPageUrl",
-      formData.get("loginPageUrl") === ""
-        ? ""
-        : "https://" + formData.get("loginPageUrl")
-    );
-    formData.set("userId", "1");
-    const credentialObj = JSON.parse(
-      JSON.stringify(Object.fromEntries(formData.entries()))
-    );
-
-    const data = {
-      credentialId: credentialId,
-      serviceName: credentialObj.serviceName,
-      title: credentialObj.credentialTitle,
-      data: JSON.stringify({
-        userName: credentialObj.userName,
-        password: credentialObj.password,
-      }),
-      url: credentialObj.loginPageUrl,
-      isWeak: this.stringToBoolean(credentialObj.isWeak),
-      isReused: false,
-      serviceType: credentialObj.serviceType,
-      picture: "https://via.placeholder.com/150",
-      userId: this.convertStringToInt(credentialObj.userId),
-    };
-
-    console.log(data);
-
-    window.ipcRenderer.send("updateCredential", data);
+      formData.set(
+        "loginPageUrl",
+        formData.get("loginPageUrl") === ""
+          ? ""
+          : "https://" + formData.get("loginPageUrl")
+      );
+      formData.set("userId", "1");
+      const credentialObj = JSON.parse(
+        JSON.stringify(Object.fromEntries(formData.entries()))
+      );
+  
+      const data = {
+        credentialId: credentialId,
+        serviceName: credentialObj.serviceName,
+        title: credentialObj.credentialTitle,
+        data: JSON.stringify({
+          userName: credentialObj.userName,
+          password: credentialObj.password,
+        }),
+        url: credentialObj.loginPageUrl,
+        isWeak: this.stringToBoolean(credentialObj.isWeak),
+        isReused: false,
+        serviceType: credentialObj.serviceType,
+        picture: "https://via.placeholder.com/150",
+        userId: this.convertStringToInt(credentialObj.userId),
+      };
+  
+      console.log(data);
+  
+      window.ipcRenderer.send("updateCredential", data);
   }
 
   async findCredentialsByUserId(userId: any): Promise<any> {

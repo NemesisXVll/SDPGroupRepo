@@ -51,6 +51,7 @@ const Grid = (props: GridProps) => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
     const fetchData = async () => {
       try {
         const result = await credentialService.findCredentialsByUserId(1);
@@ -60,7 +61,7 @@ const Grid = (props: GridProps) => {
       }
     };
     fetchData();
-
+    
     return () => {
       window.ipcRenderer.removeAllListeners("findCredentialsByIdResponse");
     };
