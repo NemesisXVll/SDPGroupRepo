@@ -43,7 +43,7 @@ export default class CredentialService {
     window.ipcRenderer.send("deleteCredential", { credentialId });
   }
 
-  async updateCredential(credentialId: string, formData: any) {
+  async updateCredential(credentialId: string, formData: any, userId: number) {
     /*Here u should do something like this to not get actual password value.
       const password = data.get('password');
       const hashedPassword = /* perform your encryption or hashing here;
@@ -57,7 +57,7 @@ export default class CredentialService {
         ? ""
         : "https://" + formData.get("loginPageUrl")
     );
-    formData.set("userId", "1");
+    formData.set("userId", userId.toString());
     const credentialObj = JSON.parse(
       JSON.stringify(Object.fromEntries(formData.entries()))
     );

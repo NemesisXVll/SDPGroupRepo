@@ -39,7 +39,7 @@ function Form(props: FormProps) {
     if (props.credentialObj?.title) {
       credentialService.updateCredential(
         props.credentialObj.credentialId,
-        formData
+        formData, props.userId
       );
     } else {
       console.log("create");

@@ -64,10 +64,9 @@ const LabelInput = (props: LabelInputProps) => {
           size="1.3em"
           className="absolute translate-x-60 top-8 text-black"
           onClick={() => {
-            const location = props.value
-              ? "https://" + props.value
-              : "https://" + value;
-            window.location.assign(location);
+            props.value
+              ? window.open(props.value, "MyWindow", "width=1200 ,height=800 ")
+              : "";
           }}
         />
       ) : (

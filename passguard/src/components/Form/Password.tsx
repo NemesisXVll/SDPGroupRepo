@@ -124,7 +124,7 @@ const PasswordStrength = (props: PasswordProps) => {
       </div>
 
       <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
-        <Button value="Generate Password">Generate Password</Button>
+        <Button type="button" value="Generate Password">Generate Password</Button>
       </div>
 
       <div className="text-sm text-gray-600 pl-2">
