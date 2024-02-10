@@ -3,6 +3,8 @@ import loginImg from "../assets/icons/login/login.jpg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { SignUp } from "../utils/authService";
 import { useNavigate } from "react-router-dom";
+import LabelInput from "./Form/LabelInput";
+import Button from "./Form/Button";
 
 interface State {
   firstName: string;
@@ -49,9 +51,12 @@ const Signup: React.FC = () => {
     }));
   };
 
-  const handleSignUpClick = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUpClick = (event: any) => {
     event.preventDefault();
-    const { email, password, confirmPassword } = state;
+    const state = JSON.parse(
+      JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
+    );
+    console.log(state.email);
 
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match.");
@@ -104,67 +109,56 @@ const Signup: React.FC = () => {
           className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSignUpClick}
         >
-          <h2 className="text-4xl font-bold text-center py-6">SignUp</h2>
+          <h2 className="text-4xl font-bold text-center py-6 font-['Nunito']">
+            SignUp
+          </h2>
 
           {/* First Name Field */}
-          <div className="flex flex-col py-2">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              required={true}
-              className="border p-2"
-              name="firstName"
-              id="firstName"
-              type="text"
-              value={firstName}
-              onChange={handleInputChange}
-            />
-          </div>
+          <LabelInput
+            required={true}
+            type="text"
+            value={firstName}
+            label="First Name"
+            id="firstName"
+            placeholder=""
+            onChange="handleOnChange"
+          ></LabelInput>
 
           {/* Last Name Field */}
-          <div className="flex flex-col py-2">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              required={true}
-              className="border p-2"
-              name="lastName"
-              id="lastName"
-              type="text"
-              value={lastName}
-              onChange={handleInputChange}
-            />
-          </div>
+          <LabelInput
+            required={true}
+            type="text"
+            value={lastName}
+            label="Last Name"
+            id="lastName"
+            placeholder=""
+            onChange="handleOnChange"
+          ></LabelInput>
 
           {/* Email Field */}
-          <div className="flex flex-col py-2">
-            <label htmlFor="email">Email</label>
-            <input
-              required={true}
-              className="border p-2"
-              name="email"
-              id="email"
-              type="email"
-              value={email}
-              onChange={handleInputChange}
-            />
-          </div>
+          <LabelInput
+            required={true}
+            type="email"
+            value={email}
+            label="Email"
+            id="email"
+            placeholder=""
+            onChange="handleOnChange"
+          ></LabelInput>
 
           {/* Password Field */}
-          <div className="flex flex-col py-2 relative">
-            <label htmlFor="password">Password</label>
-            <input
-              required={true}
-              className="border p-2 pl-3 pr-10"
-              name="password"
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={handleInputChange}
-            />
+          <LabelInput
+            type={showPassword ? "text" : "password"}
+            value={password}
+            label="Password"
+            id="password"
+            placeholder=""
+            onChange="handleOnChange"
+          >
             <button
               type="button"
-              aria-label="Toggle password visibility"
               onClick={togglePasswordVisibility}
-              className="absolute translate-x-80 translate-y-9"
+              className="absolute translate-x-[21.2rem] translate-y-8"
             >
               {showPassword ? (
                 <FiEyeOff size="1.3em" />
@@ -172,25 +166,23 @@ const Signup: React.FC = () => {
                 <FiEye size="1.3em" />
               )}
             </button>
-          </div>
+          </LabelInput>
 
           {/* Confirm Password Field */}
-          <div className="flex flex-col py-2 relative">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              required={true}
-              className="border p-2 pl-3 pr-10"
-              name="confirmPassword"
-              id="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              value={confirmPassword}
-              onChange={handleInputChange}
-            />
+          <LabelInput
+            required={true}
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            label="Confirm Password"
+            id="confirmPassword"
+            placeholder=""
+            onChange="handleOnChange"
+          >
             <button
               type="button"
               aria-label="Toggle confirm password visibility"
               onClick={toggleConfirmPasswordVisibility}
-              className="absolute translate-x-80 translate-y-9"
+              className="absolute translate-x-[21.2rem] translate-y-8"
             >
               {showConfirmPassword ? (
                 <FiEyeOff size="1.3em" />
@@ -198,26 +190,24 @@ const Signup: React.FC = () => {
                 <FiEye size="1.3em" />
               )}
             </button>
-          </div>
+          </LabelInput>
 
           {/* Error Message */}
           {errorMessage && (
             <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
           )}
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-          >
-            Create Account
-          </button>
 
-          <p className="text-center mt-8">
+          {/* Submit Button */}
+          <div className="mt-7">
+            <Button type="submit">Create Account</Button>
+          </div>
+
+          <p className="text-center mt-8 font-normal font-['Nunito']">
             Already have an account?
             <a
               onClick={handleLoginClick}
               href="#"
-              className="text-indigo-600 hover:text-indigo-500"
+              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
             >
               Login
             </a>

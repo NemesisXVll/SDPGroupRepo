@@ -3,6 +3,8 @@ import loginImg from "../assets/icons/login/login.jpg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { login } from "../utils/authService"; // Adjust the import path as needed
 import { useNavigate } from "react-router-dom";
+import LabelInput from "./Form/LabelInput";
+import Button from "./Form/Button";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -14,6 +16,10 @@ const Login: React.FC = () => {
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
+    const data = JSON.parse(
+      JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
+    );
+    const { email, password } = data;
     // Call the login function from authService
     const user = await login({ email, password });
     if (user) {
@@ -43,30 +49,31 @@ const Login: React.FC = () => {
           className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleLoginSubmit}
         >
-          <h2 className="text-4xl font-bold text-center py-6">PassGuard</h2>
-          <div className="flex flex-col py-2">
-            <label htmlFor="email">Email</label>
-            <input
-              className="border p-2"
-              id="email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col py-2 relative">
-            <label htmlFor="password">Password</label>
-            <input
-              className="border p-2 pl-3 pr-10"
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
+            PassGuard
+          </h2>
+
+          <LabelInput
+            type="text"
+            value={email}
+            label="Email"
+            id="email"
+            placeholder=""
+            onChange="handleOnChange"
+          ></LabelInput>
+
+          <LabelInput
+            type={showPassword ? "text" : "password"}
+            value={password}
+            label="Password"
+            id="password"
+            placeholder=""
+            onChange="handleOnChange"
+          >
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className=" absolute translate-x-80 translate-y-9"
+              className="absolute translate-x-[21.2rem] translate-y-8"
             >
               {showPassword ? (
                 <FiEyeOff size="1.3em" />
@@ -74,23 +81,24 @@ const Login: React.FC = () => {
                 <FiEye size="1.3em" />
               )}
             </button>
-          </div>
+          </LabelInput>
+
           {errorMessage && (
             <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
           )}
-          <button
-            type="submit"
-            onSubmit={handleLoginSubmit}
-            className="w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-          >
-            Login
-          </button>
-          <p className="text-center mt-8">
+
+          <div className="mt-7">
+            <Button value="Login" type="submit">
+              Login
+            </Button>
+          </div>
+
+          <p className="text-center mt-8 font-normal font-['Nunito']">
             Don't have an account?
             <a
               onClick={handleCreateAccount}
               href="#"
-              className="text-indigo-600 hover:text-indigo-500"
+              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
             >
               Create an account
             </a>

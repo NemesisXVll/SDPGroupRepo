@@ -22,7 +22,7 @@ const Button = (props: FormProps) => {
       onClick={props.onClick}
       className={`inline-flex items-center text-white bg-gradient-to-r rounded-3xl 
          hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
-         leading-normal tracking-tight font-semibold text-center
+         leading-normal tracking-tight font-semibold text-center w-full
           transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem]
          ${
            props.value === "Cancel"

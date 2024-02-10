@@ -21,7 +21,7 @@ const LabelInput = (props: LabelInputProps) => {
   };
 
   return (
-    <div className="mt-1 relative hover:text-blue-300 border-gray-300">
+    <div className="mt-1 relative border-gray-300">
       <input
         id={props.id}
         name={props.id}
