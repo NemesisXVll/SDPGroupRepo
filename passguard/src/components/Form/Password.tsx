@@ -4,6 +4,8 @@ import infoLogo from "../../assets/icons/form/info.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import Button from "./Button";
+import GeneratePassword  from "../GenPass";
+
 
 type PasswordProps = {
   type?: string;
@@ -21,6 +23,7 @@ const PasswordStrength = (props: PasswordProps) => {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -39,7 +42,8 @@ const PasswordStrength = (props: PasswordProps) => {
   };
 
   const handleGeneratePasswordBTN = (e: any) => {
-    e.preventDefault();
+    
+    // e.preventDefault();
   };
 
   return (
@@ -124,11 +128,20 @@ const PasswordStrength = (props: PasswordProps) => {
         </div>
       </div>
 
-      <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
+      {/* <div className="generatePasswordBTN flex place-content-center justify-end mt-2">
+
         <Button type="button" value="Generate Password">
           Generate Password
         </Button>
-      </div>
+      </div> */}
+      
+ <button className="btn btn-danger" onClick={() => setOpen(true)}>
+           Generate password
+         </button>
+         <GeneratePassword open={open}
+         onClose={() => setOpen(false)}
+         > </GeneratePassword>
+
 
       <div className="text-sm text-gray-600 pl-2">
         Status:{" "}

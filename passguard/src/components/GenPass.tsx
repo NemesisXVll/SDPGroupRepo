@@ -1,6 +1,8 @@
 import { X } from "react-feather";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import "../GenPass.css";
+
 
 export default function Modal({ open, onClose, children }: any) {
   //variables & functions needed:

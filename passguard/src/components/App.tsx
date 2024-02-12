@@ -51,7 +51,7 @@ function App() {
   //         </div> */}
   //       </Modal>
   //     </main>
-  // )
+  // );
 }
 
 export default App;
