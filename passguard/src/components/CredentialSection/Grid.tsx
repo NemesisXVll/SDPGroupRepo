@@ -54,10 +54,13 @@ const Grid = (props: GridProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await credentialService.findCredentialsByUserId(
-          props.userId
-        );
-        setCredentials(result);
+         setTimeout(async () => {
+						const result = await credentialService.findCredentialsByUserId(
+							props.userId
+						);
+						setCredentials(result);
+					},100);
+      
       } catch (error) {
         console.error("Error fetching credentials:", error);
       }
@@ -81,6 +84,7 @@ const Grid = (props: GridProps) => {
       username={JSON.parse(item.data).userName}
       dateCreated={item.dateCreated.toString().slice(0, 10)}
       dateUpdated={item.dateUpdated.toString().slice(0, 10)}
+      isWeak={item.isWeak}
     ></Card>
   ));
 

@@ -13,6 +13,7 @@ type PasswordProps = {
   label?: string;
   placeholder?: string;
   viewOnly?: boolean;
+  name?: string;
 };
 
 const PasswordStrength = (props: PasswordProps) => {

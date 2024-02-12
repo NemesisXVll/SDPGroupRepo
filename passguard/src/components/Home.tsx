@@ -22,20 +22,20 @@ function Home() {
 	const location = useLocation();
 	const user = location.state.user;
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const credentials = await userQueryService.findCredentialsByUserId(
-					user.userId
-				);
-				setCredentials(credentials);
-				// console.log("hello", credentials);
-			} catch (error) {
-				console.error("error fetching credentials in home", error);
-			}
-		};
-		fetchData();
-	}, [dataRequested]);
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			const credentials = await userQueryService.findCredentialsByUserId(
+	// 				user.userId
+	// 			);
+	// 			setCredentials(credentials);
+	// 			// console.log("hello", credentials);
+	// 		} catch (error) {
+	// 			console.error("error fetching credentials in home", error);
+	// 		}
+	// 	};
+	// 	fetchData();
+	// }, [dataRequested]);
 	const handleAddClick = () => {
 		setCredential({});
 		setShowForm(false);

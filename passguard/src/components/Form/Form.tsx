@@ -34,15 +34,17 @@ function Form(props: FormProps) {
 
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
-    console.log(e.target);
+    // console.log(e.target);
     const formData = new FormData(e.target);
+  
     if (props.credentialObj?.title) {
-      credentialService.updateCredential(
-        props.credentialObj.credentialId,
-        formData, props.userId
-      );
+				credentialService.updateCredential(
+					props.credentialObj.credentialId,
+					formData,
+					props.userId
+				);
     } else {
-      console.log("create");
+      // console.log("create");
       credentialService.createCredential(formData, props.userId);
     }
     setFormValues(!formValues);
@@ -117,6 +119,7 @@ function Form(props: FormProps) {
                 : ""
             }
             id="password"
+            name="password"
           ></PasswordStrength>
 
           <LabelInput
