@@ -29,10 +29,10 @@ model Credential {
   data         String //Username, Password (As An Encrypted JSON)
   url          String?
   isWeak       Boolean
-  isReused     Boolean
+  isReused     Boolean?
   isOld        Boolean  @default(false)
   dateCreated  DateTime @default(now())
-  dateUpdated  DateTime @updatedAt
+  dateUpdated  DateTime @default(now())
   serviceType  String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
   picture      String? //(Picture of the service)
   isFavourite  Boolean  @default(false)

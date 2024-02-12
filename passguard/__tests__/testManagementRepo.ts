@@ -9,11 +9,11 @@ jest.setTimeout(30000);
 test("Should Properly Create a New User ", async () => {
   const user = {
     userId: 3,
+    email: "ea2004969@qu.edu.qa", //moved email to outside of the data object
     data: JSON.stringify({
       masterPassword: "nonofurbusiness369",
       fName: "Essaa",
       lName: "Ahmed",
-      email: "ea2004969@qu.edu.qa",
     }),
     salt: "et52ed",
     dateCreated: new Date(),
@@ -24,18 +24,18 @@ test("Should Properly Create a New User ", async () => {
   prismaMock.user.create.mockResolvedValue(user);
 
   await expect(userManagementService.createUser(user)).resolves.toEqual({
-    userId: 3,
-    data: JSON.stringify({
-      masterPassword: "nonofurbusiness369",
-      fName: "Essaa",
-      lName: "Ahmed",
-      email: "ea2004969@qu.edu.qa",
-    }),
-    salt: "et52ed",
-    dateCreated: new Date(),
-    dateUpdated: new Date(),
-    picture: "C:/Users/Essa/Mypicture.png",
-  });
+		userId: 3,
+		email: "ea2004969@qu.edu.qa",
+		data: JSON.stringify({
+			masterPassword: "nonofurbusiness369",
+			fName: "Essaa",
+			lName: "Ahmed",
+		}),
+		salt: "et52ed",
+		dateCreated: new Date(),
+		dateUpdated: new Date(),
+		picture: "C:/Users/Essa/Mypicture.png",
+	});
 });
 
 test("Should Properly Create a New Credential", async () => {
