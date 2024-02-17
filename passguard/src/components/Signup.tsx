@@ -51,12 +51,11 @@ const Signup: React.FC = () => {
     }));
   };
 
-  const handleSignUpClick = (event: any) => {
+  const handleSignUpClick = async (event: any) => {
     event.preventDefault();
     const state = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
-    console.log(state.email);
 
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match.");
@@ -73,7 +72,7 @@ const Signup: React.FC = () => {
       picture: "",
     });
 
-    if (signUpResult) {
+    if (await signUpResult) {
       navigate("/login"); // Navigate to login page after successful signup
     } else {
       // Sign up failed - handle the error, maybe show a message to the user
