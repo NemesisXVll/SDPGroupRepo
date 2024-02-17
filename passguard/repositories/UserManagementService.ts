@@ -1,5 +1,8 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
+
+
+let tmpUpdate = false;
 export default class UserManagementService {
 	//Add Methods Here for Creating, Updating, and Deleting
 	//Use this example signature --> async createUser() {}
@@ -158,15 +161,26 @@ export default class UserManagementService {
 		}
 	}
 	async updateCredentialValidityById(credentialId: any) {
+		tmpUpdate = true;
 		try {
+			console.log("Updating credential validity for ID:", credentialId);
 			const updatedCredential = await prisma.credential.update({
 				where: { credentialId: credentialId },
 				data: { isOld: true },
 			});
-			return updatedCredential;
+			console.log("Credential updated successfully:", updatedCredential);
+
+			// Ensure that updatedCredential is a valid object
+			if (updatedCredential && typeof updatedCredential === "object") {
+				return updatedCredential;
+			} else {
+				console.error("Invalid response from database:", updatedCredential);
+				// Handle the invalid response appropriately
+			}
 		} catch (error) {
 			console.error("Error updating credentials' validity", error);
 		}
+		tmpUpdate = false;
 	}
 
 	//-------------------------Security Question Model-------------------------//
@@ -242,7 +256,6 @@ export default class UserManagementService {
 		}
 	}
 }
-let tmpUpdate = false;
 prisma.$use(async (params, next) => {
 	if (params.model == "Credential" && params.action == "create") {
 		const { data } = params.args;

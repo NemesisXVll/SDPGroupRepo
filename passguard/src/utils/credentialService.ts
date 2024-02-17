@@ -101,7 +101,7 @@ export default class CredentialService {
 				(event, arg) => {
 					const parsedData = JSON.parse(arg);
 					resolve(parsedData);
-					console.log(parsedData)
+					console.log(parsedData);
 				}
 			);
 		});
