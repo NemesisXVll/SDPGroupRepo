@@ -37,21 +37,17 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
     });
 
     if (userData) {
-      const parsedData = userData
-      if (parsedData.email === email) {
-        console.log("User already exists");
-        return false;
-      } else {
-        window.ipcRenderer.send("createUserRequest", filteredData);
-        console.log("Account created successfully!");
-        return true;
-      }
+      console.log("User already exists");
+      return false;
+    } else {
+      window.ipcRenderer.send("createUser", filteredData);
+      console.log("Account created successfully!");
+      return true;
     }
-    return true;
   } catch (error) {
     console.error("Error during SignUp:", error);
-    return false;
   }
+  return false;
 };
 
 type LoginData = {
