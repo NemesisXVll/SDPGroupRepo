@@ -29,14 +29,6 @@ const Signup: React.FC = () => {
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
-
   const togglePasswordVisibility = () => {
     setState((prevState) => ({
       ...prevState,
@@ -57,7 +49,31 @@ const Signup: React.FC = () => {
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
 
-    if (password !== confirmPassword) {
+    const lettersOnlyRegex = /^[A-Za-z]+$/;
+    if (
+      !lettersOnlyRegex.test(state.firstName) ||
+      !lettersOnlyRegex.test(state.lastName)
+    ) {
+      setErrorMessage("First and Last Name must contain only letters.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(state.email)) {
+      setErrorMessage("Invalid email format.");
+      return;
+    }
+
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    if (!passwordRegex.test(state.password)) {
+      setErrorMessage(
+        "Password must contain at least one uppercase letter, one digit, one special character, and be at least 8 characters long."
+      );
+      return;
+    }
+
+    if (state.password !== state.confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
@@ -73,9 +89,8 @@ const Signup: React.FC = () => {
     });
 
     if (await signUpResult) {
-      navigate("/login"); // Navigate to login page after successful signup
+      navigate("/login");
     } else {
-      // Sign up failed - handle the error, maybe show a message to the user
       setErrorMessage("Sign up failed. Please try again.");
     }
   };
@@ -92,6 +107,11 @@ const Signup: React.FC = () => {
 
   function handleLoginClick(): void {
     navigate("/login");
+  }
+
+  function handleOnChange(event: any): void {
+    console.log(event.target.value);
+    console.log("hi");
   }
 
   return (
@@ -120,7 +140,7 @@ const Signup: React.FC = () => {
             label="First Name"
             id="firstName"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Last Name Field */}
@@ -131,7 +151,7 @@ const Signup: React.FC = () => {
             label="Last Name"
             id="lastName"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Email Field */}
@@ -142,17 +162,18 @@ const Signup: React.FC = () => {
             label="Email"
             id="email"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Password Field */}
           <LabelInput
+            required={true}
             type={showPassword ? "text" : "password"}
             value={password}
             label="Password"
             id="password"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           >
             <button
               type="button"
@@ -175,7 +196,7 @@ const Signup: React.FC = () => {
             label="Confirm Password"
             id="confirmPassword"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           >
             <button
               type="button"

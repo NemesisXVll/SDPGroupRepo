@@ -4,15 +4,16 @@ import infoLogo from "../../assets/icons/form/info.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import Button from "./Button";
-import GeneratePassword  from "../GenPass";
-
+import GeneratePassword from "../GenPass";
 
 type PasswordProps = {
   type?: string;
   value?: string;
+  required?: boolean;
   hidden?: boolean;
   id?: string;
   label?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   viewOnly?: boolean;
   name?: string;
@@ -23,7 +24,7 @@ const PasswordStrength = (props: PasswordProps) => {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -39,10 +40,11 @@ const PasswordStrength = (props: PasswordProps) => {
     setScore(result.score);
 
     setFeedback(result.feedback.suggestions.join(" "));
+
+    props.onChange ? props.onChange(e) : "";
   };
 
   const handleGeneratePasswordBTN = (e: any) => {
-    
     // e.preventDefault();
   };
 
@@ -54,6 +56,7 @@ const PasswordStrength = (props: PasswordProps) => {
           type={showPassword ? "text" : "password"}
           name={props.id}
           id={props.id}
+          required={props.required}
           value={password}
           onChange={handlePasswordChange}
           placeholder=""
@@ -67,14 +70,14 @@ const PasswordStrength = (props: PasswordProps) => {
              score <= 0 && password.length > 0
                ? "border border-red-500"
                : score === 1
-               ? "border border-yellow-500"
-               : score === 2
-               ? "border border-orange-500"
-               : score === 3
-               ? "border border-lime-500"
-               : score === 4
-               ? "border border-green-500"
-               : ""
+                 ? "border border-yellow-500"
+                 : score === 2
+                   ? "border border-orange-500"
+                   : score === 3
+                     ? "border border-lime-500"
+                     : score === 4
+                       ? "border border-green-500"
+                       : ""
            }
            `}
         />
@@ -134,14 +137,13 @@ const PasswordStrength = (props: PasswordProps) => {
           Generate Password
         </Button>
       </div> */}
-      
- <button className="btn btn-danger" onClick={() => setOpen(true)}>
-           Generate password
-         </button>
-         <GeneratePassword open={open}
-         onClose={() => setOpen(false)}
-         > </GeneratePassword>
 
+      <button className="btn btn-danger" onClick={() => setOpen(true)}>
+        Generate password
+      </button>
+      <GeneratePassword open={open} onClose={() => setOpen(false)}>
+        {" "}
+      </GeneratePassword>
 
       <div className="text-sm text-gray-600 pl-2">
         Status:{" "}
@@ -150,27 +152,27 @@ const PasswordStrength = (props: PasswordProps) => {
             score <= 0
               ? "text-red-500"
               : score === 1
-              ? "text-yellow-500"
-              : score === 2
-              ? "text-orange-500"
-              : score === 3
-              ? "text-lime-500"
-              : score === 4
-              ? "text-green-500"
-              : ""
+                ? "text-yellow-500"
+                : score === 2
+                  ? "text-orange-500"
+                  : score === 3
+                    ? "text-lime-500"
+                    : score === 4
+                      ? "text-green-500"
+                      : ""
           }`}
         >
           {score <= 0 && password.length > 0
             ? "Very Weak"
             : score === 1
-            ? "Weak"
-            : score === 2
-            ? "Moderate"
-            : score === 3
-            ? "Strong"
-            : score === 4
-            ? "Very Strong"
-            : ""}
+              ? "Weak"
+              : score === 2
+                ? "Moderate"
+                : score === 3
+                  ? "Strong"
+                  : score === 4
+                    ? "Very Strong"
+                    : ""}
         </span>
       </div>
       {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
@@ -185,14 +187,14 @@ const PasswordStrength = (props: PasswordProps) => {
                   ? score <= 0
                     ? "bg-red-500"
                     : score === 1
-                    ? "bg-yellow-500"
-                    : score === 2
-                    ? "bg-orange-500"
-                    : score === 3
-                    ? "bg-lime-500"
-                    : score === 4
-                    ? "bg-green-500"
-                    : "bg-red-800"
+                      ? "bg-yellow-500"
+                      : score === 2
+                        ? "bg-orange-500"
+                        : score === 3
+                          ? "bg-lime-500"
+                          : score === 4
+                            ? "bg-green-500"
+                            : "bg-red-800"
                   : "bg-gray-200"
               }`}
             ></div>

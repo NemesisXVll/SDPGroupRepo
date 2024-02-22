@@ -29,6 +29,7 @@ const Grid = (props: GridProps) => {
   ) => {
     props.onCardClick(credentialData, updateClicked);
   };
+
   const handleDeleteClick = (credentialId: number) => {
     credentialService.deleteCredential(credentialId);
     setCredentials(
@@ -37,6 +38,7 @@ const Grid = (props: GridProps) => {
       )
     );
   };
+
   const handleSearch = () => {
     const input = document.getElementById("searchInput");
     if (input) {
@@ -54,13 +56,12 @@ const Grid = (props: GridProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-         setTimeout(async () => {
-						const result = await credentialService.findCredentialsByUserId(
-							props.userId
-						);
-						setCredentials(result);
-					},100);
-      
+        setTimeout(async () => {
+          const result = await credentialService.findCredentialsByUserId(
+            props.userId
+          );
+          setCredentials(result);
+        }, 100);
       } catch (error) {
         console.error("Error fetching credentials:", error);
       }

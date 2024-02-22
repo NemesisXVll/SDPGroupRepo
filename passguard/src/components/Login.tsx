@@ -35,6 +35,11 @@ const Login: React.FC = () => {
     navigate("/signup");
   }
 
+  function handleOnChange(event: any): void {
+    console.log(event.target.value);
+    console.log("hi");
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
       <div className="hidden sm:block">
@@ -55,20 +60,22 @@ const Login: React.FC = () => {
 
           <LabelInput
             type="text"
+            required={true}
             value={email}
             label="Email"
             id="email"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           <LabelInput
             type={showPassword ? "text" : "password"}
             value={password}
+            required={true}
             label="Password"
             id="password"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           >
             <button
               type="button"

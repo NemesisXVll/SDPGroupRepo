@@ -2,6 +2,7 @@ import appLogo from "../assets/icons/navbar/appLogo.svg";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import navbarItems from "../data/navbarItems";
 import { createContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 type NavbarProps = {
   isExpanded?: boolean;
@@ -11,6 +12,9 @@ type NavbarProps = {
 const NavbarContext = createContext<any>(null);
 function Navbar(props: NavbarProps) {
   const [expanded, setExpanded] = useState(props.isExpanded);
+
+  const location = useLocation();
+  const user = location.state.user;
 
   useEffect(() => {
     props.handleExpand && props.handleExpand(expanded);
@@ -87,8 +91,8 @@ function Navbar(props: NavbarProps) {
                     `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold text-white">Youssef Aly</h4>
-              <span className="text-xs text-gray-600">email.com</span>
+              <h4 className="font-semibold text-white">{`${JSON.parse(user.data).firstName + " " + JSON.parse(user.data).lastName}`}</h4>
+              <span className="text-xs text-gray-600">{`${user.email}`}</span>
             </div>
             <MoreVertical size={20} color="white" />
           </div>

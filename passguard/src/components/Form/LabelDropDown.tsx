@@ -1,9 +1,9 @@
 import { serviceNames, serviceTypes } from "../../data/dropdownItems";
-import { useState } from "react";
+import React, { useState } from "react";
 
 type LabelDropDownProps = {
   type?: string;
-  onChange?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   id?: string;
   list?: string;
   placeholder?: string;
@@ -17,6 +17,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
 
   const handleOnChange = (e: any) => {
     setValue(e.target.value);
+    props.onChange ? props.onChange(e) : "";
   };
 
   return (
@@ -30,7 +31,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         readOnly={props.viewOnly}
         onChange={handleOnChange}
         className={`pl-2 mt-5 peer h-10 w-full
-         text-gray-900 text-xs placeholder-transparent
+         text-gray-900 text-sm placeholder-transparent
          ${props.viewOnly ? "bg-slate-100" : ""}
          rounded-lg justify-start items-start gap-14 inline-flex
           focus:outline-none focus:border-blue-600 border-2`}

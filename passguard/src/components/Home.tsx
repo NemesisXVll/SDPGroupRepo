@@ -36,6 +36,7 @@ function Home() {
   // 	};
   // 	fetchData();
   // }, [dataRequested]);
+  
   const handleAddClick = () => {
     setCredential({});
     setShowForm(false);
@@ -86,6 +87,7 @@ function Home() {
         <div className="form">
           {showForm ? (
             <Form
+              onCardClick={handleCardClickInApp}
               userId={user.userId}
               formSubmitted={handleFormSubmitted}
               credentialObj={credential}
