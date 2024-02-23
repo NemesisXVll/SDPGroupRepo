@@ -1,8 +1,9 @@
 import trashLogo from "../../assets/icons/form/bluetrash.svg";
 import starLogo from "../../assets/icons/form/yellowstar.svg";
-import servicelogo from "../../assets/icons/form/servicelogo.svg";
+import { serviceNames } from "../../data/dropdownItems";
 
 function TopOfForm(props: any) {
+
   const handleDeleteCredential = () => {
     console.log("Delete button clicked");
   };
@@ -11,7 +12,22 @@ function TopOfForm(props: any) {
     <>
       <div className="flex place-items-center pt-4 box-border shadow-sm bg-neutral-100 h-min w-80">
         <div className="w-20">
-          <img className="" src={servicelogo} alt="image description" />
+          <img
+            className=""
+            src={`
+            ${
+              serviceNames.find(
+                (service: any) =>
+                  service.name ===
+                  (props.credential.serviceName
+                    ? props.credential.serviceName
+                    : props.data.serviceName)
+              )?.image ||
+              serviceNames[9].image
+            }
+            `}
+            alt="image description"
+          />
         </div>
 
         <div className="pl-2">

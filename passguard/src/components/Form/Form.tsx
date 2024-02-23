@@ -59,7 +59,6 @@ function Form(props: FormProps) {
         props.userId
       );
     } else {
-      // console.log("create");
       credentialService.createCredential(formData, props.userId);
     }
     setFormValues(!formValues);

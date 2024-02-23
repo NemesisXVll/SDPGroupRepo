@@ -1,4 +1,5 @@
 import zxcvbn from "zxcvbn";
+import { serviceNames } from "../data/dropdownItems";
 
 export default class CredentialService {
   async createCredential(formData: any, userId: number) {
@@ -32,11 +33,14 @@ export default class CredentialService {
       isWeak: this.checkPasswordStrength(credentialObj.password),
       isReused: false,
       serviceType: credentialObj.serviceType,
-      picture: "https://via.placeholder.com/150",
+      picture:
+        serviceNames.find(
+          (service: any) => service.name === credentialObj.serviceName
+        )?.image || serviceNames[9].image,
       userId: this.convertStringToInt(credentialObj.userId),
     };
 
-    // console.log(data);
+    console.log(data);
 
     window.ipcRenderer.send("createCredential", data);
   }
@@ -83,7 +87,10 @@ export default class CredentialService {
       isWeak: this.checkPasswordStrength(credentialObj.password),
       // isReused: false,
       serviceType: credentialObj.serviceType,
-      picture: "https://via.placeholder.com/150",
+      picture:
+        serviceNames.find(
+          (service: any) => service.name === credentialObj.serviceName
+        )?.image || serviceNames[9].image,
       userId: this.convertStringToInt(credentialObj.userId),
       dateUpdated: credentialObj.dateUpdated,
     };

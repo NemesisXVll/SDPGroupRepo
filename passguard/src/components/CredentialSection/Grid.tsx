@@ -81,6 +81,7 @@ const Grid = (props: GridProps) => {
       key={index}
       index={index}
       id={item.credentialId.toString()}
+      picture={item.picture}
       title={item.title}
       username={JSON.parse(item.data).userName}
       dateCreated={item.dateCreated.toString().slice(0, 10)}

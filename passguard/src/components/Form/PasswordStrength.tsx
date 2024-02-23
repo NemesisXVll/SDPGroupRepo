@@ -77,7 +77,7 @@ const PasswordStrength = (props: PasswordProps) => {
                      ? "border border-lime-500"
                      : score === 4
                        ? "border border-green-500"
-                       : ""
+                       : "focus:border-blue-600"
            }
            `}
         />
