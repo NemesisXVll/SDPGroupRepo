@@ -11,17 +11,43 @@ type CardProps = {
 	dateCreated: string;
 	dateUpdated: string;
 	isWeak: boolean;
+	isOld: boolean;
+	isReused: boolean;
+	isTrashed: boolean;
 	onClick: MouseEventHandler<HTMLDivElement>;
 	onUpdateClick: (key: React.Key) => void;
 	onDeleteClick: (key: React.Key) => void;
+	onRecoverClick: (key: React.Key) => void;
+	onPermanentRemoveClick: (key: React.Key) => void;
 };
-
 const Card = (props: CardProps) => {
+	const credentialStatus = (): string => {
+		if (props.isWeak) {
+			if (props.isReused && props.isOld) {
+				return "bg-gradient-to-r from-red-500 via-sky-700 to-yellow-400";
+			} else if (props.isReused) {
+				return "bg-gradient-to-r from-red-500 to-sky-700";
+			} else if (props.isOld) {
+				return "bg-gradient-to-r from-red-500 to-yellow-400";
+			} else {
+				return "bg-red-500";
+			}
+		} else if (props.isReused) {
+			if (props.isOld) {
+				return "bg-gradient-to-r from-sky-700 to-yellow-400";
+			} else {
+				return "bg-sky-700";
+			}
+		} else if (props.isWeak) {
+			return "bg-yellow-400";
+		}
+		return "bg-green-500";
+	};
 	return (
 		<div
 			id={props.id}
-			className={` ${props.isWeak ? "bg-red-500" : "bg-green-500"}
-      flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:bg-yellow-400 transition-all duration-300`}
+			className={`relative ${credentialStatus()} 
+      flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:scale-105 transition-all duration-300`}
 			onClick={props.onClick}
 		>
 			<img
@@ -37,6 +63,11 @@ const Card = (props: CardProps) => {
 					<Kebab
 						onUpdateClick={() => props.onUpdateClick(props.index)}
 						onDeleteClick={() => props.onDeleteClick(props.index)}
+						onRecoverClick={() => props.onRecoverClick(props.index)}
+						onPermanentRemoveClick={() =>
+							props.onPermanentRemoveClick(props.index)
+						}
+						isTrashed={props.isTrashed}
 					></Kebab>
 				</div>
 				<div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">

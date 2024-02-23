@@ -116,6 +116,7 @@ export default class UserQueryService {
 			const count = await prisma.credential.count({
 				where: {
 					userId: userId,
+					isTrashed: false,
 				},
 			});
 			return count;
@@ -131,6 +132,7 @@ export default class UserQueryService {
 				where: {
 					userId: userId,
 					isWeak: true,
+					isTrashed: false,
 				},
 			});
 			return count;
@@ -145,6 +147,7 @@ export default class UserQueryService {
 				where: {
 					userId: userId,
 					isOld: true,
+					isTrashed: false,
 				},
 			});
 			return count;
@@ -159,6 +162,7 @@ export default class UserQueryService {
 				where: {
 					userId: userId,
 					isReused: true,
+					isTrashed: false,
 				},
 			});
 			return count;

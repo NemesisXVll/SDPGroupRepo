@@ -21,6 +21,12 @@ export const registerIPCMainHandlers = () => {
 	ipcMain.on("deleteCredential", async (event, arg) => {
 		await userManagementService.deleteCredentialById(arg.credentialId);
 	});
+	ipcMain.on("trashCredentialById", async (event, arg) => {
+		await userManagementService.trashCredentialById(arg);
+	});
+	ipcMain.on("recoverCredentialById", async (event, arg) => {
+		await userManagementService.recoverCredentialById(arg);
+	});
 
 	ipcMain.on("findUserByIdRequest", async (event, arg) => {
 		event.sender.send(

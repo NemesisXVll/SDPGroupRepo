@@ -41,6 +41,12 @@ export default class CredentialService {
 		window.ipcRenderer.send("createCredential", data);
 	}
 
+	async trashCredentialById(credentialId: number) {
+		window.ipcRenderer.send("trashCredentialById", credentialId);
+	}
+	async recoverCredentialById(credentialId: number) { 
+		window.ipcRenderer.send("recoverCredentialById", credentialId);
+	}
 	async deleteCredential(credentialId: number) {
 		window.ipcRenderer.send("deleteCredential", { credentialId });
 	}
@@ -101,7 +107,6 @@ export default class CredentialService {
 				(event, arg) => {
 					const parsedData = JSON.parse(arg);
 					resolve(parsedData);
-					console.log(parsedData);
 				}
 			);
 		});

@@ -8,27 +8,34 @@ import trash from "../assets/icons/common/trash.svg";
  const navbarItems = [
     {
         name: 'Dashboard',
-        icon: dashboard
+         icon: dashboard,
+         path: '/home',
+        
     },
     {
         name: 'Secured Documents',
-        icon: document
+        icon: document,
+        path: '/secured-documents',
     },
-    {
-        name: 'Trash',
-        icon: trash
-    },
+    // {
+    //     name: 'Trash',
+    //     icon: trash,
+    //     path: '/trash'
+    // },
     {
         name: 'Notifications',
-        icon: bell
+        icon: bell,
+        path: '/notifications'
     },
     {
         name: 'Support',
-        icon: question
+        icon: question,
+        path: '/support'
     },
     {
         name: 'Settings',
-        icon: setting
+        icon: setting,
+        path: '/settings'
     },
  ]
 export default navbarItems;

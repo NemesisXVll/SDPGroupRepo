@@ -36,6 +36,8 @@ model Credential {
   serviceType  String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc."
   picture      String? //(Picture of the service)
   isFavourite  Boolean  @default(false)
+  isTrashed    Boolean  @default(false)
+  dateTrashed  DateTime @default(now())
   trash        Trash?
   User         User     @relation(fields: [userId], references: [userId])
   userId       Int //Foreign key

@@ -10,6 +10,9 @@ interface KebabState {
 type KebabProps = {
   onUpdateClick: () => void;
   onDeleteClick: () => void;
+  onRecoverClick: () => void;
+  onPermanentRemoveClick: () => void;
+  isTrashed: boolean;
 };
 
 const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
@@ -30,6 +33,12 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   };
   const handleClickOnDelete = () => {
     props.onDeleteClick();
+  }
+  const handleClickOnRecover = () => {
+    props.onRecoverClick();
+  }
+  const handleClickOnPermanentRemove = () => { 
+    props.onPermanentRemoveClick();
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -62,12 +71,26 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
             isOpen.Kebab ? "dropdown active" : "dropdown"
           }`}
         >
+          {!props.isTrashed ? (
+            <>
           <li key="1" id="1" className="text-xs" onClick={handleClickOnUpdate}>
             <p>Update</p>
           </li>
           <li key="2" id="2" className="text-xs" onClick={handleClickOnDelete}>
             <p>Delete</p>
+              </li>
+            </>
+          ) :
+          (
+            <>
+          <li key="3" id="3" className="text-xs" onClick={handleClickOnRecover}>
+            <p>Recover</p>
           </li>
+          <li key="4" id="4" className="text-xs" onClick={handleClickOnPermanentRemove}>
+            <p>Remove</p>
+          </li> 
+            </>
+          )}
         </ul>
       </div>
     </div>

@@ -1,6 +1,6 @@
+import { toNamespacedPath } from "path";
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-
 
 let tmpUpdate = false;
 export default class UserManagementService {
@@ -137,7 +137,33 @@ export default class UserManagementService {
 			throw error;
 		}
 	}
-
+	async trashCredentialById(credentialId: number) {
+		tmpUpdate = true;
+		try {
+			const trashedCredential = await prisma.credential.update({
+				where: { credentialId: credentialId },
+				data: { isTrashed: true, dateTrashed: new Date().toISOString() },
+			});
+			tmpUpdate = false;
+			return trashedCredential;
+		} catch (error) {
+			throw error;
+		}
+	}
+	async recoverCredentialById(credentialId: number) {
+		tmpUpdate = true;
+		try {
+			const recoveredCredential = await prisma.credential.update({
+				where: { credentialId: credentialId },
+				data: { isTrashed: false },
+			});
+			tmpUpdate = false;
+			return recoveredCredential;
+		} catch (error) {
+			throw error;
+		}
+		
+	}
 	async deleteCredentialById(credentialId: number) {
 		try {
 			const deletedCredential = await prisma.credential.delete({
@@ -327,34 +353,38 @@ prisma.$use(async (params, next) => {
 		const oldPassword = JSON.parse(
 			JSON.parse(JSON.stringify(oldData)).data
 		).password;
-			const allCredentials = await prisma.credential.findMany({
-				where: {
-					NOT: [{ credentialId: data.credentialId }],
-				},
-			});
+		const allCredentials = await prisma.credential.findMany({
+			where: {
+				NOT: [{ credentialId: data.credentialId }],
+			},
+		});
 		console.log("all creds:", allCredentials);
-		
+
 		if (oldPassword == newPassword || allCredentials.length == 0) {
 			tmpUpdate = false;
 			return next(params);
 		}
-		if (allCredentials.length == 1 && JSON.parse(allCredentials[0].data).password != newPassword) {
+		if (
+			allCredentials.length == 1 &&
+			JSON.parse(allCredentials[0].data).password != newPassword
+		) {
 			data.isReused = false;
 			tmpUpdate = true;
 			await prisma.credential.update({
 				where: { credentialId: allCredentials[0].credentialId },
 				data: { isReused: false },
 			});
-
-		} else if (allCredentials.length == 1 && JSON.parse(allCredentials[0].data).password == newPassword) {
+		} else if (
+			allCredentials.length == 1 &&
+			JSON.parse(allCredentials[0].data).password == newPassword
+		) {
 			data.isReused = true;
 			tmpUpdate = true;
 			await prisma.credential.update({
 				where: { credentialId: allCredentials[0].credentialId },
 				data: { isReused: true },
 			});
-		}
-		else {
+		} else {
 			const existingCredentials = allCredentials.filter((credential) => {
 				// console.log("credential: ", credential);
 				const credentialData = JSON.parse(credential.data);
