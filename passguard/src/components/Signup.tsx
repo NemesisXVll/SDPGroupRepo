@@ -5,6 +5,7 @@ import { SignUp } from "../utils/authService";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
+import MPasswdStrength from "./MPasswdStrength";
 
 interface State {
   firstName: string;
@@ -166,27 +167,14 @@ const Signup: React.FC = () => {
           ></LabelInput>
 
           {/* Password Field */}
-          <LabelInput
+          <MPasswdStrength
             required={true}
-            type={showPassword ? "text" : "password"}
             value={password}
             label="Password"
             id="password"
             placeholder=""
             onChange={handleOnChange}
-          >
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
-              {showPassword ? (
-                <FiEyeOff size="1.3em" />
-              ) : (
-                <FiEye size="1.3em" />
-              )}
-            </button>
-          </LabelInput>
+          ></MPasswdStrength>
 
           {/* Confirm Password Field */}
           <LabelInput
@@ -198,18 +186,23 @@ const Signup: React.FC = () => {
             placeholder=""
             onChange={handleOnChange}
           >
-            <button
-              type="button"
-              aria-label="Toggle confirm password visibility"
-              onClick={toggleConfirmPasswordVisibility}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
-              {showConfirmPassword ? (
-                <FiEyeOff size="1.3em" />
+            <div className="grid grid-rows-2 grid-cols-2 pr-1">
+              {showPassword ? (
+                <FiEyeOff
+                  onClick={toggleConfirmPasswordVisibility}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               ) : (
-                <FiEye size="1.3em" />
+                <FiEye
+                  onClick={toggleConfirmPasswordVisibility}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               )}
-            </button>
+            </div>
           </LabelInput>
 
           {/* Error Message */}

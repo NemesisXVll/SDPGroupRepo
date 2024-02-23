@@ -29,9 +29,9 @@ const LabelInput = (props: LabelInputProps) => {
         value={value}
         required={props.required}
         type={props.type}
-        className={`pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 text-sm bg-opacity-50
+        className={`pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50
         ${props.viewOnly ? "bg-slate-100" : ""}
-        rounded-lg justify-start items-start gap-14 inline-flex 
+        rounded-lg justify-start items-start gap-14 inline-flex text-sm
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2`}
         placeholder={props.placeholder}
         onChange={handleOnChange}
@@ -40,7 +40,7 @@ const LabelInput = (props: LabelInputProps) => {
       <label
         htmlFor={props.id}
         className="p-1 mt-4 absolute left-1 -top-6 font-normal font-['Nunito']
-         text-gray-800 text-md peer-placeholder-shown:text-base
+         text-gray-800 text-base peer-placeholder-shown:text-base
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
           peer-focus:-top-6 peer-focus:text-blue-600 transition-all"
       >

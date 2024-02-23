@@ -77,17 +77,23 @@ const Login: React.FC = () => {
             placeholder=""
             onChange={handleOnChange}
           >
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
+            <div className="grid grid-rows-2 grid-cols-2 pr-1">
               {showPassword ? (
-                <FiEyeOff size="1.3em" />
+                <FiEyeOff
+                  onClick={() => setShowPassword(!showPassword)}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               ) : (
-                <FiEye size="1.3em" />
+                <FiEye
+                  onClick={() => setShowPassword(!showPassword)}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               )}
-            </button>
+            </div>
           </LabelInput>
 
           {errorMessage && (

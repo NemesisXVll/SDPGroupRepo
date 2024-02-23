@@ -1,7 +1,7 @@
 import Button from "./Button.tsx";
 import LabelInput from "./LabelInput.tsx";
 import LabelDropDown from "./LabelDropDown.tsx";
-import PasswordStrength from "./Password.tsx";
+import PasswordStrength from "./PasswordStrength.tsx";
 import TopOfForm from "./TopOfForm.tsx";
 import { useState } from "react";
 import CredentialService from "../../utils/credentialService.ts";

@@ -62,7 +62,7 @@ const PasswordStrength = (props: PasswordProps) => {
           placeholder=""
           autoComplete={props.label}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
-           text-gray-900 placeholder-transparent 
+           text-gray-900 placeholder-transparent text-sm
            ${props.viewOnly ? "bg-slate-100" : ""}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
            focus:outline-none
@@ -90,7 +90,7 @@ const PasswordStrength = (props: PasswordProps) => {
 
         <label
           htmlFor={props.id}
-          className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
+          className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
         >
           {props.label}
         </label>
@@ -115,7 +115,6 @@ const PasswordStrength = (props: PasswordProps) => {
               className="ml-1 text-black"
             />
           )}
-          {/* <img src={props.type === "password" ? <FiEyeOff size="1.3em" /> : <FiEyeOff size="1.3em" />} alt="eye.png" className="w-4 h-5 ml-1" /> */}
           <HiOutlineClipboardDocument
             size="1.3em"
             className="ml-1 text-black"
@@ -127,7 +126,6 @@ const PasswordStrength = (props: PasswordProps) => {
               }
             }}
           />
-          {/* <img src={clipboardLogo} alt="clipboard.png" className="w-4 h-4" /> */}
         </div>
       </div>
 
