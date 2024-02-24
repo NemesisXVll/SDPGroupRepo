@@ -24,22 +24,22 @@ const Card = (props: CardProps) => {
 	const credentialStatus = (): string => {
 		if (props.isWeak) {
 			if (props.isReused && props.isOld) {
-				return "bg-gradient-to-r from-red-500 via-sky-700 to-yellow-400";
+				return "bg-gradient-to-r from-red-500 via-sky-700 to-purple-400";
 			} else if (props.isReused) {
 				return "bg-gradient-to-r from-red-500 to-sky-700";
 			} else if (props.isOld) {
-				return "bg-gradient-to-r from-red-500 to-yellow-400";
+				return "bg-gradient-to-r from-red-500 to-purple-500";
 			} else {
 				return "bg-red-500";
 			}
 		} else if (props.isReused) {
 			if (props.isOld) {
-				return "bg-gradient-to-r from-sky-700 to-yellow-400";
-			} else {
-				return "bg-sky-700";
+				return "bg-gradient-to-r from-sky-700 to-purple-500";
+			} else if (!props.isOld && !props.isWeak) {
+				return "bg-gradient-to-r from-sky-700 to-green-500";
 			}
 		} else if (props.isWeak) {
-			return "bg-yellow-400";
+			return "bg-purple-500";
 		}
 		return "bg-green-500";
 	};

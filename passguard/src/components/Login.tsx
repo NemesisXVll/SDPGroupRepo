@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import loginImg from "../assets/icons/login/login.jpg";
+import loginImg from "../assets/icons/common/appLogo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { login } from "../utils/authService"; // Adjust the import path as needed
 import { useNavigate } from "react-router-dom";

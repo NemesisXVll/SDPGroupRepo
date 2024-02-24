@@ -1,5 +1,6 @@
 import { Password } from "primereact/password";
 import prisma from "../client";
+import { encryptData, decryptData } from "./Security/Encryption";
 
 export default class UserQueryService {
 	//Add Methods Here for Reading
@@ -50,23 +51,45 @@ export default class UserQueryService {
 	//-------------------------Credential Model-------------------------//
 	//get user credentials by user id
 	async getCredentialsByUserId(userId: any) {
-		return await prisma.credential.findMany({
+		
+		const credentials = await prisma.credential.findMany({
 			where: {
 				userId: userId,
 			},
 		});
+		//decrypt data
+		credentials.forEach((element) => {
+			element.data = decryptData(element.data, "password");
+		});
+		return credentials;
+	}
+	async getAllCurrentCredentials() {
+		const credentials = await prisma.credential.findMany({
+			where: {
+				isTrashed: false,
+			},
+		});
+		//decrypt data
+		credentials.forEach((element) => {
+			element.data = decryptData(element.data, "password");
+		});
+		return credentials;
 	}
 
 	//get a credential by credential id
 	async getCredentialById(credentialId: any) {
-		return await prisma.credential.findUnique({
+		const credential = await prisma.credential.findUnique({
 			where: {
 				credentialId: credentialId,
 			},
 		});
+		//decrypt data
+		if(credential)
+		credential.data = JSON.parse(decryptData(credential.data, "password"));
+		return credential;
 	}
 	async getDataByCredentialId(credentialId: any) {
-		return await prisma.credential.findFirst({
+		const credential = await prisma.credential.findFirst({
 			where: {
 				credentialId: credentialId,
 			},
@@ -74,6 +97,10 @@ export default class UserQueryService {
 				data: true,
 			},
 		});
+		//decrypt data
+		if (credential)
+			credential.data = JSON.parse(decryptData(credential.data, "password"));
+		return credential;
 	}
 
 	//get credentials by service name

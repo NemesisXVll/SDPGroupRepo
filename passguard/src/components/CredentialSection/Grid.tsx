@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import Card from "./Card";
 import CredentialService from "../../utils/credentialService";
 import AddButton from "../Form/AddButton";
+import { Dropdown } from "flowbite-react";
+import { FaTrash } from "react-icons/fa";
+import { CiCircleAlert } from "react-icons/ci";
+import { SlGrid } from "react-icons/sl";
+
 
 const credentialService = new CredentialService();
 export interface CredentialData {
@@ -18,6 +23,7 @@ type GridProps = {
 	onCardClick: (credentialData: CredentialData, updateClicked: boolean) => void;
 	onAddClick: () => void;
 	onFormSubmit: boolean;
+	notifyStats: () => void;
 };
 
 const Grid = (props: GridProps) => {
@@ -25,6 +31,9 @@ const Grid = (props: GridProps) => {
 	const [filteredCondition, setFilteredCondition] = useState<string>(
 		"(item) => !item.isTrashed"
 	);
+	const [credentialsTitle, setCredentialsTitle] =
+		useState<string>("My Credentials");
+	const [sync, setSync] = useState<boolean>(false);
 
 	const handleCardClick = (
 		credentialData: CredentialData,
@@ -42,6 +51,9 @@ const Grid = (props: GridProps) => {
 			return item;
 		});
 		setCurrentCredentials(updatedCredentials);
+		setSync((sync) => !sync);
+		console.log("Syncing", sync);
+		props.notifyStats();
 	};
 	const handlePermanentRemoveClick = (credentialId: number) => {
 		credentialService.deleteCredential(credentialId);
@@ -59,6 +71,7 @@ const Grid = (props: GridProps) => {
 			return item;
 		});
 		setCurrentCredentials(updatedCredentials);
+		props.notifyStats();
 	};
 	const handleSearch = () => {
 		const input = document.getElementById("searchInput");
@@ -75,23 +88,29 @@ const Grid = (props: GridProps) => {
 			});
 		}
 	};
-	const handleFilterChange = (event: any) => {
-		const filter = event.target.value;
+	const handleFilterChange = (value: any) => {
+		const filter = value;
 		let filterCondition;
 
 		if (filter === "current") {
-			filterCondition = "(item) => !item.isTrashed"; // Return true for all items
+			filterCondition = "(item) => !item.isTrashed";
+			setCredentialsTitle("My Credentials");
 		} else if (filter === "weak") {
 			filterCondition = "(item) => !item.isTrashed && item.isWeak";
+			setCredentialsTitle("Weak Passwords");
 		} else if (filter === "old") {
 			filterCondition = "(item) => !item.isTrashed && item.isOld";
+			setCredentialsTitle("Old Passwords");
 		} else if (filter === "reused") {
 			filterCondition = "(item) => !item.isTrashed && item.isReused";
+			setCredentialsTitle("Reused Passwords");
 		} else if (filter === "strong") {
 			filterCondition =
 				"(item) => !item.isTrashed && !item.isWeak && !item.isOld && !item.isReused";
+			setCredentialsTitle("Strong Passwords");
 		} else if (filter === "trash") {
 			filterCondition = "(item) => item.isTrashed";
+			setCredentialsTitle("Trashed Credentials");
 		} else {
 			filterCondition = "() => true";
 		}
@@ -111,12 +130,15 @@ const Grid = (props: GridProps) => {
 			}
 		};
 		fetchData();
+		console.log("Fetching credentials");
 		return () => {
 			window.ipcRenderer.removeAllListeners("findCredentialsByIdResponse");
 		};
-	}, [props.onFormSubmit || filteredCondition]);
+	}, [props.onFormSubmit, filteredCondition ,sync]);
 
-	const credentialsLength = currentCredentials.filter(eval(filteredCondition)).length;
+	const credentialsLength = currentCredentials.filter(
+		eval(filteredCondition)
+	).length;
 
 	const injectCard = () => {
 		return currentCredentials
@@ -147,8 +169,8 @@ const Grid = (props: GridProps) => {
 	return (
 		<>
 			<div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3">
-				<h3 className="text-xl font-medium p-1">
-					Credentials ({credentialsLength})
+				<h3 className="text-xl font-medium w-56">
+					{credentialsTitle} ({credentialsLength})
 				</h3>
 				<div>
 					<div id="search-container" className="relative w-80">
@@ -163,18 +185,42 @@ const Grid = (props: GridProps) => {
 				</div>
 				<AddButton onClick={props.onAddClick}></AddButton>
 				<div id="filter-container">
-					<select
-						name="filter"
-						id="filter"
-						className="rounded-md p-2 bg-white border-2 border-gray-300"
-						onChange={handleFilterChange}
-					>
-						<option value="current">Current</option>
-						<option value="trash">Trash</option>
-						<option value="weak">Weak</option>
-						<option value="old">Old</option>
-						<option value="reused">Reused</option>
-					</select>
+					<Dropdown label= {credentialsTitle} dismissOnClick={true} color="dark">
+						<Dropdown.Item
+							value={"current"}
+							icon={SlGrid}
+							onClick={() => handleFilterChange("current")}
+						>My Credentials</Dropdown.Item>
+						<Dropdown.Item
+							value={"weak"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("weak")}
+							className="text-red-500"
+						>Weak Passwords</Dropdown.Item>
+						<Dropdown.Item
+							value={"reused"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("reused")}
+							className="text-blue-500"
+						>
+							Reused Passwords
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"old"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("old")}
+							className="text-purple-500"
+						>
+							Old Passwords
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"trash"}
+							icon={FaTrash}
+							onClick={() => handleFilterChange("trash")}
+						>
+							Trash
+						</Dropdown.Item>
+					</Dropdown>
 				</div>
 			</div>
 			<div className="cards p-3 gap-5">{injectCard()}</div>

@@ -31,12 +31,12 @@ export default class CredentialService {
 			url: credentialObj.loginPageUrl,
 			isWeak: this.checkPasswordStrength(credentialObj.password),
 			isReused: false,
+			isTrashed: false,
 			serviceType: credentialObj.serviceType,
 			picture: "https://via.placeholder.com/150",
 			userId: this.convertStringToInt(credentialObj.userId),
 		};
 
-		// console.log(data);
 
 		window.ipcRenderer.send("createCredential", data);
 	}
@@ -87,7 +87,6 @@ export default class CredentialService {
 			}),
 			url: credentialObj.loginPageUrl,
 			isWeak: this.checkPasswordStrength(credentialObj.password),
-			// isReused: false,
 			serviceType: credentialObj.serviceType,
 			picture: "https://via.placeholder.com/150",
 			userId: this.convertStringToInt(credentialObj.userId),

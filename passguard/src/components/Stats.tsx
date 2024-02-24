@@ -1,16 +1,18 @@
 import blueinfo from "../assets/icons/stats/blueinfo.svg";
 import redinfo from "../assets/icons/stats/redinfo.svg";
 import refresh from "../assets/icons/stats/refresh.svg";
-import yellowinfo from "../assets/icons/stats/yellowinfo.svg";
-import React, { useEffect, useState } from "react";
+import purpleinfo from "../assets/icons/stats/purpleinfo.svg";
+import { useEffect, useState } from "react";
 import CredentialService from "../utils/credentialService";
 import { useLocation } from "react-router-dom";
 
 const credentialService = new CredentialService();
 
-//I could comapre here instead
+type StatsProps = {
+	sync: boolean;
+};
 
-const Stats = () => {
+const Stats = (props: StatsProps) => {
 	const [totalCredentials, setTotalCredentials] = useState<number>(0);
 	const [totalWeakPasswords, setTotalWeakPasswords] = useState<number>(0);
 	const [totalOldPasswords, setTotalOldPasswords] = useState<number>(0);
@@ -23,50 +25,58 @@ const Stats = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				 await credentialService.checkOldPasswordStatus(user.userId)
-				const total = await credentialService.getTotalCredentialsCountByUserId(
-					user.userId
-				);
-				setTotalCredentials(total);
-				const totalWeak =
-					await credentialService.getWeakPasswordsCountByUserIdRequest(
-						user.userId
-					);
-				setTotalWeakPasswords(totalWeak);
-				const totalReused =
-					await credentialService.getReusedPasswordsCountByUserIdRequest(
-						user.userId
-					);
-				setTotalReusedPasswords(totalReused);
-				const totalOld =
-					await credentialService.getOldPasswordsCountByUserIdRequest(
-						user.userId
-					);
-				setTotalOldPasswords(totalOld);
+				await credentialService.checkOldPasswordStatus(user.userId);
+				setTimeout(async () => {
+					const total =
+						await credentialService.getTotalCredentialsCountByUserId(
+							user.userId
+						);
+					const totalWeak =
+						await credentialService.getWeakPasswordsCountByUserIdRequest(
+							user.userId
+						);
+					const totalReused =
+						await credentialService.getReusedPasswordsCountByUserIdRequest(
+							user.userId
+						);
+
+					const totalOld =
+						await credentialService.getOldPasswordsCountByUserIdRequest(
+							user.userId
+						);
+					setTotalCredentials(total);
+					setTotalWeakPasswords(totalWeak);
+					setTotalReusedPasswords(totalReused);
+					setTotalOldPasswords(totalOld);
+				}, 100);
 			} catch (error) {
 				console.error("Error fetching credentials:", error);
 			}
 		};
 		fetchData();
-	}, [refreshCount]);
+		console.log("Stats Refreshed");
+	}, [refreshCount, props.sync]);
 	const handleRefreshClick = () => {
 		setRefreshCount((refreshCount) => refreshCount + 1);
 	};
-	let weakWidth=0, reusedWidth=0, oldWidth = 0;
+	let weakWidth = 0,
+		reusedWidth = 0,
+		oldWidth = 0,
+		totalWidth = 0;
 	if (totalCredentials != 0) {
-		 weakWidth = (totalWeakPasswords / totalCredentials) * 1000;
-		 reusedWidth = (totalReusedPasswords / totalCredentials) * 1000;
-		 oldWidth = (totalOldPasswords / totalCredentials) * 1000;
+		weakWidth = (totalWeakPasswords / totalCredentials) * 1000;
+		reusedWidth = (totalReusedPasswords / totalCredentials) * 1000;
+		oldWidth = (totalOldPasswords / totalCredentials) * 1000;
+		totalWidth = 1000 - (weakWidth + reusedWidth + oldWidth);
 	}
 
 	return (
 		<div className="w-full p-2 h-fit m-3">
 			<div className="flex">
 				<h5 className="p-1 text-xl font-medium">Password Analysis </h5>
-					<button onClick={handleRefreshClick}>
+				<button onClick={handleRefreshClick}>
 					<img src={refresh} alt="refresh-icon" />
-					</button>
-				
+				</button>
 			</div>
 
 			<div className="flex items-center ">
@@ -74,7 +84,7 @@ const Stats = () => {
 					<div className="flex">
 						{weakWidth != 0 ? (
 							<div
-								className="flex p-2 bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
+								className="flex p-2 rounded-r-md bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
 								style={{ width: `${weakWidth}%` }}
 							>
 								Weak
@@ -82,7 +92,7 @@ const Stats = () => {
 						) : null}
 						{reusedWidth != 0 ? (
 							<div
-								className="flex p-2 bg-sky-700 h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
+								className="flex p-2 bg-sky-700 h-8 text-center rounded-r-md text-xs justify-center items-center text-white font-nunito font-bold"
 								style={{ width: `${reusedWidth}%` }}
 							>
 								Reused
@@ -90,19 +100,28 @@ const Stats = () => {
 						) : null}
 						{oldWidth != 0 ? (
 							<div
-								className="flex p-2 bg-yellow-400 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
+								className="flex p-2 bg-purple-500 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
 								style={{ width: `${oldWidth}%` }}
 							>
 								Old
 							</div>
 						) : null}
+						{ oldWidth == 0 && reusedWidth == 0 && weakWidth == 0 
+							? (
+								<div
+									className="flex p-2 bg-neutral-200 rounded-r-md rounded-l-md h-8 text-center text-xs justify-center items-center text-black font-nunito font-bold"
+									style={{ width: "100%" }}
+								>
+									No Stats Available
+								</div>
+							): null}
 					</div>
 				</div>
 				<div className="analysis-container text-center flex justify-evenly  w-full">
 					<div>
 						<div className="flex">
-							<img src={redinfo} alt="info-icon" className="w-3" />
-							<p className="text-xs font-nunito font-bold p-1">
+							<img src={redinfo} alt="info-icon" className="w-4" />
+							<p className="text-sm font-nunito font-bold p-1">
 								{totalWeakPasswords} Weak Passwords
 							</p>
 						</div>
@@ -112,8 +131,8 @@ const Stats = () => {
 					</div>
 					<div>
 						<div className="flex">
-							<img src={blueinfo} alt="info-icon" className="w-3" />
-							<p className="text-xs font-nunito font-bold p-1">
+							<img src={blueinfo} alt="info-icon" className="w-4 mt-0" />
+							<p className="text-sm font-nunito font-bold p-1">
 								{totalReusedPasswords} Reused Passwords
 							</p>
 						</div>
@@ -123,8 +142,8 @@ const Stats = () => {
 					</div>
 					<div>
 						<div className="flex">
-							<img src={yellowinfo} alt="info-icon" className="w-3" />
-							<p className="text-xs font-nunito font-bold p-1">
+							<img src={purpleinfo} alt="info-icon" className="w-4" />
+							<p className="text-sm font-nunito font-bold p-1">
 								{totalOldPasswords} Old Passwords
 							</p>
 						</div>
