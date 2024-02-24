@@ -9,7 +9,6 @@ import { useState } from "react";
 import { Trash } from "lucide-react";
 import Modal from "./GenPass.tsx";
 import Document from "./Document/Document.tsx";
-import File from "./Document/File.tsx";
 
 function App() {
   return (
@@ -20,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/secured-documents" element={<Document />} />
         </Routes>
       </BrowserRouter>
     </>

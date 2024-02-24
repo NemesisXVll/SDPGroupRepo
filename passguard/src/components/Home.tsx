@@ -60,7 +60,7 @@ function Home() {
     <>
       <div className="app-container h-screen">
         <div className="navbar">
-          <Navbar isExpanded={true}></Navbar>
+          <Navbar isExpanded={location.state.expanded}></Navbar>
         </div>
 
 				<div className="stats mb-5">

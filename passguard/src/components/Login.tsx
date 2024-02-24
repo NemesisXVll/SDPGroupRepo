@@ -24,7 +24,7 @@ const Login: React.FC = () => {
     const user = await login({ email, password });
     if (user) {
       console.log("User logged in");
-      navigate("/home", { state: { user } });
+      navigate("/home", { state: { user, expanded:true } });
     } else {
       console.log("Login failed");
       setErrorMessage("Incorrect email or password. Please try again.");
@@ -36,8 +36,6 @@ const Login: React.FC = () => {
   }
 
   function handleOnChange(event: any): void {
-    console.log(event.target.value);
-    console.log("hi");
   }
 
   return (

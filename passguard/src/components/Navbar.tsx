@@ -2,7 +2,7 @@ import appLogo from "../assets/icons/navbar/appLogo.svg";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import navbarItems from "../data/navbarItems";
 import { createContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type NavbarProps = {
   isExpanded?: boolean;
@@ -14,11 +14,19 @@ function Navbar(props: NavbarProps) {
   const [expanded, setExpanded] = useState(props.isExpanded);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const user = location.state.user;
 
   useEffect(() => {
     props.handleExpand && props.handleExpand(expanded);
   }, [expanded]);
+
+  function handleOnClick(item: { name: string; icon: string; path: string; }): void {
+    console.log(item);
+    if (item.path) {
+      navigate(item.path, { state: { expanded, user } });
+    }
+  }
 
   return (
     <aside className="h-screen">
@@ -42,6 +50,7 @@ function Navbar(props: NavbarProps) {
           <ul className="flex-1 px-3">
             {navbarItems.map((item, index) => (
               <li
+                onClick={() => handleOnClick(item)}
                 key={index}
                 className={`
                         relative flex items-center py-3 px-3 my-1

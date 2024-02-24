@@ -56,6 +56,7 @@ type LoginData = {
 };
 
 export const login = async ({ email, password }: LoginData): Promise<any> => {
+
   const user = new Promise((resolve) => {
     window.ipcRenderer.send("findUserByEmailRequest", email);
     window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
