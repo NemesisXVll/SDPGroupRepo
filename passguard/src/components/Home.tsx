@@ -15,8 +15,8 @@ function Home() {
 	const [formSubmitted, setFormSubmitted] = useState(false);
 	const [syncStats, setSyncStats] = useState(false);
 
-	const location = useLocation();
-	const user = location.state.user;
+  const location = useLocation();
+  const user = location.state.user;
 
 	const handleNotifyStats = (): void => {
 		console.log("Notifying Stats");
@@ -39,47 +39,48 @@ function Home() {
 	) => {
 		setShowForm(false);
 
-		// Introduce a delay before setting ShowForm to true
-		setTimeout(() => {
-			setShowForm(true);
-		}, 0); // Adjust the delay time (in milliseconds) according to your needs
-		setCredential(credentialData);
-		setEditInput(updateClicked);
-	};
+    // Introduce a delay before setting ShowForm to true
+    setTimeout(() => {
+      setShowForm(true);
+    }, 0); // Adjust the delay time (in milliseconds) according to your needs
+    setCredential(credentialData);
+    setEditInput(updateClicked);
+  };
 
-	const handleFormBTN = (showForm: boolean) => {
-		setShowForm(showForm);
-	};
+  const handleFormBTN = (showForm: boolean) => {
+    setShowForm(showForm);
+  };
 
 	function handleFormSubmitted(): void {
 		setFormSubmitted((formSubmitted) => !formSubmitted);
 		setSyncStats((syncStats) => !syncStats);
 	}
 
-	return (
-		<>
-			<div className="app-container h-screen">
-				<div className="navbar">
-					<Navbar isactive={false}></Navbar>
-				</div>
+  return (
+    <>
+      <div className="app-container h-screen">
+        <div className="navbar">
+          <Navbar isExpanded={true}></Navbar>
+        </div>
 
 				<div className="stats mb-5">
 					<Stats sync={syncStats}></Stats>
 				</div>
 
-				<div className="form">
-					{showForm ? (
-						<Form
-							userId={user.userId}
-							formSubmitted={handleFormSubmitted}
-							credentialObj={credential}
-							editable={editInput}
-							onBTNClick={handleFormBTN}
-						></Form>
-					) : (
-						""
-					)}
-				</div>
+        <div className="form">
+          {showForm ? (
+            <Form
+              onCardClick={handleCardClickInApp}
+              userId={user.userId}
+              formSubmitted={handleFormSubmitted}
+              credentialObj={credential}
+              editable={editInput}
+              onBTNClick={handleFormBTN}
+            ></Form>
+          ) : (
+            ""
+          )}
+        </div>
 
 				<div className="credentials overflow-auto ml-4 mt-3">
 					<Grid

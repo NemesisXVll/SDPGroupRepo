@@ -8,7 +8,7 @@ type SignUpData = {
   picture: string;
 };
 
-export const SignUp = (data: SignUpData): boolean => {
+export const SignUp = async (data: SignUpData): Promise<boolean> => {
   const { email, masterPassword, confirmPassword, ...rest } = data;
 
   if (masterPassword !== confirmPassword) {
@@ -27,16 +27,27 @@ export const SignUp = (data: SignUpData): boolean => {
     picture: "https://via.placeholder.com/150",
   };
 
-  // Hashing the password before storing it should be done on the server side
-  // For now, we'll skip it and save the data directly
-  //save the information in json format without confirmation
+  try {
+    const userData: any = await new Promise((resolve) => {
+      window.ipcRenderer.send("findUserByEmailRequest", email);
+      window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
+        const parsedData = JSON.parse(arg);
+        resolve(parsedData);
+      });
+    });
 
-  console.log(filteredData);
-
-  window.ipcRenderer.send("createUser", filteredData);
-
-  console.log("Account created successfully!");
-  return true;
+    if (userData) {
+      console.log("User already exists");
+      return false;
+    } else {
+      window.ipcRenderer.send("createUser", filteredData);
+      console.log("Account created successfully!");
+      return true;
+    }
+  } catch (error) {
+    console.error("Error during SignUp:", error);
+  }
+  return false;
 };
 
 type LoginData = {

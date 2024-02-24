@@ -51,7 +51,7 @@ const Card = (props: CardProps) => {
 			onClick={props.onClick}
 		>
 			<img
-				src={twitterCard.logo}
+				src={props.picture}
 				className="w-16 translate-x-32 translate-y-10"
 				alt="logo"
 			/>

@@ -35,6 +35,11 @@ const Login: React.FC = () => {
     navigate("/signup");
   }
 
+  function handleOnChange(event: any): void {
+    console.log(event.target.value);
+    console.log("hi");
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
       <div className="hidden sm:block">
@@ -55,32 +60,40 @@ const Login: React.FC = () => {
 
           <LabelInput
             type="text"
+            required={true}
             value={email}
             label="Email"
             id="email"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           <LabelInput
             type={showPassword ? "text" : "password"}
             value={password}
+            required={true}
             label="Password"
             id="password"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           >
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
+            <div className="grid grid-rows-2 grid-cols-2 pr-1">
               {showPassword ? (
-                <FiEyeOff size="1.3em" />
+                <FiEyeOff
+                  onClick={() => setShowPassword(!showPassword)}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               ) : (
-                <FiEye size="1.3em" />
+                <FiEye
+                  onClick={() => setShowPassword(!showPassword)}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               )}
-            </button>
+            </div>
           </LabelInput>
 
           {errorMessage && (

@@ -5,6 +5,7 @@ import { SignUp } from "../utils/authService";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
+import MPasswdStrength from "./MPasswdStrength";
 
 interface State {
   firstName: string;
@@ -29,14 +30,6 @@ const Signup: React.FC = () => {
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
-
   const togglePasswordVisibility = () => {
     setState((prevState) => ({
       ...prevState,
@@ -51,14 +44,37 @@ const Signup: React.FC = () => {
     }));
   };
 
-  const handleSignUpClick = (event: any) => {
+  const handleSignUpClick = async (event: any) => {
     event.preventDefault();
     const state = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
-    console.log(state.email);
 
-    if (password !== confirmPassword) {
+    const lettersOnlyRegex = /^[A-Za-z]+$/;
+    if (
+      !lettersOnlyRegex.test(state.firstName) ||
+      !lettersOnlyRegex.test(state.lastName)
+    ) {
+      setErrorMessage("First and Last Name must contain only letters.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(state.email)) {
+      setErrorMessage("Invalid email format.");
+      return;
+    }
+
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    if (!passwordRegex.test(state.password)) {
+      setErrorMessage(
+        "Password must contain at least one uppercase letter, one digit, one special character, and be at least 8 characters long."
+      );
+      return;
+    }
+
+    if (state.password !== state.confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
@@ -73,10 +89,9 @@ const Signup: React.FC = () => {
       picture: "",
     });
 
-    if (signUpResult) {
-      navigate("/login"); // Navigate to login page after successful signup
+    if (await signUpResult) {
+      navigate("/login");
     } else {
-      // Sign up failed - handle the error, maybe show a message to the user
       setErrorMessage("Sign up failed. Please try again.");
     }
   };
@@ -93,6 +108,11 @@ const Signup: React.FC = () => {
 
   function handleLoginClick(): void {
     navigate("/login");
+  }
+
+  function handleOnChange(event: any): void {
+    console.log(event.target.value);
+    console.log("hi");
   }
 
   return (
@@ -121,7 +141,7 @@ const Signup: React.FC = () => {
             label="First Name"
             id="firstName"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Last Name Field */}
@@ -132,7 +152,7 @@ const Signup: React.FC = () => {
             label="Last Name"
             id="lastName"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Email Field */}
@@ -143,30 +163,18 @@ const Signup: React.FC = () => {
             label="Email"
             id="email"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           ></LabelInput>
 
           {/* Password Field */}
-          <LabelInput
-            type={showPassword ? "text" : "password"}
+          <MPasswdStrength
+            required={true}
             value={password}
             label="Password"
             id="password"
             placeholder=""
-            onChange="handleOnChange"
-          >
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
-              {showPassword ? (
-                <FiEyeOff size="1.3em" />
-              ) : (
-                <FiEye size="1.3em" />
-              )}
-            </button>
-          </LabelInput>
+            onChange={handleOnChange}
+          ></MPasswdStrength>
 
           {/* Confirm Password Field */}
           <LabelInput
@@ -176,20 +184,25 @@ const Signup: React.FC = () => {
             label="Confirm Password"
             id="confirmPassword"
             placeholder=""
-            onChange="handleOnChange"
+            onChange={handleOnChange}
           >
-            <button
-              type="button"
-              aria-label="Toggle confirm password visibility"
-              onClick={toggleConfirmPasswordVisibility}
-              className="absolute translate-x-[21.2rem] translate-y-8"
-            >
-              {showConfirmPassword ? (
-                <FiEyeOff size="1.3em" />
+            <div className="grid grid-rows-2 grid-cols-2 pr-1">
+              {showPassword ? (
+                <FiEyeOff
+                  onClick={toggleConfirmPasswordVisibility}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               ) : (
-                <FiEye size="1.3em" />
+                <FiEye
+                  onClick={toggleConfirmPasswordVisibility}
+                  size="1.3em"
+                  className="ml-1 text-black
+              absolute translate-x-[21rem] top-[2rem]"
+                />
               )}
-            </button>
+            </div>
           </LabelInput>
 
           {/* Error Message */}
