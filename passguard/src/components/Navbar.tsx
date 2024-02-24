@@ -91,8 +91,8 @@ function Navbar(props: NavbarProps) {
                     `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold text-white">${JSON.parse(user.data).firstName + " " + JSON.parse(user.data).lastName}</h4>
-              <span className="text-xs text-gray-600">${user.email}</span>
+              <h4 className="font-semibold text-white">{JSON.parse(user.data).firstName + " " + JSON.parse(user.data).lastName}</h4>
+              <span className="text-xs text-gray-600">{user.email}</span>
             </div>
             <MoreVertical size={20} color="white" />
           </div>

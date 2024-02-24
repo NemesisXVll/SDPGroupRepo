@@ -1,4 +1,4 @@
-import blackBoardLogo from "../assets/icons/form/blackboardLogo.svg";
+import blackBoardLogo from "../assets/icons/form/blackBoardlogo.svg";
 import facebookLogo from "../assets/icons/form/facebookLogo.svg";
 import instaLogo from "../assets/icons/form/instaLogo.svg";
 import linkedInLogo from "../assets/icons/form/linkedInLogo.svg";

@@ -163,6 +163,7 @@ const Grid = (props: GridProps) => {
 					isOld={item.isOld}
 					isReused={item.isReused}
 					isTrashed={item.isTrashed}
+					picture= {item.picture}
 				></Card>
 			));
 	};
