@@ -1,18 +1,17 @@
 import "./kebab.scss";
 import { useState, useEffect, useRef } from "react";
 
-
-
 interface KebabState {
   Kebab: boolean;
 }
 
 type KebabProps = {
-  onUpdateClick: () => void;
+  onUpdateClick?: () => void;
   onDeleteClick: () => void;
-  onRecoverClick: () => void;
-  onPermanentRemoveClick: () => void;
-  isTrashed: boolean;
+  onRecoverClick?: () => void;
+  onPermanentRemoveClick?: () => void;
+  isTrashed?: boolean;
+  isCard?: boolean;
 };
 
 const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
@@ -29,17 +28,23 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   };
 
   const handleClickOnUpdate = () => {
-    props.onUpdateClick();
+    if (props.onUpdateClick) {
+      props.onUpdateClick();
+    }
   };
   const handleClickOnDelete = () => {
     props.onDeleteClick();
-  }
+  };
   const handleClickOnRecover = () => {
-    props.onRecoverClick();
-  }
-  const handleClickOnPermanentRemove = () => { 
-    props.onPermanentRemoveClick();
-  }
+    if (props.onRecoverClick) {
+      props.onRecoverClick();
+    }
+  };
+  const handleClickOnPermanentRemove = () => {
+    if (props.onPermanentRemoveClick) {
+      props.onPermanentRemoveClick();
+    }
+  };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (kebabRef.current && !kebabRef.current.contains(event.target as Node)) {
@@ -56,9 +61,7 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
   }, []);
 
   return (
-    <div id="kebab"
-      ref={kebabRef}
-    >
+    <div id="kebab" ref={kebabRef}>
       <div className="kebab" onClick={handleOnClick}>
         <figure></figure>
         <figure
@@ -71,24 +74,56 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
             isOpen.Kebab ? "dropdown active" : "dropdown"
           }`}
         >
-          {!props.isTrashed ? (
+          {props.isCard ? (
             <>
-          <li key="1" id="1" className="text-xs" onClick={handleClickOnUpdate}>
-            <p>Update</p>
-          </li>
-          <li key="2" id="2" className="text-xs" onClick={handleClickOnDelete}>
-            <p>Delete</p>
+              <li
+                key="1"
+                id="1"
+                className="text-xs"
+                onClick={handleClickOnDelete}
+              >
+                <p>Delete</p>
               </li>
             </>
-          ) :
-          (
+          ) : !props.isTrashed ? (
             <>
-          <li key="3" id="3" className="text-xs" onClick={handleClickOnRecover}>
-            <p>Recover</p>
-          </li>
-          <li key="4" id="4" className="text-xs" onClick={handleClickOnPermanentRemove}>
-            <p>Remove</p>
-          </li> 
+              <li
+                key="1"
+                id="1"
+                className="text-xs"
+                onClick={handleClickOnUpdate}
+              >
+                <p>Update</p>
+              </li>
+
+              <li
+                key="2"
+                id="2"
+                className="text-xs"
+                onClick={handleClickOnDelete}
+              >
+                <p>Delete</p>
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                key="1"
+                id="1"
+                className="text-xs"
+                onClick={handleClickOnRecover}
+              >
+                <p>Recover</p>
+              </li>
+
+              <li
+                key="2"
+                id="2"
+                className="text-xs"
+                onClick={handleClickOnPermanentRemove}
+              >
+                <p>Remove</p>
+              </li>
             </>
           )}
         </ul>

@@ -25,7 +25,7 @@ const Button = (props: FormProps) => {
          leading-normal tracking-tight font-semibold text-center w-full
           transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem]
          ${
-           props.value === "Cancel"
+           props.value === "Cancel" || props.value === "Add Document"
              ? "bg-black hover:text-black hover:bg-yellow-400"
              : "from-cyan-500 to-blue-500"
          }
