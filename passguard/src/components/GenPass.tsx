@@ -1,6 +1,6 @@
 'use client';
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from "react-feather";
 import { ToastContainer, toast } from "react-toastify";
 import "../GenPass.css";
@@ -10,23 +10,21 @@ export default function Component({ open, onClose, children }: any) {
   //variables & functions needed:
   /////
   const [openModal, setOpenModal] = useState(false);
-  const [email, setEmail] = useState('');
+  const [generatedpassword, setgeneratedpassword] = useState('');
 
   function onCloseModal() {
     setOpenModal(false);
-    setEmail('');
+    setgeneratedpassword('');
   }
   /////
-
-  const [password, setPassword] = useState("");
-  const [passwordLength, setPasswordLength] = useState(20);
+  const [passwordLength, setPasswordLength] = useState(15);
   const [includeUppercase, setIncludeUppercase] = useState(false);
   const [includeLowercase, setIncludeLowercase] = useState(false);
   const [includeNumbers, setIncludeNumbers] = useState(false);
   const [includeSymbols, setIncludeSymbols] = useState(false);
 
   const COPY_SUCCESS = "Password successfully copied to clipboard";
-  const numbers = "0123456789";
+  // const numbers = "0123456789";
   const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
   const specialCharacters = "!'^+%&/()=?_#$½§{[]}|;:>÷`<.*-@é";
@@ -122,7 +120,65 @@ export default function Component({ open, onClose, children }: any) {
 
   //end of variables & functions
 
+  const [password, setPassword] = useState("");
+  // const [passwordLength, setPasswordLength] = useState(15);
+  const [uppercase, setUppercase] = useState(true);
+  const [lowercase, setLowercase] = useState(true);
+  const [numbers, setNumbers] = useState(true);
+  const [symbols, setSymbols] = useState(true);
+  const [errors, setErrors] = useState({});
 
+
+  const generatePassword = () => {
+    setErrors({});
+    if (!uppercase && !lowercase && !numbers && !symbols) {
+      return setErrors("sdfsfsd");
+    } else if (passwordLength === 0) {
+      return setErrors("Password length cannot be 0");
+    } else if (passwordLength === null) {
+      return setErrors("Invalid password length");
+    } else if (passwordLength >= 30) {
+      setPassword("");
+      return setErrors("Password length cannot exceed 30 characters");
+    }
+
+    let password = "";
+    for (let i = 0; i < passwordLength; i++) {
+      let choice = random(0, 3);
+      if (lowercase && choice === 0) {
+        password += randomLower();
+      } else if (uppercase && choice === 1) {
+        password += randomUpper();
+      } else if (symbols && choice === 2) {
+        password += randomSymbol();
+      } else if (numbers && choice === 3) {
+        password += random(0, 9);
+      } else {
+        i--;
+      }
+    }
+    setPassword(password);
+  };
+  const random = (min = 0, max = 1) => {
+    return Math.floor(Math.random() * (max + 1 - min) + min);
+  };
+
+  const randomLower = () => {
+    return String.fromCharCode(random(97, 122));
+  };
+
+  const randomUpper = () => {
+    return String.fromCharCode(random(65, 90));
+  };
+
+  const randomSymbol = () => {
+    const symbols = "~*$%@#^&!?*'-=/,.{}()[]<>";
+    return symbols[random(0, symbols.length - 1)];
+  };
+
+  useEffect(() => {
+    generatePassword();
+  }, []);
 
 
   return (
@@ -255,17 +311,18 @@ export default function Component({ open, onClose, children }: any) {
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
+          <form>
           <div className="space-y-6">
             <h3 className="text-xl center font-medium text-gray-900 dark:text-white">Password generator</h3>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="generatedPassword" value="generated password" />
+                <Label htmlFor="generatedPassword" value="generated Password" />
               </div>
               <TextInput
-                id="email"
+                id="generatedpassword"
                 // placeholder="name@company.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={generatedpassword}
+                onChange={(event) => setgeneratedpassword(event.target.value)}
                 required
               />
             </div>
@@ -315,12 +372,13 @@ export default function Component({ open, onClose, children }: any) {
             </div>
 
             <div className="w-full grid grid-cols-2 gap-8 ">
-              <Button>Confirm</Button>
-              <Button className='justify-self: end'>Generate Password</Button>
+              <Button type="submit">Confirm</Button>
+              <Button onClick={generatePassword}>Generate Password</Button>
 
             </div>
            
           </div>
+          </form>
         </Modal.Body>
       </Modal>
     </>
