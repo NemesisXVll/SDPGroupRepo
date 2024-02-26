@@ -6,36 +6,19 @@ const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
 
 export const registerIPCMainHandlers = () => {
-  ipcMain.on("createCredential", async (event, arg) => {
-    await userManagementService.createCredential(arg);
-  });
+	ipcMain.on("createCredential", async (event, arg) => {
+		await userManagementService.createCredential(arg);
+	});
+	ipcMain.on("updateCredential", async (event, arg) => {
+		await userManagementService.updateCredentialById(arg.credentialId, arg);
+	});
 
-  ipcMain.on("createDocument", async (event, arg) => {
-    await userManagementService.createDocument(arg);
-  });
-
-  ipcMain.on("createUser", async (event, arg) => {
-    await userManagementService.createUser(arg);
-  });
-
-  ipcMain.on("updateCredential", async (event, arg) => {
-    await userManagementService.updateCredentialById(arg.credentialId, arg);
-  });
-
-  ipcMain.on("deleteCredential", async (event, arg) => {
-    await userManagementService.deleteCredentialById(arg.credentialId);
-  });
-
-  ipcMain.on("deleteDocumentById", async (event, arg) => {
-    await userManagementService.deleteDocumentById(arg.credentialId);
-  });
-
-  ipcMain.on("trashCredentialById", async (event, arg) => {
-    await userManagementService.trashCredentialById(arg);
-  });
-  ipcMain.on("recoverCredentialById", async (event, arg) => {
-    await userManagementService.recoverCredentialById(arg);
-  });
+	ipcMain.on("trashCredentialById", async (event, arg) => {
+		await userManagementService.trashCredentialById(arg);
+	});
+	ipcMain.on("recoverCredentialById", async (event, arg) => {
+		await userManagementService.recoverCredentialById(arg);
+	});
 
   ipcMain.on("findUserByIdRequest", async (event, arg) => {
     event.sender.send(
@@ -58,19 +41,6 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-  ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
-    event.sender.send(
-      "findDocumentsByUserIdResponse",
-      JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
-    );
-  });
-
-	ipcMain.on("findCredentialByIdRequest", async (event, arg) => {
-		event.sender.send(
-			"findCredentialByIdResponse",
-			JSON.stringify(await userQueryService.getCredentialById(arg))
-		);
-	});
 	ipcMain.on("getTotalCredentialsCountByUserIdRequest", async (event, arg) => {
 		event.sender.send(
 			"getTotalCredentialsCountByUserIdResponse",
@@ -129,3 +99,15 @@ export const registerIPCMainHandlers = () => {
     );
   });
 };
+ipcMain.on("createDocument", async (event, arg) => {
+  await userManagementService.createDocument(arg);
+});
+ipcMain.on("deleteDocumentById", async (event, arg) => {
+  await userManagementService.deleteDocumentById(arg);
+});
+ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
+  event.sender.send(
+    "findDocumentsByUserIdResponse",
+    JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
+  );
+});

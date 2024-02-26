@@ -287,7 +287,7 @@ export default function Component({ open, onClose, children }: any) {
               min="4"
               max="50"
               defaultValue={passwordLength}
-              onChange={(e) => setPasswordLength(e.target.value)}
+              // onChange={(e) => setPasswordLength(e.target.value)}
             />
           </div>
               <div className="choice">

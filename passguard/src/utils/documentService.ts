@@ -20,8 +20,8 @@ export default class DocumentService {
       window.ipcRenderer.send("createDocument", data);
   }
 
-  async deleteDocumentById(credentialId: number) {
-    window.ipcRenderer.send("deleteDocumentById", { credentialId });
+  async deleteDocumentById(documentId: number) {
+    window.ipcRenderer.send("deleteDocumentById", documentId );
   }
 
   async findDocumentsByUserId(userId: any): Promise<any> {
@@ -32,6 +32,7 @@ export default class DocumentService {
         (event, arg) => {
           const parsedData = JSON.parse(arg);
           resolve(parsedData);
+          console.log(parsedData);
         }
       );
     });
