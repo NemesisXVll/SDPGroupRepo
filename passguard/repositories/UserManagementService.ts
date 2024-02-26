@@ -1,7 +1,7 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
 import { encryptData, decryptData } from "./Security/Encryption";
-let tmpUpdate = false;
+// let tmpUpdate = false;
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -129,8 +129,11 @@ export default class UserManagementService {
 
   //-------------------------Credential Model-------------------------//
   async createCredential(credential: any) {
-    await checkForReusedPasswordOnCreation(credential);
+    const isReused = await this.checkForReusedPasswordOnCreation(credential);
     const encryptedData = encryptData(credential.data, "password");
+    if (isReused) {
+      credential.isReused = true;
+    }
     try {
       const newCredential = await prisma.credential.create({
         data: {
@@ -144,7 +147,7 @@ export default class UserManagementService {
     }
   }
   async trashCredentialById(credentialId: number) {
-    await checkForReusedPasswordOnDeletion(credentialId);
+    await this.checkForReusedPasswordOnDeletion(credentialId);
     try {
       const trashedCredential = await prisma.credential.update({
         where: { credentialId: credentialId },
@@ -160,25 +163,35 @@ export default class UserManagementService {
     }
   }
   async recoverCredentialById(credentialId: number) {
-    const recoveredCredential =
-      await userQueryService.getCredentialById(credentialId);
-    await checkForReusedPasswordOnCreation(recoveredCredential);
-    try {
-      const recoveredCredential = await prisma.credential.update({
+    const recoveredCredential = await userQueryService.getCredentialById(credentialId);
+    const preparedCredential = { ...recoveredCredential };
+    preparedCredential.data = JSON.stringify(preparedCredential.data);
+    const isReused = await this.checkForReusedPasswordOnCreation(preparedCredential);
+    if (isReused) {
+      await prisma.credential.update({
         where: { credentialId: credentialId },
-        data: { isTrashed: false },
+        data: { isReused: true, isTrashed: false },
       });
-      return recoveredCredential;
-    } catch (error) {
-      throw error;
+    } else {
+      try {
+        const recoveredCredential = await prisma.credential.update({
+          where: { credentialId: credentialId },
+          data: { isTrashed: false },
+        });
+        return recoveredCredential;
+      } catch (error) {
+        throw error;
+      }
     }
   }
   async deleteCredentialById(credentialId: number) {
-    await checkForReusedPasswordOnDeletion(credentialId);
+    await this.checkForReusedPasswordOnDeletion(credentialId);
+    console.log("deleting credential", credentialId);
     try {
       const deletedCredential = await prisma.credential.delete({
         where: { credentialId: credentialId },
       });
+      console.log("credential deleted....")
       return deletedCredential;
     } catch (error) {
       throw error;
@@ -186,25 +199,28 @@ export default class UserManagementService {
   }
 
   async updateCredentialById(credentialId: any, credential: any) {
+    await this.checkForReusedPasswordOnUpdate(credential);
+    const encryptedData = encryptData(credential.data, "password");
     try {
       const updatedCredential = await prisma.credential.update({
         where: { credentialId: credentialId },
-        data: credential,
+        data: {
+          ...credential,
+          data: encryptedData,
+        }
       });
+      console.log("credential updated....")
       return updatedCredential;
     } catch (error) {
-      throw error;
+      console.error("Error updating credential", error);
     }
   }
   async updateCredentialValidityById(credentialId: any) {
     try {
-      console.log("Updating credential validity for ID:", credentialId);
       const updatedCredential = await prisma.credential.update({
         where: { credentialId: credentialId },
         data: { isOld: true },
       });
-      console.log("Credential updated successfully:", updatedCredential);
-
       // Ensure that updatedCredential is a valid object
       if (updatedCredential && typeof updatedCredential === "object") {
         return updatedCredential;
@@ -289,6 +305,86 @@ export default class UserManagementService {
       throw error;
     }
   }
+  async checkForReusedPasswordOnCreation(credential?: any){
+    const password = JSON.parse(credential.data).password;
+    const allCredentials = await userQueryService.getAllCurrentCredentials();
+    const existingCredentials = allCredentials.filter((cred) => {
+      const credData = JSON.parse(cred.data);
+      return credData.password === password;
+    });
+    if (existingCredentials.length > 0) {
+      for (const cred of existingCredentials) {
+        await prisma.credential.update({
+          where: { credentialId: cred.credentialId },
+          data: { isReused: true },
+        });
+      }
+      return true;
+    }
+    return false;
+  };
+  async checkForReusedPasswordOnDeletion(credentialId: any) {
+    const data = await userQueryService.getDataByCredentialId(credentialId);
+    if (!data) return;
+    const password = JSON.parse(JSON.stringify(data.data)).password;
+    const allCredentials = await userQueryService.getAllCurrentCredentials();
+    const existingCredentials = allCredentials.filter((cred) => {
+      const credData = JSON.parse(cred.data);
+      return credData.password === password;
+    });
+    if (existingCredentials.length == 2) {
+      // 2 because the one being deleted is also included
+      for (const cred of existingCredentials) {
+        await prisma.credential.update({
+          where: { credentialId: cred.credentialId },
+          data: { isReused: false },
+        });
+      }
+    }
+  };
+  async checkForReusedPasswordOnUpdate(credential: any) { 
+    const newPassword = JSON.parse(credential.data).password; // new password
+    const allCredentials = await userQueryService.getAllCurrentCredentials();
+   
+    await this.checkForReusedPasswordOnCreation(credential) // check if new password is reused
+    // await this.isOldPasswordReused(credential.id, allCredentials); // check if old password is reused
+<<<<<<< Updated upstream
+
+  }
+  // async isPasswordChanged(credentialId: any, newPassword: any) { 
+  //   const oldData = await userQueryService.getDataByCredentialId(credentialId);
+  //   console.log("old data", oldData);
+  //   const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
+  //   console.log("old pass", oldPassword);
+  //   console.log("new pass", newPassword);
+  //   if (oldPassword === newPassword) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  async isOldPasswordReused(credentialId: any) {
+		// next checking which credentials had the old password and updating them accordingly
+		// const oldData = await userQueryService.getDataByCredentialId(credentialId);
+    // const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
+    // console.log("old pass", oldPassword);
+		//  const allCredentials = await userQueryService.getAllCurrentCredentials();
+		// 	const existingCredentials = allCredentials.filter((cred) => {
+		// 		const credData = JSON.parse(cred.data);
+		// 		return credData.password === oldPassword;
+		// 	});
+		// 	if (existingCredentials.length > 1) {
+		// 		for (const cred of existingCredentials) {
+		// 			await prisma.credential.update({
+		// 				where: { credentialId: cred.credentialId },
+		// 				data: { isReused: false },
+		// 			});
+		// 		}
+		// 		return true;
+		// 	}
+		// 	return false;
+	}
+
 
   //-------------------------Document Model-------------------------//
 
@@ -354,6 +450,45 @@ const checkForReusedPasswordOnDeletion = async (credentialId: any) => {
   }
 };
 
+
+=======
+
+  }
+  // async isPasswordChanged(credentialId: any, newPassword: any) { 
+  //   const oldData = await userQueryService.getDataByCredentialId(credentialId);
+  //   console.log("old data", oldData);
+  //   const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
+  //   console.log("old pass", oldPassword);
+  //   console.log("new pass", newPassword);
+  //   if (oldPassword === newPassword) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  async isOldPasswordReused(credentialId: any) {
+		// next checking which credentials had the old password and updating them accordingly
+		// const oldData = await userQueryService.getDataByCredentialId(credentialId);
+    // const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
+    // console.log("old pass", oldPassword);
+		//  const allCredentials = await userQueryService.getAllCurrentCredentials();
+		// 	const existingCredentials = allCredentials.filter((cred) => {
+		// 		const credData = JSON.parse(cred.data);
+		// 		return credData.password === oldPassword;
+		// 	});
+		// 	if (existingCredentials.length > 1) {
+		// 		for (const cred of existingCredentials) {
+		// 			await prisma.credential.update({
+		// 				where: { credentialId: cred.credentialId },
+		// 				data: { isReused: false },
+		// 			});
+		// 		}
+		// 		return true;
+		// 	}
+		// 	return false;
+	}
+}
+>>>>>>> Stashed changes
 // prisma.$use(async (params, next) => {
 // 	if (params.model == "Credential" && params.action == "create") {
 // 		console.log("creating credential");
@@ -438,6 +573,7 @@ const checkForReusedPasswordOnDeletion = async (credentialId: any) => {
 // 			tmpUpdate = false;
 // 			return next(params);
 // 		}
+////////////////////////tillhere////////////////////////////////
 // 		if (
 // 			allCredentials.length == 1 &&
 // 			JSON.parse(allCredentials[0].data).password != newPassword

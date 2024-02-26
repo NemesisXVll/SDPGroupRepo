@@ -30,7 +30,7 @@ function createWindow() {
 		// autoHideMenuBar: true,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
-			zoomFactor: 2,
+			zoomFactor: 1,
 		},
 	});
 
