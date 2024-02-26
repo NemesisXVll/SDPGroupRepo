@@ -135,10 +135,12 @@ const PasswordStrength = (props: PasswordProps) => {
           Generate Password
         </Button>
       </div> */}
-
+{/* 
       <button className="btn btn-danger" onClick={() => setOpen(true)}>
         Generate password
-      </button>
+      </button> */}
+      
+      {/* generate password modal */}
       <GeneratePassword open={open} onClose={() => setOpen(false)}>
         {" "}
       </GeneratePassword>

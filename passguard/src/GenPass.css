@@ -31,6 +31,51 @@
     margin-bottom: 15px;
   }
   
+  input[type="number"],
+select {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid pink;
+  padding: 5px;
+  margin: 0px;
+  outline: none;
+  border-radius: 8px;
+  color: green;
+}
+
+input[type="number"]:focus,
+select:focus {
+  -moz-box-shadow: 0 0 8px #88d5e9;
+  -webkit-box-shadow: 0 0 8px #88d5e9;
+  box-shadow: 0 0 8px #88d5e9;
+  border: 1px solid dodgerblue;
+}
+
+input[type="checkbox"],
+select {
+  width: 20px;
+  height: 20px;
+}
+
+input[type="submit"] {
+  background: #3b3b98;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+}
+.option {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
   .copy__btn {
     position: absolute;
     background: #3b3b98;
