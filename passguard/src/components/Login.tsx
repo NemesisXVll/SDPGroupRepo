@@ -105,12 +105,12 @@ const Login: React.FC = () => {
 
           <p className="text-center mt-8 font-normal font-['Nunito']">
             Don't have an account?
-            <a
+             <a
               onClick={handleCreateAccount}
               href="#"
               className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
             >
-              Create an account
+               &nbsp; Create an account
             </a>
           </p>
         </form>

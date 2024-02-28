@@ -9,6 +9,11 @@ module.exports = {
 			fontFamily: {
 				nunito: ["Nunito", "sans-serif"],
 			},
+			colors: {
+				yellow: {
+					400: "#facc15",
+				},
+			},
 		},
 	},
 	plugins: [require("flowbite/plugin")],
