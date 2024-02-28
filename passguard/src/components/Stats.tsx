@@ -84,7 +84,7 @@ const Stats = (props: StatsProps) => {
 					<div className="flex">
 						{weakWidth != 0 ? (
 							<div
-								className="flex p-2 rounded-r-md bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
+								className={`flex p-2 ${reusedWidth == 0 && oldWidth == 0 ? "rounded-r-md":""} bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${weakWidth}%` }}
 							>
 								Weak
@@ -92,7 +92,7 @@ const Stats = (props: StatsProps) => {
 						) : null}
 						{reusedWidth != 0 ? (
 							<div
-								className="flex p-2 bg-sky-700 h-8 text-center rounded-r-md text-xs justify-center items-center text-white font-nunito font-bold"
+								className={`flex p-2 ${weakWidth == 0 ? "rounded-l-md":""} bg-sky-700 h-8 text-center ${oldWidth == 0 ? "rounded-r-md":""} text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${reusedWidth}%` }}
 							>
 								Reused
@@ -100,7 +100,7 @@ const Stats = (props: StatsProps) => {
 						) : null}
 						{oldWidth != 0 ? (
 							<div
-								className="flex p-2 bg-purple-500 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold"
+								className={`flex p-2 ${reusedWidth == 0 || weakWidth == 0 ? "rounded-l-md":""} bg-purple-500 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${oldWidth}%` }}
 							>
 								Old
