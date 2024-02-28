@@ -6,19 +6,19 @@ const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
 
 export const registerIPCMainHandlers = () => {
-	ipcMain.on("createCredential", async (event, arg) => {
-		await userManagementService.createCredential(arg);
-	});
-	ipcMain.on("updateCredential", async (event, arg) => {
-		await userManagementService.updateCredentialById(arg.credentialId, arg);
-	});
+  ipcMain.on("createCredential", async (event, arg) => {
+    await userManagementService.createCredential(arg);
+  });
+  ipcMain.on("updateCredential", async (event, arg) => {
+    await userManagementService.updateCredentialById(arg.credentialId, arg);
+  });
 
-	ipcMain.on("trashCredentialById", async (event, arg) => {
-		await userManagementService.trashCredentialById(arg);
-	});
-	ipcMain.on("recoverCredentialById", async (event, arg) => {
-		await userManagementService.recoverCredentialById(arg);
-	});
+  ipcMain.on("trashCredentialById", async (event, arg) => {
+    await userManagementService.trashCredentialById(arg);
+  });
+  ipcMain.on("recoverCredentialById", async (event, arg) => {
+    await userManagementService.recoverCredentialById(arg);
+  });
 
   ipcMain.on("findUserByIdRequest", async (event, arg) => {
     event.sender.send(
@@ -41,25 +41,25 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-	ipcMain.on("getTotalCredentialsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getTotalCredentialsCountByUserIdResponse",
-			JSON.stringify(
-				await userQueryService.getTotalCredentialsCountByUserId(arg)
-			)
-		);
-	});
-	ipcMain.on("getWeakPasswordsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getWeakPasswordsCountByUserIdResponse",
-			JSON.stringify(await userQueryService.getWeakPasswordsCountByUserId(arg))
-		);
-	});
-	ipcMain.on("getOldPasswordsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getOldPasswordsCountByUserIdResponse",
-			JSON.stringify(await userQueryService.getOldPasswordsCountByUserId(arg))
-		);
+  ipcMain.on("getTotalCredentialsCountByUserIdRequest", async (event, arg) => {
+    event.sender.send(
+      "getTotalCredentialsCountByUserIdResponse",
+      JSON.stringify(
+        await userQueryService.getTotalCredentialsCountByUserId(arg)
+      )
+    );
+  });
+  ipcMain.on("getWeakPasswordsCountByUserIdRequest", async (event, arg) => {
+    event.sender.send(
+      "getWeakPasswordsCountByUserIdResponse",
+      JSON.stringify(await userQueryService.getWeakPasswordsCountByUserId(arg))
+    );
+  });
+  ipcMain.on("getOldPasswordsCountByUserIdRequest", async (event, arg) => {
+    event.sender.send(
+      "getOldPasswordsCountByUserIdResponse",
+      JSON.stringify(await userQueryService.getOldPasswordsCountByUserId(arg))
+    );
   });
 
   ipcMain.on("createUser", async (event, arg) => {

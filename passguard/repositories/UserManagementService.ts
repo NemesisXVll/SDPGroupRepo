@@ -182,10 +182,12 @@ export default class UserManagementService {
     }
   }
   async recoverCredentialById(credentialId: number) {
-    const recoveredCredential = await userQueryService.getCredentialById(credentialId);
+    const recoveredCredential =
+      await userQueryService.getCredentialById(credentialId);
     const preparedCredential = { ...recoveredCredential };
     preparedCredential.data = JSON.stringify(preparedCredential.data);
-    const isReused = await this.checkForReusedPasswordOnCreation(preparedCredential);
+    const isReused =
+      await this.checkForReusedPasswordOnCreation(preparedCredential);
     if (isReused) {
       await prisma.credential.update({
         where: { credentialId: credentialId },
@@ -210,7 +212,7 @@ export default class UserManagementService {
       const deletedCredential = await prisma.credential.delete({
         where: { credentialId: credentialId },
       });
-      console.log("credential deleted....")
+      console.log("credential deleted....");
       return deletedCredential;
     } catch (error) {
       throw error;
@@ -228,9 +230,9 @@ export default class UserManagementService {
           ...credential,
           isReused: stillReused,
           data: encryptedData,
-        }
+        },
       });
-      console.log("credential updated....")
+      console.log("credential updated....");
       return updatedCredential;
     } catch (error) {
       console.error("Error updating credential", error);
@@ -343,7 +345,7 @@ export default class UserManagementService {
       return true;
     }
     return false;
-  };
+  }
   async checkForReusedPasswordOnDeletion(credentialId: any) {
     const data = await userQueryService.getDataByCredentialId(credentialId);
     if (!data) return;
@@ -362,16 +364,15 @@ export default class UserManagementService {
         });
       }
     }
-  };
+  }
   async checkForReusedPasswordOnUpdate(credential: any) {
     const newPassword = JSON.parse(credential.data).password; // new password
     const allCredentials = await userQueryService.getAllCurrentCredentials();
 
     // check if new password is reused
     await this.isOldPasswordReused(credential.id, allCredentials); // check if old password is reused
-
   }
-  // async isPasswordChanged(credentialId: any, newPassword: any) { 
+  // async isPasswordChanged(credentialId: any, newPassword: any) {
   //   const oldData = await userQueryService.getDataByCredentialId(credentialId);
   //   console.log("old data", oldData);
   //   const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
@@ -630,4 +631,4 @@ export default class UserManagementService {
 //in update, if its reused boolean was set to false, check other credentials,
 
 //updating to a pass non existent works
-//updating to a pass existent
+//updating to a pass existent.
