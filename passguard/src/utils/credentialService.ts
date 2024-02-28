@@ -53,7 +53,7 @@ export default class CredentialService {
 		window.ipcRenderer.send("recoverCredentialById", credentialId);
 	}
 	async deleteCredential(credentialId: number) {
-		window.ipcRenderer.send("deleteCredential", { credentialId });
+		window.ipcRenderer.send("deleteCredential",credentialId );
 	}
 
   async updateCredential(credentialId: string, formData: any, userId: number) {

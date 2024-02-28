@@ -9,25 +9,8 @@ export const registerIPCMainHandlers = () => {
   ipcMain.on("createCredential", async (event, arg) => {
     await userManagementService.createCredential(arg);
   });
-
-  ipcMain.on("createDocument", async (event, arg) => {
-    await userManagementService.createDocument(arg);
-  });
-
-  ipcMain.on("createUser", async (event, arg) => {
-    await userManagementService.createUser(arg);
-  });
-
   ipcMain.on("updateCredential", async (event, arg) => {
     await userManagementService.updateCredentialById(arg.credentialId, arg);
-  });
-
-  ipcMain.on("deleteCredential", async (event, arg) => {
-    await userManagementService.deleteCredentialById(arg.credentialId);
-  });
-
-  ipcMain.on("deleteDocumentById", async (event, arg) => {
-    await userManagementService.deleteDocumentById(arg.credentialId);
   });
 
   ipcMain.on("trashCredentialById", async (event, arg) => {
@@ -58,38 +41,25 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-  ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
+  ipcMain.on("getTotalCredentialsCountByUserIdRequest", async (event, arg) => {
     event.sender.send(
-      "findDocumentsByUserIdResponse",
-      JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
+      "getTotalCredentialsCountByUserIdResponse",
+      JSON.stringify(
+        await userQueryService.getTotalCredentialsCountByUserId(arg)
+      )
     );
   });
-
-	ipcMain.on("findCredentialByIdRequest", async (event, arg) => {
-		event.sender.send(
-			"findCredentialByIdResponse",
-			JSON.stringify(await userQueryService.getCredentialById(arg))
-		);
-	});
-	ipcMain.on("getTotalCredentialsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getTotalCredentialsCountByUserIdResponse",
-			JSON.stringify(
-				await userQueryService.getTotalCredentialsCountByUserId(arg)
-			)
-		);
-	});
-	ipcMain.on("getWeakPasswordsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getWeakPasswordsCountByUserIdResponse",
-			JSON.stringify(await userQueryService.getWeakPasswordsCountByUserId(arg))
-		);
-	});
-	ipcMain.on("getOldPasswordsCountByUserIdRequest", async (event, arg) => {
-		event.sender.send(
-			"getOldPasswordsCountByUserIdResponse",
-			JSON.stringify(await userQueryService.getOldPasswordsCountByUserId(arg))
-		);
+  ipcMain.on("getWeakPasswordsCountByUserIdRequest", async (event, arg) => {
+    event.sender.send(
+      "getWeakPasswordsCountByUserIdResponse",
+      JSON.stringify(await userQueryService.getWeakPasswordsCountByUserId(arg))
+    );
+  });
+  ipcMain.on("getOldPasswordsCountByUserIdRequest", async (event, arg) => {
+    event.sender.send(
+      "getOldPasswordsCountByUserIdResponse",
+      JSON.stringify(await userQueryService.getOldPasswordsCountByUserId(arg))
+    );
   });
 
   ipcMain.on("createUser", async (event, arg) => {
@@ -129,3 +99,15 @@ export const registerIPCMainHandlers = () => {
     );
   });
 };
+ipcMain.on("createDocument", async (event, arg) => {
+  await userManagementService.createDocument(arg);
+});
+ipcMain.on("deleteDocumentById", async (event, arg) => {
+  await userManagementService.deleteDocumentById(arg);
+});
+ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
+  event.sender.send(
+    "findDocumentsByUserIdResponse",
+    JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
+  );
+});

@@ -3,7 +3,6 @@ import Kebab from "../CredentialSection/Kebab";
 import Button from "../Form/Button";
 import { useState } from "react";
 import fileTypeItems from "../../data/filetypes";
-import { FaRegFilePdf } from "react-icons/fa6";
 
 type DocumentCardProps = {
   index: React.Key;
@@ -17,9 +16,12 @@ type DocumentCardProps = {
 
 function DocumentCard(props: DocumentCardProps) {
   const [openModal, setOpenModal] = useState<boolean>(false);
+
   const fileType = fileTypeItems.find(
     (item) => item.extension === props.type
   )?.icon;
+  
+  console.log(fileType);
 
   return (
     <>
