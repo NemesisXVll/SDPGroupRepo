@@ -9,32 +9,28 @@ export default class DocumentService {
         data.set('password', hashedPassword);
         */
 
-      const data = {
-        category: formData.category,
-        name: formData.name,
-        path: formData.path,
-        type: formData.type,
-        userId: formData.userId,
-      };
+    const data = {
+      category: formData.category,
+      name: formData.name,
+      path: formData.path,
+      type: formData.type,
+      userId: formData.userId,
+    };
 
-      window.ipcRenderer.send("createDocument", data);
+    window.ipcRenderer.send("createDocument", data);
   }
 
   async deleteDocumentById(documentId: number) {
-    window.ipcRenderer.send("deleteDocumentById", documentId );
+    window.ipcRenderer.send("deleteDocumentById", documentId);
   }
 
   async findDocumentsByUserId(userId: any): Promise<any> {
     return new Promise((resolve) => {
       window.ipcRenderer.send("findDocumentsByUserIdRequest", userId);
-      window.ipcRenderer.once(
-        "findDocumentsByUserIdResponse",
-        (event, arg) => {
-          const parsedData = JSON.parse(arg);
-          resolve(parsedData);
-          console.log(parsedData);
-        }
-      );
+      window.ipcRenderer.once("findDocumentsByUserIdResponse", (event, arg) => {
+        const parsedData = JSON.parse(arg);
+        resolve(parsedData);
+      });
     });
   }
   async findDocumentById(credentialId: any): Promise<any> {

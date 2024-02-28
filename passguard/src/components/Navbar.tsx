@@ -21,10 +21,14 @@ function Navbar(props: NavbarProps) {
     props.handleExpand && props.handleExpand(expanded);
   }, [expanded]);
 
-  function handleOnClick(item: { name: string; icon: string; path: string; }): void {
+  function handleOnClick(item: {
+    name: string;
+    icon: string;
+    path: string;
+  }): void {
     console.log(item);
     if (item.path) {
-      navigate(item.path, { state: { expanded, user } });
+      navigate(item.path, { replace: true, state: { expanded, user } });
     }
   }
 
@@ -100,7 +104,11 @@ function Navbar(props: NavbarProps) {
                     `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold text-white">{JSON.parse(user.data).firstName + " " + JSON.parse(user.data).lastName}</h4>
+              <h4 className="font-semibold text-white">
+                {JSON.parse(user.data).firstName +
+                  " " +
+                  JSON.parse(user.data).lastName}
+              </h4>
               <span className="text-xs text-gray-600">{user.email}</span>
             </div>
             <MoreVertical size={20} color="white" />

@@ -34,16 +34,22 @@ export default class UserManagementService {
   //     throw error;
   //   }
   // }
+
   async createDocument(document: any) {
+    const encryptedData = encryptData(document.path, "password");
     try {
       const newDocument = await prisma.document.create({
-        data: document,
+        data: {
+          ...document,
+          path: encryptedData,
+        }
       });
       return newDocument;
     } catch (error) {
       throw error;
     }
   }
+  
   async deleteDocumentById(documentId: any) {
     try {
       const deletedDocument = await prisma.document.delete({

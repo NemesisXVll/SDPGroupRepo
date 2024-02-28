@@ -3,6 +3,8 @@ import zxcvbn from "zxcvbn"; // A library for estimating password strength
 import infoLogo from "../../assets/icons/form/info.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { List, Tooltip } from "flowbite-react";
 import Button from "./Button";
 import GeneratePassword from "../GenPass";
 
@@ -21,7 +23,9 @@ type PasswordProps = {
 
 const PasswordStrength = (props: PasswordProps) => {
   const [password, setPassword] = useState(props.value ? props.value : "");
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(
+    props.value ? zxcvbn(props.value).score : 0
+  );
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
@@ -48,9 +52,21 @@ const PasswordStrength = (props: PasswordProps) => {
     // e.preventDefault();
   };
 
+  const infoIcon = () => {
+    return (
+      <List className="w-fit text-white">
+        <List.Item>At least 8 characters</List.Item>
+        <List.Item>At least one lowercase character</List.Item>
+        <List.Item>At least one uppercase character</List.Item>
+        <List.Item>At least one number</List.Item>
+        <List.Item>At least one special character</List.Item>
+      </List>
+    );
+  };
+
   return (
     <div className="">
-      <div className="mb-3 flex mt-1 relative hover:text-blue-300">
+      <div className="mb-3 flex mt-1 relative hover:text-blue-300 items-center">
         <input
           readOnly={props.viewOnly}
           type={showPassword ? "text" : "password"}
@@ -61,7 +77,7 @@ const PasswordStrength = (props: PasswordProps) => {
           onChange={handlePasswordChange}
           placeholder=""
           autoComplete={props.label}
-          className={`mt-5 peer h-10 w-full pl-2 pr-1
+          className={`mt-5 peer h-10 w-full pl-2 pr-[3.5rem]
            text-gray-900 placeholder-transparent text-sm
            ${props.viewOnly ? "bg-slate-100" : ""}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
@@ -95,37 +111,43 @@ const PasswordStrength = (props: PasswordProps) => {
           {props.label}
         </label>
 
-        <div className="grid grid-rows-2 grid-cols-2 pr-1">
-          <img
-            src={infoLogo}
-            alt="info.png"
-            className="ml-4 col-start-2 w-3 h-6"
-          />
+        <div>
+          {/* Help in position and what content to put! */}
+          <Tooltip
+            content={<>{infoIcon()}</>}
+            arrow={false}
+            placement="left-end"
+          >
+            <IoInformationCircleOutline className="absolute text-black translate-x-[15.5rem] -translate-y-[1.9rem]"></IoInformationCircleOutline>
+          </Tooltip>
 
           {showPassword ? (
             <FiEyeOff
               onClick={handleShowPassword}
               size="1.3em"
-              className="ml-1 text-black"
+              className="absolute text-black translate-x-[13.6rem]"
             />
           ) : (
             <FiEye
               onClick={handleShowPassword}
               size="1.3em"
-              className="ml-1 text-black"
+              className="absolute text-black translate-x-[13.6rem]"
             />
           )}
-          <HiOutlineClipboardDocument
-            size="1.3em"
-            className="ml-1 text-black"
-            onClick={() => {
-              {
-                props.value
-                  ? navigator.clipboard.writeText(props.value)
-                  : navigator.clipboard.writeText(password);
-              }
-            }}
-          />
+
+          <Tooltip content="Copied to Clipboard!" trigger="click" arrow={false}>
+            <HiOutlineClipboardDocument
+              size="1.3em"
+              className="absolute ml-1 text-black translate-x-[14.7rem]"
+              onClick={() => {
+                {
+                  props.value
+                    ? navigator.clipboard.writeText(props.value)
+                    : navigator.clipboard.writeText(password);
+                }
+              }}
+            />
+          </Tooltip>
         </div>
       </div>
 
@@ -135,11 +157,11 @@ const PasswordStrength = (props: PasswordProps) => {
           Generate Password
         </Button>
       </div> */}
-{/* 
+      {/* 
       <button className="btn btn-danger" onClick={() => setOpen(true)}>
         Generate password
       </button> */}
-      
+
       {/* generate password modal */}
       <GeneratePassword open={open} onClose={() => setOpen(false)}>
         {" "}
@@ -178,7 +200,7 @@ const PasswordStrength = (props: PasswordProps) => {
       {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
 
       <div className="-mx-1 pl-1 w-full">
-        <div className="px-1 grid grid-cols-5 gap-1">
+        <div className="px-1 grid grid-cols-4 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}

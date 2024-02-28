@@ -264,10 +264,15 @@ export default class UserQueryService {
 
   //----------------------- Documents Model-------------------------//
   async getDocumentsByUserId(userId: any) {
-    return await prisma.document.findMany({
+    const documents = await prisma.document.findMany({
       where: {
         userId: userId,
       },
     });
+    //decrypt data
+    documents.forEach((element) => {
+      element.path = decryptData(element.path, "password");
+    });
+    return documents;
   }
 }

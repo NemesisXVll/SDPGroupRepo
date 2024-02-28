@@ -36,7 +36,7 @@ const fileTypeItems = [
     icon: <BsFiletypePng className="text-9xl" />,
   },
   {
-    extension: "JPG",
+    extension: "jpg",
     icon: <BsFiletypeJpg className="text-9xl" />,
   },
   {

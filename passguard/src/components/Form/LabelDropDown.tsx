@@ -28,6 +28,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         list={props.list}
         value={value}
         type={props.type}
+        maxLength={props.id === "serviceType" ? 25 : 100}
         readOnly={props.viewOnly}
         onChange={handleOnChange}
         className={`pl-2 mt-5 peer h-10 w-full

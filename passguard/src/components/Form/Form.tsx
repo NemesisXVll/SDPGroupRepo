@@ -11,6 +11,7 @@ const credentialService = new CredentialService();
 type FormProps = {
   userId: number;
   formSubmitted: () => void;
+  forceRender: () => void;
   onBTNClick: (showForm: boolean) => void;
   onCardClick: (credentialData: any, updateClicked: boolean) => void;
   editable?: boolean;
@@ -68,7 +69,6 @@ function Form(props: FormProps) {
 
   function handleOnChange(event: any): void {
     setFormData({ ...formData, [event.target.id]: event.target.value });
-    console.log(formData);
   }
 
   return (
@@ -76,7 +76,11 @@ function Form(props: FormProps) {
       <aside
         className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen`}
       >
-        <TopOfForm credential={props.credentialObj} data={formData}></TopOfForm>
+        <TopOfForm
+          credential={props.credentialObj}
+          data={formData}
+          credDeleted={props.forceRender}
+        ></TopOfForm>
 
         <form
           onSubmit={handleSubmitForm}
@@ -152,18 +156,25 @@ function Form(props: FormProps) {
             placeholder=""
           ></LabelInput>
 
-          <div className="flex mt-16 justify-between px-1">
-            <Button value="Cancel" onClick={handleCancelBTN}>
-              Cancel
-            </Button>
+          <div className="flex justify-between mt-16 px-1">
+            <div className="mr-1">
+              <Button value="Cancel" onClick={handleCancelBTN}>
+                Cancel
+              </Button>
+            </div>
+
             {props.credentialObj?.title ? (
-              <Button value="Update" type="submit">
-                {props.editable ? "Update" : "Edit"}
-              </Button>
+              <div className="ml-1">
+                <Button value="Update" type="submit">
+                  {props.editable ? "Update" : "Edit"}
+                </Button>
+              </div>
             ) : (
-              <Button value="Save" type="submit">
-                Save
-              </Button>
+              <div className="ml-1">
+                <Button value="Save" type="submit">
+                  Save
+                </Button>
+              </div>
             )}
           </div>
         </form>

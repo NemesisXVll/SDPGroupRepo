@@ -67,7 +67,7 @@ const Test = (props: Test) => {
 
   return (
     <>
-      <div className="mt-1 relative border-gray-300">
+      <div className="mt-1 relative border-gray-300 flex items-center">
         <input
           readOnly={props.viewOnly}
           type={showPassword ? "text" : "password"}
@@ -106,20 +106,20 @@ const Test = (props: Test) => {
           {props.label}
         </label>
 
-        <div className="grid grid-rows-2 grid-cols-2 pr-1">
+        <div className="">
           {showPassword ? (
             <FiEyeOff
               onClick={handleShowPassword}
               size="1.3em"
               className="ml-1 text-black
-              absolute translate-x-[21rem] top-[2rem]"
+              absolute translate-x-[20.8rem] top-[1.9rem]"
             />
           ) : (
             <FiEye
               onClick={handleShowPassword}
               size="1.3em"
               className="ml-1 text-black
-              absolute translate-x-[21rem] top-[2rem]"
+              absolute translate-x-[20.8rem] top-[1.9rem]"
             />
           )}
         </div>
