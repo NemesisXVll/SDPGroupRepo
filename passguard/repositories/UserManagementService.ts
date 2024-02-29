@@ -29,40 +29,46 @@ export default class UserManagementService {
 	//       },
 	//     });
 
-	//     return user.userId;
-	//   } catch (error) {
-	//     throw error;
-	//   }
-	// }
-	async createDocument(document: any) {
-		try {
-			const newDocument = await prisma.document.create({
-				data: document,
-			});
-			return newDocument;
-		} catch (error) {
-			throw error;
-		}
-	}
-	async deleteDocumentById(documentId: any) {
-		try {
-			const deletedDocument = await prisma.document.delete({
-				where: { documentId: documentId },
-			});
-			return deletedDocument;
-		} catch (error) {
-			throw error;
-		}
-	}
-	async checkSecurityAnswer(userData: any, securityAnswer: any) {
-		try {
-			// Find the user by USER_DATA and include the SECURITYQUESTION
-			const user = await prisma.user.findUnique({
-				where: { data: userData },
-				include: {
-					securityquestions: true,
-				},
-			});
+  //     return user.userId;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
+  async createDocument(document: any) {
+    const encryptedData = encryptData(document.path, "password");
+    try {
+      const newDocument = await prisma.document.create({
+        data: {
+          ...document,
+          path: encryptedData,
+        }
+      });
+      return newDocument;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  async deleteDocumentById(documentId: any) {
+    try {
+      const deletedDocument = await prisma.document.delete({
+        where: { documentId: documentId },
+      });
+      return deletedDocument;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async checkSecurityAnswer(userData: any, securityAnswer: any) {
+    try {
+      // Find the user by USER_DATA and include the SECURITYQUESTION
+      const user = await prisma.user.findUnique({
+        where: { data: userData },
+        include: {
+          securityquestions: true,
+        },
+      });
 
 			if (!user) {
 				throw new Error("User not found");

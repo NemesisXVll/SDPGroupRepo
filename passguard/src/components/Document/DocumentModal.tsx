@@ -48,7 +48,7 @@ function DocumentModal(props: DocumentModalProps) {
       return;
     }
 
-    formData.type = formData.path.split(".").pop() || "";
+    console.log(formData);
     await documentService.createDocument(formData, user.userId);
     props.closeModal();
   }
@@ -56,6 +56,19 @@ function DocumentModal(props: DocumentModalProps) {
   function handleOnInputChange(event: any): void {
     if (event.target.id === "path") {
       setPathErrorMessage("");
+
+      //File Input Type (might require changing)
+      formData.type = event.target.files[0].type;
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setFormData({
+          ...formData,
+          [event.target.id]: reader.result,
+        });
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
       setFormData({
         ...formData,
         [event.target.id]: event.target.files[0].path,

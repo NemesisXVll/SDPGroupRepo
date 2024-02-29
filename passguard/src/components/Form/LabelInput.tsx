@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { Tooltip } from "flowbite-react";
 
 type LabelInputProps = {
   type?: string;
@@ -22,14 +23,15 @@ const LabelInput = (props: LabelInputProps) => {
   };
 
   return (
-    <div className="mt-1 relative border-gray-300">
+    <div className="mt-1 relative border-gray-300 flex items-center">
       <input
         id={props.id}
         name={props.id}
         value={value}
         required={props.required}
         type={props.type}
-        className={`pl-2 pr-7 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50
+        maxLength={props.id === "credentialTitle" ? 25 : 100}
+        className={`pl-2 pr-8 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50
         ${props.viewOnly ? "bg-slate-100" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2`}
@@ -49,21 +51,23 @@ const LabelInput = (props: LabelInputProps) => {
       {props.children ? (
         props.children
       ) : props.id === "userName" ? (
-        <HiOutlineClipboardDocument
-          size="1.3em"
-          className="absolute translate-x-60 top-8 text-black"
-          onClick={() => {
-            {
-              props.value
-                ? navigator.clipboard.writeText(props.value)
-                : navigator.clipboard.writeText(value);
-            }
-          }}
-        />
+        <Tooltip content="Copied to Clipboard!" trigger="click" arrow={false}>
+          <HiOutlineClipboardDocument
+            size="1.3em"
+            className="absolute text-black translate-x-60"
+            onClick={() => {
+              {
+                props.value
+                  ? navigator.clipboard.writeText(props.value)
+                  : navigator.clipboard.writeText(value);
+              }
+            }}
+          />
+        </Tooltip>
       ) : props.id === "loginPageUrl" ? (
         <HiOutlineExternalLink
           size="1.3em"
-          className="absolute translate-x-60 top-8 text-black"
+          className="absolute text-black translate-x-60 top-7"
           onClick={() => {
             props.value
               ? window.open(props.value, "MyWindow", "width=1200 ,height=800 ")

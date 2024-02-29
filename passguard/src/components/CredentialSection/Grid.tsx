@@ -19,6 +19,7 @@ export interface CredentialData {
 }
 type GridProps = {
   userId: number;
+  forceRender: boolean;
   onCardClick: (credentialData: CredentialData, updateClicked: boolean) => void;
   onAddClick: () => void;
   onFormSubmit: boolean;
@@ -26,7 +27,6 @@ type GridProps = {
 };
 
 const Grid = (props: GridProps) => {
-
   const [currentCredentials, setCurrentCredentials] = useState<any>([]);
   const [filteredCondition, setFilteredCondition] = useState<string>(
     "(item) => !item.isTrashed"
@@ -41,7 +41,7 @@ const Grid = (props: GridProps) => {
   ) => {
     props.onCardClick(credentialData, updateClicked);
   };
-  
+
   const handleDeleteClick = (credentialId: number) => {
     credentialService.trashCredentialById(credentialId);
 
@@ -140,7 +140,7 @@ const Grid = (props: GridProps) => {
     return () => {
       window.ipcRenderer.removeAllListeners("findCredentialsByIdResponse");
     };
-  }, [props.onFormSubmit, filteredCondition, sync]);
+  }, [props.onFormSubmit, filteredCondition, sync, props.forceRender]);
 
   const credentialsLength = currentCredentials.filter(
     eval(filteredCondition)

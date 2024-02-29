@@ -24,7 +24,7 @@ const Login: React.FC = () => {
     const user = await login({ email, password });
     if (user) {
       console.log("User logged in");
-      navigate("/home", { state: { user, expanded:true } });
+      navigate("/home", { replace: true, state: { user, expanded: true } });
     } else {
       console.log("Login failed");
       setErrorMessage("Incorrect email or password. Please try again.");
@@ -32,14 +32,13 @@ const Login: React.FC = () => {
   };
 
   function handleCreateAccount(): void {
-    navigate("/signup");
+    navigate("/signup", { replace: true });
   }
 
-  function handleOnChange(event: any): void {
-  }
+  function handleOnChange(event: any): void {}
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
       <div className="hidden sm:block">
         <img
           className="w-full h-full object-cover"
@@ -49,7 +48,7 @@ const Login: React.FC = () => {
       </div>
       <div className="bg-gray-100 flex flex-col justify-center">
         <form
-          className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+          className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleLoginSubmit}
         >
           <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
@@ -75,20 +74,20 @@ const Login: React.FC = () => {
             placeholder=""
             onChange={handleOnChange}
           >
-            <div className="grid grid-rows-2 grid-cols-2 pr-1">
+            <div className="grid grid-rows-2 grid-cols-2">
               {showPassword ? (
                 <FiEyeOff
                   onClick={() => setShowPassword(!showPassword)}
                   size="1.3em"
                   className="ml-1 text-black
-              absolute translate-x-[21rem] top-[2rem]"
+                  absolute translate-x-[20.8rem] top-[1.9rem]"
                 />
               ) : (
                 <FiEye
                   onClick={() => setShowPassword(!showPassword)}
                   size="1.3em"
                   className="ml-1 text-black
-              absolute translate-x-[21rem] top-[2rem]"
+                  absolute translate-x-[20.8rem] top-[1.9rem]"
                 />
               )}
             </div>

@@ -60,7 +60,7 @@ const Document = (props: DocumentProps) => {
             user.userId
           );
           setCurrentDocuments(result);
-        }, 50);
+        }, 200);
       } catch (error) {
         console.error("Error fetching documents:", error);
       }
@@ -131,8 +131,8 @@ const Document = (props: DocumentProps) => {
           </div>
         </div>
 
-        <div className="credentials overflow-auto ml-4 mt-7">
-          <div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3">
+        <div className="credentials overflow-auto ml-4 mt-8">
+          <div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3">
             <h3 className="text-xl font-medium w-56">
               My Documents ({documentsLength})
             </h3>
@@ -147,9 +147,8 @@ const Document = (props: DocumentProps) => {
                 />
               </div>
             </div>
-            <div id="filter-container"></div>
           </div>
-          <div className="cards p-3 gap-5 ">{injectCard()}</div>
+          <div className="cards p-3 gap-5">{injectCard()}</div>
         </div>
       </div>
     </>
