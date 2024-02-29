@@ -32,6 +32,14 @@ export const registerIPCMainHandlers = () => {
       "findUserByEmailResponse",
       JSON.stringify(await userQueryService.findUserByEmail(arg))
     );
+    console.log("findUserByEmailResponse: ", await userQueryService.findUserByEmail(arg) );
+  });
+  
+  ipcMain.on("getUserDataByIdRequest", async (event, arg) => { 
+    event.sender.send(
+      "getUserDataByIdResponse",
+      JSON.stringify(await userQueryService.getUserDataById(arg))
+    );
   });
 
   ipcMain.on("findCredentialsByUserIdRequest", async (event, arg) => {

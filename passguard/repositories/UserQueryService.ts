@@ -1,6 +1,7 @@
-import { Password } from "primereact/password";
 import prisma from "../client";
 import { encryptData, decryptData } from "./Security/Encryption";
+
+let MASTER_PASSWORD: any;
 
 export default class UserQueryService {
   //Add Methods Here for Reading
@@ -21,10 +22,39 @@ export default class UserQueryService {
   }
 
   // Find a user by Email
-  async findUserByEmail(email: any) {
-    return prisma.user.findUnique({
-      where: { email: email },
+  async findUserByEmail(email: any) { 
+    const users = await prisma.user.findMany();
+    for(const user of users){
+      const dd = decryptData(user.data, user.masterPassword)
+      if (JSON.parse(dd).email === email) {
+        return user;
+      } else {
+        console.log("User not found by email");
+        return null;
+      }
+    }
+  }
+  async getUserDataById(userId: any) { 
+     const user = await prisma.user.findUnique({
+      where: { userId: userId },
+      select: {
+        data: true,
+        masterPassword: true,
+      },
+     });
+    if(!user) return null;
+    const data = decryptData(user.data, user.masterPassword);
+    return data;
+  }
+  async getUserMasterPasswordById(userId: any) { 
+    const masterPassword = await prisma.user.findUnique({
+      where: { userId: userId },
+      select: {
+        masterPassword: true,
+      },
     });
+    MASTER_PASSWORD = JSON.stringify(masterPassword);
+    return MASTER_PASSWORD;
   }
 
   // List all users
@@ -57,8 +87,10 @@ export default class UserQueryService {
       },
     });
     //decrypt data
+    const masterPassword = await this.getUserMasterPasswordById(userId);
+    if(!masterPassword) return null;
     credentials.forEach((element) => {
-      element.data = decryptData(element.data, "password");
+      element.data = decryptData(element.data, masterPassword);
     });
     return credentials;
   }
@@ -68,9 +100,8 @@ export default class UserQueryService {
         isTrashed: false,
       },
     });
-    //decrypt data
     credentials.forEach((element) => {
-      element.data = decryptData(element.data, "password");
+      element.data = decryptData(element.data, MASTER_PASSWORD);
     });
     return credentials;
   }
@@ -83,8 +114,9 @@ export default class UserQueryService {
       },
     });
     //decrypt data
-    if (credential)
-      credential.data = JSON.parse(decryptData(credential.data, "password"));
+    if (credential) {
+      credential.data = JSON.parse(decryptData(credential.data, MASTER_PASSWORD));
+    }
     return credential;
   }
   async getDataByCredentialId(credentialId: any) {
@@ -94,11 +126,13 @@ export default class UserQueryService {
       },
       select: {
         data: true,
+        userId: true,
       },
     });
     //decrypt data
-    if (credential)
-      credential.data = JSON.parse(decryptData(credential.data, "password"));
+    if (credential) {
+      credential.data = JSON.parse(decryptData(credential.data, MASTER_PASSWORD));
+    }
     return credential;
   }
 
@@ -277,9 +311,10 @@ export default class UserQueryService {
         userId: userId,
       },
     });
+    const masterPassword = await this.getUserMasterPasswordById(userId);
     //decrypt data
     documents.forEach((element) => {
-      element.path = decryptData(element.path, "password");
+      element.path = decryptData(element.path, masterPassword);
     });
     return documents;
   }

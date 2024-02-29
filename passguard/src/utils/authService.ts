@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 type SignUpData = {
   firstName: string;
   lastName: string;
@@ -17,29 +18,31 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
   }
 
   const filteredData = {
-    email: email,
-    data: JSON.stringify({
-      masterPassword: masterPassword,
-      firstName: rest.firstName,
-      lastName: rest.lastName,
-    }),
-    salt: crypto.randomUUID(),
-    picture: "https://via.placeholder.com/150",
-  };
+		data: JSON.stringify({
+			firstName: rest.firstName,
+			lastName: rest.lastName,
+			email: email
+		}),
+		masterPassword: masterPassword,
+		picture: "https://via.placeholder.com/150",
+	};
 
   try {
     const userData: any = await new Promise((resolve) => {
       window.ipcRenderer.send("findUserByEmailRequest", email);
       window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
+        if (!arg) {
+          resolve(false);
+        }
         const parsedData = JSON.parse(arg);
         resolve(parsedData);
       });
     });
-
     if (userData) {
       console.log("User already exists");
       return false;
     } else {
+      console.log("Creating user... here")
       window.ipcRenderer.send("createUser", filteredData);
       console.log("Account created successfully!");
       return true;
@@ -69,8 +72,8 @@ export const login = async ({ email, password }: LoginData): Promise<any> => {
     const userData: any = await user;
 
     if (userData) {
-      const parsedData = JSON.parse(userData.data);
-      if (parsedData.masterPassword === password) {
+      const masterPassword = userData.masterPassword;
+      if (bcrypt.compareSync(password, masterPassword)) {
         console.log("Login successful!");
         return userData;
       } else {

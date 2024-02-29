@@ -3,6 +3,9 @@ import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import navbarItems from "../data/navbarItems";
 import { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import UserService from "../utils/userService";
+
+const userService = new UserService();
 
 type NavbarProps = {
   isExpanded?: boolean;
@@ -12,6 +15,7 @@ type NavbarProps = {
 const NavbarContext = createContext<any>(null);
 function Navbar(props: NavbarProps) {
   const [expanded, setExpanded] = useState(props.isExpanded);
+  const [data, setData] = useState<any>({});
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,6 +23,9 @@ function Navbar(props: NavbarProps) {
 
   useEffect(() => {
     props.handleExpand && props.handleExpand(expanded);
+    userService.getUserDataById(user.userId).then((data) => {
+      setData(data);
+    });
   }, [expanded]);
 
   function handleOnClick(item: {
@@ -105,9 +112,9 @@ function Navbar(props: NavbarProps) {
           >
             <div className="leading-4">
               <h4 className="font-semibold text-white">
-                {JSON.parse(user.data).firstName +
+                {data.firstName +
                   " " +
-                  JSON.parse(user.data).lastName}
+                  data.lastName}
               </h4>
               <span className="text-xs text-gray-600">{user.email}</span>
             </div>

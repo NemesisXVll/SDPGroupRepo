@@ -9,12 +9,11 @@ generator client {
   binaryTargets = ["native", "windows"]
 }
 
-//(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
 model User {
-  userId            Int                @id @default(autoincrement()) //(D) 
-  email             String             @unique
-  data              String             @unique //remove MasterPassword, firstName, lastName, add email(As an Encrypted JSON)
-  salt              String
+  userId            Int                @id @default(autoincrement()) //(D)
+  masterPassword    String                          
+  data              String             @unique  //firstName, lastName, email 
+  salt              String?
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt
   picture           String? //(Picture of the user)

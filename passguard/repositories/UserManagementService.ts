@@ -1,6 +1,6 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-import { encryptData } from "./Security/Encryption";
+import { encryptData, hashPassword, generateSalt } from "./Security/Encryption";
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -34,8 +34,9 @@ export default class UserManagementService {
   //   }
   // }
 
-  async createDocument(document: any) {
-    const encryptedData = encryptData(document.path, "password");
+	async createDocument(document: any) {
+	const masterPassword = await userQueryService.getUserMasterPasswordById(document.userId);
+    const encryptedData = encryptData(document.path, masterPassword);
     try {
       const newDocument = await prisma.document.create({
         data: {
@@ -119,15 +120,25 @@ export default class UserManagementService {
 
 	async createUser(user: any) {
 		try {
+			const salt = generateSalt();
+			const hashedPassword = await hashPassword(user.masterPassword, salt);
+			const encryptedData = encryptData(user.data, hashedPassword);
+		
 			const newUser = await prisma.user.create({
-				data: user,
+				data: {
+					...user,
+					data : encryptedData,
+					masterPassword: hashedPassword,
+					salt: salt
+				},
 			});
+			console.log("User created....", newUser);
 			return newUser;
-		} catch (error) {
+		} catch (error) { 
+			console.error("Error creating user", error);
 			throw error;
 		}
 	}
-
 	async deleteUserById(userId: any) {
 		try {
 			const deletedUser = await prisma.user.delete({
@@ -154,7 +165,8 @@ export default class UserManagementService {
 	//-------------------------Credential Model-------------------------//
 	async createCredential(credential: any) {
 		const isReused = await this.checkForReusedPasswordOnCreation(credential);
-		const encryptedData = encryptData(credential.data, "password");
+		const masterPassword = await userQueryService.getUserMasterPasswordById(credential.userId);
+		const encryptedData = encryptData(credential.data, masterPassword);
 		if (isReused) {
 			credential.isReused = true;
 		}
@@ -165,6 +177,7 @@ export default class UserManagementService {
 					data: encryptedData,
 				},
 			});
+			// console.log("credential created....",credential);
 			return newCredential;
 		} catch (error) {
 			throw error;
@@ -226,7 +239,8 @@ export default class UserManagementService {
 
 	async updateCredentialById(credentialId: any, credential: any) {
 		const stillReused = await this.checkForReusedPasswordOnUpdate(credential);
-		const encryptedData = encryptData(credential.data, "password");
+		const masterPassword = await userQueryService.getUserMasterPasswordById(credential.userId);
+		const encryptedData = encryptData(credential.data, masterPassword);
 		try {
 			const updatedCredential = await prisma.credential.update({
 				where: { credentialId: credentialId },
