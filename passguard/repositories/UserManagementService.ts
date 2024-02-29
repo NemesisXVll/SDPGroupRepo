@@ -1,7 +1,6 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-import { encryptData, decryptData } from "./Security/Encryption";
-let tmpUpdate = false;
+import { encryptData } from "./Security/Encryption";
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -377,20 +376,20 @@ export default class UserManagementService {
 			newPassword
 		);
 		if (!isChanged) {
-			console.log("Password not changed");
+			// console.log("Password not changed");
 			return;
 		}
 		//Check if old password was reused
 		const allCredentials = await userQueryService.getAllCurrentCredentials();
-		console.log("new pass: ", newPassword);
+		// console.log("new pass: ", newPassword);
 		await this.isOldPasswordReused(credential.credentialId, allCredentials);
 
 		const stillReused = await this.checkForReusedPasswordOnCreation(credential); // check if new password is still reused
 		if (stillReused) {
-			console.log("Password still reused");
+			// console.log("Password still reused");
 			return true;
 		} else {
-			console.log("Password not reused");
+			// console.log("Password not reused");
 			return false;
 		}
 	}
@@ -410,17 +409,17 @@ export default class UserManagementService {
 		// next checking which credentials had the old password and updating them accordingly
 		const oldData = await userQueryService.getDataByCredentialId(credentialId);
 		const oldPassword = JSON.parse(JSON.stringify(oldData?.data)).password;
-		console.log("old pass", oldPassword);
+		// console.log("old pass", oldPassword);
 		const existingCredentials = allCredentials.filter((cred: any) => {
 			const credData = JSON.parse(cred.data);
 			return credData.password === oldPassword;
 		});
 		if (existingCredentials.length == 2) { // 2 because the one being updated is also included
 			for (const cred of existingCredentials) {
-				console.log(
-					"exactly one other credential with old pass found",
-					cred.credentialId
-				);
+				// console.log(
+				// 	"exactly one other credential with old pass found",
+				// 	cred.credentialId
+				// );
 				await prisma.credential.update({
 					where: {
 						credentialId: cred.credentialId,
@@ -431,171 +430,4 @@ export default class UserManagementService {
 		}
 	}
 }
-// prisma.$use(async (params, next) => {
-// 	if (
-// 		params.model == "Credential" &&
-// 		params.action == "update" &&
-// 		tmpUpdate != true
-// 	) {
-// 		console.log("updating credential");
-// 		const userQueryService = new UserQueryService();
-// 		const { data } = params.args;
-// 		console.log(data);
-// 		const newPassword = JSON.parse(data.data).password;
 
-// 		const oldData = await userQueryService.getDataByCredentialId(
-// 			data.credentialId
-// 		);
-// 		const oldPassword = JSON.parse(
-// 			JSON.parse(JSON.stringify(oldData)).data
-// 		).password;
-// 		const allCredentials = await prisma.credential.findMany({
-// 			where: {
-// 				NOT: [{ credentialId: data.credentialId }],
-// 			},
-// 		});
-// 		console.log("all creds:", allCredentials);
-
-// 		if (oldPassword == newPassword || allCredentials.length == 0) {
-// 			tmpUpdate = false;
-// 			return next(params);
-// 		}
-////////////////////////tillhere////////////////////////////////
-// 		if (
-// 			allCredentials.length == 1 &&
-// 			JSON.parse(allCredentials[0].data).password != newPassword
-// 		) {
-// 			data.isReused = false;
-// 			tmpUpdate = true;
-// 			await prisma.credential.update({
-// 				where: { credentialId: allCredentials[0].credentialId },
-// 				data: { isReused: false },
-// 			});
-// 		} else if (
-// 			allCredentials.length == 1 &&
-// 			JSON.parse(allCredentials[0].data).password == newPassword
-// 		) {
-// 			data.isReused = true;
-// 			tmpUpdate = true;
-// 			await prisma.credential.update({
-// 				where: { credentialId: allCredentials[0].credentialId },
-// 				data: { isReused: true },
-// 			});
-// 		} else {
-// 			const existingCredentials = allCredentials.filter((credential) => {
-// 				// console.log("credential: ", credential);
-// 				const credentialData = JSON.parse(credential.data);
-// 				return credentialData.password === newPassword;
-// 			});
-// 			// console.log("creds with same password: ", existingCredentials);
-// 			if (existingCredentials.length > 0) {
-// 				for (const credential of existingCredentials) {
-// 					// console.log("same password found!!!", credential.credentialId);
-// 					tmpUpdate = true;
-// 					await prisma.credential.update({
-// 						where: { credentialId: credential.credentialId },
-// 						data: { isReused: true },
-// 					});
-// 				}
-// 				data.isReused = true;
-// 			} else {
-// 				data.isReused = false;
-// 			}
-// 		}
-// 		// Next checking if old password had exactly one other cred with the same pass
-// 		// const userQueryService = new UserQueryService();
-// 		// console.log("checking for: ",data.credentialId)
-// 		// const oldData = await userQueryService.getDataByCredentialId(
-// 		// 	data.credentialId
-// 		// );
-// 		// console.log("old Data for above cred id", oldData)
-// 		// const oldPassword = JSON.parse(
-// 		// 	JSON.parse(JSON.stringify(oldData)).data
-// 		// ).password;
-// 		// console.log("old pass", oldPassword);
-// 		// const otherCredentials = allCredentials.filter((credential) => {
-// 		// 	console.log("error here??:", credential);
-// 		// 	const credentialData = JSON.parse(credential.data);
-// 		// 	console.log("is parsing good: ",credentialData.password)
-// 		// 	return credentialData.password === oldPassword;
-// 		// });
-// 		// if (otherCredentials.length == 1) {
-// 		// 	await prisma.credential.update({
-// 		// 		where: { credentialId: otherCredentials[0].credentialId },
-// 		// 		data: { isReused: false },
-// 		// 	});
-// 		// }
-// 	}
-// 	tmpUpdate = false;
-// 	return next(params);
-// });
-// prisma.$use(async (params, next) => {
-// 	const userQueryService = new UserQueryService();
-// 	if (params.model == "Credential" && params.action == "update" && params.args.data.isTrashed == true) {
-// 		const { where } = params.args;
-// 		console.log("updating trash credential id: ", where.credentialId);
-// 		const data = await userQueryService.getDataByCredentialId(
-// 			where.credentialId
-// 		);
-// 		const password = JSON.parse(JSON.parse(JSON.stringify(data)).data).password;
-// 		const allCredentials = await prisma.credential.findMany({
-// 			where: {
-// 				NOT: [{ credentialId: where.credentialId }],
-// 			},
-// 		});
-// 		const existingCredentials = allCredentials.filter((credential) => {
-// 			const credentialData = JSON.parse(credential.data);
-// 			return credentialData.password === password;
-// 		});
-// 		if (existingCredentials.length == 1) {
-// 			tmpUpdate = true;
-// 			await prisma.credential.update({
-// 				where: { credentialId: existingCredentials[0].credentialId },
-// 				data: { isReused: false },
-// 			});
-// 		}
-// 	}
-// 	return await next(params);
-// });
-// prisma.$use(async (params, next) => {
-// 	if (
-// 		params.action == "update" &&
-// 		params.args.data.isTrashed == true
-// 	) {
-// 		console.log("trashing credential");
-// 		const { data } = params.args;
-// 		const credentialId = data.credentialId;
-// 		const allCredentials = await prisma.credential.findMany({
-// 			where: {
-// 				NOT: [{ credentialId: credentialId }],
-// 			},
-// 		});
-// 		const oldData = await prisma.credential.findUnique({
-// 			where: { credentialId: credentialId },
-// 		});
-// 		const oldPassword = JSON.parse(
-// 			JSON.parse(JSON.stringify(oldData)).data
-// 		).password;
-// 		const existingCredentials = allCredentials.filter((credential) => {
-// 			const credentialData = JSON.parse(credential.data);
-// 			return credentialData.password === oldPassword;
-// 		});
-// 		if (existingCredentials.length == 1) {
-// 			tmpUpdate = true;
-// 			await prisma.credential.update({
-// 				where: { credentialId: existingCredentials[0].credentialId },
-// 				data: { isReused: false },
-// 			});
-// 		}
-// 	}
-// 	tmpUpdate = false;
-// 	return next(params);
-// });
-
-//in update, if its reused boolean was set to true, check same pass credentials, if match keep reused to true and set other matching credentials to true //done
-//in update, if its reused boolean was set to true, check other credentials, if no match only changed its reused to false //done
-//in update, if its reused boolean was set to false, check other credentials, if match change all matching boolean to true
-//in update, if its reused boolean was set to false, check other credentials,
-
-//updating to a pass non existent works
-//updating to a pass existent.

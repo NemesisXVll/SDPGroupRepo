@@ -131,6 +131,7 @@ const Grid = (props: GridProps) => {
           );
           setCurrentCredentials(result);
         }, 100);
+        await credentialService.checkTrashStatus(props.userId);
       } catch (error) {
         console.error("Error fetching credentials:", error);
       }

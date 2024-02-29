@@ -228,6 +228,30 @@ export default class CredentialService {
     }
     return true;
   }
+  async checkTrashStatus(userId: any): Promise<any> {
+    const trashedCredentials = await this.getTrashedCredentialsByUserId(userId);
+    const currentDate = new Date();
+    for (const credential of trashedCredentials) {
+      const dateTrashed = new Date(credential.dateTrashed);
+      const differenceInMilliseconds = Math.abs(
+        currentDate.getTime() - dateTrashed.getTime()
+      );
+      const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+      if (differenceInDays >= 2 && trashedCredentials.length > 0) {
+        console.log("Deleting outdated trashed credential")
+        await this.deleteCredential(credential.credentialId);
+      }
+    }
+  }
+  async getTrashedCredentialsByUserId(userId: any): Promise<any> { 
+    return new Promise((resolve) => {
+      window.ipcRenderer.send("getTrashedCredentialsByUserIdRequest", userId);
+      window.ipcRenderer.once("getTrashedCredentialsByUserIdResponse", (event, arg) => {
+        const parsedData = JSON.parse(arg);
+        resolve(parsedData);
+      });
+    });
+  }
   async getReusedPasswordsCountByUserIdRequest(userId: any): Promise<number> {
     try {
       return new Promise((resolve) => {

@@ -215,6 +215,14 @@ export default class UserQueryService {
       },
     });
   }
+  async getTrashedCredentialsByUserId(userId: number) { 
+    return await prisma.credential.findMany({
+      where: {
+        userId: userId,
+        isTrashed: true,
+      },
+    });
+  }
 
   //-------------------------Trash Model-------------------------//
   //get trash by trash id

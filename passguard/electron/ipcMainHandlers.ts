@@ -98,7 +98,15 @@ export const registerIPCMainHandlers = () => {
       )
     );
   });
+  ipcMain.on("getTrashedCredentialsByUserIdRequest", async (event, arg) => { 
+    event.sender.send(
+      "getTrashedCredentialsByUserIdResponse",
+      JSON.stringify(await userQueryService.getTrashedCredentialsByUserId(arg))
+    );
+
+  });
 };
+
 ipcMain.on("createDocument", async (event, arg) => {
   await userManagementService.createDocument(arg);
 });
