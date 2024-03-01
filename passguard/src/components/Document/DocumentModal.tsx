@@ -1,96 +1,156 @@
 import { FileInput, Label, Modal, Select, TextInput } from "flowbite-react";
 import AddButton from "../Form/Button";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import DocumentService from "../../utils/documentService";
+
+const documentService = new DocumentService();
 
 type DocumentModalProps = {
-    modalVal: boolean;
-    closeModal: () => void;
+  modalVal: boolean;
+  closeModal: () => void;
 };
 
 function DocumentModal(props: DocumentModalProps) {
+  const location = useLocation();
+  const user = location.state.user;
 
-    const [openModal] = useState(props.modalVal);
-    const [formData, setFormData] = useState({
-        type: "",
-        file: "",
-        fileName: "",
-        fileCategory: "",
-    });
+  const [openModal] = useState(props.modalVal);
+  const [pathErrorMessage, setPathErrorMessage] = useState("");
+  const [nameErrorMessage, setNameErrorMessage] = useState("");
 
-    function onCloseModal() {
-        props.closeModal();
+  const [formData, setFormData] = useState({
+    userId: user.userId,
+    name: "",
+    path: "",
+    type: "",
+    category: "Other",
+  });
+
+  function onCloseModal() {
+    props.closeModal();
+  }
+
+  async function handleAddDocument(event: any): Promise<void> {
+    event.preventDefault();
+
+    if (formData.path === "" && formData.name === "") {
+      setPathErrorMessage("Please Upload a File");
+      setNameErrorMessage("Please Enter a File Name");
+      return;
+    } else if (formData.path === "") {
+      setPathErrorMessage("Please Upload a File");
+      setNameErrorMessage("");
+      return;
+    } else if (formData.name === "") {
+      setNameErrorMessage("Please Enter a File Name");
+      setPathErrorMessage("");
+      return;
     }
 
-    function handleAddDocument(event: any): void {
-        event.preventDefault();
-        formData.type = formData.file?.split(".").pop() || '';
-        console.log(formData);
+    console.log(formData);
+    await documentService.createDocument(formData, user.userId);
+    props.closeModal();
+  }
 
-        props.closeModal();
+  function handleOnInputChange(event: any): void {
+    if (event.target.id === "path") {
+      setPathErrorMessage("");
+
+      //File Input Type (might require changing)
+      formData.type = event.target.files[0].type;
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setFormData({
+          ...formData,
+          [event.target.id]: reader.result,
+        });
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      setFormData({
+        ...formData,
+        [event.target.id]: event.target.files[0].path,
+      });
+    } else {
+      setFormData({ ...formData, [event.target.id]: event.target.value });
     }
+  }
 
-    function handleOnInputChange(event: any): void {
-        if (event.target.id === "file") {
-            const selectedFile = event.target.files?.[0].path;
-            setFormData({ ...formData, [event.target.id]: selectedFile });
-        }
-        else {
-            setFormData({ ...formData, [event.target.id]: event.target.value });
-            console.log(formData);
-        }
-    }
+  return (
+    <>
+      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">
+              Add Document
+            </h3>
 
-    return (
-        <>
-            <Modal show={openModal} size="md" onClose={onCloseModal} popup>
-                <Modal.Header />
-                <Modal.Body>
-                    <div className="space-y-6">
-                        <h3 className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">Add Document</h3>
+            <form>
+              <div className="mb-1 block">
+                <Label htmlFor="path" value="Upload File" className="" />
+              </div>
+              <FileInput
+                required={true}
+                id="path"
+                className="font-nunito"
+                onChange={handleOnInputChange}
+              />
 
-                        <form>
+              <div className="mt-2 block">
+                <Label htmlFor="name" value="File Name" className="" />
+                <TextInput
+                  required={true}
+                  id="name"
+                  className="w-full"
+                  onChange={handleOnInputChange}
+                />
+              </div>
 
-                            <div className="mb-1 block">
-                                <Label htmlFor="file" value="Upload File" className="" />
-                            </div>
-                            <FileInput id="file" className="font-nunito" onChange={handleOnInputChange} />
+              <div className="mt-2 block">
+                <Label htmlFor="category" value="Category" />
+              </div>
+              <Select
+                id="category"
+                required
+                onChange={handleOnInputChange}
+                defaultValue={"Other"}
+              >
+                <option>Driver License</option>
+                <option>Passport/ID</option>
+                <option>Bank Card</option>
+                <option>Insurance</option>
+                <option>Contract</option>
+                <option>Medical</option>
+                <option>Legal</option>
+                <option>Receipt</option>
+                <option>Other</option>
+              </Select>
 
-                            <div className="mt-2 block">
-                                <Label htmlFor="fileName" value="File Name" className="" />
-                                <TextInput id="fileName" className="w-full" onChange={handleOnInputChange} />
-                            </div>
+              {nameErrorMessage && (
+                <p className="text-red-500 text-s mt-1">{nameErrorMessage}</p>
+              )}
+              {pathErrorMessage && (
+                <p className="text-red-500 text-s mt-1">{pathErrorMessage}</p>
+              )}
 
-                            <div className="mt-2 block">
-                                <Label htmlFor="fileCategory" value="Category" />
-                            </div>
-                            <Select id="fileCategory" required onChange={handleOnInputChange}>
-                                <option>Driver License</option>
-                                <option>Passport/ID</option>
-                                <option>Bank Card</option>
-                                <option>Insurance</option>
-                                <option>Contract</option>
-                                <option>Medical</option>
-                                <option>Legal</option>
-                                <option>Receipt</option>
-                                <option>Other</option>
-                            </Select>
-
-                            <div className="w-full mt-6">
-                                <AddButton onClick={handleAddDocument} type="button" value="Save">Add</AddButton>
-                            </div>
-
-                        </form>
-
-
-
-                    </div>
-                </Modal.Body>
-            </Modal>
-        </>
-    );
+              <div className="w-full mt-6">
+                <AddButton
+                  onClick={handleAddDocument}
+                  type="button"
+                  value="Save"
+                >
+                  Add
+                </AddButton>
+              </div>
+            </form>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
 }
 
 export default DocumentModal;
-
-
-

@@ -7,20 +7,24 @@ import Grid from "./CredentialSection/Grid.tsx";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
+import AutoRedirectHook from "./Inactivity/AutoRedirectHook.tsx";
 
 function Home() {
 	const [showForm, setShowForm] = useState(false);
 	const [editInput, setEditInput] = useState(false);
 	const [credential, setCredential] = useState<any>([]);
 	const [formSubmitted, setFormSubmitted] = useState(false);
+	const [forceGridRender, setForceGridRender] = useState(false);
 	const [syncStats, setSyncStats] = useState(false);
+	const { redirect, setRedirect } = AutoRedirectHook();
 
-  const location = useLocation();
-  const user = location.state.user;
+	const location = useLocation();
+	const user = location.state.user;
 
 	const handleNotifyStats = (): void => {
 		console.log("Notifying Stats");
 		setSyncStats((syncStats) => !syncStats);
+		setForceGridRender((forceGridRender) => !forceGridRender);
 	};
 
 	const handleAddClick = () => {
@@ -32,6 +36,7 @@ function Home() {
 			setShowForm(true);
 		}, 0); // Adjust the delay time (in milliseconds) according to your needs
 	};
+
 	// Callback function to be passed to Grid
 	const handleCardClickInApp = (
 		credentialData: CredentialData,
@@ -39,51 +44,59 @@ function Home() {
 	) => {
 		setShowForm(false);
 
-    // Introduce a delay before setting ShowForm to true
-    setTimeout(() => {
-      setShowForm(true);
-    }, 0); // Adjust the delay time (in milliseconds) according to your needs
-    setCredential(credentialData);
-    setEditInput(updateClicked);
-  };
+		// Introduce a delay before setting ShowForm to true
+		setTimeout(() => {
+			setShowForm(true);
+		}, 0); // Adjust the delay time (in milliseconds) according to your needs
+		setCredential(credentialData);
+		setEditInput(updateClicked);
+	};
 
-  const handleFormBTN = (showForm: boolean) => {
-    setShowForm(showForm);
-  };
+	const handleFormBTN = (showForm: boolean) => {
+		setShowForm(showForm);
+	};
 
 	function handleFormSubmitted(): void {
 		setFormSubmitted((formSubmitted) => !formSubmitted);
 		setSyncStats((syncStats) => !syncStats);
 	}
 
-  return (
-    <>
-      <div className="app-container h-screen">
-        <div className="navbar">
-          <Navbar isExpanded={location.state.expanded}></Navbar>
-        </div>
+	function handleForceRender(): void {
+		setForceGridRender((forceGridRender) => !forceGridRender);
+		setShowForm(false);
+	}
+
+	return (
+		<>
+			{redirect}
+			<div className="app-container h-screen">
+				<div className="navbar">
+					<Navbar isExpanded={location.state.expanded}></Navbar>
+				</div>
 
 				<div className="stats mb-5">
 					<Stats sync={syncStats}></Stats>
 				</div>
 
-        <div className="form">
-          {showForm ? (
-            <Form
-              onCardClick={handleCardClickInApp}
-              userId={user.userId}
-              formSubmitted={handleFormSubmitted}
-              credentialObj={credential}
-              editable={editInput}
-              onBTNClick={handleFormBTN}
-            ></Form>
-          ) : (
-            ""
-          )}
-        </div>
+				<div className="form">
+					{showForm ? (
+						<Form
+							onCardClick={handleCardClickInApp}
+							userId={user.userId}
+							formSubmitted={handleFormSubmitted}
+							credentialObj={credential}
+							editable={editInput}
+							onBTNClick={handleFormBTN}
+							forceRender={handleForceRender}
+						></Form>
+					) : (
+						""
+					)}
+				</div>
 
 				<div className="credentials overflow-auto ml-4 mt-3">
 					<Grid
+						forceRender={forceGridRender}
 						userId={user.userId}
 						onCardClick={handleCardClickInApp}
 						onAddClick={handleAddClick}

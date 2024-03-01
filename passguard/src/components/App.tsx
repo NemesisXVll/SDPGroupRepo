@@ -4,11 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home.tsx";
 import Login from "./Login.tsx";
 import Signup from "./Signup.tsx";
-import Navbar from "./Navbar.tsx";
-import { useState } from "react";
-import { Trash } from "lucide-react";
-import Modal from "./GenPass.tsx";
 import Document from "./Document/Document.tsx";
+import LockPage from "./Inactivity/LockPage.tsx";
 
 function App() {
   return (
@@ -20,6 +17,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
           <Route path="/secured-documents" element={<Document />} />
+          <Route path="/lock" element={<LockPage />} />
         </Routes>
       </BrowserRouter>
     </>

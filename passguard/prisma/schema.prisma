@@ -9,23 +9,23 @@ generator client {
   binaryTargets = ["native", "windows"]
 }
 
-//(N-NOTINJSON / Y-INJSON / E-ENCRYPTION / D-NOENCRYPT)
 model User {
-  userId            Int                @id @default(autoincrement()) //(D) 
-  email             String             @unique
-  data              String             @unique //remove MasterPassword, firstName, lastName, add email(As an Encrypted JSON)
-  salt              String
+  userId            Int                @id @default(autoincrement()) //(D)
+  masterPassword    String                          
+  data              String             @unique  //firstName, lastName, email 
+  salt              String?
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt
   picture           String? //(Picture of the user)
+  documents         Document[]
   credentials       Credential[]
   securityquestions SecurityQuestion[]
 }
 
 model Credential {
   credentialId Int      @id @default(autoincrement())
-  serviceName  String  
-  title        String  
+  serviceName  String
+  title        String
   data         String //Username, Password (As An Encrypted JSON)
   url          String?
   isWeak       Boolean
@@ -34,9 +34,9 @@ model Credential {
   dateCreated  DateTime @default(now())
   dateUpdated  DateTime @default(now())
   serviceType  String   @default("Personal") //"Like 'Personal', 'Social Media', 'Email', 'Banking', etc." //CT
-  picture      String? //(Picture of the service)
+  picture      String?
   isFavourite  Boolean  @default(false)
-  isTrashed    Boolean  @default(false) 
+  isTrashed    Boolean  @default(false)
   dateTrashed  DateTime @default(now())
   trash        Trash?
   User         User     @relation(fields: [userId], references: [userId])
@@ -55,4 +55,15 @@ model Trash {
   dateTempDeleted DateTime   @default(now())
   Credential      Credential @relation(fields: [credentialId], references: [credentialId])
   credentialId    Int        @unique //Foreign Key
+}
+
+model Document {
+  documentId  Int      @id @default(autoincrement())
+  name        String
+  path        String
+  type        String
+  category    String
+  dateCreated DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [userId])
+  userId      Int //Foreign key
 }

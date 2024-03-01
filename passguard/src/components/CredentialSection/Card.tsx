@@ -46,7 +46,7 @@ const Card = (props: CardProps) => {
 	return (
 		<div
 			id={props.id}
-			className={`relative ${credentialStatus()} 
+			className={`relative ${credentialStatus()}
       flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:scale-105 transition-all duration-300`}
 			onClick={props.onClick}
 		>
