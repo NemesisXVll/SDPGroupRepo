@@ -2,9 +2,8 @@
 CREATE TABLE "User" (
     "userId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "masterPassword" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "data" TEXT NOT NULL,
-    "salt" TEXT NOT NULL,
+    "salt" TEXT,
     "dateCreated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateUpdated" DATETIME NOT NULL,
     "picture" TEXT
@@ -58,9 +57,6 @@ CREATE TABLE "Document" (
     "userId" INTEGER NOT NULL,
     CONSTRAINT "Document_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE RESTRICT ON UPDATE CASCADE
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_data_key" ON "User"("data");

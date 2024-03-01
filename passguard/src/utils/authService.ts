@@ -58,6 +58,37 @@ type LoginData = {
   password: string;
 };
 
+export const unlock = async (masterPassword: string, userId: number): Promise<any> => { 
+  const user = new Promise((resolve) => {
+    window.ipcRenderer.send("findUserByIdRequest", userId);
+    window.ipcRenderer.once("findUserByIdResponse", (event, arg) => {
+      const parsedData = JSON.parse(arg);
+      resolve(parsedData);
+    });
+  });
+
+  try {
+    const userData: any = await user;
+
+    if (userData) {
+      const storedMasterPassword = userData.masterPassword;
+      if (bcrypt.compareSync(masterPassword, storedMasterPassword)) {
+        console.log("Unlock successful!");
+        return userData;
+      } else {
+        console.log("Incorrect password");
+        return false;
+      }
+    } else {
+      console.log("User not found");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error during unlock:", error);
+    return false;
+  }
+
+}
 export const login = async ({ email, password }: LoginData): Promise<any> => {
 
   const user = new Promise((resolve) => {
