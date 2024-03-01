@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { login } from "../utils/authService"; // Adjust the import path as needed
+import { login } from "../utils/authService"; 
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
@@ -13,6 +13,8 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   
 
   const handleLoginSubmit = async (event: any) => {
@@ -41,6 +43,26 @@ const Login: React.FC = () => {
     navigate("/signup");
   }
 
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click(); 
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.name.endsWith('.db')) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+       
+        
+      } else {
+        console.error('Please select a .db file');
+      }
+    }
+  };
+  
   
 
   function handleOnChange(event: any): void {
@@ -129,6 +151,22 @@ const Login: React.FC = () => {
               Create an account
             </a>
           </p>
+
+         <div className="text-center mt-1">
+            <span>Do you want to import your database?</span>
+                <a
+                    onClick={handleImportClick}
+                    className="text-indigo-600 hover:text-indigo-500 cursor-pointer ml-1"
+                >
+                    Import
+                </a>
+            <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+            />
+          </div>
         </form>
       </div>
     </div>
