@@ -22,31 +22,29 @@ export default class UserQueryService {
   }
 
   // Find a user by Email
-  async findUserByEmail(email: any) { 
+  async findUserByEmail(email: any) {
     const users = await prisma.user.findMany();
-    for(const user of users){
-      const dd = decryptData(user.data, user.masterPassword)
+    for (const user of users) {
+      const dd = decryptData(user.data, user.masterPassword);
       if (JSON.parse(dd).email === email) {
         return user;
-      } else {
-        console.log("User not found by email");
-        return null;
       }
     }
+    return null;
   }
-  async getUserDataById(userId: any) { 
-     const user = await prisma.user.findUnique({
+  async getUserDataById(userId: any) {
+    const user = await prisma.user.findUnique({
       where: { userId: userId },
       select: {
         data: true,
         masterPassword: true,
       },
-     });
-    if(!user) return null;
+    });
+    if (!user) return null;
     const data = decryptData(user.data, user.masterPassword);
     return data;
   }
-  async getUserMasterPasswordById(userId: any) { 
+  async getUserMasterPasswordById(userId: any) {
     const masterPassword = await prisma.user.findUnique({
       where: { userId: userId },
       select: {
@@ -88,7 +86,7 @@ export default class UserQueryService {
     });
     //decrypt data
     const masterPassword = await this.getUserMasterPasswordById(userId);
-    if(!masterPassword) return null;
+    if (!masterPassword) return null;
     credentials.forEach((element) => {
       element.data = decryptData(element.data, masterPassword);
     });
@@ -115,7 +113,9 @@ export default class UserQueryService {
     });
     //decrypt data
     if (credential) {
-      credential.data = JSON.parse(decryptData(credential.data, MASTER_PASSWORD));
+      credential.data = JSON.parse(
+        decryptData(credential.data, MASTER_PASSWORD)
+      );
     }
     return credential;
   }
@@ -131,7 +131,9 @@ export default class UserQueryService {
     });
     //decrypt data
     if (credential) {
-      credential.data = JSON.parse(decryptData(credential.data, MASTER_PASSWORD));
+      credential.data = JSON.parse(
+        decryptData(credential.data, MASTER_PASSWORD)
+      );
     }
     return credential;
   }
@@ -249,7 +251,7 @@ export default class UserQueryService {
       },
     });
   }
-  async getTrashedCredentialsByUserId(userId: number) { 
+  async getTrashedCredentialsByUserId(userId: number) {
     return await prisma.credential.findMany({
       where: {
         userId: userId,

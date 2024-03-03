@@ -2,45 +2,55 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function useAutoRedirect(timeoutDuration = 15000, redirectPath = "/lock") {
-	const navigate = useNavigate();
-	const [redirect, setRedirect] = useState(false);
-	const location = useLocation();
-	const user = location.state.user;
+function useAutoRedirect(
+  timeoutDuration = 5000,
+  redirectPath = "/lock",
+  _expanded: boolean
+) {
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false);
 
-	useEffect(() => {
-		let timeoutId:any;
+  const location = useLocation();
+  const user = location.state.user;
 
-		const resetTimeout = () => {
-			clearTimeout(timeoutId);
-			timeoutId = setTimeout(() => {
-				setRedirect(true);
-			}, timeoutDuration);
-		};
+  console.log("User: ", user);
 
-		const handleActivity = () => {
-			resetTimeout();
-		};
+  useEffect(() => {
+    let timeoutId: any;
 
-		window.addEventListener("mousemove", handleActivity);
-		window.addEventListener("keypress", handleActivity);
+    const resetTimeout = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setRedirect(true);
+      }, timeoutDuration);
+    };
 
-		resetTimeout();
+    const handleActivity = () => {
+      resetTimeout();
+    };
 
-		return () => {
-			clearTimeout(timeoutId);
-			window.removeEventListener("mousemove", handleActivity);
-			window.removeEventListener("keypress", handleActivity);
-		};
-	}, [timeoutDuration]);
+    window.addEventListener("mousemove", handleActivity);
+    window.addEventListener("keypress", handleActivity);
 
-	useEffect(() => {
-		if (redirect) {
-			navigate(redirectPath, {state: user, replace: true });
-		}
-	}, [redirect, redirectPath, navigate]);
+    resetTimeout();
 
-	return { redirect, setRedirect };
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("keypress", handleActivity);
+    };
+  }, [timeoutDuration]);
+
+  useEffect(() => {
+    if (redirect) {
+      navigate(redirectPath, {
+        replace: true,
+        state: { user, expanded: _expanded },
+      });
+    }
+  }, [redirect, redirectPath, navigate]);
+
+  return { redirect, setRedirect };
 }
 
 export default useAutoRedirect;

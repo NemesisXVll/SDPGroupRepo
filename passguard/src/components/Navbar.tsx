@@ -112,11 +112,9 @@ function Navbar(props: NavbarProps) {
           >
             <div className="leading-4">
               <h4 className="font-semibold text-white">
-                {data.firstName +
-                  " " +
-                  data.lastName}
+                {data.firstName + " " + data.lastName}
               </h4>
-              <span className="text-xs text-gray-600">{user.email}</span>
+              <span className="text-xs text-gray-600">{data.email}</span>
             </div>
             <MoreVertical size={20} color="white" />
           </div>

@@ -23,7 +23,7 @@ const Document = (props: DocumentProps) => {
 	const [expanded, setExpanded] = useState(location.state?.expanded);
 	const [currentDocuments, setCurrentDocuments] = useState<any>([]);
 	const [sync, setSync] = useState<boolean>(false);
-	const { redirect, setRedirect } = useAutoRedirect();
+	const { redirect, setRedirect } = useAutoRedirect(undefined, undefined, expanded);
 
 	const handleDeleteClick = (documentId: number) => {
 		console.log("Deleting Document", documentId);

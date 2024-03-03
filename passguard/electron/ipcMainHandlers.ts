@@ -32,10 +32,13 @@ export const registerIPCMainHandlers = () => {
       "findUserByEmailResponse",
       JSON.stringify(await userQueryService.findUserByEmail(arg))
     );
-    console.log("findUserByEmailResponse: ", await userQueryService.findUserByEmail(arg) );
+    console.log(
+      "findUserByEmailResponse: ",
+      await userQueryService.findUserByEmail(arg)
+    );
   });
-  
-  ipcMain.on("getUserDataByIdRequest", async (event, arg) => { 
+
+  ipcMain.on("getUserDataByIdRequest", async (event, arg) => {
     event.sender.send(
       "getUserDataByIdResponse",
       JSON.stringify(await userQueryService.getUserDataById(arg))
@@ -71,6 +74,7 @@ export const registerIPCMainHandlers = () => {
   });
 
   ipcMain.on("createUser", async (event, arg) => {
+    console.log("createUser: ", arg);
     await userManagementService.createUser(arg);
   });
 
@@ -106,12 +110,11 @@ export const registerIPCMainHandlers = () => {
       )
     );
   });
-  ipcMain.on("getTrashedCredentialsByUserIdRequest", async (event, arg) => { 
+  ipcMain.on("getTrashedCredentialsByUserIdRequest", async (event, arg) => {
     event.sender.send(
       "getTrashedCredentialsByUserIdResponse",
       JSON.stringify(await userQueryService.getTrashedCredentialsByUserId(arg))
     );
-
   });
 };
 

@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+
 type SignUpData = {
   firstName: string;
   lastName: string;
@@ -7,6 +8,11 @@ type SignUpData = {
   confirmPassword: string;
   salt: string;
   picture: string;
+};
+
+type LoginData = {
+  email: string;
+  password: string;
 };
 
 export const SignUp = async (data: SignUpData): Promise<boolean> => {
@@ -18,14 +24,16 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
   }
 
   const filteredData = {
-		data: JSON.stringify({
-			firstName: rest.firstName,
-			lastName: rest.lastName,
-			email: email
-		}),
-		masterPassword: masterPassword,
-		picture: "https://via.placeholder.com/150",
-	};
+    data: JSON.stringify({
+      firstName: rest.firstName,
+      lastName: rest.lastName,
+      email: email,
+    }),
+    masterPassword: masterPassword,
+    picture: "https://via.placeholder.com/150",
+  };
+
+  console.log("filteredData: ", filteredData);
 
   try {
     const userData: any = await new Promise((resolve) => {
@@ -42,7 +50,6 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
       console.log("User already exists");
       return false;
     } else {
-      console.log("Creating user... here")
       window.ipcRenderer.send("createUser", filteredData);
       console.log("Account created successfully!");
       return true;
@@ -53,12 +60,10 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
   return false;
 };
 
-type LoginData = {
-  email: string;
-  password: string;
-};
-
-export const unlock = async (masterPassword: string, userId: number): Promise<any> => { 
+export const unlock = async (
+  masterPassword: string,
+  userId: number
+): Promise<any> => {
   const user = new Promise((resolve) => {
     window.ipcRenderer.send("findUserByIdRequest", userId);
     window.ipcRenderer.once("findUserByIdResponse", (event, arg) => {
@@ -87,10 +92,8 @@ export const unlock = async (masterPassword: string, userId: number): Promise<an
     console.error("Error during unlock:", error);
     return false;
   }
-
-}
+};
 export const login = async ({ email, password }: LoginData): Promise<any> => {
-
   const user = new Promise((resolve) => {
     window.ipcRenderer.send("findUserByEmailRequest", email);
     window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {

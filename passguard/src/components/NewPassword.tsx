@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import loginImg from "../assets/icons/common/appLogo.svg"; 
+import React, { useEffect, useState } from "react";
+import loginImg from "../assets/icons/common/appLogo.svg";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
-
 import { useNavigate } from "react-router-dom";
 
 const NewPassword: React.FC = () => {
-  
+  const navigate = useNavigate();
 
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
 
-  const handleNewPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNewPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setNewPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setConfirmPassword(event.target.value);
   };
 
@@ -27,9 +29,9 @@ const NewPassword: React.FC = () => {
       setErrorMessage("Passwords do not match. Please try again.");
       return;
     }
-    //  add logic to replace the password  the password
+    //  add logic to replace the password the password
     console.log("Password updated successfully.");
-    
+    navigate("/login");
   };
 
   return (
@@ -68,8 +70,6 @@ const NewPassword: React.FC = () => {
             id="confirm-password"
             placeholder="Re-enter New Password"
             onChange={handleConfirmPasswordChange}
-            
-
           />
 
           {errorMessage && (
