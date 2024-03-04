@@ -35,7 +35,6 @@ function Navbar(props: NavbarProps) {
     icon: string;
     path: string;
   }): void {
-    console.log(item);
     if (item.path) {
       navigate(item.path, { replace: true, state: { expanded, user } });
     }

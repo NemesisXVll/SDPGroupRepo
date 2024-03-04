@@ -9,6 +9,7 @@ const documentService = new DocumentService();
 type DocumentModalProps = {
   modalVal: boolean;
   closeModal: () => void;
+  warningModal: () => void;
 };
 
 function DocumentModal(props: DocumentModalProps) {
@@ -44,11 +45,9 @@ function DocumentModal(props: DocumentModalProps) {
       return;
     }
 
-    console.log(formData);
-
     await documentService.createDocument(formData, user.userId);
 
-    props.closeModal();
+    props.warningModal();
   }
 
   function handleOnInputChange(event: any): void {
@@ -153,7 +152,6 @@ function DocumentModal(props: DocumentModalProps) {
           </div>
         </Modal.Body>
       </Modal>
-
     </>
   );
 }

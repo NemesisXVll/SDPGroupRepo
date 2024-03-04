@@ -108,6 +108,10 @@ const Document = (props: DocumentProps) => {
 
   function handleModals(): void {
     setOpenModal(false);
+  }
+
+  function handleWarningModal(): void {
+    setOpenModal(false);
     setOpenWarningModal(true);
   }
 
@@ -135,6 +139,7 @@ const Document = (props: DocumentProps) => {
 
             {openModal ? (
               <DocumentModal
+                warningModal={handleWarningModal}
                 closeModal={handleModals}
                 modalVal={openModal}
               ></DocumentModal>
@@ -151,7 +156,7 @@ const Document = (props: DocumentProps) => {
           </div>
         </div>
 
-        <div className="credentials overflow-auto ml-4 mt-8">
+        <div className="credentials overflow-auto ml-4 mt-8 ">
           <div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3">
             <h3 className="text-xl font-medium w-56">
               My Documents ({documentsLength})
