@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function useAutoRedirect(
-  timeoutDuration = 5000,
+  timeoutDuration = 15000,
   redirectPath = "/lock",
   _expanded: boolean
 ) {
@@ -45,7 +45,7 @@ function useAutoRedirect(
     if (redirect) {
       navigate(redirectPath, {
         replace: true,
-        state: { user, expanded: _expanded },
+        state: { user, expanded: _expanded, beforeLockLocation: location.pathname },
       });
     }
   }, [redirect, redirectPath, navigate]);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import loginImg from "../../assets/icons/common/appLogo.svg";
 import LabelInput from "../Form/LabelInput";
 import Button from "../Form/Button";
@@ -15,6 +15,13 @@ function LockPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.history.pushState(null, "", "/login");
+    window.onpopstate = function () {
+      window.history.pushState(null, "", "/login");
+    };
+  }, []);
+
   const handleUnlockSubmit = async (event: any) => {
     event.preventDefault();
     const data = JSON.parse(
@@ -25,7 +32,7 @@ function LockPage() {
     const user = await unlock(password, location.state.user.userId);
     if (user) {
       console.log("User logged in");
-      navigate("/home", {
+      navigate(location.state.beforeLockLocation, {
         replace: true,
         state: { user, expanded: location.state.expanded },
       });

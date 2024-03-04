@@ -7,7 +7,7 @@ interface KebabState {
 
 type KebabProps = {
   onUpdateClick?: () => void;
-  onDeleteClick: () => void;
+  onDeleteClick?: () => void;
   onRecoverClick?: () => void;
   onPermanentRemoveClick?: () => void;
   isTrashed?: boolean;
@@ -33,7 +33,9 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
     }
   };
   const handleClickOnDelete = () => {
-    props.onDeleteClick();
+    if (props.onDeleteClick) {
+      props.onDeleteClick();
+    }
   };
   const handleClickOnRecover = () => {
     if (props.onRecoverClick) {

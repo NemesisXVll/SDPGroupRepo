@@ -12,12 +12,12 @@ import AutoRedirectHook from "./Inactivity/AutoRedirectHook.tsx";
 function Home() {
   const location = useLocation();
 
-useEffect(() => {
-	window.history.pushState(null, "", "/login");
-	window.onpopstate = function () {
-		window.history.pushState(null, "", "/login");
-	};
-}, []);
+  useEffect(() => {
+    window.history.pushState(null, "", "/login");
+    window.onpopstate = function () {
+      window.history.pushState(null, "", "/login");
+    };
+  }, []);
 
   const user = location.state.user;
   const navigate = useNavigate();
@@ -83,6 +83,7 @@ useEffect(() => {
 
   function handleForceRender(): void {
     setForceGridRender((forceGridRender) => !forceGridRender);
+    setSyncStats((syncStats) => !syncStats);
     setShowForm(false);
   }
 

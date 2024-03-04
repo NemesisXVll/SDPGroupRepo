@@ -9,10 +9,9 @@ import LockPage from "./Inactivity/LockPage.tsx";
 import ForgetOTP from "./ForgetOtp.tsx";
 import OTPVerification from "./OTP.tsx";
 import NewPassword from "./NewPassword.tsx";
-import { useEffect } from "react";
+import Settings from "./Settings/Settings.tsx";
 
 function App() {
-
   // window.history.pushState(null, "", window.location.href);
   // window.onpopstate = function () {
   //   window.history.pushState(null, "", window.location.href);
@@ -31,18 +30,10 @@ function App() {
           <Route path="/secured-documents" element={<Document />} />
           <Route path="/reset-password" element={<NewPassword />} />
           <Route path="/lock" element={<LockPage />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </>
-
-    // <>
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route index path="/document" element={<Document />} />
-    //       <Route path="/file" element={<File />} />
-    //     </Routes>
-    //   </BrowserRouter>
-    // </>
   );
 
   //   const [open, setOpen] = useState(false)

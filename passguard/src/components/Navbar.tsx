@@ -4,6 +4,8 @@ import navbarItems from "../data/navbarItems";
 import { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
+import Kebab from "./CredentialSection/Kebab";
+import { Dropdown } from "flowbite-react";
 
 const userService = new UserService();
 
@@ -116,7 +118,14 @@ function Navbar(props: NavbarProps) {
               </h4>
               <span className="text-xs text-gray-600">{data.email}</span>
             </div>
-            <MoreVertical size={20} color="white" />
+
+            <div className="">
+              <Dropdown label="" placement="top" color="dark">
+                <Dropdown.Item onClick={() => navigate("/login")}>
+                  Sign Out
+                </Dropdown.Item>
+              </Dropdown>
+            </div>
           </div>
         </div>
       </nav>

@@ -27,10 +27,6 @@ function DocumentModal(props: DocumentModalProps) {
     category: "Other",
   });
 
-  function onCloseModal() {
-    props.closeModal();
-  }
-
   async function handleAddDocument(event: any): Promise<void> {
     event.preventDefault();
 
@@ -49,7 +45,9 @@ function DocumentModal(props: DocumentModalProps) {
     }
 
     console.log(formData);
+
     await documentService.createDocument(formData, user.userId);
+
     props.closeModal();
   }
 
@@ -80,7 +78,12 @@ function DocumentModal(props: DocumentModalProps) {
 
   return (
     <>
-      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => props.closeModal()}
+        popup
+      >
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
@@ -93,6 +96,7 @@ function DocumentModal(props: DocumentModalProps) {
                 <Label htmlFor="path" value="Upload File" className="" />
               </div>
               <FileInput
+                accept=".pdf, image/jpeg, image/png, image/gif, image/svg+xml"
                 required={true}
                 id="path"
                 className="font-nunito"
@@ -149,6 +153,7 @@ function DocumentModal(props: DocumentModalProps) {
           </div>
         </Modal.Body>
       </Modal>
+
     </>
   );
 }

@@ -64,7 +64,7 @@ function DocumentCard(props: DocumentCardProps) {
                   <div className="flex justify-center gap-4">
                     <Button
                       color="failure"
-                      onClick={() => props.onDeleteClick(props.index)}
+                      onClick={() => props.onDeleteClick(props.id)}
                     >
                       {"Yes, I'm sure"}
                     </Button>

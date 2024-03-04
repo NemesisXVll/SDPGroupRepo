@@ -220,7 +220,7 @@ const Signup: React.FC = () => {
               href="#"
               className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
             >
-              Login
+              &nbsp; Login
             </a>
           </p>
         </form>
