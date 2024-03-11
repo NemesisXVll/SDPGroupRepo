@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import { Label } from "flowbite-react";
-import { CiSettings } from "react-icons/ci";
+import { GrCircleQuestion } from "react-icons/gr";
 import { useLocation } from "react-router-dom";
 import AutoRedirectHook from "../Inactivity/AutoRedirectHook";
 
@@ -39,11 +39,11 @@ const Settings = (props: SettingsProps) => {
           <div className="p-2 m-3 TopOfDocument">
             <div className="flex">
               <Label
-                value="Settings"
+                value="About"
                 className="flex p-1 text-xl font-medium mb-2"
                 color="dark"
               />
-              <CiSettings className="h-5 w-5 mt-[0.45rem]" />
+              <GrCircleQuestion className="h-5 w-5 mt-[0.45rem]" />
             </div>
           </div>
         </div>

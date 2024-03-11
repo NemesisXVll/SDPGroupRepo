@@ -3,6 +3,7 @@ import "./grid.css";
 import { useState, useEffect } from "react";
 import Card from "./Card";
 import CredentialService from "../../utils/credentialService";
+import { serviceNames } from "../../data/dropdownItems";
 import AddButton from "../Form/AddButton";
 import { Dropdown } from "flowbite-react";
 import { FaTrash } from "react-icons/fa";
@@ -147,6 +148,8 @@ const Grid = (props: GridProps) => {
     eval(filteredCondition)
   ).length;
 
+  console.log("Current Credentials", currentCredentials);
+
   const injectCard = () => {
     return currentCredentials
       .filter(eval(filteredCondition))
@@ -170,7 +173,9 @@ const Grid = (props: GridProps) => {
           isOld={item.isOld}
           isReused={item.isReused}
           isTrashed={item.isTrashed}
-          picture={item.picture}
+          picture={serviceNames.find(
+            (service: any) => service.name === item.serviceName
+          )?.card || serviceNames[9].card}
         ></Card>
       ));
   };

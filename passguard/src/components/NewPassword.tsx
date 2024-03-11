@@ -5,6 +5,13 @@ import Button from "./Form/Button";
 import { useNavigate } from "react-router-dom";
 
 const NewPassword: React.FC = () => {
+  useEffect(() => {
+    window.history.pushState(null, "", "/login");
+    window.onpopstate = function () {
+      window.history.pushState(null, "", "/login");
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const [newPassword, setNewPassword] = useState<string>("");

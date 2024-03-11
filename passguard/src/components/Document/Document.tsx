@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import "../CredentialSection/grid.css";
 import { useLocation } from "react-router-dom";
-import { IoDocument } from "react-icons/io5";
+import { CgFileDocument } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 import { Label, Modal } from "flowbite-react";
 import Button from "../Form/Button";
@@ -134,7 +134,7 @@ const Document = (props: DocumentProps) => {
                 className="flex p-1 text-xl font-medium mb-2"
                 color="dark"
               />
-              <IoDocument className="mt-2 h-5" />
+              <CgFileDocument className="mt-2 h-5" />
             </div>
 
             {openModal ? (

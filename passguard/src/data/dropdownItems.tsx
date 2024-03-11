@@ -8,6 +8,16 @@ import tiktokLogo from "../assets/icons/form/tiktokLogo.svg";
 import twitterLogo from "../assets/icons/form/twitterLogo.svg";
 import whatsAppLogo from "../assets/icons/form/whatsappLogo.svg";
 import otherLogo from "../assets/icons/form/otherLogo.svg";
+import blackboardCard from "../assets/icons/common/blackboardCard.svg";
+import facebookCard from "../assets/icons/common/facebookCard.svg";
+import instagramCard from "../assets/icons/common/instagramCard.svg";
+import linkedinCard from "../assets/icons/common/linkedinCard.svg";
+import pinterestCard from "../assets/icons/common/pintrestCard.svg";
+import snapchatCard from "../assets/icons/common/snapchatCard.svg";
+import tiktokCard from "../assets/icons/common/tiktokCard.svg";
+import twitterCard from "../assets/icons/common/twitterCard.svg";
+import whatsappCard from "../assets/icons/common/whatsappCard.svg";
+import otherCard from "../assets/icons/common/otherCard.svg";
 
 export const serviceTypes = [
   {
@@ -45,6 +55,7 @@ export const serviceNames = [
     id: 1,
     name: "Facebook",
     image: facebookLogo,
+    card: facebookCard,
     Description:
       "A popular social networking platform for connecting with friends and family, sharing updates, and joining groups.",
   },
@@ -52,6 +63,7 @@ export const serviceNames = [
     id: 2,
     name: "Twitter",
     image: twitterLogo,
+    card: twitterCard,
     Description:
       "A microblogging platform for sharing short messages, links, and multimedia with a global audience.",
   },
@@ -59,6 +71,7 @@ export const serviceNames = [
     id: 3,
     name: "Instagram",
     image: instaLogo,
+    card: instagramCard,
     Description:
       "A photo and video sharing platform with features like Stories, Reels, and IGTV.",
   },
@@ -66,6 +79,7 @@ export const serviceNames = [
     id: 4,
     name: "LinkedIn",
     image: linkedInLogo,
+    card: linkedinCard,
     Description:
       "A professional networking platform for connecting with colleagues, job searching, and business networking.",
   },
@@ -73,6 +87,7 @@ export const serviceNames = [
     id: 5,
     name: "Snapchat",
     image: snapchatLogo,
+    card: snapchatCard,
     Description:
       "A multimedia messaging app known for its temporary photo and video sharing, Stories, and filters.",
   },
@@ -80,6 +95,7 @@ export const serviceNames = [
     id: 6,
     name: "Pinterest",
     image: pinterestLogo,
+    card: pinterestCard,
     Description:
       "A visual discovery and bookmarking platform for finding and organizing ideas, recipes, and inspiration.",
   },
@@ -87,6 +103,7 @@ export const serviceNames = [
     id: 7,
     name: "TikTok",
     image: tiktokLogo,
+    card: tiktokCard,
     Description:
       "A short-form video sharing app where users can create and watch entertaining videos.",
   },
@@ -94,6 +111,7 @@ export const serviceNames = [
     id: 8,
     name: "WhatsApp",
     image: whatsAppLogo,
+    card: whatsappCard,
     Description:
       "A messaging app for text and voice communication, as well as sharing photos, videos, and documents.",
   },
@@ -101,6 +119,7 @@ export const serviceNames = [
     id: 9,
     name: "Blackboard",
     image: blackBoardLogo,
+    card: blackboardCard,
     Description:
       "A virtual learning environment and course management system for online education.",
   },
@@ -108,6 +127,7 @@ export const serviceNames = [
     id: 10,
     name: "Other",
     image: otherLogo,
+    card: otherCard,
     Description: "",
   },
 ];

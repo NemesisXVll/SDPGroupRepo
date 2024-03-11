@@ -7,6 +7,13 @@ import UserService from "../utils/userService";
 const userService = new UserService();
 
 const OTPVerification: React.FC = () => {
+  useEffect(() => {
+    window.history.pushState(null, "", "/login");
+    window.onpopstate = function () {
+      window.history.pushState(null, "", "/login");
+    };
+  }, []);
+
   const location = useLocation();
   const user = location.state.user;
   const navigate = useNavigate();
@@ -21,13 +28,6 @@ const OTPVerification: React.FC = () => {
   userService.getUserDataById(user.userId).then((data: any) => {
     setUserEmail(data.email);
   });
-
-  useEffect(() => {
-    window.history.pushState(null, "", "/login");
-    window.onpopstate = function () {
-      window.history.pushState(null, "", "/login");
-    };
-  }, []);
 
   useEffect(() => {
     sendOTP(); // Automatically send OTP when component mounts

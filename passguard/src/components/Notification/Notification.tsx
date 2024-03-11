@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import { Label } from "flowbite-react";
-import { CiSettings } from "react-icons/ci";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import AutoRedirectHook from "../Inactivity/AutoRedirectHook";
 
-type SettingsProps = {};
+type NotificationProps = {};
 
-const Settings = (props: SettingsProps) => {
+const Notification = (props: NotificationProps) => {
   useEffect(() => {
     window.history.pushState(null, "", "/login");
     window.onpopstate = function () {
@@ -39,11 +39,11 @@ const Settings = (props: SettingsProps) => {
           <div className="p-2 m-3 TopOfDocument">
             <div className="flex">
               <Label
-                value="Settings"
+                value="Notifications"
                 className="flex p-1 text-xl font-medium mb-2"
                 color="dark"
               />
-              <CiSettings className="h-5 w-5 mt-[0.45rem]" />
+              <IoIosNotificationsOutline className="h-5 w-5 mt-[0.45rem]" />
             </div>
           </div>
         </div>
@@ -52,4 +52,4 @@ const Settings = (props: SettingsProps) => {
   );
 };
 
-export default Settings;
+export default Notification;
