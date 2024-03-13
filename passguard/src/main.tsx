@@ -9,11 +9,11 @@ import "primereact/resources/primereact.css"; // core css
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  
     <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
       <App />
     </PrimeReactProvider>
-  </React.StrictMode>
+  
 );
 
 // Remove Preload scripts loading
