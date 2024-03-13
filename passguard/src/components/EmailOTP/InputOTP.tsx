@@ -11,12 +11,14 @@ const OtpInput: React.FC<OtpInputProps> = ({ length = 6, onOtpChange }) => {
 	const otpInputRefs = useRef<HTMLInputElement[]>([]);
 
 	const handleChange = (index: number, value: string) => {
-		const newOtp = [...otp];
-		newOtp[index] = value;
-		setOtp(newOtp);
+		if (/^\d*$/.test(value)) {
+			const newOtp = [...otp];
+			newOtp[index] = value;
+			setOtp(newOtp);
 
-		if (value && otpInputRefs.current[index + 1]) {
-			otpInputRefs.current[index + 1].focus();
+			if (value && otpInputRefs.current[index + 1]) {
+				otpInputRefs.current[index + 1].focus();
+			}
 		}
 	};
 
