@@ -6,6 +6,8 @@ import { login } from "../utils/authService"; // Adjust the import path as neede
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
+import { FaCheckCircle } from "react-icons/fa";
+import { Modal, ModalHeader } from "flowbite-react";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLoginSubmit = async (event: any) => {
@@ -35,11 +39,11 @@ const Login: React.FC = () => {
   };
 
   function handleForgotPassword(): void {
-    navigate("/forgot-password");
+    navigate("/forgot-password", {});
   }
 
   function handleCreateAccount(): void {
-    navigate("/signup");
+    navigate("/signup", {});
   }
 
   const handleImportClick = () => {
@@ -47,15 +51,22 @@ const Login: React.FC = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("File Changed");
     const files = event.target.files;
     if (files && files.length > 0) {
       const file = files[0];
-      if (file.name.endsWith(".db")) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-      } else {
-        console.error("Please select a .db file");
-      }
+
+      new Promise((_resolve) => {
+        window.ipcRenderer.send("importDBRequest", file.path);
+        window.ipcRenderer.once("importDBResponse", (_event, arg) => {
+          const parsedData = JSON.parse(arg);
+          if (parsedData) {
+            setOpenSuccessModal(true);
+          } else {
+            console.log("Import Failed");
+          }
+        });
+      });
     }
   };
 
@@ -157,11 +168,35 @@ const Login: React.FC = () => {
             </a>
             <input
               type="file"
+              accept=".db"
               ref={fileInputRef}
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
           </p>
+
+          <Modal
+            dismissible
+            show={openSuccessModal}
+            size="md"
+            popup
+            onClose={() => setOpenSuccessModal(false)}
+          >
+            <ModalHeader></ModalHeader>
+            <Modal.Body>
+              <div className="flex justify-center p-3">
+                <FaCheckCircle className="text-5xl text-green-500" />
+              </div>
+              <h1 className="flex justify-center">
+                Import Completed Successfully
+              </h1>
+            </Modal.Body>
+            <div className="mx-6 my-4">
+              <Button onClick={() => setOpenSuccessModal(false)}>
+                Continue
+              </Button>
+            </div>
+          </Modal>
         </form>
       </div>
     </div>

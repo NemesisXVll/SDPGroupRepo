@@ -6,6 +6,14 @@ const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
 
 export const registerIPCMainHandlers = () => {
+
+  ipcMain.on("importDBRequest", async (event, arg) => {
+    event.sender.send(
+      "importDBResponse",
+      JSON.stringify(await userManagementService.importDB(arg))
+    );
+  });
+
   ipcMain.on("createCredential", async (event, arg) => {
     await userManagementService.createCredential(arg);
   });

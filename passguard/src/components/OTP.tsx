@@ -3,6 +3,7 @@ import emailjs from "emailjs-com";
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 const userService = new UserService();
 
@@ -123,6 +124,10 @@ const OTPVerification: React.FC = () => {
             e.preventDefault();
           }} // Prevent form submission
         >
+          <CiCircleChevLeft
+            className="w-10 h-10 hover:text-indigo-600 cursor-pointer"
+            onClick={() => navigate("/login", {})}
+          ></CiCircleChevLeft>
           <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
             PassGuard
           </h2>

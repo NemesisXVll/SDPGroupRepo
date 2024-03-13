@@ -1,6 +1,8 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
 import { encryptData, hashPassword, generateSalt } from "./Security/Encryption";
+import * as fs from "fs";
+import * as path from "path";
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -33,6 +35,17 @@ export default class UserManagementService {
   //     throw error;
   //   }
   // }
+
+  async importDB(dbPath: any) {
+    try {
+      console.log("Importing DB...");
+      fs.copyFileSync(dbPath, path.join(__dirname, "../prisma/dev.db"));
+      return true;
+    } catch (error) {
+      console.error("Error importing DB", error);
+      return false;
+    }
+  }
 
   async createDocument(document: any) {
     const masterPassword = await userQueryService.getUserMasterPasswordById(
