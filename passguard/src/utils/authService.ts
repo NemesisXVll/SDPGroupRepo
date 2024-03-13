@@ -33,8 +33,6 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
     picture: "https://via.placeholder.com/150",
   };
 
-  console.log("filteredData: ", filteredData);
-
   try {
     const userData: any = await new Promise((resolve) => {
       window.ipcRenderer.send("findUserByEmailRequest", email);
@@ -93,6 +91,7 @@ export const unlock = async (
     return false;
   }
 };
+
 export const login = async ({ email, password }: LoginData): Promise<any> => {
   const user = new Promise((resolve) => {
     window.ipcRenderer.send("findUserByEmailRequest", email);

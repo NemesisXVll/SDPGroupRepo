@@ -3,6 +3,8 @@ import loginImg from "../assets/icons/common/appLogo.svg";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import { useNavigate } from "react-router-dom";
+import { Modal, ModalHeader } from "flowbite-react";
+import { FaCheckCircle } from "react-icons/fa";
 
 const NewPassword: React.FC = () => {
   useEffect(() => {
@@ -17,6 +19,7 @@ const NewPassword: React.FC = () => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
 
   const handleNewPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -38,7 +41,7 @@ const NewPassword: React.FC = () => {
     }
     //  add logic to replace the password the password
     console.log("Password updated successfully.");
-    navigate("/login");
+    setOpenSuccessModal(true);
   };
 
   return (
@@ -55,7 +58,7 @@ const NewPassword: React.FC = () => {
           className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
+          <h2 className="text-4xl text-center py-4 font-bold font-['Nunito']">
             Set New Password
           </h2>
 
@@ -90,6 +93,25 @@ const NewPassword: React.FC = () => {
           </div>
         </form>
       </div>
+      <Modal
+        dismissible
+        show={openSuccessModal}
+        size="md"
+        popup
+        onClose={() => setOpenSuccessModal(false)}
+      >
+        <Modal.Body className="p-6">
+          <div className="flex justify-center p-2">
+            <FaCheckCircle className="text-5xl text-green-500" />
+          </div>
+          <h1 className="flex justify-center">Password Updated Successfully</h1>
+        </Modal.Body>
+        <div className="mx-6 my-4">
+          <Button onClick={() => navigate("/login", {})}>
+            Go To Login
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };

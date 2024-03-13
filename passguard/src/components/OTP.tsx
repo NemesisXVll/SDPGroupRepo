@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import { AiTwotoneMail } from "react-icons/ai";
 import InputOTP from "./EmailOTP/InputOTP";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 const userService = new UserService();
 

@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
+import { Modal, ModalHeader } from "flowbite-react";
+import { CiCircleChevLeft } from "react-icons/ci";
+import { FaCheckCircle } from "react-icons/fa";
 
 interface State {
   firstName: string;
@@ -29,6 +32,7 @@ const Signup: React.FC = () => {
     showConfirmPassword: false,
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
     setState((prevState) => ({
@@ -38,7 +42,6 @@ const Signup: React.FC = () => {
   };
 
   const toggleConfirmPasswordVisibility = () => {
-    console.log(showConfirmPassword);
     setState((prevState) => ({
       ...prevState,
       showConfirmPassword: !prevState.showConfirmPassword,
@@ -91,7 +94,7 @@ const Signup: React.FC = () => {
     });
 
     if (await signUpResult) {
-      navigate("/login", { replace: true });
+      setOpenSuccessModal(true);
     } else {
       setErrorMessage("Sign up failed. Please try again.");
     }
@@ -127,7 +130,11 @@ const Signup: React.FC = () => {
           className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSignUpClick}
         >
-          <h2 className="text-4xl font-bold text-center py-6 font-['Nunito']">
+          <CiCircleChevLeft
+            className="w-10 h-10 hover:text-indigo-600 cursor-pointer"
+            onClick={() => navigate("/login", {})}
+          ></CiCircleChevLeft>
+          <h2 className="text-4xl font-bold text-center py-4 font-['Nunito']">
             SignUp
           </h2>
 
@@ -225,6 +232,24 @@ const Signup: React.FC = () => {
           </p>
         </form>
       </div>
+      <Modal
+        dismissible
+        show={openSuccessModal}
+        size="md"
+        popup
+        onClose={() => setOpenSuccessModal(false)}
+      >
+        <ModalHeader></ModalHeader>
+        <Modal.Body>
+          <div className="flex justify-center p-3">
+            <FaCheckCircle className="text-5xl text-green-500" />
+          </div>
+          <h1 className="flex justify-center">Acount Created Successfully</h1>
+        </Modal.Body>
+        <div className="mx-6 my-4">
+          <Button onClick={() => navigate("/login", {})}>Go To Login</Button>
+        </div>
+      </Modal>
     </div>
   );
 };
