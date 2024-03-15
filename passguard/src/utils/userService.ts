@@ -14,4 +14,19 @@ export default class UserService {
             return {};
         }
     }
+    async findUserByEmail(email: string) { 
+        try {
+            return new Promise((resolve) => {
+                window.ipcRenderer.send("findUserByEmailRequest", email);
+                window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
+                    const parsedData = JSON.parse(arg);
+                    resolve(parsedData);
+                });
+            });
+        } catch (error) {
+            console.error("Error finding user by email", error);
+            return {};
+        }
+    }
+
 }

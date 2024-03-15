@@ -16,32 +16,46 @@ type FormProps = {
 
 const Button = (props: FormProps) => {
   return (
-    <button
-      type={props.type}
-      value={props.value}
-      onClick={props.onClick}
-      className={`inline-flex items-center text-white bg-gradient-to-r rounded-3xl
+		<button
+			type={props.type}
+			value={props.value}
+			onClick={props.onClick}
+			className={`inline-flex items-center  bg-gradient-to-r rounded-3xl
          hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
          leading-normal tracking-tight font-semibold text-center w-full
           transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem]
          ${
-           props.value === "Cancel" || props.value === "Add Document"
-             ? "bg-black hover:text-black hover:bg-yellow-400"
-             : "from-cyan-500 to-blue-500"
-         }
+						props.value === "Add Document" ||
+						props.value === "Login" ||
+						props.value === "sendVerification" ||
+						props.value === "createAccount" ||
+						props.value === "Add"
+							? "bg-black hover:text-black hover:bg-yellow-400 text-white"
+							: ""
+					}
+         ${
+						props.value === "Save"
+							? "bg-blue-500 hover:bg-yellow-400 text-white"
+							: ""
+					}
+         ${
+						props.value === "Cancel"
+							? "text-blue-500 border border-gray-400 hover:bg-red-500 hover:text-white"
+							: ""
+					}
          duration-[400ms]
          `}
-    >
-      {buttonsArr.map((item, index) =>
-        item.icon !== "" && item.value === props.value ? (
-          <img key={index} src={item.icon} alt={item.value} className="pr-1" />
-        ) : (
-          ""
-        )
-      )}
-      {props.children}
-    </button>
-  );
+		>
+			{buttonsArr.map((item, index) =>
+				item.icon !== "" && item.value === props.value ? (
+					<img key={index} src={item.icon} alt={item.value} className="pr-1" />
+				) : (
+					""
+				)
+			)}
+			{props.children}
+		</button>
+	);
 };
 
 export default Button;

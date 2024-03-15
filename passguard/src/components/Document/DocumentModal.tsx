@@ -83,7 +83,7 @@ function DocumentModal(props: DocumentModalProps) {
         onClose={() => props.closeModal()}
         popup
       >
-        <Modal.Header />
+        <Modal.Header/>
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">

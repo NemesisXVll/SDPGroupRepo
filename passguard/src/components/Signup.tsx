@@ -117,141 +117,148 @@ const Signup: React.FC = () => {
   function handleOnChange(event: any): void {}
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
-      <div className="hidden sm:block">
-        <img
-          className="w-full h-full object-cover"
-          src={loginImg}
-          alt="Signup visual"
-        />
-      </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
-          onSubmit={handleSignUpClick}
-        >
-          <CiCircleChevLeft
-            className="w-10 h-10 hover:text-indigo-600 cursor-pointer"
-            onClick={() => navigate("/login", {})}
-          ></CiCircleChevLeft>
-          <h2 className="text-4xl font-bold text-center py-4 font-['Nunito']">
-            SignUp
-          </h2>
+		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
+			<div className="hidden sm:block">
+				<img
+					className="w-full h-full object-cover"
+					src={loginImg}
+					alt="Signup visual"
+				/>
+			</div>
+			<div className="bg-gray-100 flex flex-col justify-center">
+				<form
+					className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+					onSubmit={handleSignUpClick}
+				>
+					<CiCircleChevLeft
+						className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+						onClick={() => navigate("/login", {})}
+					></CiCircleChevLeft>
+					<div className="flex items-center justify-center">
+						<h2 className="text-4xl text-center py-2 font-bold font-nunito">
+							📝 Sign
+						</h2>
+						<h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+							Up&nbsp;
+						</h2>
+					</div>
 
-          {/* First Name Field */}
-          <LabelInput
-            required={true}
-            type="text"
-            value={firstName}
-            label="First Name"
-            id="firstName"
-            placeholder=""
-            onChange={handleOnChange}
-          ></LabelInput>
+					{/* First Name Field */}
+					<LabelInput
+						required={true}
+						type="text"
+						value={firstName}
+						label="First Name"
+						id="firstName"
+						placeholder=""
+						onChange={handleOnChange}
+					></LabelInput>
 
-          {/* Last Name Field */}
-          <LabelInput
-            required={true}
-            type="text"
-            value={lastName}
-            label="Last Name"
-            id="lastName"
-            placeholder=""
-            onChange={handleOnChange}
-          ></LabelInput>
+					{/* Last Name Field */}
+					<LabelInput
+						required={true}
+						type="text"
+						value={lastName}
+						label="Last Name"
+						id="lastName"
+						placeholder=""
+						onChange={handleOnChange}
+					></LabelInput>
 
-          {/* Email Field */}
-          <LabelInput
-            required={true}
-            type="email"
-            value={email}
-            label="Email"
-            id="email"
-            placeholder=""
-            onChange={handleOnChange}
-          ></LabelInput>
+					{/* Email Field */}
+					<LabelInput
+						required={true}
+						type="email"
+						value={email}
+						label="Email"
+						id="email"
+						placeholder=""
+						onChange={handleOnChange}
+					></LabelInput>
 
-          {/* Password Field */}
-          <MPasswdStrength
-            required={true}
-            value={password}
-            label="Password"
-            id="password"
-            placeholder=""
-            onChange={handleOnChange}
-          ></MPasswdStrength>
+					{/* Password Field */}
+					<MPasswdStrength
+						required={true}
+						value={password}
+						label="Password"
+						id="password"
+						placeholder=""
+						onChange={handleOnChange}
+					></MPasswdStrength>
 
-          {/* Confirm Password Field */}
-          <LabelInput
-            required={true}
-            type={showConfirmPassword ? "text" : "password"}
-            value={confirmPassword}
-            label="Confirm Password"
-            id="confirmPassword"
-            placeholder=""
-            onChange={handleOnChange}
-          >
-            <div className="">
-              {showConfirmPassword ? (
-                <FiEyeOff
-                  onClick={toggleConfirmPasswordVisibility}
-                  size="1.3em"
-                  className="ml-1 text-black
+					{/* Confirm Password Field */}
+					<LabelInput
+						required={true}
+						type={showConfirmPassword ? "text" : "password"}
+						value={confirmPassword}
+						label="Confirm Password"
+						id="confirmPassword"
+						placeholder=""
+						onChange={handleOnChange}
+					>
+						<div className="">
+							{showConfirmPassword ? (
+								<FiEyeOff
+									onClick={toggleConfirmPasswordVisibility}
+									size="1.3em"
+									className="ml-1 text-black
                   absolute translate-x-[20.8rem] top-[1.9rem]"
-                />
-              ) : (
-                <FiEye
-                  onClick={toggleConfirmPasswordVisibility}
-                  size="1.3em"
-                  className="ml-1 text-black
+								/>
+							) : (
+								<FiEye
+									onClick={toggleConfirmPasswordVisibility}
+									size="1.3em"
+									className="ml-1 text-black
               absolute translate-x-[20.8rem] top-[1.9rem]"
-                />
-              )}
-            </div>
-          </LabelInput>
+								/>
+							)}
+						</div>
+					</LabelInput>
 
-          {/* Error Message */}
-          {errorMessage && (
-            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-          )}
+					{/* Error Message */}
+					{errorMessage && (
+						<p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+					)}
 
-          {/* Submit Button */}
-          <div className="mt-7">
-            <Button type="submit">Create Account</Button>
-          </div>
+					{/* Submit Button */}
+					<div className="mt-7">
+						<Button type="submit" value="createAccount">
+							Create Account
+						</Button>
+					</div>
 
-          <p className="text-center mt-8 font-normal font-['Nunito']">
-            Already have an account?
-            <a
-              onClick={handleLoginClick}
-              href="#"
-              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
-            >
-              &nbsp; Login
-            </a>
-          </p>
-        </form>
-      </div>
-      <Modal
-        dismissible
-        show={openSuccessModal}
-        size="md"
-        popup
-        onClose={() => setOpenSuccessModal(false)}
-      >
-        <ModalHeader></ModalHeader>
-        <Modal.Body>
-          <div className="flex justify-center p-3">
-            <FaCheckCircle className="text-5xl text-green-500" />
-          </div>
-          <h1 className="flex justify-center">Acount Created Successfully</h1>
-        </Modal.Body>
-        <div className="mx-6 my-4">
-          <Button onClick={() => navigate("/login", {})}>Go To Login</Button>
-        </div>
-      </Modal>
-    </div>
-  );
+					<p className="text-center text-sm text-gray-600 mt-8 font-normal font-['Nunito']">
+						Already have an account?
+						<a
+							onClick={handleLoginClick}
+							href="#"
+							className="text-indigo-600 text-sm hover:text-indigo-500 font-normal font-['Nunito']"
+						>
+							&nbsp; Login
+						</a>
+					</p>
+				</form>
+			</div>
+			<Modal
+				dismissible
+				show={openSuccessModal}
+				size="md"
+				popup
+				onClose={() => setOpenSuccessModal(false)}
+			>
+				<ModalHeader></ModalHeader>
+				<Modal.Body>
+					<div className="flex justify-center p-3">
+						<FaCheckCircle className="text-5xl text-green-500" />
+					</div>
+					<h1 className="flex justify-center">Acount Created Successfully</h1>
+				</Modal.Body>
+				<div className="mx-6 my-4">
+					<Button onClick={() => navigate("/login", {})}>Go To Login</Button>
+				</div>
+			</Modal>
+		</div>
+	);
 };
 
 export default Signup;
