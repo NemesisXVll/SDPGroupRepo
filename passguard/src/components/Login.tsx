@@ -97,24 +97,6 @@ const Login: React.FC = () => {
       ) : (
         ""
       )}
-
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
-          onSubmit={handleLoginSubmit}
-        >
-          <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
-            PassGuard
-          </h2>
-	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
-			<div className="hidden sm:block">
-				<img
-					className="w-full h-full object-cover"
-					src={loginImg}
-					alt="Login visual"
-				/>
-			</div>
 			<div className="bg-gray-100 flex flex-col justify-center">
 				<form
 					className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"

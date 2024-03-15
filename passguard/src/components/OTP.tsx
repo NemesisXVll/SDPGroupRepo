@@ -4,7 +4,7 @@ import loginImg from "../assets/icons/common/appLogo.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import InputOTP from "./EmailOTP/InputOTP";
-import { FcPrevious } from "react-icons/fc";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 const userService = new UserService();
 
