@@ -9,6 +9,7 @@ import MPasswdStrength from "./MPasswdStrength";
 import { Modal, ModalHeader } from "flowbite-react";
 import {FcPrevious} from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 interface State {
   firstName: string;
