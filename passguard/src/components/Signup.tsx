@@ -7,7 +7,7 @@ import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
 import { Modal, ModalHeader } from "flowbite-react";
-import { CiCircleChevLeft } from "react-icons/ci";
+import {FcPrevious} from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface State {

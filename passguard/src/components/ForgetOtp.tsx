@@ -7,7 +7,6 @@ import LabelInput from "./Form/LabelInput";
 import { AiTwotoneMail } from "react-icons/ai";
 import Button from "./Form/Button";
 import UserService from "../utils/userService";
-import redinfo from "../assets/icons/stats/redinfo.svg";
 
 const ForgetOTP: React.FC = () => {
 	const navigate = useNavigate();

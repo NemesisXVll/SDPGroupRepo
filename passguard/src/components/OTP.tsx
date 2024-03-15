@@ -4,23 +4,23 @@ import loginImg from "../assets/icons/common/appLogo.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import InputOTP from "./EmailOTP/InputOTP";
-import { CiCircleChevLeft } from "react-icons/ci";
+import { FcPrevious } from "react-icons/fc";
 
 const userService = new UserService();
 
 const OTPVerification: React.FC = () => {
-	const location = useLocation();
-	const user = location.state.user;
-	const navigate = useNavigate();
+  const location = useLocation();
+  const user = location.state.user;
+  const navigate = useNavigate();
 
-	const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 	const [userName, setUserName] = useState("");
-	const [otp, setOTP] = useState("");
-	const [message, setMessage] = useState("");
-	const [generatedOTP, setGeneratedOTP] = useState<string | null>(null); // Store the generated OTP
-	const [disabled, setDisabled] = useState(false);
-	const [OTPSent, setOTPSent] = useState(false);
-	const [timer, setTimer] = useState(0);
+  const [otp, setOTP] = useState("");
+  const [message, setMessage] = useState("");
+  const [generatedOTP, setGeneratedOTP] = useState<string | null>(null); // Store the generated OTP
+  const [disabled, setDisabled] = useState(false);
+  const [OTPSent, setOTPSent] = useState(false);
+  const [timer, setTimer] = useState(0);
 
 	useEffect(() => {
 		window.history.pushState(null, "", "/login");
@@ -33,14 +33,14 @@ const OTPVerification: React.FC = () => {
 		sendOTP(); // Automatically send OTP when component mounts
 	}, [OTPSent, userEmail]); // Empty dependency array to run only once
 
-	const generateOTP = (): string => {
-		const randomValues = new Uint8Array(6); // 6 bytes for 6 digits
+  const generateOTP = (): string => {
+    const randomValues = new Uint8Array(6); // 6 bytes for 6 digits
 
-		// Populate the array with random values
-		crypto.getRandomValues(randomValues);
+    // Populate the array with random values
+    crypto.getRandomValues(randomValues);
 
-		// Map the random values to digits (0-9)
-		const otp = randomValues.map((value) => value % 10).join("");
+    // Map the random values to digits (0-9)
+    const otp = randomValues.map((value) => value % 10).join("");
 
 		return otp;
 	};
@@ -77,30 +77,30 @@ const OTPVerification: React.FC = () => {
 				message: newOTP,
 			};
 
-			// await emailjs.send(
-			//   "service_3ojecjd",
-			//   "template_nsdnz0c",
-			//   templateParams,
-			//   "6igdyzCgketnFP148"
-			// );
-		} catch (error) {
-			console.error("Failed to send OTP:", error);
-			setMessage("Failed to send OTP");
-		}
-	};
+      // await emailjs.send(
+      //   "service_3ojecjd",
+      //   "template_nsdnz0c",
+      //   templateParams,
+      //   "6igdyzCgketnFP148"
+      // );
+    } catch (error) {
+      console.error("Failed to send OTP:", error);
+      setMessage("Failed to send OTP");
+    }
+  };
 
-	const verifyOTP = (enteredOTP: any) => {
-		console.log("VERIFYING OTP");
-		if (enteredOTP == generatedOTP) {
-			//CHANGE
-			console.log("OTP is correct");
-			setMessage("OTP is correct");
-			navigate("/home", { state: { user, expanded: true } });
-		} else {
-			console.log("OTP is incorrect");
-			setMessage("Wrong OTP entered");
-		}
-	};
+  const verifyOTP = (enteredOTP: any) => {
+    console.log("VERIFYING OTP");
+    if (enteredOTP == generatedOTP) {
+      //CHANGE
+      console.log("OTP is correct");
+      setMessage("OTP is correct");
+      navigate("/home", { state: { user, expanded: true } });
+    } else {
+      console.log("OTP is incorrect");
+      setMessage("Wrong OTP entered");
+    }
+  };
 
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
