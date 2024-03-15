@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import Kebab from "./CredentialSection/Kebab";
 import { Dropdown } from "flowbite-react";
+import Button from "./Form/Button";
 
 const userService = new UserService();
 
@@ -118,12 +119,13 @@ function Navbar(props: NavbarProps) {
               <span className="text-xs text-gray-600">{data.email}</span>
             </div>
 
-            <div className="">
-              <Dropdown label="" placement="top" color="dark">
+            <div className="w-min">
+              {/* <Dropdown label="" placement="top" color="dark">
                 <Dropdown.Item onClick={() => navigate("/login")}>
                   Sign Out
                 </Dropdown.Item>
-              </Dropdown>
+              </Dropdown> */}
+              <Button value="Cancel" onClick={() => navigate("/login")}>Sign Out</Button>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
 import { Modal, ModalHeader } from "flowbite-react";
-import { CiCircleChevLeft } from "react-icons/ci";
+import {FcPrevious} from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface State {
@@ -130,10 +130,10 @@ const Signup: React.FC = () => {
           className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSignUpClick}
         >
-          <CiCircleChevLeft
-            className="w-10 h-10 hover:text-indigo-600 cursor-pointer"
+          <FcPrevious
+            className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
-          ></CiCircleChevLeft>
+          ></FcPrevious>
           <h2 className="text-4xl font-bold text-center py-4 font-['Nunito']">
             SignUp
           </h2>

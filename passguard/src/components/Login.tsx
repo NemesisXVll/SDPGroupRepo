@@ -8,20 +8,27 @@ import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import { FaCheckCircle } from "react-icons/fa";
 import { Modal, ModalHeader } from "flowbite-react";
+import Captcha from "./Captcha";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
+  const [loginTries, setLoginTries] = useState<number>(0);
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
+    if (loginTries >= 1) {
+      setOpenModal(true);
+      return;
+    }
     const data = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
@@ -34,12 +41,17 @@ const Login: React.FC = () => {
       navigate("/otp", { state: { user } });
     } else {
       console.log("Login failed");
+      setLoginTries((loginTries) => loginTries + 1);
       setErrorMessage("Incorrect email or password. Please try again.");
     }
   };
 
   function handleForgotPassword(): void {
     navigate("/forgot-password", {});
+  }
+
+  function handleModals(): void {
+    setOpenModal(false);
   }
 
   function handleCreateAccount(): void {
@@ -79,6 +91,13 @@ const Login: React.FC = () => {
           alt="Login visual"
         />
       </div>
+
+      {openModal ? (
+        <Captcha closeModal={handleModals} modalVal={openModal}></Captcha>
+      ) : (
+        ""
+      )}
+
       <div className="bg-gray-100 flex flex-col justify-center">
         <form
           className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"

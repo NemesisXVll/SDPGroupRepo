@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import emailjs from 'emailjs-com';
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { useNavigate } from "react-router-dom";
-import { CiCircleChevLeft } from "react-icons/ci";
+import {FcPrevious} from "react-icons/fc";
 
 const ForgetOTP: React.FC = () => {
   const navigate = useNavigate();
@@ -84,10 +84,10 @@ const ForgetOTP: React.FC = () => {
             e.preventDefault();
           }} // Prevent form submission
         >
-          <CiCircleChevLeft
-            className="w-10 h-10 hover:text-indigo-600 cursor-pointer"
+          <FcPrevious
+            className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
-          ></CiCircleChevLeft>
+          ></FcPrevious>
           <h2 className="text-4xl text-center py-4 font-bold font-['Nunito']">
             PassGuard
           </h2>
