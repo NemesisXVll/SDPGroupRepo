@@ -181,69 +181,69 @@ const Grid = (props: GridProps) => {
   };
 
   return (
-    <>
-      <div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3">
-        <h3 className="text-xl font-medium w-56">
-          {credentialsTitle} ({credentialsLength})
-        </h3>
-        <div>
-          <div id="search-container" className="relative w-80">
-            <input
-              id="searchInput"
-              type="text"
-              placeholder="Search"
-              className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
-              onClick={handleSearch}
-            />
-          </div>
-        </div>
-        <AddButton onClick={props.onAddClick}></AddButton>
-        <div id="filter-container">
-          <Dropdown label={credentialsTitle} dismissOnClick={true} color="dark">
-            <Dropdown.Item
-              value={"current"}
-              icon={SlGrid}
-              onClick={() => handleFilterChange("current")}
-            >
-              My Credentials
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"weak"}
-              icon={CiCircleAlert}
-              onClick={() => handleFilterChange("weak")}
-              className="text-red-500"
-            >
-              Weak Passwords
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"reused"}
-              icon={CiCircleAlert}
-              onClick={() => handleFilterChange("reused")}
-              className="text-blue-500"
-            >
-              Reused Passwords
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"old"}
-              icon={CiCircleAlert}
-              onClick={() => handleFilterChange("old")}
-              className="text-purple-500"
-            >
-              Old Passwords
-            </Dropdown.Item>
-            <Dropdown.Item
-              value={"trash"}
-              icon={FaTrash}
-              onClick={() => handleFilterChange("trash")}
-            >
-              Trash
-            </Dropdown.Item>
-          </Dropdown>
-        </div>
-      </div>
-      <div className="cards p-3 gap-5">{injectCard()}</div>
-    </>
-  );
+		<>
+			<div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3">
+				<h3 className="text-xl font-medium w-56">
+					{credentialsTitle} ({credentialsLength})
+				</h3>
+				<div>
+					<div id="search-container" className="relative w-80">
+						<input
+							id="searchInput"
+							type="text"
+							placeholder="Search"
+							className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
+							onClick={handleSearch}
+						/>
+					</div>
+				</div>
+				<div id="filter-container" className="m-1">
+					<Dropdown label={credentialsTitle} dismissOnClick={true} color="dark">
+						<Dropdown.Item
+							value={"current"}
+							icon={SlGrid}
+							onClick={() => handleFilterChange("current")}
+						>
+							My Credentials
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"weak"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("weak")}
+							className="text-red-500"
+						>
+							Weak Passwords
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"reused"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("reused")}
+							className="text-blue-500"
+						>
+							Reused Passwords
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"old"}
+							icon={CiCircleAlert}
+							onClick={() => handleFilterChange("old")}
+							className="text-purple-500"
+						>
+							Old Passwords
+						</Dropdown.Item>
+						<Dropdown.Item
+							value={"trash"}
+							icon={FaTrash}
+							onClick={() => handleFilterChange("trash")}
+						>
+							Trash
+						</Dropdown.Item>
+					</Dropdown>
+				</div>
+				<AddButton onClick={props.onAddClick}></AddButton>
+			</div>
+			<div className="cards p-3 gap-5">{injectCard()}</div>
+		</>
+	);
 };
 
 export default Grid;

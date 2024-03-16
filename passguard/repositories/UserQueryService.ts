@@ -32,6 +32,7 @@ export default class UserQueryService {
     }
     return null;
   }
+  
   async getUserDataById(userId: any) {
     const user = await prisma.user.findUnique({
       where: { userId: userId },

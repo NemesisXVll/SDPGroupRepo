@@ -79,7 +79,7 @@ const Test = (props: Test) => {
           placeholder=""
           autoComplete={props.label}
           className={`mt-5 peer h-10 w-full pl-2 pr-1
-           text-gray-900 placeholder-transparent text-sm
+           text-gray-900 placeholder-transparent text-sm border-gray-400
            ${props.viewOnly ? "bg-slate-100" : ""}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
            focus:outline-none
@@ -125,7 +125,7 @@ const Test = (props: Test) => {
         </div>
       </div>
 
-      <div className="text-base text-gray-600 pl-2 mt-1">
+      <div className="text-gray-600 pl-2 mt-1 text-sm font-semibold">
         Status:{" "}
         <span
           className={`${

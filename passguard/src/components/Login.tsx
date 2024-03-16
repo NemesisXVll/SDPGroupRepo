@@ -11,7 +11,7 @@ import { Modal, ModalHeader } from "flowbite-react";
 import Captcha from "./Captcha/Captcha";
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
   const [loginTries, setLoginTries] = useState<number>(0);
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
@@ -56,19 +56,19 @@ const Login: React.FC = () => {
     setOpenModal(false);
   }
 
-  function handleCreateAccount(): void {
-    navigate("/signup", {});
-  }
+	function handleCreateAccount(): void {
+		navigate("/signup", {});
+	}
 
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
+	const handleImportClick = () => {
+		fileInputRef.current?.click();
+	};
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("File Changed");
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log("File Changed");
+		const files = event.target.files;
+		if (files && files.length > 0) {
+			const file = files[0];
 
       if (file.name.endsWith(".db")) {
         new Promise((_resolve) => {
@@ -104,102 +104,115 @@ const Login: React.FC = () => {
       ) : (
         ""
       )}
+			<div className="bg-gray-100 flex flex-col justify-center">
+				<form
+					className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+					onSubmit={handleLoginSubmit}
+				>
+					<div className="flex items-center justify-center flex-col">
+						<div className="flex">
+							<h2 className="text-4xl text-center py-2 font-bold font-nunito">
+								👋 Welcome&nbsp;
+							</h2>
+							<h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+								back&nbsp;
+							</h2>
+							<h2 className="text-4xl text-center py-2 font-bold font-nunito">
+								!
+							</h2>
+						</div>
 
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
-          onSubmit={handleLoginSubmit}
-        >
-          <h2 className="text-4xl text-center py-6 font-bold font-['Nunito']">
-            PassGuard
-          </h2>
+						<p className="text-sm text-gray-600 font-nunito">
+							Enter your credential to login
+						</p>
+					</div>
 
-          <LabelInput
-            type="text"
-            required={true}
-            value={email}
-            label="Email"
-            id="email"
-            placeholder=""
-          ></LabelInput>
+					<LabelInput
+						type="text"
+						required={true}
+						value={email}
+						label="Email"
+						id="email"
+						placeholder=""
+					></LabelInput>
 
-          <LabelInput
-            type={showPassword ? "text" : "password"}
-            value={password}
-            required={true}
-            label="Password"
-            id="password"
-            placeholder=""
-          >
-            <div className="grid grid-rows-2 grid-cols-2">
-              {showPassword ? (
-                <FiEyeOff
-                  onClick={() => setShowPassword(!showPassword)}
-                  size="1.3em"
-                  className="ml-1 text-black
+					<LabelInput
+						type={showPassword ? "text" : "password"}
+						value={password}
+						required={true}
+						label="Password"
+						id="password"
+						placeholder=""
+					>
+						<div className="grid grid-rows-2 grid-cols-2">
+							{showPassword ? (
+								<FiEyeOff
+									onClick={() => setShowPassword(!showPassword)}
+									size="1.3em"
+									className="ml-1 text-black
                   absolute translate-x-[20.8rem] top-[1.9rem]"
-                />
-              ) : (
-                <FiEye
-                  onClick={() => setShowPassword(!showPassword)}
-                  size="1.3em"
-                  className="ml-1 text-black
+								/>
+							) : (
+								<FiEye
+									onClick={() => setShowPassword(!showPassword)}
+									size="1.3em"
+									className="ml-1 text-black
                   absolute translate-x-[20.8rem] top-[1.9rem]"
-                />
-              )}
-            </div>
-          </LabelInput>
+								/>
+							)}
+						</div>
+					</LabelInput>
 
-          {errorMessage && (
-            <div className="flex mt-1">
-              <CgDanger className="w-4 h-5 text-red-500" />
-              <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
-            </div>
-          )}
+					{errorMessage && (
+						<div className="flex mt-1">
+							<CgDanger className="w-4 h-5 text-red-500" />
+							<p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+						</div>
+					)}
 
-          <div className="mt-2">
-            <a
-              onClick={handleForgotPassword}
-              href="#"
-              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
-            >
-              Forgot Password?
-            </a>
-          </div>
+					<div className="mt-2">
+						<a
+							onClick={handleForgotPassword}
+							href="#"
+							className="text-indigo-600 text-sm hover:text-indigo-500 font-nunito font-semibold"
+						>
+							Forgot Password?
+						</a>
+					</div>
 
-          <div className="mt-3">
-            <Button value="Login" type="submit">
-              Login
-            </Button>
-          </div>
+					<div className="mt-3">
+						<Button value="Login" type="submit">
+							Login
+						</Button>
+					</div>
 
-          <p className="text-center mt-4 font-normal font-['Nunito']">
-            Don't have an account?
-            <a
-              onClick={handleCreateAccount}
-              href="#"
-              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito']"
-            >
-              &nbsp; Create an account
-            </a>
-          </p>
+					<p className="text-center text-gray-600 text-sm mt-4 font-normal font-nunito">
+						Don't have an account?
+						<a
+							onClick={handleCreateAccount}
+							href="#"
+							className="text-indigo-600 text-sm hover:text-indigo-500  font-nunito font-semibold"
+						>
+							&nbsp; Create an account
+						</a>
+					</p>
 
-          <p className="text-center mt-1 font-normal font-['Nunito']">
-            Do you want to import your database?
-            <a
-              onClick={handleImportClick}
-              className="text-indigo-600 hover:text-indigo-500 font-normal font-['Nunito'] cursor-default"
-            >
-              &nbsp; Import
-            </a>
-            <input
-              type="file"
-              accept=".db"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-            />
-          </p>
+					<p className="text-center text-gray-600 text-sm mt-1 font-normal font-nunito">
+						Do you want to import your database?
+						<a
+							onClick={handleImportClick}
+							className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-normal font-nunito cursor-default font-semibold"
+						>
+							&nbsp; Import
+						</a>
+						<input
+							type="file"
+							accept=".db"
+							ref={fileInputRef}
+							onChange={handleFileChange}
+							style={{ display: "none" }}
+						/>
+					</p>
 
           <Modal
             dismissible

@@ -138,3 +138,4 @@ ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
     JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
   );
 });
+

@@ -80,7 +80,7 @@ const PasswordStrength = (props: PasswordProps) => {
           className={`mt-5 peer h-10 w-full pl-2 pr-[3.5rem]
            text-gray-900 placeholder-transparent text-sm
            ${props.viewOnly ? "bg-slate-100" : ""}
-           rounded-lg border-2 justify-start items-start gap-14 inline-flex
+           rounded-lg border-2 justify-start items-start gap-14 inline-flex border-gray-400
            focus:outline-none
            ${
              score <= 0 && password.length > 0

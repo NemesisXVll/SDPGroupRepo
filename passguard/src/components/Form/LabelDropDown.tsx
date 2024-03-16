@@ -31,7 +31,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         maxLength={props.id === "serviceType" ? 25 : 100}
         readOnly={props.viewOnly}
         onChange={handleOnChange}
-        className={`pl-2 mt-5 peer h-10 w-full
+        className={`pl-2 mt-5 peer h-10 w-full border-gray-400
          text-gray-900 text-sm placeholder-transparent
          ${props.viewOnly ? "bg-slate-100" : ""}
          rounded-lg justify-start items-start gap-14 inline-flex
