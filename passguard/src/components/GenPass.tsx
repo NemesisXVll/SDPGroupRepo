@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
+import { Modal, Tooltip } from "flowbite-react";
 import Button from "./Form/Button";
+import { HiOutlineClipboardDocument } from "react-icons/hi2";
 
-const PasswordGeneratorModal = () => {
+type PasswordGeneratorModalProps = {
+	onConfirm: (password: string) => void;
+};
+
+const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [generatedPassword, setGeneratedPassword] = useState("");
 	const [passwordLength, setPasswordLength] = useState(12); // Default password length
@@ -53,20 +58,20 @@ const PasswordGeneratorModal = () => {
 			generatePassword();
 		}
 	};
-
-	const copyToClipboard = () => {
-		navigator.clipboard.writeText(generatedPassword);
-	};
-
+	const syncInputField = () => { 
+		setModalOpen(!modalOpen);
+		props.onConfirm(generatedPassword);
+	
+	}
 	const getCharacterStyle = (char:any) => {
 		if (/[A-Z]/.test(char)) {
 			return { color: "black" }; // Uppercase characters
 		} else if (/[a-z]/.test(char)) {
-			return { color: "black" }; // Lowercase characters
+			return { color: "#a855f7" }; // Lowercase characters
 		} else if (/[0-9]/.test(char)) {
-			return { color: "blue" }; // Numbers
+			return { color: "#3b82f6" }; // Numbers
 		} else {
-			return { color: "red" }; // Symbols
+			return { color: "#ef4444" }; // Symbols
 		}
 	};
 
@@ -85,7 +90,7 @@ const PasswordGeneratorModal = () => {
 				<div className="p-4">
 					<div className="p-2">
 						<h1 className="text-2xl font-nunito font-bold border-b-4">
-							Password <span className="">Generator</span>
+							Password Generator
 						</h1>
 						<br />
 						<h2 className="text-lg font-nunito font-semibold p-1">
@@ -98,6 +103,21 @@ const PasswordGeneratorModal = () => {
 									{char}
 								</span>
 							))}
+							<Tooltip
+								content="Copied to Clipboard!"
+								trigger="click"
+								arrow={false}
+								property="right"
+								className={` translate-x-[5rem] translate-y-[3.5rem] bg-black`}
+							>
+								<HiOutlineClipboardDocument
+									size="1.3em"
+									className="absolute ml-1 text-black translate-x-[25rem] translate-y-[-0.75rem]"
+									onClick={() => {
+										navigator.clipboard.writeText(generatedPassword);
+									}}
+								/>
+							</Tooltip>
 						</div>
 					</div>
 					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 mb-5 mt-2 ">
@@ -122,7 +142,7 @@ const PasswordGeneratorModal = () => {
 						/>
 					</div>
 					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
-						<label className="font-nunito font-medium">Include Lowercase</label>
+						<label className="font-nunito font-medium">Include <span className="text-purple-500">Lowercase</span></label>
 						<input
 							type="checkbox"
 							checked={includeLowercase}
@@ -131,7 +151,7 @@ const PasswordGeneratorModal = () => {
 					</div>
 					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
 						<label className="font-nunito font-medium">
-							Include Special Symbols
+							Include <span className="text-red-500">Special Symbols</span>
 						</label>
 						<input
 							type="checkbox"
@@ -139,8 +159,8 @@ const PasswordGeneratorModal = () => {
 							onChange={() => setIncludeSpecialSymbols(!includeSpecialSymbols)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
-						<label className="font-nunito font-medium">Include Numbers</label>
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 mb-0">
+						<label className="font-nunito font-medium">Include <span className="text-blue-500">Numbers</span></label>
 						<input
 							type="checkbox"
 							checked={includeNumbers}
@@ -148,11 +168,8 @@ const PasswordGeneratorModal = () => {
 						/>
 					</div>
 				</div>
-				<div className="mb-5 w-full flex items-center justify-center p-5">
-					<Button value="GenCopy" onClick={copyToClipboard}>
-						Copy to Clipboard
-					</Button>
-					<Button value="GenConfirm" onClick={copyToClipboard}>
+				<div className="w-full flex items-center justify-center p-5">
+					<Button value="GenConfirm" onClick={syncInputField}>
 						Confirm
 					</Button>
 				</div>

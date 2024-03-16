@@ -66,11 +66,11 @@ function Navbar(props: NavbarProps) {
 								onClick={() => handleOnClick(item)}
 								key={index}
 								className={`
-                        relative flex items-center py-3 px-3 my-1
-                        font-medium rounded-md cursor-pointer
+                        relative flex items-center py-3 px-3 my-3 rounded-md
+                        font-medium  cursor-pointer
                         text-white
                         hover:bg-yellow-400 hover:text-black
-                          group
+                          group  border-b-2 border-gray-700
                         `}
 							>
 								<img src={item.icon} alt={item.name} className="w-6 h-6" />

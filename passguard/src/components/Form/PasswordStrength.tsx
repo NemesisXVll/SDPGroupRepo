@@ -48,9 +48,13 @@ const PasswordStrength = (props: PasswordProps) => {
     props.onChange ? props.onChange(e) : "";
   };
 
-  const handleGeneratePasswordBTN = (e: any) => {
-    // e.preventDefault();
+  const handleConfirm = (password: string) => {
+    setPassword(password);
+    const result = zxcvbn(password);
+    setScore(result.score);
+    setOpen(false);
   };
+
 
   const infoIcon = () => {
     return (
@@ -93,7 +97,7 @@ const PasswordStrength = (props: PasswordProps) => {
                      ? "border border-lime-500"
                      : score === 4
                        ? "border border-green-500"
-                       : "focus:border-blue-600"
+                       : "focus:border-blue-500"
            }
            `}
         />
@@ -163,7 +167,7 @@ const PasswordStrength = (props: PasswordProps) => {
       </button> */}
 
       {/* generate password modal */}
-      <div className="pb-3"><GeneratePassword></GeneratePassword></div>
+      <div className="pb-3"><GeneratePassword onConfirm={handleConfirm}></GeneratePassword></div>
   
 
       <div className="text-sm font-nunito font-bold text-gray-500 pl-2">

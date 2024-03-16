@@ -44,7 +44,7 @@ const Button = (props: FormProps) => {
 							? "text-blue-500 border border-gray-400 hover:bg-gray-200"
 							: ""
 					}
-					${props.value === "GenConfirm" ? "ml-5 bg-blue-500 hover:bg-yellow-400 text-white" : ""}
+					${props.value === "GenConfirm" ? "bg-blue-500 hover:bg-yellow-400 text-white" : ""}
 		${props.value === "signout" ? "border bg-yellow-400 border-black rounded-xl min-w-[7rem] hover:bg-red-500 hover:text-white" : ""}
 			${props.value === "GenCopy" ? "text-blue-500 border border-gray-400 hover:bg-gray-200" : ""}
          duration-[400ms]
