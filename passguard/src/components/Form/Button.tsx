@@ -2,11 +2,11 @@ import React from "react";
 import buttonsArr from "../../data/buttons.tsx";
 
 type FormProps = {
-  type?: "button" | "submit" | "reset";
-  value?: string;
-  style?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  children?: React.ReactNode;
+	type?: "button" | "submit" | "reset";
+	value?: string;
+	style?: string;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
+	children?: React.ReactNode;
 };
 
 // interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -15,7 +15,7 @@ type FormProps = {
 // }
 
 const Button = (props: FormProps) => {
-  return (
+	return (
 		<button
 			type={props.type}
 			value={props.value}
@@ -40,9 +40,10 @@ const Button = (props: FormProps) => {
 					}
          ${
 						props.value === "Cancel"
-							? "text-blue-500 border border-gray-400 hover:bg-red-500 hover:text-white"
+							? "text-blue-500 border border-gray-400 hover:bg-gray-200"
 							: ""
 					}
+		${props.value === "signout" ? "border bg-yellow-400 border-black rounded-xl min-w-[7rem] hover:bg-red-500 hover:text-white" : ""}
          duration-[400ms]
          `}
 		>
