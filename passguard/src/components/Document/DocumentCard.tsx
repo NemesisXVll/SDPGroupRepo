@@ -19,6 +19,13 @@ function DocumentCard(props: DocumentCardProps) {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
+  function handleClickOnYes(event: any): void {
+    props.onDeleteClick(props.index);
+    setTimeout(() => {
+      setOpenDeleteModal(false);
+    }, 999);
+  }
+
   // const fileType = fileTypeItems.find(
   //   (item) => item.extension === props.type
   // )?.icon;
@@ -62,11 +69,8 @@ function DocumentCard(props: DocumentCardProps) {
                     Are you sure you want to delete this document?
                   </h3>
                   <div className="flex justify-center gap-4">
-                    <Button
-                      color="failure"
-                      onClick={() => props.onDeleteClick(props.id)}
-                    >
-                      {"Yes, I'm sure"}
+                    <Button color="failure" onClick={handleClickOnYes}>
+                      Yes, I'm sure
                     </Button>
                     <Button
                       color="gray"

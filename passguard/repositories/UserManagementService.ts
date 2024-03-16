@@ -48,6 +48,7 @@ export default class UserManagementService {
   }
 
   async createDocument(document: any) {
+    console.log("Creating document....", document);
     const masterPassword = await userQueryService.getUserMasterPasswordById(
       document.userId
     );

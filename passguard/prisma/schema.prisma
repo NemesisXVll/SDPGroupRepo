@@ -11,8 +11,8 @@ generator client {
 
 model User {
   userId            Int                @id @default(autoincrement()) //(D)
-  masterPassword    String                          
-  data              String             @unique  //firstName, lastName, email 
+  masterPassword    String
+  data              String             @unique //firstName, lastName, email 
   salt              String?
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt

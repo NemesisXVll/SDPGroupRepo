@@ -45,6 +45,8 @@ function DocumentModal(props: DocumentModalProps) {
       return;
     }
 
+    console.log("Adding Document", formData.path);
+
     await documentService.createDocument(formData, user.userId);
 
     props.warningModal();

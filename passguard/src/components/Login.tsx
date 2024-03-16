@@ -8,7 +8,7 @@ import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import { FaCheckCircle } from "react-icons/fa";
 import { Modal, ModalHeader } from "flowbite-react";
-import Captcha from "./Captcha";
+import Captcha from "./Captcha/Captcha";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -19,15 +19,17 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
-    if (loginTries >= 1) {
+    console.log("Login Tries", loginTries);
+    if (loginTries >= 2) {
       setOpenModal(true);
-      return;
+      setLoginTries(-1);
     }
     const data = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
@@ -68,17 +70,22 @@ const Login: React.FC = () => {
     if (files && files.length > 0) {
       const file = files[0];
 
-      new Promise((_resolve) => {
-        window.ipcRenderer.send("importDBRequest", file.path);
-        window.ipcRenderer.once("importDBResponse", (_event, arg) => {
-          const parsedData = JSON.parse(arg);
-          if (parsedData) {
-            setOpenSuccessModal(true);
-          } else {
-            console.log("Import Failed");
-          }
+      if (file.name.endsWith(".db")) {
+        new Promise((_resolve) => {
+          window.ipcRenderer.send("importDBRequest", file.path);
+          window.ipcRenderer.once("importDBResponse", (_event, arg) => {
+            const parsedData = JSON.parse(arg);
+            if (parsedData) {
+              setOpenSuccessModal(true);
+            } else {
+              console.log("Import Failed");
+            }
+          });
         });
-      });
+      } else {
+        setOpenErrorModal(true);
+        console.log("Invalid file type");
+      }
     }
   };
 
@@ -214,6 +221,31 @@ const Login: React.FC = () => {
               <Button onClick={() => setOpenSuccessModal(false)}>
                 Continue
               </Button>
+            </div>
+          </Modal>
+
+          <Modal
+            dismissible
+            show={openErrorModal}
+            size="md"
+            popup
+            onClose={() => setOpenErrorModal(false)}
+          >
+            <ModalHeader></ModalHeader>
+            <Modal.Body>
+              <div className="flex justify-center p-3">
+                <CgDanger
+                  className="
+                text-5xl text-red-500
+                "
+                />
+              </div>
+              <h1 className="flex justify-center">
+                Incorrect File Type. Please upload a .db file
+              </h1>
+            </Modal.Body>
+            <div className="mx-6 my-4">
+              <Button onClick={() => setOpenErrorModal(false)}>Continue</Button>
             </div>
           </Modal>
         </form>

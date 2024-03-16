@@ -74,7 +74,7 @@ const Document = (props: DocumentProps) => {
             user.userId
           );
           setCurrentDocuments(result);
-        }, 200);
+        }, 999);
       } catch (error) {
         console.error("Error fetching documents:", error);
       }
