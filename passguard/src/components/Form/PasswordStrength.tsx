@@ -163,11 +163,10 @@ const PasswordStrength = (props: PasswordProps) => {
       </button> */}
 
       {/* generate password modal */}
-      <GeneratePassword open={open} onClose={() => setOpen(false)}>
-        {" "}
-      </GeneratePassword>
+      <div className="pb-3"><GeneratePassword></GeneratePassword></div>
+  
 
-      <div className="text-sm text-gray-600 pl-2">
+      <div className="text-sm font-nunito font-bold text-gray-500 pl-2">
         Status:{" "}
         <span
           className={`${
