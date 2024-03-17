@@ -3,6 +3,7 @@ import AddButton from "../Form/Button";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import DocumentService from "../../utils/documentService";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 const documentService = new DocumentService();
 
@@ -36,7 +37,9 @@ function DocumentModal(props: DocumentModalProps) {
       setNameErrorMessage("Please Enter a File Name");
       return;
     } else if (formData.path === "") {
-      setPathErrorMessage("Please Upload a File");
+      setPathErrorMessage(
+        "Please Upload a File and make sure it is less than 2MB"
+      );
       setNameErrorMessage("");
       return;
     } else if (formData.name === "") {
@@ -45,8 +48,6 @@ function DocumentModal(props: DocumentModalProps) {
       return;
     }
 
-    console.log("Adding Document", formData.path);
-
     await documentService.createDocument(formData, user.userId);
 
     props.warningModal();
@@ -54,6 +55,10 @@ function DocumentModal(props: DocumentModalProps) {
 
   function handleOnInputChange(event: any): void {
     if (event.target.id === "path") {
+      if (event.target.files[0].size > 1571153) {
+        setPathErrorMessage("File size is too large");
+        return;
+      }
       setPathErrorMessage("");
 
       //File Input Type (might require changing)
@@ -67,11 +72,6 @@ function DocumentModal(props: DocumentModalProps) {
         });
       });
       reader.readAsDataURL(event.target.files[0]);
-
-      setFormData({
-        ...formData,
-        [event.target.id]: event.target.files[0].path,
-      });
     } else {
       setFormData({ ...formData, [event.target.id]: event.target.value });
     }
@@ -81,11 +81,11 @@ function DocumentModal(props: DocumentModalProps) {
     <>
       <Modal
         show={openModal}
-        size="md"
+        size="lg"
         onClose={() => props.closeModal()}
         popup
       >
-        <Modal.Header/>
+        <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">
@@ -103,6 +103,12 @@ function DocumentModal(props: DocumentModalProps) {
                 className="font-nunito"
                 onChange={handleOnInputChange}
               />
+              <div className="flex">
+                <IoInformationCircleOutline className="mt-[0.3rem] text-gray-500"></IoInformationCircleOutline>
+                <p className="text-gray-500 text-sm mt-1">
+                  Files allowed (jpg, jpeg, gif, png, pdf, svg), Max Size: 1.5MB
+                </p>
+              </div>
 
               <div className="mt-2 block">
                 <Label htmlFor="name" value="File Name" className="" />

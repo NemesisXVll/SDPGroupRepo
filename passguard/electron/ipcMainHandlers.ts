@@ -6,7 +6,6 @@ const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
 
 export const registerIPCMainHandlers = () => {
-
   ipcMain.on("importDBRequest", async (event, arg) => {
     event.sender.send(
       "importDBResponse",
@@ -39,10 +38,6 @@ export const registerIPCMainHandlers = () => {
     event.sender.send(
       "findUserByEmailResponse",
       JSON.stringify(await userQueryService.findUserByEmail(arg))
-    );
-    console.log(
-      "findUserByEmailResponse: ",
-      await userQueryService.findUserByEmail(arg)
     );
   });
 
@@ -138,4 +133,3 @@ ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
     JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
   );
 });
-

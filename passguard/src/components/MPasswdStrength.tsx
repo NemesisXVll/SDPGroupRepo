@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import zxcvbn from "zxcvbn";
 
-type Test = {
+type MPasswordStrengthProps = {
   type?: string;
   value?: string;
   required?: boolean;
@@ -16,7 +16,7 @@ type Test = {
   strength?: number;
 };
 
-const Test = (props: Test) => {
+const MPasswordStrength = (props: MPasswordStrengthProps) => {
   const [password, setPassword] = useState(props.value ? props.value : "");
   const [score, setScore] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
@@ -213,7 +213,7 @@ const Test = (props: Test) => {
 
   return (
     <>
-      <div className="mt-1 relative border-gray-300 flex items-center">
+      <div className="relative border-gray-300 flex items-center ">
         <input
           readOnly={props.viewOnly}
           type={showPassword ? "text" : "password"}
@@ -224,7 +224,7 @@ const Test = (props: Test) => {
           onChange={handlePasswordChange}
           placeholder=""
           autoComplete={props.label}
-          className={`mt-5 peer h-10 w-full pl-2 pr-8
+          className={`peer h-10 w-full pl-2 pr-8 
            text-gray-900 placeholder-transparent text-sm border-gray-400
            ${props.viewOnly ? "bg-slate-100" : ""}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex
@@ -247,7 +247,7 @@ const Test = (props: Test) => {
 
         <label
           htmlFor={props.id}
-          className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
+          className="ml-1 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
         >
           {props.label}
         </label>
@@ -258,14 +258,14 @@ const Test = (props: Test) => {
               onClick={handleShowPassword}
               size="1.3em"
               className="ml-1 text-black
-                  absolute translate-x-[24rem] top-[1.9rem]"
+                  absolute translate-x-[24rem] top-[0.6rem]"
             />
           ) : (
             <FiEye
               onClick={handleShowPassword}
               size="1.3em"
               className="ml-1 text-black
-              absolute translate-x-[24rem] top-[1.9rem]"
+              absolute translate-x-[24rem] top-[0.6rem]"
             />
           )}
         </div>
@@ -330,4 +330,4 @@ const Test = (props: Test) => {
   );
 };
 
-export default Test;
+export default MPasswordStrength;

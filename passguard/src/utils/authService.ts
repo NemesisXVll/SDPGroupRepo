@@ -15,13 +15,33 @@ type LoginData = {
   password: string;
 };
 
-export const SignUp = async (data: SignUpData): Promise<boolean> => {
-  const { email, masterPassword, confirmPassword, ...rest } = data;
+export const checkEmail = async (email: string): Promise<boolean> => {
+  const user = new Promise((resolve) => {
+    window.ipcRenderer.send("findUserByEmailRequest", email);
+    window.ipcRenderer.once("findUserByEmailResponse", (event, arg) => {
+      const parsedData = JSON.parse(arg);
+      resolve(parsedData);
+    });
+  });
 
-  if (masterPassword !== confirmPassword) {
-    console.log("Passwords do not match.");
+  try {
+    const userData: any = await user;
+
+    if (userData) {
+      console.log("User already exists");
+      return true;
+    } else {
+      console.log("User does not exist");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error during checkEmail:", error);
     return false;
   }
+};
+
+export const SignUp = async (data: SignUpData): Promise<boolean> => {
+  const { email, masterPassword, confirmPassword, ...rest } = data;
 
   const filteredData = {
     data: JSON.stringify({
@@ -44,6 +64,7 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
         resolve(parsedData);
       });
     });
+
     if (userData) {
       console.log("User already exists");
       return false;
@@ -54,7 +75,9 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
     }
   } catch (error) {
     console.error("Error during SignUp:", error);
+    return false;
   }
+
   return false;
 };
 

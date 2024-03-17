@@ -1,18 +1,26 @@
 import React, { useState } from "react";
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { SignUp } from "../utils/authService";
+import { SignUp, checkEmail } from "../utils/authService";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
-import { FileInput, Label, Modal, ModalHeader, Tooltip } from "flowbite-react";
+import {
+  FileInput,
+  Label,
+  List,
+  Modal,
+  ModalHeader,
+  Tooltip,
+} from "flowbite-react";
 import { FcPrevious } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { HiXMark } from "react-icons/hi2";
 import { CgDanger } from "react-icons/cg";
 import zxcvbn from "zxcvbn";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 interface State {
   firstName: string;
@@ -106,50 +114,18 @@ const Signup: React.FC = () => {
       return;
     }
 
-    if (passwordState.contextSpecific) {
-      setErrorMessage(
-        "Password cannot contain your first name, last name, or email."
-      );
-      return;
-    }
-
-    if (passwordState.repeatedChar) {
-      setErrorMessage(
-        "Password cannot contain repeated characters (e.g. aaaa)."
-      );
-      return;
-    }
-
-    if (passwordState.sequentialChar) {
-      setErrorMessage(
-        "Password cannot contain sequential characters (e.g. 1234)."
-      );
-      return;
-    }
-
-    console.log(state.email);
-    navigate("/otp", {
-      state: {
-        user: { email: state.email, firstName: state.firstName },
-        fromSignup: true,
-      },
+    checkEmail(state.email).then((result) => {
+      if (result) {
+        setErrorMessage("Email already exists");
+      } else {
+        navigate("/otp", {
+          state: {
+            user: { state },
+            fromSignup: true,
+          },
+        });
+      }
     });
-
-    // const signUpResult = SignUp({
-    //   firstName: state.firstName,
-    //   lastName: state.lastName,
-    //   email: state.email,
-    //   masterPassword: state.password,
-    //   confirmPassword: state.confirmPassword,
-    //   salt: "",
-    //   picture: "",
-    // });
-
-    // if (await signUpResult) {
-    //   setOpenSuccessModal(true);
-    // } else {
-    //   setErrorMessage("Sign up failed. Please try again.");
-    // }
   };
 
   const {
@@ -197,15 +173,19 @@ const Signup: React.FC = () => {
       }
     }
 
-    if (firstName !== "" && lastName !== "" && email !== "") {
-      if (
-        newPassword.toLowerCase().includes(firstName.toLowerCase()) ||
-        newPassword.toLowerCase().includes(lastName.toLowerCase()) ||
-        newPassword.toLowerCase().includes(email.toLowerCase())
-      ) {
+    if (state.firstName !== "") {
+      if (newPassword.toLowerCase().includes(firstName.toLowerCase()))
         contextSpecific = true;
-      }
     }
+    if (state.lastName !== "") {
+      if (newPassword.toLowerCase().includes(lastName.toLowerCase()))
+        contextSpecific = true;
+    }
+    if (state.email !== "") {
+      if (newPassword.toLowerCase().includes(email.toLowerCase()))
+        contextSpecific = true;
+    }
+    if (newPassword.toLowerCase().includes("passguard")) contextSpecific = true;
 
     setPasswordStrength(
       (upperCase && lowerCase ? 1 : 0) +
@@ -225,8 +205,6 @@ const Signup: React.FC = () => {
       sequentialChar,
       contextSpecific,
     });
-
-    console.log(passwordState);
   }
 
   return (
@@ -304,60 +282,102 @@ const Signup: React.FC = () => {
             }}
           ></LabelInput>
 
-          <Tooltip
-            placement="bottom"
-            content={
-              <div className="">
-                <ul>
-                  <li className="mb-1 flex items-center">
-                    {passwordState.upperCase && passwordState.lowerCase ? (
-                      <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                    ) : (
-                      <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                    )}
-                    Upper & lower case letters
-                  </li>
-                  <li className="mb-1 flex items-center">
-                    {passwordState.specialChar ? (
-                      <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                    ) : (
-                      <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                    )}
-                    A symbol (e.g. #$&)
-                  </li>
-                  <li className="flex items-center">
-                    {passwordState.length ? (
-                      <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                    ) : (
-                      <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                    )}
-                    A longer password (min. 8 chars.)
-                  </li>
-                  <li className="mt-1 flex items-center">
-                    {passwordState.number ? (
-                      <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                    ) : (
-                      <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                    )}
-                    A number (e.g. 123)
-                  </li>
-                </ul>
+          <div className="flex-row mt-2">
+            <Tooltip
+              content={
+                <>
+                  <div className="">
+                    <ul>
+                      <li>To Achieve a Very Strong Password</li>
+                      <li className="mb-1 flex items-center">
+                        {!passwordState.sequentialChar ? (
+                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                        ) : (
+                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                        )}
+                        No Sequential Characters (e.g. 1234)
+                      </li>
+                      <li className="mb-1 flex items-center">
+                        {!passwordState.repeatedChar ? (
+                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                        ) : (
+                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                        )}
+                        No Repeated Characters (e.g. aaaa)
+                      </li>
+                      <li className="mb-1 flex items-center">
+                        {!passwordState.contextSpecific ? (
+                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                        ) : (
+                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                        )}
+                        No Context Specific Characters (e.g. service name,
+                        username)
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              }
+              arrow={false}
+              placement="top-end"
+            >
+              <IoInformationCircleOutline className="text-black  ml-[25rem]"></IoInformationCircleOutline>
+            </Tooltip>
+            <Tooltip
+              placement="bottom"
+              content={
+                <div className="">
+                  <ul>
+                    <li className="mb-1 flex items-center">
+                      {passwordState.upperCase && passwordState.lowerCase ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      Upper & lower case letters
+                    </li>
+                    <li className="mb-1 flex items-center">
+                      {passwordState.specialChar ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A symbol (e.g. #$&)
+                    </li>
+                    <li className="flex items-center">
+                      {passwordState.length ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A longer password (min. 8 chars.)
+                    </li>
+                    <li className="mt-1 flex items-center">
+                      {passwordState.number ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A number (e.g. 123)
+                    </li>
+                  </ul>
+                </div>
+              }
+            >
+              {/* Password Field */}
+              <div className="w-[26.2rem]">
+                <MPasswdStrength
+                  required={true}
+                  value={password}
+                  strength={passwordStrength}
+                  label="Password"
+                  id="password"
+                  placeholder=""
+                  onChange={handleOnPasswordChange}
+                ></MPasswdStrength>
               </div>
-            }
-          >
-            {/* Password Field */}
-            <div className="w-[26.2rem]">
-              <MPasswdStrength
-                required={true}
-                value={password}
-                strength={passwordStrength}
-                label="Password"
-                id="password"
-                placeholder=""
-                onChange={handleOnPasswordChange}
-              ></MPasswdStrength>
-            </div>
-          </Tooltip>
+            </Tooltip>
+          </div>
 
           {/* Confirm Password Field */}
           <LabelInput

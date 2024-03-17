@@ -31,9 +31,11 @@ const OTPVerification: React.FC = () => {
   }, []);
   useEffect(() => {
     if (location.state.fromSignup === true) {
-      setUserEmail(user.email);
-      setUserName(user.firstName);
+      console.log("FROM SIGNUP");
+      setUserEmail(user.state.email);
+      setUserName(user.state.firstName);
     } else {
+      console.log("NOT FROM SIGNUP");
       userService.getUserDataById(user.userId).then((data: any) => {
         setUserEmail(data.email);
         setUserName(data.firstName);
@@ -102,9 +104,13 @@ const OTPVerification: React.FC = () => {
       //CHANGE
       console.log("OTP is correct");
       setMessage("OTP is correct");
-      navigate("/security-question", {
-        state: { user, expanded: true },
-      });
+      if (location.state.fromSignup === true) {
+        navigate("/security-question", {
+          state: { user, expanded: true },
+        });
+      } else {
+        navigate("/home", { state: { user, expanded: true } });
+      }
     } else {
       console.log("OTP is incorrect");
       setMessage("Wrong OTP entered");
