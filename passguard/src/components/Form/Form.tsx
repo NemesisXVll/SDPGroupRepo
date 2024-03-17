@@ -133,6 +133,7 @@ function Form(props: FormProps) {
             placeholder=""
           ></LabelInput>
 
+
           <PasswordStrength
             type={showPassword ? "text" : "password"}
             label="Password"

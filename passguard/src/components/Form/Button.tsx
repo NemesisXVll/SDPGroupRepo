@@ -35,7 +35,7 @@ const Button = (props: FormProps) => {
 							: ""
 					}
          ${
-						props.value === "Save"
+						props.value === "Save" || props.value === "Update"
 							? "bg-blue-500 hover:bg-yellow-400 text-white"
 							: ""
 					}

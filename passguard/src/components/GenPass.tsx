@@ -77,7 +77,7 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 
 	return (
 		<>
-			<Button value="GenPass" onClick={toggleModal}>
+			<Button value="GenPass" type="button" onClick={toggleModal}>
 				🔑 Generate Password
 			</Button>
 			<Modal
@@ -97,7 +97,7 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							Current Length:{" "}
 							<span className="font-bold text-blue-500">{passwordLength}</span>
 						</h2>
-						<div className="flex  justify-center items-center border bg-gray-200 text-blue-500 border-gray-300 p-2 w-full rounded-2xl text-center text-lg font-bold font-nunito">
+						<div className="flex justify-center items-center border bg-gray-200 text-blue-500 border-gray-300 p-2 w-full rounded-2xl text-center text-lg font-bold font-nunito">
 							{generatedPassword.split("").map((char, index) => (
 								<span key={index} style={getCharacterStyle(char)}>
 									{char}

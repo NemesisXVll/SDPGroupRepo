@@ -5,7 +5,7 @@ import Card from "./Card";
 import CredentialService from "../../utils/credentialService";
 import { serviceNames } from "../../data/dropdownItems";
 import AddButton from "../Form/AddButton";
-import { Dropdown } from "flowbite-react";
+import { Dropdown, Tooltip } from "flowbite-react";
 import { FaTrash } from "react-icons/fa";
 import { CiCircleAlert } from "react-icons/ci";
 import { SlGrid } from "react-icons/sl";
@@ -239,7 +239,9 @@ const Grid = (props: GridProps) => {
 						</Dropdown.Item>
 					</Dropdown>
 				</div>
-				<AddButton onClick={props.onAddClick}></AddButton>
+				<Tooltip content="Add a Credential" placement="bottom">
+					<AddButton onClick={props.onAddClick}></AddButton>
+				</Tooltip>
 			</div>
 			<div className="cards p-3 gap-5">{injectCard()}</div>
 		</>

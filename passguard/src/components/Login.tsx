@@ -27,16 +27,16 @@ const Login: React.FC = () => {
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
     console.log("Login Tries", loginTries);
-    if (loginTries >= 2) {
-      setOpenModal(true);
-      setLoginTries(-1);
-    }
-    const data = JSON.parse(
+      const data = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
     const { email, password } = data;
     // Call the login function from authService
     const user = await login({ email, password });
+    if (loginTries >= 2 && !user) {
+      setOpenModal(true);
+      setLoginTries(-1);
+    }
     if (user) {
       console.log("User logged in");
       // navigate("/home", { replace: true, state: { user, expanded: true } });

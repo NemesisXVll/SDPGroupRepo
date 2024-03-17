@@ -98,7 +98,7 @@ function Navbar(props: NavbarProps) {
 					</ul>
 				</NavbarContext.Provider>
 
-				<div className="border-t flex p-3">
+				<div className="border-t border-gray-700 flex p-3">
 					<img
 						src="https://source.unsplash.com/100x100/?Rock"
 						alt="profile picture"
