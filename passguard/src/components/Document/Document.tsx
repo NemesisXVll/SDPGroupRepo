@@ -4,12 +4,14 @@ import "../CredentialSection/grid.css";
 import { useLocation } from "react-router-dom";
 import { CgFileDocument } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
-import { Label, Modal } from "flowbite-react";
+import { Label, Modal, Toast } from "flowbite-react";
 import Button from "../Form/Button";
 import DocumentModal from "./DocumentModal";
 import DocumentCard from "./DocumentCard";
 import DocumentService from "../../utils/documentService";
 import useAutoRedirect from "../Inactivity/AutoRedirectHook";
+import { HiCheck } from "react-icons/hi2";
+import { HiX } from "react-icons/hi";
 
 const documentService = new DocumentService();
 
@@ -31,6 +33,7 @@ const Document = (props: DocumentProps) => {
   const [expanded, setExpanded] = useState(location.state?.expanded);
   const [currentDocuments, setCurrentDocuments] = useState<any>([]);
   const [sync, setSync] = useState<boolean>(false);
+  const [showDeleteToast, setShowDeleteToast] = useState<boolean>(false);
   const { redirect, setRedirect } = useAutoRedirect(
     undefined,
     undefined,
@@ -40,6 +43,10 @@ const Document = (props: DocumentProps) => {
   const handleDeleteClick = (documentId: number) => {
     console.log("Deleting Document", documentId);
     documentService.deleteDocumentById(documentId);
+    setShowDeleteToast(true);
+    setTimeout(() => {
+      setShowDeleteToast(false);
+    }, 3000);
     const updateDocuments = currentDocuments.map((item: any) => {
       if (item.credentialId === documentId) {
         item.isTrashed = true;
@@ -116,90 +123,104 @@ const Document = (props: DocumentProps) => {
   }
 
   return (
-    <>
-      {redirect}
-      <div className="app-container h-screen">
-        <div className="navbar">
-          <Navbar
-            isExpanded={expanded}
-            handleExpand={(expanded) => setExpanded(expanded)}
-          />
-        </div>
+		<>
+			{redirect}
+			<div className="app-container h-screen">
+				<div className="navbar">
+					<Navbar
+						isExpanded={expanded}
+						handleExpand={(expanded) => setExpanded(expanded)}
+					/>
+				</div>
 
-        <div className="TopOfDocument border-b-2">
-          <div className="p-2 m-3 TopOfDocument">
-            <div className="flex">
-              <Label
-                value="Documents"
-                className="flex p-1 text-xl font-medium mb-2"
-                color="dark"
-              />
-              <CgFileDocument className="mt-2 h-5" />
-            </div>
+				<div className="TopOfDocument border-b-2">
+					<div className="p-2 m-3 TopOfDocument">
+						<div className="flex">
+							<Label
+								value="Documents"
+								className="flex p-1 text-xl font-medium mb-2"
+								color="dark"
+							/>
+							<CgFileDocument className="mt-2 h-5" />
+						</div>
 
-            {openModal ? (
-              <DocumentModal
-                warningModal={handleWarningModal}
-                closeModal={handleModals}
-                modalVal={openModal}
-              ></DocumentModal>
-            ) : (
-              ""
-            )}
+						{openModal ? (
+							<DocumentModal
+								warningModal={handleWarningModal}
+								closeModal={handleModals}
+								modalVal={openModal}
+							></DocumentModal>
+						) : (
+							""
+						)}
 
-            <div className="w-fit ml-1">
-              <Button onClick={handleAddDocument} value="Add Document">
-                <FaPlus className="mr-1" />
-                Add Document
-              </Button>
-            </div>
-          </div>
-        </div>
+						<div className="w-fit ml-1">
+							<Button onClick={handleAddDocument} value="Add Document">
+								<FaPlus className="mr-1" />
+								Add Document
+							</Button>
+						</div>
+					</div>
+				</div>
 
-        <div className="credentials overflow-auto ml-4 mt-8 ">
-          <div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3">
-            <h3 className="text-xl font-medium w-56">
-              My Documents ({documentsLength})
-            </h3>
-            <div>
-              <div id="search-container" className="relative w-80">
-                <input
-                  id="searchInput"
-                  type="text"
-                  placeholder="Search"
-                  onClick={handleSearch}
-                  className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="cards p-3 gap-5">{injectCard()}</div>
-        </div>
-      </div>
+				<div className="credentials overflow-auto ml-4 mt-8 ">
+					<div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3">
+						<h3 className="text-xl font-medium w-56">
+							My Documents ({documentsLength})
+						</h3>
+						<div>
+							<div id="search-container" className="relative w-80">
+								<input
+									id="searchInput"
+									type="text"
+									placeholder="Search"
+									onClick={handleSearch}
+									className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
+								/>
+							</div>
+							<div className="absolute left-[52rem]">
+								{showDeleteToast && (
+									<Toast>
+										<div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+											<HiX className="h-5 w-5 text-red-500" />
+										</div>
+										<div className="ml-3 text-sm font-nunito">
+											Credential has been updated.
+										</div>
+										<Toast.Toggle />
+									</Toast>
+								)}
+							</div>
+						</div>
+					</div>
+					<div className="cards p-3 gap-5">{injectCard()}</div>
+				</div>
+			</div>
 
-      <Modal
-        dismissible
-        show={openWarningModal}
-        size="md"
-        popup
-        onClose={() => setOpenWarningModal(false)}
-      >
-        <Modal.Header className="">
-          <h1 className="">Delete Source File</h1>
-        </Modal.Header>
-        <Modal.Body>
-          <h1 className="">
-            Danger PassGuard will keep an optimized copy of the file in your
-            vault. For added security, delete the source file from your
-            computer.
-          </h1>
-        </Modal.Body>
-        <div className="mx-6 my-2">
-          <Button onClick={() => setOpenWarningModal(false)}>Close</Button>
-        </div>
-      </Modal>
-    </>
-  );
+			<Modal
+				dismissible
+				show={openWarningModal}
+				size="md"
+				popup
+				onClose={() => setOpenWarningModal(false)}
+			>
+				<Modal.Header className="p-5">
+					<h1 className="text-center">⚠️ Delete Source File</h1>
+				</Modal.Header>
+				<Modal.Body>
+					<h1 className="font-nunito">
+						PassGuard will keep an encrypted copy of this file in your vault.
+						For added security, delete the source file from your computer.
+					</h1>
+				</Modal.Body>
+				<div className="mx-6 my-2">
+					<Button value="Save" onClick={() => setOpenWarningModal(false)}>
+						Close
+					</Button>
+				</div>
+			</Modal>
+		</>
+	);
 };
 
 export default Document;

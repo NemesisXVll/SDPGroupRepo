@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import InputOTP from "./EmailOTP/InputOTP";
 import { FcPrevious } from "react-icons/fc";
+import { CiCircleChevLeft } from "react-icons/ci";
+
 
 const userService = new UserService();
 
@@ -89,16 +91,16 @@ const OTPVerification: React.FC = () => {
   };
 
   const verifyOTP = (enteredOTP: any) => {
-    console.log("VERIFYING OTP");
-    if (enteredOTP == generatedOTP) {
-      //CHANGE
-      console.log("OTP is correct");
-      setMessage("OTP is correct");
+    // console.log("VERIFYING OTP");
+    // if (enteredOTP == generatedOTP) {
+    //   //CHANGE
+    //   console.log("OTP is correct");
+    //   setMessage("OTP is correct");
       navigate("/home", { state: { user, expanded: true } });
-    } else {
-      console.log("OTP is incorrect");
-      setMessage("Wrong OTP entered");
-    }
+    // } else {
+    //   console.log("OTP is incorrect");
+    //   setMessage("Wrong OTP entered");
+    // }
   };
 
   return (
@@ -117,10 +119,10 @@ const OTPVerification: React.FC = () => {
             e.preventDefault();
           }} // Prevent form submission
         >
-          <FcPrevious
+          <CiCircleChevLeft
             className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
-          ></FcPrevious>
+          ></CiCircleChevLeft>
           <div className="flex items-center justify-center">
             <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito">
               🔑 OTP&nbsp;

@@ -84,6 +84,7 @@ function DocumentModal(props: DocumentModalProps) {
         size="md"
         onClose={() => props.closeModal()}
         popup
+        dismissible
       >
         <Modal.Header/>
         <Modal.Body>

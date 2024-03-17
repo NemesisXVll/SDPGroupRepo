@@ -12,7 +12,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { HiXMark } from "react-icons/hi2";
 import { CgDanger } from "react-icons/cg";
-import zxcvbn from "zxcvbn";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 interface State {
   firstName: string;
@@ -235,10 +235,10 @@ const Signup: React.FC = () => {
           className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSignUpClick}
         >
-          <FcPrevious
+          <CiCircleChevLeft
             className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
-          ></FcPrevious>
+          ></CiCircleChevLeft>
           <div className="flex items-center justify-center">
             <h2 className="text-4xl text-center py-2 font-bold font-nunito">
               📝 Sign
@@ -424,7 +424,6 @@ const Signup: React.FC = () => {
         </form>
       </div>
       <Modal
-        dismissible
         show={openSuccessModal}
         size="md"
         popup
@@ -438,7 +437,7 @@ const Signup: React.FC = () => {
           <h1 className="flex justify-center">Acount Created Successfully</h1>
         </Modal.Body>
         <div className="mx-6 my-4">
-          <Button onClick={() => navigate("/login", {})}>Go To Login</Button>
+          <Button value="Login" onClick={() => navigate("/login", {})}>Go To Login</Button>
         </div>
       </Modal>
     </div>

@@ -21,8 +21,6 @@ const LabelInput = (props: LabelInputProps) => {
     props.value?.includes("http") ? true : false
   );
 
-  console.log("isHTTPS", isHTTPS);
-
   const handleOnChange = (e: any) => {
     setValue(e.target.value);
     props.onChange ? props.onChange(e) : "";
