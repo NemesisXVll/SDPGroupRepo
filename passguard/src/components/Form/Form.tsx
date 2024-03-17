@@ -33,7 +33,6 @@ function Form(props: FormProps) {
     serviceType: "",
     serviceName: "",
   });
-
   const handleCancelBTN = (e: any) => {
     e.preventDefault();
     props.onBTNClick(false);
@@ -73,6 +72,7 @@ function Form(props: FormProps) {
 
   return (
     <>
+      
       <aside
         className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen`}
       >

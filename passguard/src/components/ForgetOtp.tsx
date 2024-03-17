@@ -8,6 +8,7 @@ import { FcPrevious } from "react-icons/fc";
 import Button from "./Form/Button";
 import UserService from "../utils/userService";
 import Captcha from "./Captcha/Captcha";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 const ForgetOTP: React.FC = () => {
   const navigate = useNavigate();
@@ -56,10 +57,10 @@ const ForgetOTP: React.FC = () => {
               checkEmail(false);
             }} // Prevent form submission
           >
-            <FcPrevious
+            <CiCircleChevLeft
               className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
               onClick={() => navigate("/login", {})}
-            ></FcPrevious>
+            ></CiCircleChevLeft>
             <div className="flex justify-center items-center">
               <AiTwotoneMail className="text-4xl" />
 

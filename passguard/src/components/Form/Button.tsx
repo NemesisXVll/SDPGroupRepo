@@ -20,10 +20,11 @@ const Button = (props: FormProps) => {
 			type={props.type}
 			value={props.value}
 			onClick={props.onClick}
-			className={`inline-flex items-center  bg-gradient-to-r rounded-3xl
+			className={`  inline-flex items-center  bg-gradient-to-r rounded-3xl
          hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
-         leading-normal tracking-tight font-semibold text-center w-full
+         leading-normal tracking-tight font-semibold text-center
           transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem]
+		  ${props.style}
          ${
 						props.value === "Add Document" ||
 						props.value === "Login" ||
@@ -31,22 +32,23 @@ const Button = (props: FormProps) => {
 						props.value === "createAccount" ||
 						props.value === "Add" ||
 						props.value === "GenPass"
-							? "bg-black hover:text-black hover:bg-yellow-400 text-white"
+							? "bg-black hover:text-black hover:bg-yellow-400 text-white w-full"
 							: ""
 					}
          ${
 						props.value === "Save" || props.value === "Update"
-							? "bg-blue-500 hover:bg-yellow-400 text-white"
+							? "bg-blue-500 hover:bg-yellow-400 text-white w-full"
 							: ""
 					}
          ${
 						props.value === "Cancel"
-							? "text-blue-500 border border-gray-400 hover:bg-gray-200"
+							? "text-blue-500 border border-gray-400 hover:bg-gray-200 w-full"
 							: ""
 					}
-					${props.value === "GenConfirm" ? "bg-blue-500 hover:bg-yellow-400 text-white" : ""}
-		${props.value === "signout" ? "border bg-yellow-400 border-black rounded-xl min-w-[7rem] hover:bg-red-500 hover:text-white" : ""}
-			${props.value === "GenCopy" ? "text-blue-500 border border-gray-400 hover:bg-gray-200" : ""}
+					${props.value === "GenConfirm" ? "bg-blue-500 hover:bg-yellow-400 text-white w-full" : ""}
+		${props.value === "signout" ? "border bg-yellow-400 border-black rounded-xl  hover:bg-red-500 hover:text-white" : ""}
+			${props.value === "GenCopy" ? "text-blue-500 border border-gray-400 hover:bg-gray-200 w-full" : ""}
+			${props.value === "confirmsignout" ? "bg-red-500 hover:bg-yellow-400 text-white w-full" : ""}
          duration-[400ms]
          `}
 		>

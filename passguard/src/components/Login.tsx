@@ -198,7 +198,7 @@ const Login: React.FC = () => {
           </p>
 
           <p className="text-center text-gray-600 text-sm mt-1 font-normal font-nunito">
-            Do you want to import your database?
+            Do you want to import your credentials?
             <a
               onClick={handleImportClick}
               className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-normal font-nunito cursor-default font-semibold"
@@ -231,7 +231,7 @@ const Login: React.FC = () => {
               </h1>
             </Modal.Body>
             <div className="mx-6 my-4">
-              <Button onClick={() => setOpenSuccessModal(false)}>
+              <Button value= "Login" onClick={() => setOpenSuccessModal(false)}>
                 Continue
               </Button>
             </div>
@@ -253,12 +253,12 @@ const Login: React.FC = () => {
                 "
                 />
               </div>
-              <h1 className="flex justify-center">
-                Incorrect File Type. Please upload a .db file
+              <h1 className="flex justify-center text-center font-nunito">
+                Please upload a valid PassGuard .db file
               </h1>
             </Modal.Body>
             <div className="mx-6 my-4">
-              <Button onClick={() => setOpenErrorModal(false)}>Continue</Button>
+              <Button value="Login" onClick={() => setOpenErrorModal(false)}>Continue</Button>
             </div>
           </Modal>
         </form>

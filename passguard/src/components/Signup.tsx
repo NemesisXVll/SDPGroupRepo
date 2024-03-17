@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { SignUp, checkEmail } from "../utils/authService";
+import { checkEmail } from "../utils/authService";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
-import {
-  FileInput,
-  Label,
-  List,
-  Modal,
-  ModalHeader,
-  Tooltip,
-} from "flowbite-react";
+import { FileInput, Modal, ModalHeader, Tooltip } from "flowbite-react";
 import { FcPrevious } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { HiXMark } from "react-icons/hi2";
 import { CgDanger } from "react-icons/cg";
-import zxcvbn from "zxcvbn";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { CiCircleChevLeft } from "react-icons/ci";
 
 interface State {
   firstName: string;
@@ -221,10 +214,10 @@ const Signup: React.FC = () => {
           className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md"
           onSubmit={handleSignUpClick}
         >
-          <FcPrevious
+          <CiCircleChevLeft
             className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
-          ></FcPrevious>
+          ></CiCircleChevLeft>
           <div className="flex items-center justify-center">
             <h2 className="text-4xl text-center py-2 font-bold font-nunito">
               📝 Sign
@@ -450,24 +443,6 @@ const Signup: React.FC = () => {
           </p>
         </form>
       </div>
-      <Modal
-        dismissible
-        show={openSuccessModal}
-        size="md"
-        popup
-        onClose={() => setOpenSuccessModal(false)}
-      >
-        <ModalHeader></ModalHeader>
-        <Modal.Body>
-          <div className="flex justify-center p-3">
-            <FaCheckCircle className="text-5xl text-green-500" />
-          </div>
-          <h1 className="flex justify-center">Acount Created Successfully</h1>
-        </Modal.Body>
-        <div className="mx-6 my-4">
-          <Button onClick={() => navigate("/login", {})}>Go To Login</Button>
-        </div>
-      </Modal>
     </div>
   );
 };
