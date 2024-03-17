@@ -78,7 +78,7 @@ function Navbar(props: NavbarProps) {
                         font-medium rounded-md cursor-pointer
                         text-white
                         hover:bg-yellow-400 hover:text-black
-                          group
+                          group  border-b-2 border-gray-700
                         `}
                 >
                   <img src={item.icon} alt={item.name} className="w-6 h-6" />

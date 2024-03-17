@@ -21,11 +21,11 @@ const navbarItems = [
   //     icon: trash,
   //     path: '/trash'
   // },
-  {
-    name: "Notifications",
-    icon: bell,
-    path: "/notifications",
-  },
+  // {
+  //   name: "Notifications",
+  //   icon: bell,
+  //   path: "/notifications",
+  // },
   {
     name: "About",
     icon: question,

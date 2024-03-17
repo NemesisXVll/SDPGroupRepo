@@ -37,8 +37,8 @@ const LabelInput = (props: LabelInputProps) => {
         required={props.required}
         type={props.type}
         maxLength={props.id === "credentialTitle" ? 25 : 100}
-        className={`pl-2 pr-8 mt-5 peer h-10 w-full text-gray-900 bg-opacity-50 border-gray-400
-        ${props.viewOnly ? "bg-slate-100" : ""} ${props.status == false ? "border-red-500" : ""}
+        className={`pl-2 pr-8 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400
+        ${props.viewOnly ? "bg-gray-200 text-gray-500" : "text-black"} ${props.status == false ? "border-red-500" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2`}
         placeholder={props.placeholder}
