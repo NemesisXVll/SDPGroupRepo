@@ -11,7 +11,7 @@ import OTPVerification from "./OTP.tsx";
 import NewPassword from "./NewPassword.tsx";
 import Settings from "./Settings/Settings.tsx";
 import About from "./About/About.tsx";
-import Notification from "./Notification/Notification.tsx";
+import SecurityQuestion from "./SecurityQuestion/SecurityQuestion.tsx";
 
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
         <Routes>
           <Route index element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/security-question" element={<SecurityQuestion />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/notifications" element={<Notification />} />
           <Route path="/about" element={<About />} />
           <Route path="/forgot-password" element={<ForgetOTP />} />
           <Route path="/otp" element={<OTPVerification />} />
