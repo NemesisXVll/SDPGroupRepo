@@ -127,21 +127,29 @@ const Signup: React.FC = () => {
       return;
     }
 
-    const signUpResult = SignUp({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      email: state.email,
-      masterPassword: state.password,
-      confirmPassword: state.confirmPassword,
-      salt: "",
-      picture: "",
+    console.log(state.email);
+    navigate("/otp", {
+      state: {
+        user: { email: state.email, firstName: state.firstName },
+        fromSignup: true,
+      },
     });
 
-    if (await signUpResult) {
-      setOpenSuccessModal(true);
-    } else {
-      setErrorMessage("Sign up failed. Please try again.");
-    }
+    // const signUpResult = SignUp({
+    //   firstName: state.firstName,
+    //   lastName: state.lastName,
+    //   email: state.email,
+    //   masterPassword: state.password,
+    //   confirmPassword: state.confirmPassword,
+    //   salt: "",
+    //   picture: "",
+    // });
+
+    // if (await signUpResult) {
+    //   setOpenSuccessModal(true);
+    // } else {
+    //   setErrorMessage("Sign up failed. Please try again.");
+    // }
   };
 
   const {
@@ -392,7 +400,6 @@ const Signup: React.FC = () => {
           </div>
           <FileInput
             accept="image/jpeg, image/png"
-            required={true}
             id="path"
             className="font-nunito"
           />
@@ -407,7 +414,7 @@ const Signup: React.FC = () => {
           {/* Submit Button */}
           <div className="mt-7">
             <Button type="submit" value="createAccount">
-              Create Account
+              Continue
             </Button>
           </div>
 

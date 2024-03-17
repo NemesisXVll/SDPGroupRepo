@@ -11,6 +11,7 @@ const userService = new UserService();
 const OTPVerification: React.FC = () => {
   const location = useLocation();
   const user = location.state.user;
+
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
@@ -29,6 +30,17 @@ const OTPVerification: React.FC = () => {
     };
   }, []);
   useEffect(() => {
+    if (location.state.fromSignup === true) {
+      setUserEmail(user.email);
+      setUserName(user.firstName);
+    } else {
+      userService.getUserDataById(user.userId).then((data: any) => {
+        setUserEmail(data.email);
+        setUserName(data.firstName);
+      });
+    }
+  }, []);
+  useEffect(() => {
     if (userEmail && userName) sendOTP(); // Automatically send OTP when component mounts
   }, [OTPSent, userEmail]); // Empty dependency array to run only once
 
@@ -43,10 +55,6 @@ const OTPVerification: React.FC = () => {
 
     return otp;
   };
-  userService.getUserDataById(user.userId).then((data: any) => {
-    setUserEmail(data.email);
-    setUserName(data.firstName);
-  });
 
   const sendOTP = async () => {
     try {
@@ -94,7 +102,9 @@ const OTPVerification: React.FC = () => {
       //CHANGE
       console.log("OTP is correct");
       setMessage("OTP is correct");
-      navigate("/home", { state: { user, expanded: true } });
+      navigate("/security-question", {
+        state: { user, expanded: true },
+      });
     } else {
       console.log("OTP is incorrect");
       setMessage("Wrong OTP entered");
