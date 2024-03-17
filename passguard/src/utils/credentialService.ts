@@ -12,9 +12,7 @@ export default class CredentialService {
 
     formData.set(
       "loginPageUrl",
-      formData.get("loginPageUrl") === ""
-        ? ""
-        : "https://" + formData.get("loginPageUrl")
+      formData.get("loginPageUrl") === "" ? "" : formData.get("loginPageUrl")
     );
 
     formData.set("userId", userId.toString()); //Need to change this to the actual user id
@@ -46,15 +44,15 @@ export default class CredentialService {
     window.ipcRenderer.send("createCredential", data);
   }
 
-	async trashCredentialById(credentialId: number) {
-		window.ipcRenderer.send("trashCredentialById", credentialId);
-	}
-	async recoverCredentialById(credentialId: number) { 
-		window.ipcRenderer.send("recoverCredentialById", credentialId);
-	}
-	async deleteCredential(credentialId: number) {
-		window.ipcRenderer.send("deleteCredential",credentialId );
-	}
+  async trashCredentialById(credentialId: number) {
+    window.ipcRenderer.send("trashCredentialById", credentialId);
+  }
+  async recoverCredentialById(credentialId: number) {
+    window.ipcRenderer.send("recoverCredentialById", credentialId);
+  }
+  async deleteCredential(credentialId: number) {
+    window.ipcRenderer.send("deleteCredential", credentialId);
+  }
 
   async updateCredential(credentialId: string, formData: any, userId: number) {
     /*Here u should do something like this to not get actual password value.
@@ -68,7 +66,7 @@ export default class CredentialService {
       "loginPageUrl",
       formData.get("loginPageUrl") === ""
         ? ""
-        : "https://" + formData.get("loginPageUrl")
+        : formData.get("loginPageUrl")
     );
     formData.set("userId", userId.toString());
     const credentialObj = JSON.parse(
@@ -107,83 +105,83 @@ export default class CredentialService {
     window.ipcRenderer.send("updateCredential", data);
   }
 
-	async findCredentialsByUserId(userId: any): Promise<any> {
-		return new Promise((resolve) => {
-			window.ipcRenderer.send("findCredentialsByUserIdRequest", userId);
-			window.ipcRenderer.once(
-				"findCredentialsByUserIdResponse",
-				(event, arg) => {
-					const parsedData = JSON.parse(arg);
-					resolve(parsedData);
-				}
-			);
-		});
-	}
-	async getPasswordByCredentialId(credentialId: any): Promise<String> {
-		return new Promise((resolve) => {
-			window.ipcRenderer.send("getPasswordByCredentialIdRequest", credentialId);
-			window.ipcRenderer.once(
-				"getPasswordByCredentialIdResponse",
-				(event, arg) => {
-					const password = JSON.parse(arg);
-					resolve(password);
-				}
-			);
-		});
-	}
-	async getTotalCredentialsCountByUserId(userId: any): Promise<number> {
-		try {
-			return new Promise((resolve) => {
-				window.ipcRenderer.send(
-					"getTotalCredentialsCountByUserIdRequest",
-					userId
-				);
-				window.ipcRenderer.once(
-					"getTotalCredentialsCountByUserIdResponse",
-					(event, arg) => {
-						const parsedData = JSON.parse(arg);
-						resolve(parsedData);
-					}
-				);
-			});
-		} catch (error) {
-			console.error("Error counting total credentials", error);
-			return 0;
-		}
-	}
-	async getWeakPasswordsCountByUserIdRequest(userId: any): Promise<number> {
-		try {
-			return new Promise((resolve) => {
-				window.ipcRenderer.send("getWeakPasswordsCountByUserIdRequest", userId);
-				window.ipcRenderer.once(
-					"getWeakPasswordsCountByUserIdResponse",
-					(event, arg) => {
-						resolve(arg);
-					}
-				);
-			});
-		} catch (error) {
-			console.error("Error counting weak passwords", error);
-			return 0;
-		}
-	}
-	async getOldPasswordsCountByUserIdRequest(userId: any): Promise<number> {
-		try {
-			return new Promise((resolve) => {
-				window.ipcRenderer.send("getOldPasswordsCountByUserIdRequest", userId);
-				window.ipcRenderer.once(
-					"getOldPasswordsCountByUserIdResponse",
-					(event, arg) => {
-						const parsedData = JSON.parse(arg);
-						resolve(parsedData);
-					}
-				);
-			});
-		} catch (error) {
-			console.error("Error counting old passwords", error);
-			return 0;
-		}
-	}
+  async findCredentialsByUserId(userId: any): Promise<any> {
+    return new Promise((resolve) => {
+      window.ipcRenderer.send("findCredentialsByUserIdRequest", userId);
+      window.ipcRenderer.once(
+        "findCredentialsByUserIdResponse",
+        (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        }
+      );
+    });
+  }
+  async getPasswordByCredentialId(credentialId: any): Promise<String> {
+    return new Promise((resolve) => {
+      window.ipcRenderer.send("getPasswordByCredentialIdRequest", credentialId);
+      window.ipcRenderer.once(
+        "getPasswordByCredentialIdResponse",
+        (event, arg) => {
+          const password = JSON.parse(arg);
+          resolve(password);
+        }
+      );
+    });
+  }
+  async getTotalCredentialsCountByUserId(userId: any): Promise<number> {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send(
+          "getTotalCredentialsCountByUserIdRequest",
+          userId
+        );
+        window.ipcRenderer.once(
+          "getTotalCredentialsCountByUserIdResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error counting total credentials", error);
+      return 0;
+    }
+  }
+  async getWeakPasswordsCountByUserIdRequest(userId: any): Promise<number> {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("getWeakPasswordsCountByUserIdRequest", userId);
+        window.ipcRenderer.once(
+          "getWeakPasswordsCountByUserIdResponse",
+          (event, arg) => {
+            resolve(arg);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error counting weak passwords", error);
+      return 0;
+    }
+  }
+  async getOldPasswordsCountByUserIdRequest(userId: any): Promise<number> {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("getOldPasswordsCountByUserIdRequest", userId);
+        window.ipcRenderer.once(
+          "getOldPasswordsCountByUserIdResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error counting old passwords", error);
+      return 0;
+    }
+  }
 
   async findCredentialById(credentialId: any): Promise<any> {
     return new Promise((resolve) => {
@@ -238,18 +236,21 @@ export default class CredentialService {
       );
       const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
       if (differenceInDays >= 2 && trashedCredentials.length > 0) {
-        console.log("Deleting outdated trashed credential")
+        console.log("Deleting outdated trashed credential");
         await this.deleteCredential(credential.credentialId);
       }
     }
   }
-  async getTrashedCredentialsByUserId(userId: any): Promise<any> { 
+  async getTrashedCredentialsByUserId(userId: any): Promise<any> {
     return new Promise((resolve) => {
       window.ipcRenderer.send("getTrashedCredentialsByUserIdRequest", userId);
-      window.ipcRenderer.once("getTrashedCredentialsByUserIdResponse", (event, arg) => {
-        const parsedData = JSON.parse(arg);
-        resolve(parsedData);
-      });
+      window.ipcRenderer.once(
+        "getTrashedCredentialsByUserIdResponse",
+        (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        }
+      );
     });
   }
   async getReusedPasswordsCountByUserIdRequest(userId: any): Promise<number> {

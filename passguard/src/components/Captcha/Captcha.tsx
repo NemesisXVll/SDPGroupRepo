@@ -18,13 +18,12 @@ const Captcha = (props: CaptchaProps) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const captchaCanvasRef = useRef<HTMLCanvasElement>(null);
+  const ref: any = useRef(null);
 
   useEffect(() => {
-    if (captchaCanvasRef.current) {
-      captchaCanvasRef.current.width = 200;
-      captchaCanvasRef.current.height = 80;
-      generateCaptcha();
-    }
+    setTimeout(() => {
+      ref.current.click();
+    }, 0);
   }, []);
 
   function generateCaptcha() {
@@ -73,7 +72,6 @@ const Captcha = (props: CaptchaProps) => {
 
   function handleContinueBTN(event: any): void {
     event.preventDefault();
-    setCaptchaInput("captchaInput");
     if (
       captchaInput !== captchaCode ||
       captchaInput === "" ||
@@ -103,7 +101,7 @@ const Captcha = (props: CaptchaProps) => {
       >
         <div className="bg-white rounded-lg shadow-md p-4 font-['Nunito'] text-gray-800 w-full max-w-lg mx-auto">
           <h1 className="text-xl font-bold text-gray-800 mb-6 text-center font-['Nunito']">
-            Generate and Enter the Code
+            Enter the Code Below
           </h1>
           <div className="mb-3 flex justify-center mx-auto gap-2">
             <canvas
@@ -115,6 +113,7 @@ const Captcha = (props: CaptchaProps) => {
             ></canvas>
             <button
               type="button"
+              ref={ref}
               className="items-center justify-center h-fit p-1 mt-6 flex rounded-md hover: transition-all"
               id="refresh-captcha"
               onClick={() => handleRefreshCaptchaClick()}
