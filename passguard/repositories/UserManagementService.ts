@@ -147,7 +147,7 @@ export default class UserManagementService {
           salt: salt,
         },
       });
-      console.log("User created....", newUser);
+      // console.log("User created....", newUser);
       return newUser;
     } catch (error) {
       console.error("Error creating user", error);

@@ -94,6 +94,7 @@ function DocumentModal(props: DocumentModalProps) {
             </h3>
 
             <form>
+              
               <div className="mb-1 block">
                 <Label htmlFor="path" value="Upload File" className="" />
               </div>
@@ -104,6 +105,7 @@ function DocumentModal(props: DocumentModalProps) {
                 className="font-nunito"
                 onChange={handleOnInputChange}
               />
+
               <div className="flex">
                 <IoInformationCircleOutline className="mt-[0.3rem] text-gray-500"></IoInformationCircleOutline>
                 <p className="text-gray-500 text-sm mt-1">

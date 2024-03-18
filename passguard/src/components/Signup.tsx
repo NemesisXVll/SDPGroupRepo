@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
 import MPasswdStrength from "./MPasswdStrength";
-import { FileInput, Modal, ModalHeader, Tooltip } from "flowbite-react";
-import { FcPrevious } from "react-icons/fc";
-import { FaCheckCircle } from "react-icons/fa";
+import { FileInput, Tooltip } from "flowbite-react";
 import { FcCheckmark } from "react-icons/fc";
 import { HiXMark } from "react-icons/hi2";
 import { CgDanger } from "react-icons/cg";
@@ -21,6 +19,7 @@ interface State {
   email: string;
   password: string;
   confirmPassword: string;
+  picture: string;
   showConfirmPassword: boolean;
 }
 
@@ -40,7 +39,6 @@ const Signup: React.FC = () => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
 
   const [state, setState] = useState<State>({
@@ -49,6 +47,7 @@ const Signup: React.FC = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    picture: "",
     showConfirmPassword: false,
   });
   const [passwordState, setPasswordState] = useState<PasswordState>({
@@ -63,6 +62,24 @@ const Signup: React.FC = () => {
     contextSpecific: false,
   });
 
+  function handleFileInput(event: any): void {
+    
+    if (event.target.files[0].size > 1000000) {
+      setErrorMessage("File size is too large");
+      return;
+    }
+    setErrorMessage("");
+
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      setState({
+        ...state,
+        [event.target.id]: reader.result,
+      });
+    });
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
   const toggleConfirmPasswordVisibility = () => {
     setState((prevState) => ({
       ...prevState,
@@ -72,9 +89,6 @@ const Signup: React.FC = () => {
 
   const handleSignUpClick = async (event: any) => {
     event.preventDefault();
-    const state = JSON.parse(
-      JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
-    );
 
     const lettersOnlyRegex = /^[A-Za-z]+$/;
     if (
@@ -121,15 +135,6 @@ const Signup: React.FC = () => {
     });
   };
 
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword,
-    showConfirmPassword,
-  } = state;
-
   function handleLoginClick(): void {
     navigate("/login", { replace: true });
   }
@@ -151,7 +156,7 @@ const Signup: React.FC = () => {
     const number = numberRegex.test(newPassword);
     const specialChar = specialCharRegex.test(newPassword);
     const length = newPassword.length >= 8;
-    const match = confirmPassword === newPassword;
+    const match = state.confirmPassword === newPassword;
     const repeatedChar = /(.)\1{2,}/.test(newPassword);
 
     let sequentialChar = false;
@@ -167,15 +172,15 @@ const Signup: React.FC = () => {
     }
 
     if (state.firstName !== "") {
-      if (newPassword.toLowerCase().includes(firstName.toLowerCase()))
+      if (newPassword.toLowerCase().includes(state.firstName.toLowerCase()))
         contextSpecific = true;
     }
     if (state.lastName !== "") {
-      if (newPassword.toLowerCase().includes(lastName.toLowerCase()))
+      if (newPassword.toLowerCase().includes(state.lastName.toLowerCase()))
         contextSpecific = true;
     }
     if (state.email !== "") {
-      if (newPassword.toLowerCase().includes(email.toLowerCase()))
+      if (newPassword.toLowerCase().includes(state.email.toLowerCase()))
         contextSpecific = true;
     }
     if (newPassword.toLowerCase().includes("passguard")) contextSpecific = true;
@@ -210,10 +215,7 @@ const Signup: React.FC = () => {
         />
       </div>
       <div className="bg-gray-100 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md"
-          onSubmit={handleSignUpClick}
-        >
+        <form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md">
           <CiCircleChevLeft
             className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
             onClick={() => navigate("/login", {})}
@@ -231,7 +233,7 @@ const Signup: React.FC = () => {
           <LabelInput
             required={true}
             type="text"
-            value={firstName}
+            value={state.firstName}
             label="First Name"
             id="firstName"
             placeholder=""
@@ -247,7 +249,7 @@ const Signup: React.FC = () => {
           <LabelInput
             required={true}
             type="text"
-            value={lastName}
+            value={state.lastName}
             label="Last Name"
             id="lastName"
             placeholder=""
@@ -263,7 +265,7 @@ const Signup: React.FC = () => {
           <LabelInput
             required={true}
             type="email"
-            value={email}
+            value={state.email}
             label="Email"
             id="email"
             placeholder=""
@@ -361,7 +363,7 @@ const Signup: React.FC = () => {
               <div className="w-[26.2rem]">
                 <MPasswdStrength
                   required={true}
-                  value={password}
+                  value={state.password}
                   strength={passwordStrength}
                   label="Password"
                   id="password"
@@ -374,15 +376,21 @@ const Signup: React.FC = () => {
 
           {/* Confirm Password Field */}
           <LabelInput
+            onChange={(event) => {
+              setState((prevState) => ({
+                ...prevState,
+                confirmPassword: event.target.value,
+              }));
+            }}
             required={true}
-            type={showConfirmPassword ? "text" : "password"}
-            value={confirmPassword}
+            type={state.showConfirmPassword ? "text" : "password"}
+            value={state.confirmPassword}
             label="Confirm Password"
             id="confirmPassword"
             placeholder=""
           >
             <div className="">
-              {showConfirmPassword ? (
+              {state.showConfirmPassword ? (
                 <FiEyeOff
                   onClick={toggleConfirmPasswordVisibility}
                   size="1.3em"
@@ -402,7 +410,7 @@ const Signup: React.FC = () => {
 
           <div className="mb-1 block mt-2">
             <label
-              htmlFor={"path"}
+              htmlFor="picture"
               className="p-1 font-normal font-['Nunito']
          text-gray-800 text-base peer-placeholder-shown:text-base
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
@@ -412,10 +420,17 @@ const Signup: React.FC = () => {
             </label>
           </div>
           <FileInput
-            accept="image/jpeg, image/png"
-            id="path"
+            accept="image/jpeg, image/png, image/gif, image/svg+xml"
+            id="picture"
             className="font-nunito"
+            onChange={handleFileInput}
           />
+          <div className="flex">
+            <IoInformationCircleOutline className="mt-[0.3rem] text-gray-500 "></IoInformationCircleOutline>
+            <p className="text-gray-500 text-sm mt-1 ml-2zz">
+              Files allowed (jpg, jpeg, gif, png, svg), Max Size: 1MB
+            </p>
+          </div>
 
           {errorMessage && (
             <div className="flex mt-1">
@@ -426,7 +441,11 @@ const Signup: React.FC = () => {
 
           {/* Submit Button */}
           <div className="mt-7">
-            <Button type="submit" value="createAccount">
+            <Button
+              type="submit"
+              onClick={handleSignUpClick}
+              value="createAccount"
+            >
               Continue
             </Button>
           </div>

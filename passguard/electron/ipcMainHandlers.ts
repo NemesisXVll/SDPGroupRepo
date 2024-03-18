@@ -77,7 +77,7 @@ export const registerIPCMainHandlers = () => {
   });
 
   ipcMain.on("createUser", async (event, arg) => {
-    console.log("createUser: ", arg);
+    // console.log("createUser: ", arg);
     await userManagementService.createUser(arg);
   });
 

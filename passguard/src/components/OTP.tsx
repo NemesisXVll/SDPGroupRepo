@@ -7,7 +7,6 @@ import InputOTP from "./EmailOTP/InputOTP";
 import { FcPrevious } from "react-icons/fc";
 import { CiCircleChevLeft } from "react-icons/ci";
 
-
 const userService = new UserService();
 
 const OTPVerification: React.FC = () => {

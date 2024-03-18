@@ -31,8 +31,7 @@ const SecurityQuestion: React.FC = () => {
       email: user.state.email,
       masterPassword: user.state.password,
       confirmPassword: user.state.confirmPassword,
-      salt: "",
-      picture: "",
+      picture: user.state.picture,
     });
 
     console.log(signUpResult);
@@ -96,7 +95,9 @@ const SecurityQuestion: React.FC = () => {
           <h1 className="flex justify-center">Acount Created Successfully</h1>
         </Modal.Body>
         <div className="mx-6 my-4">
-          <Button onClick={() => navigate("/login", {})}>Go To Login</Button>
+          <Button value="Login" onClick={() => navigate("/login", {})}>
+            Go To Login
+          </Button>
         </div>
       </Modal>
     </>

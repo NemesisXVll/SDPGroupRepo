@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import Defaultuserphoto from "../assets/icons/common/DefaultuserPhoto.jpg";
 
 type SignUpData = {
   firstName: string;
@@ -6,7 +7,6 @@ type SignUpData = {
   email: string;
   masterPassword: string;
   confirmPassword: string;
-  salt: string;
   picture: string;
 };
 
@@ -48,9 +48,9 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
       firstName: rest.firstName,
       lastName: rest.lastName,
       email: email,
+      picture: rest.picture === "" ? Defaultuserphoto : rest.picture,
     }),
     masterPassword: masterPassword,
-    picture: "https://via.placeholder.com/150",
   };
 
   try {

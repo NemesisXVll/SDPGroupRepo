@@ -26,8 +26,7 @@ const Login: React.FC = () => {
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
-    console.log("Login Tries", loginTries);
-      const data = JSON.parse(
+    const data = JSON.parse(
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
     const { email, password } = data;
@@ -231,7 +230,7 @@ const Login: React.FC = () => {
               </h1>
             </Modal.Body>
             <div className="mx-6 my-4">
-              <Button value= "Login" onClick={() => setOpenSuccessModal(false)}>
+              <Button value="Login" onClick={() => setOpenSuccessModal(false)}>
                 Continue
               </Button>
             </div>
@@ -258,7 +257,9 @@ const Login: React.FC = () => {
               </h1>
             </Modal.Body>
             <div className="mx-6 my-4">
-              <Button value="Login" onClick={() => setOpenErrorModal(false)}>Continue</Button>
+              <Button value="Login" onClick={() => setOpenErrorModal(false)}>
+                Continue
+              </Button>
             </div>
           </Modal>
         </form>

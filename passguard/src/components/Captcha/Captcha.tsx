@@ -153,7 +153,9 @@ const Captcha = (props: CaptchaProps) => {
             </div>
 
             <div className="mx-auto w-72">
-              <Button type="submit">Continue</Button>
+              <Button value="Login" type="submit">
+                Continue
+              </Button>
             </div>
           </form>
         </div>
