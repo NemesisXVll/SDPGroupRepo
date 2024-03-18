@@ -217,6 +217,19 @@ export default class UserManagementService {
       throw error;
     }
   }
+  async favoriteCredentialById(credentialId: number, isFavorited: boolean) { 
+    try {
+      const favoritedCredential = await prisma.credential.update({
+        where: { credentialId: credentialId },
+        data: {
+          isFavourite: isFavorited,
+        },
+      });
+      return favoritedCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
   async recoverCredentialById(credentialId: number) {
     const recoveredCredential =
       await userQueryService.getCredentialById(credentialId);

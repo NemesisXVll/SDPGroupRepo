@@ -45,10 +45,10 @@ const Settings = (props: SettingsProps) => {
 
 				<div className="TopOfDocument border-b-2">
 					<div className="p-2 m-3 TopOfDocument">
-						<div className="flex border border-t-0 border-l-0 border-r-0 border-b-gray-300 m-5">
+						<div className="flex">
 							<Label
 								value=" ⚙ Settings"
-								className="flex p-1 text-3xl font-medium mb-2"
+								className="flex p-1 text-xl font-medium mb-2"
 								color="dark"
 							/>
 						</div>
@@ -56,11 +56,11 @@ const Settings = (props: SettingsProps) => {
 							<Tabs.Item title="Manage Profile" icon={HiUserCircle}>
 								Change personal info here
 							</Tabs.Item>
-              <Tabs.Item title="Password" icon={PiPasswordFill}>
-                <ManagePassword></ManagePassword>
+							<Tabs.Item title="Password" icon={PiPasswordFill}>
+								<ManagePassword></ManagePassword>
 							</Tabs.Item>
 							<Tabs.Item title="Manage credentials" icon={GrStorage}>
-							Export/Import/Erase All Credentials Here
+								Export/Import/Erase All Credentials Here
 							</Tabs.Item>
 						</Tabs>
 					</div>

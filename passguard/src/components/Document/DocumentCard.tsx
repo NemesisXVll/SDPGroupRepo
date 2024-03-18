@@ -112,7 +112,7 @@ function DocumentCard(props: DocumentCardProps) {
       </div>
 
       {openModal ? (
-        <Modal show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal show={openModal} onClose={() => setOpenModal(false)} dismissible>
           <Modal.Header className="font-nunito font-medium break-words text-sm">
             {props.name} - {props.category}
           </Modal.Header>

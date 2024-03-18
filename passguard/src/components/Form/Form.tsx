@@ -12,6 +12,7 @@ type FormProps = {
   userId: number;
   formSubmitted: () => void;
   forceRender: () => void;
+  favoriteRender: () => void;
   onBTNClick: (showForm: boolean) => void;
   onCardClick: (credentialData: any, updateClicked: boolean) => void;
   editable?: boolean;
@@ -80,6 +81,7 @@ function Form(props: FormProps) {
           credential={props.credentialObj}
           data={formData}
           credDeleted={props.forceRender}
+          favoriteRender={props.favoriteRender}
         ></TopOfForm>
 
         <form

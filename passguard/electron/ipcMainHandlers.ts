@@ -133,3 +133,6 @@ ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
     JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
   );
 });
+ipcMain.on("favoriteCredentialById", async (event, arg) => { 
+  await userManagementService.favoriteCredentialById(arg.credentialId, arg.isFavorited);
+});

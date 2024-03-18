@@ -86,6 +86,9 @@ function Home() {
     setSyncStats((syncStats) => !syncStats);
     setShowForm(false);
   }
+  function handleFavoriteRender(): void { 
+    setForceGridRender((forceGridRender) => !forceGridRender);
+  }
 
   return (
     <>
@@ -112,6 +115,7 @@ function Home() {
               editable={editInput}
               onBTNClick={handleFormBTN}
               forceRender={handleForceRender}
+              favoriteRender={handleFavoriteRender}
             ></Form>
           ) : (
             ""
