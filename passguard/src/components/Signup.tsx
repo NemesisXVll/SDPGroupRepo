@@ -29,7 +29,6 @@ interface PasswordState {
   number: boolean;
   specialChar: boolean;
   length: boolean;
-  match: boolean;
   repeatedChar: boolean;
   sequentialChar: boolean;
   contextSpecific: boolean;
@@ -56,14 +55,12 @@ const Signup: React.FC = () => {
     number: false,
     specialChar: false,
     length: false,
-    match: false,
     repeatedChar: false,
     sequentialChar: false,
     contextSpecific: false,
   });
 
   function handleFileInput(event: any): void {
-    
     if (event.target.files[0].size > 1000000) {
       setErrorMessage("File size is too large");
       return;
@@ -156,7 +153,6 @@ const Signup: React.FC = () => {
     const number = numberRegex.test(newPassword);
     const specialChar = specialCharRegex.test(newPassword);
     const length = newPassword.length >= 8;
-    const match = state.confirmPassword === newPassword;
     const repeatedChar = /(.)\1{2,}/.test(newPassword);
 
     let sequentialChar = false;
@@ -198,7 +194,6 @@ const Signup: React.FC = () => {
       number,
       specialChar,
       length,
-      match,
       repeatedChar,
       sequentialChar,
       contextSpecific,
@@ -318,6 +313,7 @@ const Signup: React.FC = () => {
             >
               <IoInformationCircleOutline className="text-black  ml-[25rem]"></IoInformationCircleOutline>
             </Tooltip>
+
             <Tooltip
               placement="bottom"
               content={
@@ -340,20 +336,20 @@ const Signup: React.FC = () => {
                       A symbol (e.g. #$&)
                     </li>
                     <li className="flex items-center">
-                      {passwordState.length ? (
-                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                      ) : (
-                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                      )}
-                      A longer password (min. 8 chars.)
-                    </li>
-                    <li className="mt-1 flex items-center">
                       {passwordState.number ? (
                         <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
                       ) : (
                         <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
                       )}
                       A number (e.g. 123)
+                    </li>
+                    <li className="mt-1 flex items-center">
+                      {passwordState.length ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A longer password (min. 8 chars.)
                     </li>
                   </ul>
                 </div>
@@ -362,6 +358,9 @@ const Signup: React.FC = () => {
               {/* Password Field */}
               <div className="w-[26.2rem]">
                 <MPasswdStrength
+                  contextSpecific={passwordState.contextSpecific}
+                  sequentialChar={passwordState.sequentialChar}
+                  repeatedChar={passwordState.repeatedChar}
                   required={true}
                   value={state.password}
                   strength={passwordStrength}
