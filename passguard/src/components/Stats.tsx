@@ -74,17 +74,17 @@ const Stats = (props: StatsProps) => {
 		<div className="w-full p-2 h-fit m-3">
 			<div className="flex">
 				<h5 className="p-1 text-xl font-medium">Password Analysis </h5>
-				<button onClick={handleRefreshClick}>
+				{/* <button onClick={handleRefreshClick}>
 					<img src={refresh} alt="refresh-icon" />
-				</button>
+				</button> */}
 			</div>
 
-			<div className="flex items-center ">
+			<div className="flex items-center border-b-2 pb-5">
 				<div className="flex-row w-60 h-fit m-1">
 					<div className="flex">
 						{weakWidth != 0 ? (
 							<div
-								className={`flex p-2 ${reusedWidth == 0 && oldWidth == 0 ? "rounded-r-md":""} bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
+								className={`flex p-2 ${reusedWidth == 0 && oldWidth == 0 ? "rounded-r-md" : ""} bg-red-500 rounded-l-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${weakWidth}%` }}
 							>
 								Weak
@@ -92,7 +92,7 @@ const Stats = (props: StatsProps) => {
 						) : null}
 						{reusedWidth != 0 ? (
 							<div
-								className={`flex p-2 ${weakWidth == 0 ? "rounded-l-md":""} bg-sky-700 h-8 text-center ${oldWidth == 0 ? "rounded-r-md":""} text-xs justify-center items-center text-white font-nunito font-bold`}
+								className={`flex p-2 ${weakWidth == 0 ? "rounded-l-md" : ""} bg-sky-700 h-8 text-center ${oldWidth == 0 ? "rounded-r-md" : ""} text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${reusedWidth}%` }}
 							>
 								Reused
@@ -100,21 +100,20 @@ const Stats = (props: StatsProps) => {
 						) : null}
 						{oldWidth != 0 ? (
 							<div
-								className={`flex p-2 ${reusedWidth == 0 || weakWidth == 0 ? "rounded-l-md":""} bg-purple-500 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
+								className={`flex p-2 ${reusedWidth == 0 || weakWidth == 0 ? "rounded-l-md" : ""} bg-purple-500 rounded-r-md h-8 text-center text-xs justify-center items-center text-white font-nunito font-bold`}
 								style={{ width: `${oldWidth}%` }}
 							>
 								Old
 							</div>
 						) : null}
-						{ oldWidth == 0 && reusedWidth == 0 && weakWidth == 0 
-							? (
-								<div
-									className="flex p-2 bg-neutral-200 rounded-r-md rounded-l-md h-8 text-center text-xs justify-center items-center text-black font-nunito font-bold"
-									style={{ width: "100%" }}
-								>
-									No Stats Available
-								</div>
-							): null}
+						{oldWidth == 0 && reusedWidth == 0 && weakWidth == 0 ? (
+							<div
+								className="flex p-2 bg-neutral-200 rounded-r-md rounded-l-md h-8 text-center text-xs justify-center items-center text-black font-nunito font-bold"
+								style={{ width: "100%" }}
+							>
+								No Stats Available
+							</div>
+						) : null}
 					</div>
 				</div>
 				<div className="analysis-container text-center flex justify-evenly  w-full">

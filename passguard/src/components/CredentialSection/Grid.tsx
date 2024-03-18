@@ -6,7 +6,7 @@ import CredentialService from "../../utils/credentialService";
 import { serviceNames } from "../../data/dropdownItems";
 import AddButton from "../Form/AddButton";
 import { Dropdown, Toast, Tooltip } from "flowbite-react";
-import { FaTrash } from "react-icons/fa";
+import { FaHeart, FaTrash } from "react-icons/fa";
 import { CiCircleAlert } from "react-icons/ci";
 import { SlGrid } from "react-icons/sl";
 import { HiX } from "react-icons/hi";
@@ -37,11 +37,10 @@ const Grid = (props: GridProps) => {
 	const [credentialsTitle, setCredentialsTitle] =
 		useState<string>("My Credentials");
 	const [sync, setSync] = useState<boolean>(false);
-  const [showDeleteToast, setShowDeleteToast] = useState<boolean>(false);
-  const [showRecoverToast, setShowRecoverToast] = useState<boolean>(false);
-  const [showPermanentRemoveToast, setShowPermanentRemoveToast] =
-    useState<boolean>(false);
-  const [showUpdateToast, setShowUpdateToast] = useState<boolean>(false);
+	const [showDeleteToast, setShowDeleteToast] = useState<boolean>(false);
+	const [showRecoverToast, setShowRecoverToast] = useState<boolean>(false);
+	const [showPermanentRemoveToast, setShowPermanentRemoveToast] =
+		useState<boolean>(false);
 
 	const handleCardClick = (
 		credentialData: CredentialData,
@@ -53,7 +52,7 @@ const Grid = (props: GridProps) => {
 	const handleDeleteClick = (credentialId: number) => {
 		credentialService.trashCredentialById(credentialId);
 		setShowDeleteToast(true);
-		
+
 		setTimeout(() => {
 			setShowDeleteToast(false);
 		}, 3000);
@@ -71,11 +70,11 @@ const Grid = (props: GridProps) => {
 	};
 
 	const handlePermanentRemoveClick = (credentialId: number) => {
-    credentialService.deleteCredential(credentialId);
-    setShowPermanentRemoveToast(true);
-    setTimeout(() => {
-      setShowPermanentRemoveToast(false);
-    }, 3000);
+		credentialService.deleteCredential(credentialId);
+		setShowPermanentRemoveToast(true);
+		setTimeout(() => {
+			setShowPermanentRemoveToast(false);
+		}, 3000);
 		const updatedCredentials = currentCredentials.filter((item: any) => {
 			return item.credentialId !== credentialId;
 		});
@@ -83,11 +82,11 @@ const Grid = (props: GridProps) => {
 	};
 
 	const handleRecoverClick = (credentialId: number) => {
-    credentialService.recoverCredentialById(credentialId);
-    setShowRecoverToast(true);
-    setTimeout(() => {
-      setShowRecoverToast(false);
-    }, 3000);
+		credentialService.recoverCredentialById(credentialId);
+		setShowRecoverToast(true);
+		setTimeout(() => {
+			setShowRecoverToast(false);
+		}, 3000);
 		const updatedCredentials = currentCredentials.map((item: any) => {
 			if (item.credentialId === credentialId) {
 				item.isTrashed = false;
@@ -121,6 +120,10 @@ const Grid = (props: GridProps) => {
 		if (filter === "current") {
 			filterCondition = "(item) => !item.isTrashed";
 			setCredentialsTitle("My Credentials");
+		} else if (filter === "favorite") {
+
+			filterCondition = "(item) => !item.isTrashed && item.isFavourite";
+			setCredentialsTitle("Favorite Credentials");
 		} else if (filter === "weak") {
 			filterCondition = "(item) => !item.isTrashed && item.isWeak";
 			setCredentialsTitle("Weak Passwords");
@@ -158,7 +161,6 @@ const Grid = (props: GridProps) => {
 			}
 		};
 		fetchData();
-		console.log("Fetching credentials");
 		return () => {
 			window.ipcRenderer.removeAllListeners("findCredentialsByIdResponse");
 		};
@@ -167,8 +169,6 @@ const Grid = (props: GridProps) => {
 	const credentialsLength = currentCredentials.filter(
 		eval(filteredCondition)
 	).length;
-
-	console.log("Current Credentials", currentCredentials);
 
 	const injectCard = () => {
 		return currentCredentials
@@ -229,6 +229,14 @@ const Grid = (props: GridProps) => {
 							My Credentials
 						</Dropdown.Item>
 						<Dropdown.Item
+							value={"favorite"}
+							icon={FaHeart}
+							onClick={() => handleFilterChange("favorite")}
+							className="text-green-500"
+						>
+							Favorite Credentials
+						</Dropdown.Item>
+						<Dropdown.Item
 							value={"weak"}
 							icon={CiCircleAlert}
 							onClick={() => handleFilterChange("weak")}
@@ -279,7 +287,7 @@ const Grid = (props: GridProps) => {
 					)}
 				</div>
 
-				<div className="absolute left-[52rem]">
+				<div className="absolute left-[53rem]">
 					{showPermanentRemoveToast && (
 						<Toast>
 							<div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
@@ -291,33 +299,20 @@ const Grid = (props: GridProps) => {
 							<Toast.Toggle />
 						</Toast>
 					)}
-        </div>
-        <div className="absolute left-[52rem]">
-          {showRecoverToast && (
-            <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-red-800 dark:text-red-200">
-                <HiCheck className="h-5 w-5" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Credential recovered.
-              </div>
-              <Toast.Toggle />
-            </Toast>
-          )}
-        </div>
-        <div className="absolute left-[52rem]">
-          {showUpdateToast && (
-            <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-red-800 dark:text-red-200">
-                <HiCheck className="h-5 w-5 text-green-500" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Credential has been updated.
-              </div>
-              <Toast.Toggle />
-            </Toast>
-          )}
-        </div>
+				</div>
+				<div className="absolute left-[53rem]">
+					{showRecoverToast && (
+						<Toast>
+							<div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-red-800 dark:text-red-200">
+								<HiCheck className="h-5 w-5" />
+							</div>
+							<div className="ml-3 text-sm font-normal">
+								Credential recovered.
+							</div>
+							<Toast.Toggle />
+						</Toast>
+					)}
+				</div>
 			</div>
 			<div className="cards p-3 gap-5">{injectCard()}</div>
 		</>

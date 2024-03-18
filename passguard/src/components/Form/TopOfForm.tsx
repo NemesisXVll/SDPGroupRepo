@@ -1,30 +1,38 @@
-import { useState } from "react";
-import trashLogo from "../../assets/icons/form/bluetrash.svg";
-import starLogo from "../../assets/icons/form/yellowstar.svg";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { useState, useEffect} from "react";
+import { FaHeart, FaRegTrashAlt } from "react-icons/fa";
 import { serviceNames } from "../../data/dropdownItems";
 import CredentialService from "../../utils/credentialService";
-import { Button, Modal } from "flowbite-react";
+import { Button, Modal, Tooltip } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 const credentialService = new CredentialService();
 
 function TopOfForm(props: any) {
-  const [openModal, setOpenModal] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
+	const [isFavorited, setIsFavorited] = useState(props.credential.isFavourite);
 
-  const handleDeleteCredential = () => {
-    setOpenModal(false);
-    console.log("Trashing Credential", props.credential.credentialId);
+	const handleFavorite =  () => {
+		setIsFavorited(!isFavorited);
+		if (props.credential.credentialId) {
+			credentialService.favoriteCredentialById(props.credential.credentialId, !isFavorited);
+		}
+		props.favoriteRender();
+		console.log("Favoried Credential", props.credential.credentialId);
+	}
 
-    if (props.credential.credentialId) {
-      credentialService.trashCredentialById(props.credential.credentialId);
-    }
-    props.credDeleted();
+	const handleDeleteCredential = () => {
+		setOpenModal(false);
+		console.log("Trashing Credential", props.credential.credentialId);
 
-    setOpenModal(false);
-  };
+		if (props.credential.credentialId) {
+			credentialService.trashCredentialById(props.credential.credentialId);
+		}
+		props.credDeleted();
 
-  return (
+		setOpenModal(false);
+	};
+
+	return (
 		<>
 			<div className="flex items-center pt-4 box-border shadow-sm bg-neutral-100 h-min w-80">
 				<div className="w-20">
@@ -59,9 +67,16 @@ function TopOfForm(props: any) {
 				</div>
 
 				<div id="logos" className="flex">
-					<i>
-						<img src={starLogo} alt="starlogo.svg" className="w-5 h-5" />
-					</i>
+					{props.credential.credentialId && !props.credential.isTrashed ? (
+						<div className="relative inline-block">
+							<Tooltip content="Favorite" placement="bottom" className="mt-3" arrow={false}>
+								<FaHeart
+									className={`w-6 h-6 cursor-pointer ${isFavorited ? "text-red-500 fill-current" : "text-gray-500"}`}
+									onClick={handleFavorite}
+								/>
+							</Tooltip>
+						</div>
+					) : ""}
 
 					{/* <i className="">
             <img

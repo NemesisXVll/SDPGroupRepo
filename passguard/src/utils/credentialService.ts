@@ -273,4 +273,8 @@ export default class CredentialService {
       return 0;
     }
   }
+  async favoriteCredentialById(credentialId: any, isFavorited: boolean) { 
+    window.ipcRenderer.send("favoriteCredentialById", { credentialId, isFavorited });
+
+  }
 }
