@@ -183,37 +183,39 @@ const ManagePassword = () => {
             </LabelInput>
 
             <div className="flex-row mt-2 ">
-              <Tooltip
-                content={
-                  <>
-                    <div className="">
-                      <ul>
-                        <li>To Achieve a Very Strong Password</li>
-                        <li className="mb-1 flex items-center">
-                          {!passwordState.sequentialChar ? (
-                            <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                          ) : (
-                            <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                          )}
-                          No Sequential Characters (e.g. 1234)
-                        </li>
-                        <li className="mb-1 flex items-center">
-                          {!passwordState.repeatedChar ? (
-                            <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                          ) : (
-                            <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                          )}
-                          No Repeated Characters (e.g. aaaa)
-                        </li>
-                      </ul>
-                    </div>
-                  </>
-                }
-                arrow={false}
-                placement="top-end"
-              >
-                <IoInformationCircleOutline className="text-black  ml-[25rem]"></IoInformationCircleOutline>
-              </Tooltip>
+              <div className="ml-[25rem]">
+                <Tooltip
+                  content={
+                    <>
+                      <div className="">
+                        <ul>
+                          <li>To Achieve a Stronger Password</li>
+                          <li className="mb-1 flex items-center">
+                            {!passwordState.sequentialChar ? (
+                              <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                            ) : (
+                              <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                            )}
+                            No Sequential Characters (e.g. 1234)
+                          </li>
+                          <li className="mb-1 flex items-center">
+                            {!passwordState.repeatedChar ? (
+                              <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                            ) : (
+                              <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                            )}
+                            No Repeated Characters (e.g. aaaa)
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  }
+                  arrow={false}
+                  placement="top-end"
+                >
+                  <IoInformationCircleOutline className="text-black"></IoInformationCircleOutline>
+                </Tooltip>
+              </div>
 
               <Tooltip
                 placement="bottom"
