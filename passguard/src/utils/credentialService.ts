@@ -277,4 +277,7 @@ export default class CredentialService {
     window.ipcRenderer.send("favoriteCredentialById", { credentialId, isFavorited });
 
   }
+  async deleteAllCredentialsByUserId(userId: any) { 
+    window.ipcRenderer.send("deleteAllCredentialsByUserId", userId);
+  }
 }
