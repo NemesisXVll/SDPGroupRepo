@@ -206,264 +206,266 @@ const Signup: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
-      <div className="hidden sm:block">
-        <img
-          className="w-full h-full object-cover"
-          src={loginImg}
-          alt="Signup visual"
-        />
-      </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md">
-          <CiCircleChevLeft
-            className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
-            onClick={() => navigate("/login", {})}
-          ></CiCircleChevLeft>
-          <div className="flex items-center justify-center">
-            <h2 className="text-4xl text-center py-2 font-bold font-nunito">
-              📝 Sign
-            </h2>
-            <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
-              Up&nbsp;
-            </h2>
-          </div>
+		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
+			<div className="hidden sm:block">
+				<img
+					className="w-full h-full object-cover"
+					src={loginImg}
+					alt="Signup visual"
+				/>
+			</div>
+			<div className="bg-gray-100 flex flex-col justify-center">
+				<form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md">
+					<CiCircleChevLeft
+						className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+						onClick={() => navigate("/login", {})}
+					></CiCircleChevLeft>
+					<div className="flex items-center justify-center">
+						<h2 className="text-4xl text-center py-2 font-bold font-nunito">
+							📝 Sign
+						</h2>
+						<h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+							Up&nbsp;
+						</h2>
+					</div>
 
-          {/* First Name Field */}
-          <LabelInput
-            required={true}
-            type="text"
-            value={state.firstName}
-            label="First Name"
-            id="firstName"
-            placeholder=""
-            onChange={(event) => {
-              setState((prevState) => ({
-                ...prevState,
-                firstName: event.target.value,
-              }));
-            }}
-          ></LabelInput>
+					{/* First Name Field */}
+					<LabelInput
+						required={true}
+						type="text"
+						value={state.firstName}
+						label="First Name"
+						id="firstName"
+						placeholder=""
+						onChange={(event) => {
+							setState((prevState) => ({
+								...prevState,
+								firstName: event.target.value,
+							}));
+						}}
+					></LabelInput>
 
-          {/* Last Name Field */}
-          <LabelInput
-            required={true}
-            type="text"
-            value={state.lastName}
-            label="Last Name"
-            id="lastName"
-            placeholder=""
-            onChange={(event) => {
-              setState((prevState) => ({
-                ...prevState,
-                lastName: event.target.value,
-              }));
-            }}
-          ></LabelInput>
+					{/* Last Name Field */}
+					<LabelInput
+						required={true}
+						type="text"
+						value={state.lastName}
+						label="Last Name"
+						id="lastName"
+						placeholder=""
+						onChange={(event) => {
+							setState((prevState) => ({
+								...prevState,
+								lastName: event.target.value,
+							}));
+						}}
+					></LabelInput>
 
-          {/* Email Field */}
-          <LabelInput
-            required={true}
-            type="email"
-            value={state.email}
-            label="Email"
-            id="email"
-            placeholder=""
-            onChange={(event) => {
-              setState((prevState) => ({
-                ...prevState,
-                email: event.target.value,
-              }));
-            }}
-          ></LabelInput>
+					{/* Email Field */}
+					<LabelInput
+						required={true}
+						type="email"
+						value={state.email}
+						label="Email"
+						id="email"
+						placeholder=""
+						onChange={(event) => {
+							setState((prevState) => ({
+								...prevState,
+								email: event.target.value,
+							}));
+						}}
+					></LabelInput>
 
-          <div className="flex-row mt-2">
-            <Tooltip
-              content={
-                <>
-                  <div className="">
-                    <ul>
-                      <li>To Achieve a Very Strong Password</li>
-                      <li className="mb-1 flex items-center">
-                        {!passwordState.sequentialChar ? (
-                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                        ) : (
-                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                        )}
-                        No Sequential Characters (e.g. 1234)
-                      </li>
-                      <li className="mb-1 flex items-center">
-                        {!passwordState.repeatedChar ? (
-                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                        ) : (
-                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                        )}
-                        No Repeated Characters (e.g. aaaa)
-                      </li>
-                      <li className="mb-1 flex items-center">
-                        {!passwordState.contextSpecific ? (
-                          <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                        ) : (
-                          <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                        )}
-                        No Context Specific Characters (e.g. service name,
-                        username)
-                      </li>
-                    </ul>
-                  </div>
-                </>
-              }
-              arrow={false}
-              placement="top-end"
-            >
-              <IoInformationCircleOutline className="text-black  ml-[25rem]"></IoInformationCircleOutline>
-            </Tooltip>
-            <Tooltip
-              placement="bottom"
-              content={
-                <div className="">
-                  <ul>
-                    <li className="mb-1 flex items-center">
-                      {passwordState.upperCase && passwordState.lowerCase ? (
-                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                      ) : (
-                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                      )}
-                      Upper & lower case letters
-                    </li>
-                    <li className="mb-1 flex items-center">
-                      {passwordState.specialChar ? (
-                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                      ) : (
-                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                      )}
-                      A symbol (e.g. #$&)
-                    </li>
-                    <li className="flex items-center">
-                      {passwordState.length ? (
-                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                      ) : (
-                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                      )}
-                      A longer password (min. 8 chars.)
-                    </li>
-                    <li className="mt-1 flex items-center">
-                      {passwordState.number ? (
-                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
-                      ) : (
-                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
-                      )}
-                      A number (e.g. 123)
-                    </li>
-                  </ul>
-                </div>
-              }
-            >
-              {/* Password Field */}
-              <div className="w-[26.2rem]">
-                <MPasswdStrength
-                  required={true}
-                  value={state.password}
-                  strength={passwordStrength}
-                  label="Password"
-                  id="password"
-                  placeholder=""
-                  onChange={handleOnPasswordChange}
-                ></MPasswdStrength>
-              </div>
-            </Tooltip>
-          </div>
+					<div className="flex-row mt-2">
+						<div className="ml-[25rem]">
+							<Tooltip
+								content={
+									<>
+										<div className="">
+											<ul>
+												<li>To Achieve a Very Strong Password</li>
+												<li className="mb-1 flex items-center">
+													{!passwordState.sequentialChar ? (
+														<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+													) : (
+														<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+													)}
+													No Sequential Characters (e.g. 1234)
+												</li>
+												<li className="mb-1 flex items-center">
+													{!passwordState.repeatedChar ? (
+														<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+													) : (
+														<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+													)}
+													No Repeated Characters (e.g. aaaa)
+												</li>
+												<li className="mb-1 flex items-center">
+													{!passwordState.contextSpecific ? (
+														<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+													) : (
+														<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+													)}
+													No Context Specific Characters (e.g. service name,
+													username)
+												</li>
+											</ul>
+										</div>
+									</>
+								}
+								arrow={false}
+								placement="top-end"
+							>
+								<IoInformationCircleOutline className="text-black mb-1"></IoInformationCircleOutline>
+							</Tooltip>
+						</div>
+						<Tooltip
+							placement="bottom"
+							content={
+								<div className="">
+									<ul>
+										<li className="mb-1 flex items-center">
+											{passwordState.upperCase && passwordState.lowerCase ? (
+												<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+											) : (
+												<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+											)}
+											Upper & lower case letters
+										</li>
+										<li className="mb-1 flex items-center">
+											{passwordState.specialChar ? (
+												<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+											) : (
+												<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+											)}
+											A symbol (e.g. #$&)
+										</li>
+										<li className="flex items-center">
+											{passwordState.length ? (
+												<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+											) : (
+												<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+											)}
+											A longer password (min. 8 chars.)
+										</li>
+										<li className="mt-1 flex items-center">
+											{passwordState.number ? (
+												<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+											) : (
+												<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+											)}
+											A number (e.g. 123)
+										</li>
+									</ul>
+								</div>
+							}
+						>
+							{/* Password Field */}
+							<div className="w-[26.2rem]">
+								<MPasswdStrength
+									required={true}
+									value={state.password}
+									strength={passwordStrength}
+									label="Password"
+									id="password"
+									placeholder=""
+									onChange={handleOnPasswordChange}
+								></MPasswdStrength>
+							</div>
+						</Tooltip>
+					</div>
 
-          {/* Confirm Password Field */}
-          <LabelInput
-            onChange={(event) => {
-              setState((prevState) => ({
-                ...prevState,
-                confirmPassword: event.target.value,
-              }));
-            }}
-            required={true}
-            type={state.showConfirmPassword ? "text" : "password"}
-            value={state.confirmPassword}
-            label="Confirm Password"
-            id="confirmPassword"
-            placeholder=""
-          >
-            <div className="">
-              {state.showConfirmPassword ? (
-                <FiEyeOff
-                  onClick={toggleConfirmPasswordVisibility}
-                  size="1.3em"
-                  className="ml-1 text-black
+					{/* Confirm Password Field */}
+					<LabelInput
+						onChange={(event) => {
+							setState((prevState) => ({
+								...prevState,
+								confirmPassword: event.target.value,
+							}));
+						}}
+						required={true}
+						type={state.showConfirmPassword ? "text" : "password"}
+						value={state.confirmPassword}
+						label="Confirm Password"
+						id="confirmPassword"
+						placeholder=""
+					>
+						<div className="">
+							{state.showConfirmPassword ? (
+								<FiEyeOff
+									onClick={toggleConfirmPasswordVisibility}
+									size="1.3em"
+									className="ml-1 text-black
                   absolute translate-x-[24rem] top-[1.9rem]"
-                />
-              ) : (
-                <FiEye
-                  onClick={toggleConfirmPasswordVisibility}
-                  size="1.3em"
-                  className="ml-1 text-black
+								/>
+							) : (
+								<FiEye
+									onClick={toggleConfirmPasswordVisibility}
+									size="1.3em"
+									className="ml-1 text-black
               absolute translate-x-[24rem] top-[1.9rem]"
-                />
-              )}
-            </div>
-          </LabelInput>
+								/>
+							)}
+						</div>
+					</LabelInput>
 
-          <div className="mb-1 block mt-2">
-            <label
-              htmlFor="picture"
-              className="p-1 font-normal font-['Nunito']
+					<div className="mb-1 block mt-2">
+						<label
+							htmlFor="picture"
+							className="p-1 font-normal font-['Nunito']
          text-gray-800 text-base peer-placeholder-shown:text-base
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
           peer-focus: peer-focus:text-blue-600 transition-all"
-            >
-              Upload Profile Picture
-            </label>
-          </div>
-          <FileInput
-            accept="image/jpeg, image/png, image/gif, image/svg+xml"
-            id="picture"
-            className="font-nunito"
-            onChange={handleFileInput}
-          />
-          <div className="flex">
-            <IoInformationCircleOutline className="mt-[0.3rem] text-gray-500 "></IoInformationCircleOutline>
-            <p className="text-gray-500 text-sm mt-1 ml-2zz">
-              Files allowed (jpg, jpeg, gif, png, svg), Max Size: 1MB
-            </p>
-          </div>
+						>
+							Upload Profile Picture
+						</label>
+					</div>
+					<FileInput
+						accept="image/jpeg, image/png, image/gif, image/svg+xml"
+						id="picture"
+						className="font-nunito"
+						onChange={handleFileInput}
+					/>
+					<div className="flex">
+						<IoInformationCircleOutline className="mt-[0.3rem] text-gray-500 "></IoInformationCircleOutline>
+						<p className="text-gray-500 text-sm mt-1 ml-2zz">
+							Files allowed (jpg, jpeg, gif, png, svg), Max Size: 1MB
+						</p>
+					</div>
 
-          {errorMessage && (
-            <div className="flex mt-1">
-              <CgDanger className="w-4 h-5 text-red-500" />
-              <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
-            </div>
-          )}
+					{errorMessage && (
+						<div className="flex mt-1">
+							<CgDanger className="w-4 h-5 text-red-500" />
+							<p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+						</div>
+					)}
 
-          {/* Submit Button */}
-          <div className="mt-7">
-            <Button
-              type="submit"
-              onClick={handleSignUpClick}
-              value="createAccount"
-            >
-              Continue
-            </Button>
-          </div>
+					{/* Submit Button */}
+					<div className="mt-7">
+						<Button
+							type="submit"
+							onClick={handleSignUpClick}
+							value="createAccount"
+						>
+							Continue
+						</Button>
+					</div>
 
-          <p className="text-center text-sm text-gray-600 mt-8 font-normal font-['Nunito']">
-            Already have an account?
-            <a
-              onClick={handleLoginClick}
-              href="#"
-              className="text-indigo-600 text-sm hover:text-indigo-500 font-normal font-['Nunito']"
-            >
-              &nbsp; Login
-            </a>
-          </p>
-        </form>
-      </div>
-    </div>
-  );
+					<p className="text-center text-sm text-gray-600 mt-8 font-normal font-['Nunito']">
+						Already have an account?
+						<a
+							onClick={handleLoginClick}
+							href="#"
+							className="text-indigo-600 text-sm hover:text-indigo-500 font-normal font-['Nunito']"
+						>
+							&nbsp; Login
+						</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	);
 };
 
 export default Signup;

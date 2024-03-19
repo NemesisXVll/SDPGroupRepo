@@ -53,17 +53,20 @@ const PasswordStrength = (props: PasswordProps) => {
     setOpen(false);
   };
 
-  const infoIcon = () => {
-    return (
-      <List className="w-fit text-white">
-        <List.Item>At least 8 characters</List.Item>
-        <List.Item>At least one lowercase character</List.Item>
-        <List.Item>At least one uppercase character</List.Item>
-        <List.Item>At least one number</List.Item>
-        <List.Item>At least one special character</List.Item>
-      </List>
-    );
-  };
+  // const infoIcon = () => {
+  //   return (
+  //     <>
+  //       <p>Recommendations:</p>
+	// 			<List className="w-fit text-white">
+	// 				<List.Item>At least 8 characters</List.Item>
+	// 				<List.Item>At least one lowercase character</List.Item>
+	// 				<List.Item>At least one uppercase character</List.Item>
+	// 				<List.Item>At least one number</List.Item>
+	// 				<List.Item>At least one special character</List.Item>
+	// 			</List>
+	// 		</>
+	// 	);
+  // };
 
   return (
     <div className="">
@@ -114,13 +117,13 @@ const PasswordStrength = (props: PasswordProps) => {
 
         <div>
           {/* Help in position and what content to put! */}
-          <Tooltip
+          {/* <Tooltip
             content={<>{infoIcon()}</>}
             arrow={false}
             placement="left-end"
           >
             <IoInformationCircleOutline className="absolute text-black translate-x-[15.5rem] -translate-y-[1.9rem]"></IoInformationCircleOutline>
-          </Tooltip>
+          </Tooltip> */}
 
           {showPassword ? (
             <FiEyeOff
