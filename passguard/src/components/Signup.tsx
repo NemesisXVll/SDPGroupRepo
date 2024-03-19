@@ -29,7 +29,6 @@ interface PasswordState {
   number: boolean;
   specialChar: boolean;
   length: boolean;
-  match: boolean;
   repeatedChar: boolean;
   sequentialChar: boolean;
   contextSpecific: boolean;
@@ -56,14 +55,12 @@ const Signup: React.FC = () => {
     number: false,
     specialChar: false,
     length: false,
-    match: false,
     repeatedChar: false,
     sequentialChar: false,
     contextSpecific: false,
   });
 
   function handleFileInput(event: any): void {
-    
     if (event.target.files[0].size > 1000000) {
       setErrorMessage("File size is too large");
       return;
@@ -156,7 +153,6 @@ const Signup: React.FC = () => {
     const number = numberRegex.test(newPassword);
     const specialChar = specialCharRegex.test(newPassword);
     const length = newPassword.length >= 8;
-    const match = state.confirmPassword === newPassword;
     const repeatedChar = /(.)\1{2,}/.test(newPassword);
 
     let sequentialChar = false;
@@ -198,7 +194,6 @@ const Signup: React.FC = () => {
       number,
       specialChar,
       length,
-      match,
       repeatedChar,
       sequentialChar,
       contextSpecific,
@@ -363,7 +358,10 @@ const Signup: React.FC = () => {
 						>
 							{/* Password Field */}
 							<div className="w-[26.2rem]">
-								<MPasswdStrength
+                <MPasswdStrength
+                  contextSpecific={passwordState.contextSpecific}
+                  sequentialChar={passwordState.sequentialChar}
+                  repeatedChar={passwordState.repeatedChar}
 									required={true}
 									value={state.password}
 									strength={passwordStrength}

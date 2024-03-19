@@ -14,6 +14,9 @@ type MPasswordStrengthProps = {
   viewOnly?: boolean;
   name?: string;
   strength?: number;
+  contextSpecific?: boolean;
+  repeatedChar?: boolean;
+  sequentialChar?: boolean;
 };
 
 const MPasswordStrength = (props: MPasswordStrengthProps) => {
@@ -37,171 +40,76 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
       new RegExp(/(?=.*?[0-9])/).test(password);
     const atLeastOneSpecialChar = (password: string) =>
       new RegExp(/(?=.*?[#?!@$ %^&*-])/).test(password);
-    if (!atLeastMinimumLength(password)) {
-      return 0;
-    }
+
+    const zxcvbnScore = zxcvbn(password).score;
+
     let strengthCount = 0;
-    if (atLeastOneUppercaseLetter(password)) {
+    // console.log(zxcvbnScore); //FOR SCORE
+
+    const fulfilledConditionsCount = [
+      atLeastOneUppercaseLetter(password),
+      atLeastOneLowercaseLetter(password),
+      atLeastOneNumber(password),
+      atLeastOneSpecialChar(password),
+    ].filter((condition) => condition).length;
+
+    if (fulfilledConditionsCount >= 2) {
       strengthCount++;
     }
-    if (atLeastOneLowercaseLetter(password)) {
+
+    if (fulfilledConditionsCount >= 3) {
       strengthCount++;
     }
-    if (atLeastOneNumber(password)) {
-      strengthCount++;
+
+    // if (
+    //   atLeastOneUppercaseLetter(password) &&
+    //   atLeastOneLowercaseLetter(password)
+    // ) {
+    //   strengthCount++;
+    // }
+    // if (atLeastOneNumber(password)) {
+    //   strengthCount++;
+    // }
+    // if (atLeastOneSpecialChar(password)) {
+    //   strengthCount++;
+    // }
+
+    if (
+      atLeastOneLowercaseLetter(password) &&
+      atLeastOneUppercaseLetter(password) &&
+      atLeastOneNumber(password) &&
+      atLeastOneSpecialChar(password)
+    ) {
+      strengthCount = 2;
     }
-    if (atLeastOneSpecialChar(password)) {
-      strengthCount++;
+
+    if (
+      atLeastOneLowercaseLetter(password) &&
+      atLeastOneUppercaseLetter(password) &&
+      atLeastOneNumber(password) &&
+      atLeastOneSpecialChar(password) &&
+      atLeastMinimumLength(password) &&
+      zxcvbnScore == 3
+    ) {
+      strengthCount = 3;
     }
-    if (strengthCount === 4) {
-      return strengthCount;
+
+    if (
+      !props.contextSpecific &&
+      !props.repeatedChar &&
+      !props.sequentialChar &&
+      zxcvbnScore == 4 &&
+      atLeastOneLowercaseLetter(password) &&
+      atLeastOneUppercaseLetter(password) &&
+      atLeastOneNumber(password) &&
+      atLeastOneSpecialChar(password) &&
+      atLeastMinimumLength(password)
+    ) {
+      strengthCount = 4;
     }
+
     return strengthCount;
   };
-
-  // function displayStrength(c:any) {
-  //   var f = "Very Weak";
-  //   var e = "e40808";
-  //   if (c == 0) {
-  //     f = "Very Weak";
-  //   }
-  //   if (c == 1) {
-  //     f = "Weak";
-  //     e = "e40808";
-  //   }
-  //   if (c == 2) {
-  //     f = "Medium";
-  //     e = "ffd800";
-  //   }
-  //   if (c == 3) {
-  //     f = "Strong";
-  //     e = "2cb117 ";
-  //   }
-  //   if (c == 4) {
-  //     f = "Very Strong";
-  //     e = "2cb117";
-  //   }
-  //   if (c == 5) {
-  //     f = "No Password";
-  //     e = "D0D0D0";
-  //   }
-  // }
-
-  // function displayWeakExplanation(matchSequence : any, strength: any) {
-  //   var strengthtext = false;
-  //   switch (strength) {
-  //     case 0:
-  //       strengthtext = " very weak ";
-  //       break;
-  //     case 1:
-  //       strengthtext = " weak ";
-  //       break;
-  //     case 2:
-  //       strengthtext = " of medium strength ";
-  //       break;
-  //   }
-  //   var matchSize = matchSequence.length;
-  //   var pattern = false;
-  //   var dictionary = false;
-  //   var word = false;
-  //   var matchType = false;
-  //   var containsWord = "contains";
-  //   var result = new Array();
-  //   for (var i = 0; i < matchSize; i++) {
-  //     pattern = matchSequence[i].pattern;
-  //     thisRes = false;
-  //     switch (pattern) {
-  //       case "dictionary":
-  //         dictionary = dictionaryType(matchSequence[i]);
-  //         thisType = dictionary["type"];
-  //         thisWord = dictionary["word"];
-  //         if (!result[thisType]) {
-  //           result[thisType] = new Array();
-  //         }
-  //         //result[thisType]["count"]++;
-  //         result[thisType][thisWord] = true;
-  //         break;
-  //       case "spatial":
-  //         if (matchSequence[i]["graph"] != "dvorak") {
-  //           if (
-  //             !result[
-  //               "combination of characters that are close together on the keyboard"
-  //             ]
-  //           ) {
-  //             result[
-  //               "combination of characters that are close together on the keyboard"
-  //             ] = new Array();
-  //           }
-  //           thisWord = matchSequence[i]["matched_word"];
-  //           result[
-  //             "combination of characters that are close together on the keyboard"
-  //           ][thisWord] = true;
-  //         }
-  //         break;
-  //       case "sequence":
-  //         if (!result["sequence of characters"]) {
-  //           result["sequence of characters"] = new Array();
-  //         }
-  //         thisWord = matchSequence[i]["matched_word"];
-  //         result["sequence of characters"][thisWord] = true;
-  //         break;
-  //     }
-  //   }
-  //   //document.getElementById("explanation").innerHTML = dump(result);
-  //   //return;
-  //   var hasWords = false;
-  //   if (matchSize > 0) {
-  //     if (matchSize === 1) {
-  //       explanation = "Your password is " + strengthtext + " because it is ";
-  //     } else {
-  //       explanation =
-  //         "Your password is " + strengthtext + " because it contains ";
-  //     }
-  //     matchSize = 0;
-  //     for (h in result) {
-  //       matchSize++;
-  //     }
-  //     var andString = " ";
-  //     var commaString = ", ";
-  //     var thisCount = 0;
-  //     //gathered all information, now to translate into words
-  //     for (matchType in result) {
-  //       thisElem = result[matchType];
-  //       count = 0;
-  //       for (h in thisElem) {
-  //         count++;
-  //       }
-  //       thisCount++;
-  //       if (thisCount >= matchSize && matchSize != 1) {
-  //         andString = " and ";
-  //       }
-  //       if (count > 1) {
-  //         explanation += andString + count + " " + matchType + "s";
-  //         hasWords = true;
-  //       } else {
-  //         explanation += andString + " a " + matchType;
-  //         hasWords = true;
-  //       }
-  //       andString = ", ";
-  //     }
-  //     explanation += ".";
-  //   }
-  //   // document.getElementById("explanation").innerHTML = dump(result);
-  //   document.getElementById("explanation").innerHTML = "";
-  //   if (hasWords) document.getElementById("explanation").innerHTML = explanation;
-  // }
-
-  // function checkThisPassword(password: string){
-  //   var checked = zxcvbn(password);
-  //   var strength = checked.score;
-  //   if (password == "") strength = 0;
-  //   displayStrength(strength);
-  //   const matchSequence = checked.sequence; // Fix: Access the 'sequence' property instead of 'match_sequence'
-  //   console.log("Password Strength: ", matchSequence);
-  //   return true;
-  // }
-
-  // checkThisPassword(password);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
