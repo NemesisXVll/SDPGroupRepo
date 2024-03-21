@@ -156,3 +156,9 @@ ipcMain.on("favoriteCredentialById", async (event, arg) => {
     arg.isFavorited
   );
 });
+ipcMain.on("deleteAllCredentialsByUserId", async (event, arg) => {
+  await userManagementService.deleteAllCredentialsByUserId(arg);
+});
+ipcMain.on("deleteAllDocumentsByUserId", async (event, arg) => {
+  await userManagementService.deleteAllDocumentsByUserId(arg);
+});

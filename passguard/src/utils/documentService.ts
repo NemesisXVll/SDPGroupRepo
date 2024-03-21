@@ -42,6 +42,9 @@ export default class DocumentService {
       });
     });
   }
+  async deleteAllDocumentsByUserId(userId: number) { 
+    window.ipcRenderer.send("deleteAllDocumentsByUserId", userId);
+  }
   convertStringToInt(value: string): number | null {
     const parsedValue = parseInt(value, 10);
     // Check if parsing was successful
