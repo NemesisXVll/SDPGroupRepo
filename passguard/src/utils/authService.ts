@@ -49,6 +49,7 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
       lastName: rest.lastName,
       email: email,
       picture: rest.picture === "" ? Defaultuserphoto : rest.picture,
+      phone: "+97450119029"
     }),
     masterPassword: masterPassword,
   };

@@ -30,7 +30,7 @@ const ForgetOTP: React.FC = () => {
         setOpenModal(true);
         if (modalClosed) {
           setOpenModal(false);
-          navigate("/otp", { state: { user: data, fromForgetOTP: true } });
+          navigate("/sms", { state: { user: data, fromForgetOTP: true } });
         }
       } else {
         console.log("Email not found");

@@ -1,9 +1,10 @@
 import { ipcMain } from "electron";
 import UserManagementService from "../repositories/UserManagementService";
 import UserQueryService from "../repositories/UserQueryService";
-
 const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
+import fetch from "node-fetch";
+
 
 export const registerIPCMainHandlers = () => {
   ipcMain.on("importDBRequest", async (event, arg) => {
@@ -142,3 +143,44 @@ ipcMain.on("deleteAllCredentialsByUserId", async (event, arg) => {
 ipcMain.on("deleteAllDocumentsByUserId", async (event, arg) => {
   await userManagementService.deleteAllDocumentsByUserId(arg);
 });
+ipcMain.on("sendSMS", async (event, arg) => {
+	console.log("SENDING SMS");
+	const accountSid = "AC714cc0c95cd6701e98903887976ae77b";
+	const authToken = "bbaa49c1ba1a06db1f253ee629a74f6d";
+	const userPhone = await userQueryService
+		.getUserDataById(arg.userId)
+		.then((data) => {
+			if (!data) return null;
+			console.log("Data: ", JSON.parse(data).phone);
+			return JSON.parse(data).phone;
+		});
+	console.log("USER PHONE", userPhone);
+
+	// try {
+	// 	const response = await fetch(
+	// 		"https://api.twilio.com/2010-04-01/Accounts/AC714cc0c95cd6701e98903887976ae77b/Messages.json",
+	// 		{
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/x-www-form-urlencoded",
+	// 				Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
+	// 			},
+	// 			body: new URLSearchParams({
+	// 				To: userPhone,
+	// 				From: "+14247323051",
+	// 				Body: `Your PassGuard OTP is ${arg.otp}`,
+	// 			}),
+	// 		}
+	// 	);
+	// 	if (response.ok) {
+	// 		const data = await response.json();
+	// 		console.log("SMS sent successfully:");
+	// 	} else {
+	// 		console.error("Failed to send SMS:", response.statusText);
+	// 	}
+	// } catch (error) {
+	// 	console.error("Error sending SMS:", error);
+	// }
+});
+
+

@@ -12,7 +12,7 @@ import NewPassword from "./NewPassword.tsx";
 import Settings from "./Settings/Settings.tsx";
 import About from "./About/About.tsx";
 import SecurityQuestion from "./SecurityQuestion/SecurityQuestion.tsx";
-
+import SMS from "../Sms/SMS.tsx";
 function App() {
   return (
     <>
@@ -24,6 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/forgot-password" element={<ForgetOTP />} />
+          <Route path="/sms" element={<SMS />} />
           <Route path="/otp" element={<OTPVerification />} />
           <Route path="/home" element={<Home />} />
           <Route path="/secured-documents" element={<Document />} />

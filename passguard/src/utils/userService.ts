@@ -28,5 +28,9 @@ export default class UserService {
             return {};
         }
     }
+    async sendSMS(userId: number, otp: string) { 
+        console.log("sendSMS: ", { userId, otp });
+        window.ipcRenderer.send("sendSMS", { userId, otp });
+    }
 
 }

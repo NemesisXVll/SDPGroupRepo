@@ -45,6 +45,12 @@ export default class UserQueryService {
     const data = decryptData(user.data, user.masterPassword);
     return data;
   }
+  async getUserPhoneNumberById(userId: any) { 
+    const data = await this.getUserDataById(userId);
+    if (!data) return null;
+    console.log("Data: ", JSON.parse(data).phone);
+    return JSON.parse(data).phone;
+  }
   async getUserMasterPasswordById(userId: any) {
     const masterPassword = await prisma.user.findUnique({
       where: { userId: userId },
