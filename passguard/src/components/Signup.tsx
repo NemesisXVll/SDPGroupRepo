@@ -118,6 +118,10 @@ const Signup: React.FC = () => {
       return;
     }
 
+    if (errorMessage === "File size is too large") {
+      return;
+    }
+
     checkEmail(state.email).then((result) => {
       if (result) {
         setErrorMessage("Email already exists");

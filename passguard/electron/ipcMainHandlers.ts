@@ -69,6 +69,7 @@ export const registerIPCMainHandlers = () => {
       JSON.stringify(await userQueryService.getWeakPasswordsCountByUserId(arg))
     );
   });
+
   ipcMain.on("getOldPasswordsCountByUserIdRequest", async (event, arg) => {
     event.sender.send(
       "getOldPasswordsCountByUserIdResponse",
@@ -81,8 +82,24 @@ export const registerIPCMainHandlers = () => {
     await userManagementService.createUser(arg);
   });
 
+  ipcMain.on("deleteUserRequest", async (event, arg) => {
+    event.sender.send(
+      "deleteUserResponse",
+      JSON.stringify(await userManagementService.deleteUserById(arg))
+    );
+  });
+
   ipcMain.on("deleteCredential", async (event, arg) => {
     await userManagementService.deleteCredentialById(arg);
+  });
+
+  ipcMain.on("updateUserRequest", async (event, arg) => {
+    event.sender.send(
+      "updateUserResponse",
+      JSON.stringify(
+        await userManagementService.updateUserById(arg.userId, arg)
+      )
+    );
   });
 
   ipcMain.on("findCredentialByIdRequest", async (event, arg) => {
@@ -133,6 +150,9 @@ ipcMain.on("findDocumentsByUserIdRequest", async (event, arg) => {
     JSON.stringify(await userQueryService.getDocumentsByUserId(arg))
   );
 });
-ipcMain.on("favoriteCredentialById", async (event, arg) => { 
-  await userManagementService.favoriteCredentialById(arg.credentialId, arg.isFavorited);
+ipcMain.on("favoriteCredentialById", async (event, arg) => {
+  await userManagementService.favoriteCredentialById(
+    arg.credentialId,
+    arg.isFavorited
+  );
 });

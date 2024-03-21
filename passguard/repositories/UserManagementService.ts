@@ -1,6 +1,11 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-import { encryptData, hashPassword, generateSalt } from "./Security/Encryption";
+import {
+  encryptData,
+  hashPassword,
+  generateSalt,
+  decryptData,
+} from "./Security/Encryption";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -166,11 +171,14 @@ export default class UserManagementService {
     }
   }
 
-  async updateUserById(userId: any, user: any) {
+  async updateUserById(userId: any, data: any) {
+    const encryptedData = encryptData(data.data, data.masterPassword);
     try {
       const updatedUser = await prisma.user.update({
         where: { userId: userId },
-        data: user,
+        data: {
+          data: encryptedData,
+        },
       });
       return updatedUser;
     } catch (error) {
@@ -217,7 +225,7 @@ export default class UserManagementService {
       throw error;
     }
   }
-  async favoriteCredentialById(credentialId: number, isFavorited: boolean) { 
+  async favoriteCredentialById(credentialId: number, isFavorited: boolean) {
     try {
       const favoritedCredential = await prisma.credential.update({
         where: { credentialId: credentialId },
@@ -269,11 +277,15 @@ export default class UserManagementService {
   }
 
   async updateCredentialById(credentialId: any, credential: any) {
+    console.log("updating credential", credentialId, credential);
     const stillReused = await this.checkForReusedPasswordOnUpdate(credential);
     const masterPassword = await userQueryService.getUserMasterPasswordById(
       credential.userId
     );
     const encryptedData = encryptData(credential.data, masterPassword);
+
+    console.log("encrypted data", encryptedData);
+
     try {
       const updatedCredential = await prisma.credential.update({
         where: { credentialId: credentialId },

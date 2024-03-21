@@ -6,6 +6,7 @@ import UserService from "../utils/userService";
 import InputOTP from "./EmailOTP/InputOTP";
 import { FcPrevious } from "react-icons/fc";
 import { CiCircleChevLeft } from "react-icons/ci";
+import SecurityQuestion from "./SecurityQuestion/SecurityQuestion";
 
 const userService = new UserService();
 
@@ -20,6 +21,7 @@ const OTPVerification: React.FC = () => {
   const [otp, setOTP] = useState("");
   const [message, setMessage] = useState("");
   const [generatedOTP, setGeneratedOTP] = useState<string | null>(null); // Store the generated OTP
+  const [showModal, setShowModal] = useState(false); // Modal to show the Security Question
   const [disabled, setDisabled] = useState(false);
   const [OTPSent, setOTPSent] = useState(false);
   const [timer, setTimer] = useState(0);
@@ -30,11 +32,16 @@ const OTPVerification: React.FC = () => {
       window.history.pushState(null, "", "/login");
     };
   }, []);
+
   useEffect(() => {
     if (location.state.fromSignup === true) {
       console.log("FROM SIGNUP");
       setUserEmail(user.state.email);
       setUserName(user.state.firstName);
+    } else if (location.state.fromSettings === true) {
+      console.log("FROM SETTINGS");
+      setUserEmail(user.email);
+      setUserName(user.data.firstName);
     } else {
       console.log("NOT FROM SIGNUP");
       userService.getUserDataById(user.userId).then((data: any) => {
@@ -99,16 +106,26 @@ const OTPVerification: React.FC = () => {
     }
   };
 
-  const verifyOTP = (enteredOTP: any) => {
-    console.log("VERIFYING OTP");
+  const verifyOTP = async (enteredOTP: any) => {
+    // console.log("VERIFYING OTP");
     if (enteredOTP == generatedOTP) {
       //CHANGE
-      console.log("OTP is correct");
+      // console.log("OTP is correct");
       setMessage("OTP is correct");
       if (location.state.fromSignup === true) {
-        navigate("/security-question", {
-          state: { user, expanded: true },
-        });
+        // navigate("/security-question", {
+        //   state: { user, expanded: true },
+        // });
+        setShowModal(true);
+      } else if (location.state.fromSettings === true) {
+        user.data.email = userEmail;
+        const updatedUser = await userService.updateUser(
+          user.id,
+          user.data,
+          user.salt,
+          user.masterPassword
+        );
+        navigate("/settings", { state: { user: updatedUser, expanded: true } });
       } else {
         navigate("/home", { state: { user, expanded: true } });
       }
@@ -119,52 +136,58 @@ const OTPVerification: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-      <div className="hidden sm:block">
-        <img
-          className="w-full h-full object-cover"
-          src={loginImg}
-          alt="Login visual"
-        />
-      </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }} // Prevent form submission
-        >
-          <CiCircleChevLeft
-            className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
-            onClick={() => navigate("/login", {})}
-          ></CiCircleChevLeft>
-          <div className="flex items-center justify-center">
-            <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito">
-              🔑 OTP&nbsp;
-            </h2>
-            <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
-              Verification&nbsp;
-            </h2>
-          </div>
-          <div className="bg-green-400 h-10 flex justify-center items-center shadow-sm rounded-md">
-            <p className="text-sm text-center">
-              We've sent a verification code to {userEmail}
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
+        <div className="hidden sm:block">
+          <img
+            className="w-full h-full object-cover"
+            src={loginImg}
+            alt="Login visual"
+          />
+        </div>
+        <div className="bg-gray-100 flex flex-col justify-center">
+          <form
+            className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }} // Prevent form submission
+          >
+            <CiCircleChevLeft
+              className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+              onClick={() => navigate("/login", {})}
+            ></CiCircleChevLeft>
+            <div className="flex items-center justify-center">
+              <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito">
+                🔑 OTP&nbsp;
+              </h2>
+              <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+                Verification&nbsp;
+              </h2>
+            </div>
+            <div className="bg-green-400 h-10 flex justify-center items-center shadow-sm rounded-md">
+              <p className="text-sm text-center">
+                We've sent a verification code to {userEmail}
+              </p>
+            </div>
+            <InputOTP onOtpChange={(otp) => verifyOTP(otp)} />
+            {message && <p className="text-red-500 text-center">{message}</p>}
+            <p className="text-sm  mt-2 text-center">
+              Didn't receive OTP code?
             </p>
-          </div>
-          <InputOTP onOtpChange={(otp) => verifyOTP(otp)} />
-          {message && <p className="text-red-500 text-center">{message}</p>}
-          <p className="text-sm  mt-2 text-center">Didn't receive OTP code?</p>
-          <div className="text-center">
-            <a
-              className={`text-sm text-indigo-600 hover:underline cursor-pointer ${disabled ? "opacity-50 cursor-wait hover:no-underline" : ""}`}
-              onClick={sendOTP}
-            >
-              {disabled ? `Resend in ${timer} seconds` : "Resend OTP"}
-            </a>
-          </div>
-        </form>
+            <div className="text-center">
+              <a
+                className={`text-sm text-indigo-600 hover:underline cursor-pointer ${disabled ? "opacity-50 cursor-wait hover:no-underline" : ""}`}
+                onClick={sendOTP}
+              >
+                {disabled ? `Resend in ${timer} seconds` : "Resend OTP"}
+              </a>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+
+      {showModal && <SecurityQuestion openModal={true}></SecurityQuestion>}
+    </>
   );
 };
 

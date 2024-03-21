@@ -44,7 +44,7 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
     const zxcvbnScore = zxcvbn(password).score;
 
     let strengthCount = 0;
-    // console.log(zxcvbnScore); //FOR SCORE
+    // console.log(zxcvbn(password)); //FOR SCORE
 
     const fulfilledConditionsCount = [
       atLeastOneUppercaseLetter(password),

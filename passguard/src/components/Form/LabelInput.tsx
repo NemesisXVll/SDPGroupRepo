@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { Tooltip } from "flowbite-react";
@@ -20,6 +20,11 @@ const LabelInput = (props: LabelInputProps) => {
   const [isHTTPS, setIsHTTPS] = useState(
     props.value?.includes("http") ? true : false
   );
+
+  useEffect(() => {
+    setValue(props.value ? props.value : "");
+    setIsHTTPS(props.value?.includes("http") ? true : false);
+  }, [props.value]);
 
   const handleOnChange = (e: any) => {
     setValue(e.target.value);

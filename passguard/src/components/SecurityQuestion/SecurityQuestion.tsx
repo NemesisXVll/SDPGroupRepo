@@ -6,14 +6,29 @@ import { FcPrevious } from "react-icons/fc";
 import { SignUp } from "../../utils/authService";
 import { Modal, ModalHeader } from "flowbite-react";
 import { FaCheckCircle } from "react-icons/fa";
+import { CiCircleChevLeft } from "react-icons/ci";
+import { AiTwotoneMail } from "react-icons/ai";
+import LabelInput from "../Form/LabelInput";
+import UserService from "../../utils/userService";
 
-const SecurityQuestion: React.FC = () => {
+const userService = new UserService();
+
+type SecurityQuestionProps = {
+  openModal: any;
+  closeModal?: () => void;
+};
+
+const SecurityQuestion = (props: SecurityQuestionProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = location.state.user;
 
-  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(
+    props.openModal
+  );
+  const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
+  const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     window.history.pushState(null, "", "/login");
@@ -25,64 +40,137 @@ const SecurityQuestion: React.FC = () => {
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
 
-    const signUpResult = await SignUp({
-      firstName: user.state.firstName,
-      lastName: user.state.lastName,
-      email: user.state.email,
-      masterPassword: user.state.password,
-      confirmPassword: user.state.confirmPassword,
-      picture: user.state.picture,
-    });
-
-    console.log(signUpResult);
-
-    if (signUpResult) {
-      setOpenSuccessModal(true);
-    } else {
-      setErrorMessage("Sign up failed. Please try again.");
+    if (location.pathname === "/otp") {
+      const signUpResult = await SignUp({
+        firstName: user.state.firstName,
+        lastName: user.state.lastName,
+        email: user.state.email,
+        masterPassword: user.state.password,
+        confirmPassword: user.state.confirmPassword,
+        picture: user.state.picture,
+      });
+      if (signUpResult) {
+        setOpenSuccessModal(true);
+      } else {
+        console.log("Sign up failed");
+      }
+      navigate("/login", { state: { fromSecurityQuestion: true } });
     }
+
+    if (location.pathname === "/settings") {
+      setShowSecQuestion(false);
+      setShowNewEmail(true);
+    }
+  }
+
+  async function handleSubmitNewEmail(event: any): Promise<void> {
+    event.preventDefault();
+
+    await userService.getUserDataById(user.userId).then((res: any) => {
+      navigate("/otp", {
+        state: {
+          user: {
+            id: user.userId,
+            data: res,
+            email: email,
+            masterPassword: user.masterPassword,
+            salt: user.salt,
+          },
+          fromSettings: true,
+        },
+      });
+    });
   }
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
-        <div className="hidden sm:block">
-          <img
-            className="w-full h-full object-cover"
-            src={loginImg}
-            alt="Signup visual"
-          />
-        </div>
-        <div className="bg-gray-100 flex flex-col justify-center">
-          <form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md">
-            <FcPrevious
-              className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
-              onClick={() => navigate("/login", {})}
-            ></FcPrevious>
-            <div className="flex items-center justify-center">
-              <h2 className="text-4xl text-center py-2 font-bold font-nunito">
-                📝 Security
-              </h2>
-              <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
-                Question&nbsp;
-              </h2>
-            </div>
-
-            {/* Submit Button */}
-            <div className="mt-7">
-              <Button
-                type="submit"
-                onClick={handleOnClick}
-                value="createAccount"
-              >
-                Create Account
-              </Button>
-            </div>
-          </form>
-        </div>
-      </div>
-
       <Modal
+        show={openSuccessModal}
+        size="lg"
+        popup
+        onClose={() => {
+          if (props.closeModal) {
+            props.closeModal();
+          }
+          setShowSecQuestion(true);
+          setShowNewEmail(false);
+        }}
+      >
+        {location.pathname === "/settings" && <ModalHeader></ModalHeader>}
+
+        {showSecQuestion &&
+          (location.pathname === "/otp" ||
+            location.pathname === "/settings") && (
+            <div className="">
+              <form className="w-full mx-auto p-4 shadow-md">
+                <div className="flex items-center justify-center">
+                  <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+                    📝 Security
+                  </h2>
+                  <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+                    Question&nbsp;
+                  </h2>
+                </div>
+
+                {/* Submit Button */}
+                <div className="mt-7">
+                  <Button
+                    type="submit"
+                    onClick={handleOnClick}
+                    value="createAccount"
+                  >
+                    Create Account
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
+
+        {showNewEmail && (
+          <div className="flex flex-col justify-center pb-3">
+            <form
+              className="max-w-[400px] w-full mx-auto  p-4 shadow-md"
+              onSubmit={handleSubmitNewEmail} // Prevent form submission
+            >
+              <div className="flex justify-center items-center">
+                <AiTwotoneMail className="text-4xl" />
+                <div className="flex items-center justify-center">
+                  <h2 className="text-3xl text-center pl-2 py-2 font-bold font-nunito">
+                    Enter your new&nbsp;
+                  </h2>
+                  <h2 className="text-3xl text-center py-2 font-bold font-nunito text-yellow-400">
+                    email&nbsp;
+                  </h2>
+                </div>
+              </div>
+              <p className="text-center text-sm text-gray-600">
+                We will send you a verification code to verify your email.
+              </p>
+              <div className="mt-4">
+                <LabelInput
+                  type="text"
+                  value={email}
+                  required={true}
+                  label="Email"
+                  id="email"
+                  placeholder=""
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                ></LabelInput>
+              </div>
+
+              <div className="mt-10">
+                <Button type="submit" value="sendVerification">
+                  Send verification code
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
+      </Modal>
+
+      {/* <Modal
         show={openSuccessModal}
         size="md"
         popup
@@ -99,7 +187,7 @@ const SecurityQuestion: React.FC = () => {
             Go To Login
           </Button>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
