@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route index element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/security-question" element={<SecurityQuestion />} />
+          {/* <Route path="/security-question" element={<SecurityQuestion />} /> */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/forgot-password" element={<ForgetOTP />} />

@@ -112,6 +112,48 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </h2>
                 </div>
 
+                {/* Security Questions */}
+                <div className="mt-4">
+                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                    <option id="Q1">
+                      name of a college you applied to but didn’t attend?
+                    </option>
+                    <option id="Q2">
+                      {" "}
+                      What was the name of your first stuffed toy?
+                    </option>
+                    <option id="Q3">
+                      Where was the destination of your most memorable school
+                      field trip?
+                    </option>
+                  </select>
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded mb-4 "
+                    placeholder="Your answer"
+                    id="answer1"
+                  />
+
+                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                    <option id="Q4">
+                      What was your maths teacher's surname in your 8th year of
+                      school?
+                    </option>
+                    <option id="Q5">
+                      name of the first school you remember attending?
+                    </option>
+                    <option id="Q6">
+                      What was your driving instructor's first name?
+                    </option>
+                  </select>
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded mb-4"
+                    placeholder="Your answer"
+                    id="answer2"
+                  />
+                </div>
+
                 {/* Submit Button */}
                 <div className="mt-7">
                   <Button
