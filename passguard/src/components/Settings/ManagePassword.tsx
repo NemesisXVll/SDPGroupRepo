@@ -123,7 +123,6 @@ const ManagePassword = () => {
 
   return (
     <>
-      <h2 className="m-2 font-bold text-lg">Master Password</h2>
       <div className="p-5 flex items-center justify-between bg-gray-300 rounded-xl shadow-md">
         <span className="font-semibold font-nunito">
           Change Master Password

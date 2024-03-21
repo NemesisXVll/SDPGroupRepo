@@ -1,6 +1,11 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-import { encryptData, hashPassword, generateSalt } from "./Security/Encryption";
+import {
+  encryptData,
+  hashPassword,
+  generateSalt,
+  decryptData,
+} from "./Security/Encryption";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -166,17 +171,20 @@ export default class UserManagementService {
 		}
 	}
 
-	async updateUserById(userId: any, user: any) {
-		try {
-			const updatedUser = await prisma.user.update({
-				where: { userId: userId },
-				data: user,
-			});
-			return updatedUser;
-		} catch (error) {
-			throw error;
-		}
-	}
+  async updateUserById(userId: any, data: any) {
+    const encryptedData = encryptData(data.data, data.masterPassword);
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { userId: userId },
+        data: {
+          data: encryptedData,
+        },
+      });
+      return updatedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 	//-------------------------Credential Model-------------------------//
 	async createCredential(credential: any) {

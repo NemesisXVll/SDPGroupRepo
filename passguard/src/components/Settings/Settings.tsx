@@ -12,6 +12,7 @@ import CredentialService from "../../utils/credentialService";
 import DocumentService from "../../utils/documentService";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTrash } from "react-icons/fa";
+import UserProfile from "./UserProfile";
 
 type SettingsProps = {};
 
@@ -26,6 +27,7 @@ const Settings = (props: SettingsProps) => {
 	const location = useLocation();
 
 	const [expanded, setExpanded] = useState(location.state?.expanded);
+	const [userUpdatedFlag, setUserUpdatedFlag] = useState(false);
 	const { redirect, setRedirect } = AutoRedirectHook(
 		undefined,
 		undefined,
@@ -34,6 +36,12 @@ const Settings = (props: SettingsProps) => {
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [deleteOption, setDeleteOption] = useState("");
 	const [openToast, setOpenToast] = useState(false);
+
+	function handleUserUpdated() {
+		console.log("User updated");
+		setUserUpdatedFlag(!userUpdatedFlag);
+	  }
+
 	const handleWipeAllCredentials = () => {
 		const credentialService = new CredentialService();
 		credentialService.deleteAllCredentialsByUserId(location.state?.userId);
@@ -56,16 +64,17 @@ const Settings = (props: SettingsProps) => {
 		}, 3000);
 	};
 
-	return (
-		<>
-			{redirect}
-			<div className="app-container h-screen">
-				<div className="navbar">
-					<Navbar
-						isExpanded={expanded}
-						handleExpand={(expanded) => setExpanded(expanded)}
-					/>
-				</div>
+  return (
+    <>
+      {redirect}
+      <div className="app-container h-screen">
+        <div className="navbar">
+          <Navbar
+            updatedUser = {userUpdatedFlag}
+            isExpanded={expanded}
+            handleExpand={(expanded) => setExpanded(expanded)}
+          />
+        </div>
 
 				<div className="TopOfDocument border-b-2">
 					<div className="p-2 m-3 TopOfDocument">
@@ -78,7 +87,7 @@ const Settings = (props: SettingsProps) => {
 						</div>
 						<Tabs aria-label="Default tabs" style="default">
 							<Tabs.Item title="Manage Profile" icon={HiUserCircle}>
-								Change personal info here
+								<UserProfile userUpdated={handleUserUpdated}></UserProfile>
 							</Tabs.Item>
 							<Tabs.Item title="Password" icon={PiPasswordFill}>
 								<ManagePassword></ManagePassword>

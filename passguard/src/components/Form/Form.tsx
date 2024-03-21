@@ -73,7 +73,6 @@ function Form(props: FormProps) {
 
   return (
     <>
-      
       <aside
         className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen`}
       >
@@ -134,7 +133,6 @@ function Form(props: FormProps) {
             id="userName"
             placeholder=""
           ></LabelInput>
-
 
           <PasswordStrength
             type={showPassword ? "text" : "password"}
