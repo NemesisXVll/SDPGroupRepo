@@ -78,7 +78,7 @@ function DocumentCard(props: DocumentCardProps) {
                       value="Cancel"
                       onClick={() => setOpenDeleteModal(false)}
                     >
-                      No, cancel
+                    Cancel
                     </Button>
                     <Button value="confirmsignout" onClick={handleClickOnYes}>
                       Delete

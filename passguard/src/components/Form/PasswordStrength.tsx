@@ -126,6 +126,7 @@ const PasswordStrength = (props: PasswordProps) => {
           </Tooltip> */}
 
           {showPassword ? (
+            
             <FiEyeOff
               onClick={handleShowPassword}
               size="1.3em"
