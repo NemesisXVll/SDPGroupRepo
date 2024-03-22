@@ -78,9 +78,23 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
 			return;
 		}
 
-		if (errorMessage === "File size is too large") {
-			return;
-		}
+    if (errorMessage === "File size is too large") {
+      return;
+    }
+
+    const data = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      picture: userData.picture,
+    };
+
+    await userService.updateUser(
+      user.userId,
+      data,
+      user.salt,
+      user.masterPassword
+    );
 
 		setShowModal(true);
 

@@ -49,7 +49,7 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
       lastName: rest.lastName,
       email: email,
       picture: rest.picture === "" ? Defaultuserphoto : rest.picture,
-      phone: "+97450119029"
+      phone: "+97450119029",
     }),
     masterPassword: masterPassword,
   };
@@ -100,11 +100,9 @@ export const unlock = async (
     if (userData) {
       const storedMasterPassword = userData.masterPassword;
       if (bcrypt.compareSync(masterPassword, storedMasterPassword)) {
-        console.log("Unlock successful!");
-        return userData;
+        return userData; //Unlock successful
       } else {
-        console.log("Incorrect password");
-        return false;
+        return false; //Incorrect password
       }
     } else {
       console.log("User not found");

@@ -32,7 +32,7 @@ export default class UserQueryService {
     }
     return null;
   }
-  
+
   async getUserDataById(userId: any) {
     const user = await prisma.user.findUnique({
       where: { userId: userId },
@@ -42,10 +42,12 @@ export default class UserQueryService {
       },
     });
     if (!user) return null;
+    console.log("User: ", user.data, user.masterPassword);
     const data = decryptData(user.data, user.masterPassword);
     return data;
   }
-  async getUserPhoneNumberById(userId: any) { 
+
+  async getUserPhoneNumberById(userId: any) {
     const data = await this.getUserDataById(userId);
     if (!data) return null;
     console.log("Data: ", JSON.parse(data).phone);

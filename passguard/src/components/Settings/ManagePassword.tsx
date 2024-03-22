@@ -8,10 +8,14 @@ import { HiXMark } from "react-icons/hi2";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import MPasswdStrength from "../MPasswdStrength";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../utils/userService";
+import { unlock } from "../../utils/authService";
+import { CgDanger } from "react-icons/cg";
+import DocummentService from "../../utils/documentService";
 
 const userService = new UserService();
+const documentService = new DocummentService();
 
 interface PasswordState {
   upperCase: boolean;
@@ -24,8 +28,13 @@ interface PasswordState {
   contextSpecific: boolean;
 }
 
-const ManagePassword = () => {
+type ManageUserProfileProps = {
+  userUpdated?: () => void;
+};
+
+const ManagePassword = (props: ManageUserProfileProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const user = location.state.user;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +43,7 @@ const ManagePassword = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [showCurrentPass, setshowCurrentPass] = useState(false);
   const [showConfirmNewPass, setshowConfirmNewPass] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [passwordState, setPasswordState] = useState<PasswordState>({
     upperCase: false,
@@ -54,19 +63,45 @@ const ManagePassword = () => {
     setCurrentPassword("");
     setNewPassword("");
     setConfirmNewPassword("");
+    setErrorMessage("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (newPassword !== confirmNewPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
+    if (!(await unlock(currentPassword, user.userId))) {
+      //For checking if the current password is actually the user's current password
+      setErrorMessage("Current password is incorrect");
+      return;
+    }
+
+    if (await unlock(newPassword, user.userId)) {
+      //For checking if the new password is the same as the current password, then it shouldnt be allowed
+      setErrorMessage("New password is like the current password");
+      return;
+    }
+
+    const updatedUser: any = await userService.updateUserMasterPassword(
+      user.userId,
+      user.salt,
+      currentPassword,
+      newPassword
+    );
+
+    navigate("/settings", { state: { user: updatedUser, expanded: true } });
+
+    if (props.userUpdated) {
+      props.userUpdated();
+    }
 
     //DO THE LOGIC OF GETTING MASTER PASSWORD UNENCRYPTED
     //COMPARE CURRENT WITH ONE IN DATABASE
     //COMPLETE REST OF THE STEPS
-
-    // if (newPassword !== confirmNewPassword) {
-    //   console.log("Passwords do not match");
-    //   return;
-    // }
 
     // handleChangePassword();
     // closeModal();
@@ -312,9 +347,14 @@ const ManagePassword = () => {
               </div>
             </LabelInput>
 
-            {errorMessage && <p className="text-red-500 text-sm mt-2">{}</p>}
+            {errorMessage && (
+              <div className="flex mt-1">
+                <CgDanger className="w-4 h-5 text-red-500" />
+                <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+              </div>
+            )}
 
-            <div className="mt-7">
+            <div className="mt-5">
               <Button value="Update" type="submit">
                 Update Password
               </Button>
