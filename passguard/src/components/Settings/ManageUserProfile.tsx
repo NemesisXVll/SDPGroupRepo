@@ -80,6 +80,20 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
       return;
     }
 
+    const data = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      picture: userData.picture,
+    };
+
+    await userService.updateUser(
+      user.userId,
+      data,
+      user.salt,
+      user.masterPassword
+    );
+
     setShowModal(true);
 
     if (props.userUpdated) {

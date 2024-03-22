@@ -18,7 +18,7 @@ const UserProfile = (props: UserProfileProps) => {
         </div>
 
         <div className="mt-4">
-          <ManagePassword></ManagePassword>
+          <ManagePassword userUpdated={props.userUpdated}></ManagePassword>
         </div>
 
         <div className="mt-4">
