@@ -39,7 +39,7 @@ model Credential {
   isTrashed    Boolean  @default(false)
   dateTrashed  DateTime @default(now())
   trash        Trash?
-  User         User     @relation(fields: [userId], references: [userId])
+  User         User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId       Int //Foreign key
 }
 
@@ -53,7 +53,7 @@ model SecurityQuestion {
 model Trash {
   trashId         Int        @id @default(autoincrement())
   dateTempDeleted DateTime   @default(now())
-  Credential      Credential @relation(fields: [credentialId], references: [credentialId])
+  Credential      Credential @relation(fields: [credentialId], references: [credentialId], onDelete: Cascade)
   credentialId    Int        @unique //Foreign Key
 }
 
@@ -64,6 +64,6 @@ model Document {
   type        String
   category    String
   dateCreated DateTime @default(now())
-  User        User     @relation(fields: [userId], references: [userId])
+  User        User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId      Int //Foreign key
 }

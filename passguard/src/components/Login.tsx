@@ -14,21 +14,21 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { Divide } from "lucide-react";
 
 const Login: React.FC = () => {
-	const navigate = useNavigate();
-	const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-	const [email, setEmail] = useState<string>("");
-	const [successFulUserToast, setSuccessFulUserToast] =
-		useState<boolean>(false);
-	const [loginTries, setLoginTries] = useState<number>(0);
-	const [password, setPassword] = useState<string>("");
-	const [showPassword, setShowPassword] = useState<boolean>(false);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
-	const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
-	const [openModal, setOpenModal] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [successFulUserToast, setSuccessFulUserToast] =
+    useState<boolean>(false);
+  const [loginTries, setLoginTries] = useState<number>(0);
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
 
-	const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (
@@ -39,9 +39,9 @@ const Login: React.FC = () => {
     }
   }, []);
 
-	setTimeout(() => {
-		setSuccessFulUserToast(false);
-	}, 3000);
+  setTimeout(() => {
+    setSuccessFulUserToast(false);
+  }, 3000);
 
   const handleLoginSubmit = async (event: any) => {
     event.preventDefault();
@@ -72,235 +72,235 @@ const Login: React.FC = () => {
     }
   };
 
-	function handleForgotPassword(): void {
-		navigate("/forgot-password", {});
-	}
+  function handleForgotPassword(): void {
+    navigate("/forgot-password", {});
+  }
 
-	function handleModals(): void {
-		setOpenModal(false);
-	}
+  function handleModals(): void {
+    setOpenModal(false);
+  }
 
-	function handleCreateAccount(): void {
-		navigate("/signup", {});
-	}
+  function handleCreateAccount(): void {
+    navigate("/signup", {});
+  }
 
-	const handleImportClick = () => {
-		fileInputRef.current?.click();
-	};
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		console.log("File Changed");
-		const files = event.target.files;
-		if (files && files.length > 0) {
-			const file = files[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("File Changed");
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
 
-			if (file.name.endsWith(".db")) {
-				new Promise((_resolve) => {
-					window.ipcRenderer.send("importDBRequest", file.path);
-					window.ipcRenderer.once("importDBResponse", (_event, arg) => {
-						const parsedData = JSON.parse(arg);
-						if (parsedData) {
-							setOpenSuccessModal(true);
-						} else {
-							console.log("Import Failed");
-						}
-					});
-				});
-			} else {
-				setOpenErrorModal(true);
-				console.log("Invalid file type");
-			}
-		}
-	};
+      if (file.name.endsWith(".db")) {
+        new Promise((_resolve) => {
+          window.ipcRenderer.send("importDBRequest", file.path);
+          window.ipcRenderer.once("importDBResponse", (_event, arg) => {
+            const parsedData = JSON.parse(arg);
+            if (parsedData) {
+              setOpenSuccessModal(true);
+            } else {
+              console.log("Import Failed");
+            }
+          });
+        });
+      } else {
+        setOpenErrorModal(true);
+        console.log("Invalid file type");
+      }
+    }
+  };
 
-	return (
-		<>
-			<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
-				<div className="hidden sm:block">
-					<img
-						className="w-full h-full object-cover"
-						src={loginImg}
-						alt="Login visual"
-					/>
-				</div>
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
+        <div className="hidden sm:block">
+          <img
+            className="w-full h-full object-cover"
+            src={loginImg}
+            alt="Login visual"
+          />
+        </div>
 
-				{openModal ? (
-					<Captcha closeModal={handleModals} modalVal={openModal}></Captcha>
-				) : (
-					""
-				)}
-				<div className="bg-gray-100 flex flex-col justify-center">
-					<form
-						className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
-						onSubmit={handleLoginSubmit}
-					>
-						<div className="flex items-center justify-center flex-col">
-							<div className="flex">
-								<h2 className="text-4xl text-center py-2 font-bold font-nunito">
-									👋 Welcome&nbsp;
-								</h2>
-								<h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
-									back&nbsp;
-								</h2>
-								<h2 className="text-4xl text-center py-2 font-bold font-nunito">
-									!
-								</h2>
-							</div>
+        {openModal ? (
+          <Captcha closeModal={handleModals} modalVal={openModal}></Captcha>
+        ) : (
+          ""
+        )}
+        <div className="bg-gray-100 flex flex-col justify-center">
+          <form
+            className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            onSubmit={handleLoginSubmit}
+          >
+            <div className="flex items-center justify-center flex-col">
+              <div className="flex">
+                <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+                  👋 Welcome&nbsp;
+                </h2>
+                <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
+                  back&nbsp;
+                </h2>
+                <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+                  !
+                </h2>
+              </div>
 
-							<p className="text-sm text-gray-600 font-nunito">
-								Enter your credential to login
-							</p>
-						</div>
+              <p className="text-sm text-gray-600 font-nunito">
+                Enter your credential to login
+              </p>
+            </div>
 
-						<LabelInput
-							type="text"
-							required={true}
-							value={email}
-							label="Email"
-							id="email"
-							placeholder=""
-						></LabelInput>
+            <LabelInput
+              type="text"
+              required={true}
+              value={email}
+              label="Email"
+              id="email"
+              placeholder=""
+            ></LabelInput>
 
-						<LabelInput
-							type={showPassword ? "text" : "password"}
-							value={password}
-							required={true}
-							label="Password"
-							id="password"
-							placeholder=""
-						>
-							<div className="grid grid-rows-2 grid-cols-2">
-								{showPassword ? (
-									<Tooltip
-										content={"Hide"}
-										className="absolute -translate-x-[1.3rem]"
-									>
-										<FiEyeOff
-											onClick={() => setShowPassword(!showPassword)}
-											size="1.3em"
-											className="ml-1 text-black
+            <LabelInput
+              type={showPassword ? "text" : "password"}
+              value={password}
+              required={true}
+              label="Password"
+              id="password"
+              placeholder=""
+            >
+              <div className="grid grid-rows-2 grid-cols-2">
+                {showPassword ? (
+                  <Tooltip
+                    content={"Hide"}
+                    className="absolute -translate-x-[1.3rem]"
+                  >
+                    <FiEyeOff
+                      onClick={() => setShowPassword(!showPassword)}
+                      size="1.3em"
+                      className="ml-1 text-black
                                       absolute translate-x-[20.8rem] top-[1.9rem]"
-										/>
-									</Tooltip>
-								) : (
-									<Tooltip
-										content={"Show"}
-										className="absolute -translate-x-[1.3rem]"
-									>
-										<FiEye
-											onClick={() => setShowPassword(!showPassword)}
-											size="1.3em"
-											className="ml-1 text-black
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    content={"Show"}
+                    className="absolute -translate-x-[1.3rem]"
+                  >
+                    <FiEye
+                      onClick={() => setShowPassword(!showPassword)}
+                      size="1.3em"
+                      className="ml-1 text-black
                                       absolute translate-x-[20.8rem] top-[1.9rem]"
-										/>
-									</Tooltip>
-								)}
-							</div>
-						</LabelInput>
+                    />
+                  </Tooltip>
+                )}
+              </div>
+            </LabelInput>
 
-						{errorMessage && (
-							<div className="flex mt-1">
-								<CgDanger className="w-4 h-5 text-red-500" />
-								<p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
-							</div>
-						)}
+            {errorMessage && (
+              <div className="flex mt-1">
+                <CgDanger className="w-4 h-5 text-red-500" />
+                <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+              </div>
+            )}
 
-						<div className="mt-2">
-							<a
-								onClick={handleForgotPassword}
-								href="#"
-								className="text-indigo-600 text-sm hover:text-indigo-500 font-nunito font-semibold"
-							>
-								Forgot Password?
-							</a>
-						</div>
+            <div className="mt-2">
+              <a
+                onClick={handleForgotPassword}
+                href="#"
+                className="text-indigo-600 text-sm hover:text-indigo-500 font-nunito font-semibold"
+              >
+                Forgot Password?
+              </a>
+            </div>
 
-						<div className="mt-3">
-							<Button value="Login" type="submit">
-								Login
-							</Button>
-						</div>
+            <div className="mt-3">
+              <Button value="Login" type="submit">
+                Login
+              </Button>
+            </div>
 
-						<p className="text-center text-gray-600 text-sm mt-4 font-normal font-nunito">
-							Don't have an account?
-							<a
-								onClick={handleCreateAccount}
-								href="#"
-								className="text-indigo-600 text-sm hover:text-indigo-500  font-nunito font-semibold"
-							>
-								&nbsp; Create an account
-							</a>
-						</p>
-						<div className="flex items-center justify-center mr-14 mt-1">
-							<Tooltip
-								content={
-									<span>
-										This feature is intended for users who have <br />{" "}
-										previously used PassGuard on a different device.
-									</span>
-								}
-								placement="bottom"
-								className="absolute -translate-x-[0.3rem] translate-y-[1rem]"
-								arrow={false}
-							>
-								<IoInformationCircleOutline className="text-sm text-black mr-1" />
-							</Tooltip>
-							<p className="text-center text-gray-600 text-sm font-normal font-nunito">
-								Import your Passguard Data
-								<a
-									onClick={handleImportClick}
-									className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-nunito cursor-default font-semibold"
-								>
-									&nbsp; Import
-								</a>
-								<input
-									type="file"
-									accept=".db"
-									ref={fileInputRef}
-									onChange={handleFileChange}
-									style={{ display: "none" }}
-								/>
-							</p>
-						</div>
+            <p className="text-center text-gray-600 text-sm mt-4 font-normal font-nunito">
+              Don't have an account?
+              <a
+                onClick={handleCreateAccount}
+                href="#"
+                className="text-indigo-600 text-sm hover:text-indigo-500  font-nunito font-semibold"
+              >
+                &nbsp; Create an account
+              </a>
+            </p>
+            <div className="flex items-center justify-center mr-6 mt-1">
+              <Tooltip
+                content={
+                  <span>
+                    This feature is intended for users who have <br />{" "}
+                    previously used PassGuard on a different device.
+                  </span>
+                }
+                placement="bottom"
+                className="absolute -translate-x-[0.3rem] translate-y-[1rem]"
+                arrow={false}
+              >
+                <IoInformationCircleOutline className="text-sm text-black mr-1" />
+              </Tooltip>
+              <p className="text-center text-gray-600 text-sm font-normal font-nunito">
+                Import your Passguard Data
+                <a
+                  onClick={handleImportClick}
+                  className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-nunito cursor-default font-semibold"
+                >
+                  &nbsp; Import
+                </a>
+                <input
+                  type="file"
+                  accept=".db"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </p>
+            </div>
 
-						<Modal
-							dismissible
-							show={openSuccessModal}
-							size="md"
-							popup
-							onClose={() => setOpenSuccessModal(false)}
-						>
-							<ModalHeader></ModalHeader>
-							<Modal.Body>
-								<div className="flex justify-center p-3">
-									<FaCheckCircle className="text-5xl text-green-500" />
-								</div>
-								<h1 className="flex justify-center">
-									Import Completed Successfully
-								</h1>
-							</Modal.Body>
-							<div className="mx-6 my-4">
-								<Button
-									value="Login"
-									onClick={() => setOpenSuccessModal(false)}
-								>
-									Continue
-								</Button>
-							</div>
-						</Modal>
+            <Modal
+              dismissible
+              show={openSuccessModal}
+              size="md"
+              popup
+              onClose={() => setOpenSuccessModal(false)}
+            >
+              <ModalHeader></ModalHeader>
+              <Modal.Body>
+                <div className="flex justify-center p-3">
+                  <FaCheckCircle className="text-5xl text-green-500" />
+                </div>
+                <h1 className="flex justify-center">
+                  Import Completed Successfully
+                </h1>
+              </Modal.Body>
+              <div className="mx-6 my-4">
+                <Button
+                  value="Login"
+                  onClick={() => setOpenSuccessModal(false)}
+                >
+                  Continue
+                </Button>
+              </div>
+            </Modal>
 
-						<Modal
-							dismissible
-							show={openErrorModal}
-							size="md"
-							popup
-							onClose={() => setOpenErrorModal(false)}
-						>
-							<ModalHeader></ModalHeader>
-							<Modal.Body>
-								<div className="flex justify-center p-3">
-									<CgDanger
-										className="
+            <Modal
+              dismissible
+              show={openErrorModal}
+              size="md"
+              popup
+              onClose={() => setOpenErrorModal(false)}
+            >
+              <ModalHeader></ModalHeader>
+              <Modal.Body>
+                <div className="flex justify-center p-3">
+                  <CgDanger
+                    className="
                 text-5xl text-red-500
                 "
                   />
@@ -323,7 +323,7 @@ const Login: React.FC = () => {
                   <HiCheck className="h-5 w-5" />
                 </div>
                 <div className="ml-3 text-sm font-normal">
-				{location.state?.fromNewPassword
+                  {location.state?.fromNewPassword
                     ? "Password Updated Successfully"
                     : "Account Created Successfully"}
                 </div>
