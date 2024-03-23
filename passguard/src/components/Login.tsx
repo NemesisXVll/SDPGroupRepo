@@ -10,6 +10,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Modal, ModalHeader, Toast, Tooltip } from "flowbite-react";
 import Captcha from "./Captcha/Captcha";
 import { HiCheck, HiX } from "react-icons/hi";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { Divide } from "lucide-react";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -219,23 +221,37 @@ const Login: React.FC = () => {
 								&nbsp; Create an account
 							</a>
 						</p>
-
-						<p className="text-center text-gray-600 text-sm mt-1 font-normal font-nunito">
-							Do you want to import your credentials?
-							<a
-								onClick={handleImportClick}
-								className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-normal font-nunito cursor-default font-semibold"
+						<div className="flex items-center justify-center mr-14 mt-1">
+							<Tooltip
+								content={
+									<span>
+										This feature is intended for users who have <br />{" "}
+										previously used PassGuard on a different device.
+									</span>
+								}
+								placement="bottom"
+								className="absolute -translate-x-[0.3rem] translate-y-[1rem]"
+								arrow={false}
 							>
-								&nbsp; Import
-							</a>
-							<input
-								type="file"
-								accept=".db"
-								ref={fileInputRef}
-								onChange={handleFileChange}
-								style={{ display: "none" }}
-							/>
-						</p>
+								<IoInformationCircleOutline className="text-sm text-black mr-1" />
+							</Tooltip>
+							<p className="text-center text-gray-600 text-sm font-normal font-nunito">
+								Import your Passguard Data
+								<a
+									onClick={handleImportClick}
+									className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-nunito cursor-default font-semibold"
+								>
+									&nbsp; Import
+								</a>
+								<input
+									type="file"
+									accept=".db"
+									ref={fileInputRef}
+									onChange={handleFileChange}
+									style={{ display: "none" }}
+								/>
+							</p>
+						</div>
 
 						<Modal
 							dismissible

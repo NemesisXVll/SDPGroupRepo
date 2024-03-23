@@ -284,7 +284,7 @@ const Signup: React.FC = () => {
 										<div className="">
 											<ul>
 												<li className="font-bold">
-													<span className="text-green-400">Optional:</span> To
+													<span className="text-green-400">Suggestions:</span> To
 													Achieve a Stronger Password
 												</li>
 												<li className="mb-1 flex items-center">
