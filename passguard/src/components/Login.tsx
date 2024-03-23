@@ -29,7 +29,10 @@ const Login: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (location.state?.fromSecurityQuestion) {
+    if (
+      location.state?.fromSecurityQuestion ||
+      location.state?.fromNewPassword
+    ) {
       setSuccessFulUserToast(true);
     }
   }, []);
@@ -52,7 +55,14 @@ const Login: React.FC = () => {
     }
     if (user) {
       console.log("User logged in");
-      navigate("/otp", { state: { user } });
+      const preference = JSON.parse(user.preference).loginOtp;
+      if (preference === "email") {
+        navigate("/otp", { state: { user } });
+      } else if (preference === "sms") {
+        navigate("/sms", { state: { user } });
+      } else {
+        navigate("/home", { state: { user, expanded: true } });
+      }
     } else {
       console.log("Login failed");
       setLoginTries((loginTries) => loginTries + 1);
@@ -287,7 +297,9 @@ const Login: React.FC = () => {
                   <HiCheck className="h-5 w-5" />
                 </div>
                 <div className="ml-3 text-sm font-normal">
-                  User Added Successfully
+                  {location.state?.fromNewPassword
+                    ? "Password Updated Successfully"
+                    : "User Added Successfully"}
                 </div>
                 <Toast.Toggle />
               </Toast>

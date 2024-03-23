@@ -78,7 +78,6 @@ export const registerIPCMainHandlers = () => {
   });
 
   ipcMain.on("createUser", async (event, arg) => {
-    // console.log("createUser: ", arg);
     await userManagementService.createUser(arg);
   });
 
@@ -86,6 +85,15 @@ export const registerIPCMainHandlers = () => {
     event.sender.send(
       "deleteUserResponse",
       JSON.stringify(await userManagementService.deleteUserById(arg))
+    );
+  });
+
+  ipcMain.on("updateUserPreferenceRequest", async (event, arg) => {
+    event.sender.send(
+      "updateUserPreferenceResponse",
+      JSON.stringify(
+        await userManagementService.updateUserPreferenceById(arg.userId, arg.preference)
+      )
     );
   });
 
@@ -109,7 +117,6 @@ export const registerIPCMainHandlers = () => {
         await userManagementService.updateUserMasterPassword(
           arg.userId,
           arg.salt,
-          arg.currentPassword,
           arg.newMasterPassword
         )
       )

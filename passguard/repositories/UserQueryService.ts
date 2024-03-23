@@ -42,7 +42,6 @@ export default class UserQueryService {
       },
     });
     if (!user) return null;
-    console.log("User: ", user.data, user.masterPassword);
     const data = decryptData(user.data, user.masterPassword);
     return data;
   }

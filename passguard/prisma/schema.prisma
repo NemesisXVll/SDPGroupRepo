@@ -16,6 +16,7 @@ model User {
   salt              String?
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt
+  preference        String //{trashDuration: "", lockDuration: "", theme: "", loginOtp: "", forgetPassOtp: ""}
   documents         Document[]
   credentials       Credential[]
   securityquestions SecurityQuestion[]

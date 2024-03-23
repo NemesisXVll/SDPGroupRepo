@@ -16,6 +16,7 @@ const userService = new UserService();
 type SecurityQuestionProps = {
   openModal: any;
   closeModal?: () => void;
+  fromLoc?: string;
 };
 
 const SecurityQuestion = (props: SecurityQuestionProps) => {
@@ -39,6 +40,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
+
+    if (
+      props.fromLoc === "forgetPassEmailOTP" ||
+      props.fromLoc === "forgetPassSMSOTP"
+    ) {
+      navigate("/new-password", { state: { user, fromForgetPass: true } });
+    }
 
     if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
@@ -100,7 +108,8 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
         {showSecQuestion &&
           (location.pathname === "/otp" ||
-            location.pathname === "/settings") && (
+            location.pathname === "/settings" ||
+            location.pathname === "/sms") && (
             <div className="">
               <form className="w-full mx-auto p-4 shadow-md">
                 <div className="flex items-center justify-center">

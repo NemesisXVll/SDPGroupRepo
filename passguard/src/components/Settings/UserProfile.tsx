@@ -2,6 +2,10 @@ import ManagePassword from "./ManagePassword";
 import ManageEmail from "./ManageEmail";
 import ManageUserProfile from "./ManageUserProfile";
 import WipeAccount from "./WipeAccount";
+import TrashDuration from "./TrashDuration";
+import Autolock from "./Autolock";
+import OtpDropDown from "./OtpDropDown";
+import DarkMode from "./DarkMode";
 
 type UserProfileProps = {
   userUpdated?: any;
@@ -10,19 +14,20 @@ type UserProfileProps = {
 const UserProfile = (props: UserProfileProps) => {
   return (
     <>
-      <div className="m-0 p-0 box-border">
-        <ManageUserProfile userUpdated={props.userUpdated}></ManageUserProfile>
+      <div className={`overflow-y-auto max-h-[100vh] h-[100vh] `}>
+        <div className="pb-[10rem]">
+          <ManageUserProfile
+            userUpdated={props.userUpdated}
+          ></ManageUserProfile>
 
-        <div className="mt-4">
-          <ManageEmail></ManageEmail>
-        </div>
+          <div className="mt-4">
+            <ManageEmail></ManageEmail>
+            <WipeAccount></WipeAccount>
+          </div>
 
-        <div className="mt-4">
-          <ManagePassword userUpdated={props.userUpdated}></ManagePassword>
-        </div>
-
-        <div className="mt-4">
-          <WipeAccount></WipeAccount>
+          <div className="Appearance">
+            <DarkMode></DarkMode>
+          </div>
         </div>
       </div>
     </>

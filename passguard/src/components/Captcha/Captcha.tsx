@@ -80,10 +80,11 @@ const Captcha = (props: CaptchaProps) => {
       setErrorMessage("Invalid captcha code. Please try again.");
       generateCaptcha();
       return;
+    } else {
+      console.log("Captcha code is correct");
+      setErrorMessage("");
+      props.closeModal();
     }
-
-    setErrorMessage("");
-    props.closeModal();
   }
 
   function handleOnChange(event: any): void {

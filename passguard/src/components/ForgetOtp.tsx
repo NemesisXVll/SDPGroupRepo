@@ -4,7 +4,6 @@ import loginImg from "../assets/icons/common/appLogo.svg";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";
 import { AiTwotoneMail } from "react-icons/ai";
-import { FcPrevious } from "react-icons/fc";
 import Button from "./Form/Button";
 import UserService from "../utils/userService";
 import Captcha from "./Captcha/Captcha";
@@ -30,7 +29,14 @@ const ForgetOTP: React.FC = () => {
         setOpenModal(true);
         if (modalClosed) {
           setOpenModal(false);
-          navigate("/sms", { state: { user: data, fromForgetOTP: true } });
+          const forgetPassPereference = JSON.parse(
+            data.preference
+          ).forgetPassOtp;
+          if (forgetPassPereference === "sms") {
+            navigate("/sms", { state: { user: data, fromForgetOTP: true } });
+          } else {
+            navigate("/otp", { state: { user: data, fromForgetOTP: true } });
+          }
         }
       } else {
         console.log("Email not found");

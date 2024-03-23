@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function useAutoRedirect(
-  timeoutDuration = 1000 * 60 * 5, // 5 minutes
+  timeoutDuration: number, // 5 minutes
   redirectPath = "/lock",
   _expanded: boolean
 ) {
   const navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
+
+  const calculatedTimeoutDuration = 1000 * 60 * timeoutDuration;
 
   const location = useLocation();
   const user = location.state.user;
@@ -20,7 +22,7 @@ function useAutoRedirect(
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setRedirect(true);
-      }, timeoutDuration);
+      }, calculatedTimeoutDuration);
     };
 
     const handleActivity = () => {
@@ -37,7 +39,7 @@ function useAutoRedirect(
       window.removeEventListener("mousemove", handleActivity);
       window.removeEventListener("keypress", handleActivity);
     };
-  }, [timeoutDuration]);
+  }, [calculatedTimeoutDuration]);
 
   useEffect(() => {
     if (redirect) {

@@ -19,7 +19,7 @@ const Settings = (props: SettingsProps) => {
 
   const [expanded, setExpanded] = useState(location.state?.expanded);
   const { redirect, setRedirect } = AutoRedirectHook(
-    undefined,
+    JSON.parse(location.state.user.preference).lockDuration,
     undefined,
     expanded
   );

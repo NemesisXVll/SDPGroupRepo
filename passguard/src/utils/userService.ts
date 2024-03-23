@@ -67,14 +67,12 @@ export default class UserService {
   async updateUserMasterPassword(
     userId: any,
     salt: any,
-    currentPassword: any,
     newMasterPassword: any
   ) {
     try {
       const dataObj = {
         userId: userId,
         salt: salt,
-        currentPassword: currentPassword,
         newMasterPassword: newMasterPassword,
       };
 
@@ -106,6 +104,29 @@ export default class UserService {
       });
     } catch (error) {
       console.error("Error deleting user", error);
+      return {};
+    }
+  }
+
+  async updateUserPreference(userId: number, preferences: any) {
+    try {
+      const dataObj = {
+        userId: userId,
+        preference: JSON.stringify(preferences),
+      };
+
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("updateUserPreferenceRequest", dataObj);
+        window.ipcRenderer.once(
+          "updateUserPreferenceResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error changing user preferences", error);
       return {};
     }
   }

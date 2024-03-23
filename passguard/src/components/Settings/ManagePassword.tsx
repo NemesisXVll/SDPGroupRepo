@@ -86,10 +86,20 @@ const ManagePassword = (props: ManageUserProfileProps) => {
       return;
     }
 
+    if (
+      !passwordState.upperCase ||
+      !passwordState.lowerCase ||
+      !passwordState.number ||
+      !passwordState.specialChar ||
+      !passwordState.length
+    ) {
+      setErrorMessage("Password does not meet the requirements.");
+      return;
+    }
+
     const updatedUser: any = await userService.updateUserMasterPassword(
       user.userId,
       user.salt,
-      currentPassword,
       newPassword
     );
 
@@ -99,12 +109,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
       props.userUpdated();
     }
 
-    //DO THE LOGIC OF GETTING MASTER PASSWORD UNENCRYPTED
-    //COMPARE CURRENT WITH ONE IN DATABASE
-    //COMPLETE REST OF THE STEPS
-
-    // handleChangePassword();
-    // closeModal();
+    closeModal();
   };
 
   function handleOnPasswordChange(event: any): void {
@@ -158,23 +163,33 @@ const ManagePassword = (props: ManageUserProfileProps) => {
 
   return (
     <>
-      <div className="p-5 flex items-center justify-between bg-gray-300 rounded-xl shadow-md">
-        <span className="font-semibold font-nunito">
-          Change Master Password
-        </span>
-        <Button
-          value="ChangeMaster"
-          style="bg-black text-white hover:bg-yellow-400"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Change Password
-        </Button>
+      <h2 className="m-2 font-bold text-lg">Security</h2>
+      <div className="p-5 flex items-center justify-between rounded-b-none rounded-xl bg-gray-100 border border-gray-200 shadow-md">
+        <div className="flex flex-col">
+          <span className="font-semibold pb-2">Change Master Password</span>
+          <span className="font-nunito text-gray-500">
+            <span className="font-semibold text-sm">
+              Use this feature if you would like to change you PassGuard account
+              email.
+            </span>
+          </span>
+        </div>
+
+        <div className="">
+          <Button
+            value="changeMasterPassword"
+            style="bg-black text-white hover:bg-yellow-400"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Change Master Password
+          </Button>
+        </div>
       </div>
 
-      <Modal show={isModalOpen} onClose={closeModal} dismissible>
+      <Modal show={isModalOpen} onClose={closeModal} size="xl" dismissible>
         <Modal.Body>
           <form
-            className="w-[28rem] mx-auto  p-4 border border-gray-300 shadow-md "
+            className="w-[28rem] mx-auto  p-4  border-gray-300 "
             onSubmit={handleSubmit}
           >
             <h2 className="text-2xl font-nunito font-bold border-b-4 p-2 mb-3">

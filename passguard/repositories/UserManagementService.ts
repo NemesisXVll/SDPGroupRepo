@@ -143,6 +143,13 @@ export default class UserManagementService {
       const salt = generateSalt();
       const hashedPassword = await hashPassword(user.masterPassword, salt);
       const encryptedData = encryptData(user.data, hashedPassword);
+      const preference = JSON.stringify({
+        trashDuration: "2",
+        lockDuration: "5",
+        theme: "light",
+        loginOtp: "email",
+        forgetPassOtp: "email",
+      });
 
       const newUser = await prisma.user.create({
         data: {
@@ -150,6 +157,7 @@ export default class UserManagementService {
           data: encryptedData,
           masterPassword: hashedPassword,
           salt: salt,
+          preference: preference,
         },
       });
       // console.log("User created....", newUser);
@@ -172,7 +180,6 @@ export default class UserManagementService {
   }
 
   async updateUserById(userId: any, data: any) {
-    console.log("Updating user data", data.masterPassword);
     const encryptedData = encryptData(data.data, data.masterPassword);
     try {
       const updatedUser = await prisma.user.update({
@@ -187,10 +194,23 @@ export default class UserManagementService {
     }
   }
 
+  async updateUserPreferenceById(userId: any, preference: any) {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { userId: userId },
+        data: {
+          preference: preference,
+        },
+      });
+      return updatedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async updateUserMasterPassword(
     userId: any,
     salt: any,
-    currentPassword: any,
     newMasterPassword: any
   ) {
     let updatedUser = null;

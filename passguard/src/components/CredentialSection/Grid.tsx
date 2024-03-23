@@ -11,6 +11,7 @@ import { CiCircleAlert } from "react-icons/ci";
 import { SlGrid } from "react-icons/sl";
 import { HiX } from "react-icons/hi";
 import { HiCheck } from "react-icons/hi2";
+import { useLocation } from "react-router-dom";
 
 const credentialService = new CredentialService();
 export interface CredentialData {
@@ -30,6 +31,11 @@ type GridProps = {
 };
 
 const Grid = (props: GridProps) => {
+  const location = useLocation();
+  const trashDuration = JSON.parse(
+    location.state.user.preference
+  ).trashDuration;
+
   const [currentCredentials, setCurrentCredentials] = useState<any>([]);
   const [filteredCondition, setFilteredCondition] = useState<string>(
     "(item) => !item.isTrashed"
@@ -154,7 +160,7 @@ const Grid = (props: GridProps) => {
           );
           setCurrentCredentials(result);
         }, 100);
-        await credentialService.checkTrashStatus(props.userId);
+        await credentialService.checkTrashStatus(props.userId, trashDuration);
       } catch (error) {
         console.error("Error fetching credentials:", error);
       }

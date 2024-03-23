@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "salt" TEXT,
     "dateCreated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateUpdated" DATETIME NOT NULL,
-    "picture" TEXT
+    "preference" TEXT NOT NULL
 );
 
 -- CreateTable

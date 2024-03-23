@@ -107,10 +107,8 @@ const OTPVerification: React.FC = () => {
   };
 
   const verifyOTP = async (enteredOTP: any) => {
-    // console.log("VERIFYING OTP");
     if (enteredOTP == generatedOTP) {
-      //CHANGE
-      // console.log("OTP is correct");
+      console.log("OTP is correct");
       setMessage("OTP is correct");
       if (location.state.fromSignup === true) {
         // navigate("/security-question", {
@@ -126,6 +124,8 @@ const OTPVerification: React.FC = () => {
           user.masterPassword
         );
         navigate("/settings", { state: { user: updatedUser, expanded: true } });
+      } else if (location.state.fromForgetOTP === true) {
+        setShowModal(true);
       } else {
         navigate("/home", { state: { user, expanded: true } });
       }
@@ -134,6 +134,10 @@ const OTPVerification: React.FC = () => {
       setMessage("Wrong OTP entered");
     }
   };
+
+  function handleCloseModal(): void {
+    setShowModal(false);
+  }
 
   return (
     <>
@@ -186,7 +190,7 @@ const OTPVerification: React.FC = () => {
         </div>
       </div>
 
-      {showModal && <SecurityQuestion openModal={true}></SecurityQuestion>}
+      {showModal && <SecurityQuestion fromLoc={"forgetPassEmailOTP"} openModal={true} closeModal={handleCloseModal}></SecurityQuestion>}
     </>
   );
 };

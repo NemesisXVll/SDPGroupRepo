@@ -26,9 +26,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgetOTP />} />
           <Route path="/sms" element={<SMS />} />
           <Route path="/otp" element={<OTPVerification />} />
+          <Route path="/new-password" element={<NewPassword />} />
           <Route path="/home" element={<Home />} />
           <Route path="/secured-documents" element={<Document />} />
-          <Route path="/reset-password" element={<NewPassword />} />
           <Route path="/lock" element={<LockPage />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>

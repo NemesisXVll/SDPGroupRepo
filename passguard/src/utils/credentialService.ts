@@ -64,9 +64,7 @@ export default class CredentialService {
 
     formData.set(
       "loginPageUrl",
-      formData.get("loginPageUrl") === ""
-        ? ""
-        : formData.get("loginPageUrl")
+      formData.get("loginPageUrl") === "" ? "" : formData.get("loginPageUrl")
     );
     formData.set("userId", userId.toString());
     const credentialObj = JSON.parse(
@@ -226,7 +224,7 @@ export default class CredentialService {
     }
     return true;
   }
-  async checkTrashStatus(userId: any): Promise<any> {
+  async checkTrashStatus(userId: any, trashDuration: any): Promise<any> {
     const trashedCredentials = await this.getTrashedCredentialsByUserId(userId);
     const currentDate = new Date();
     for (const credential of trashedCredentials) {
@@ -235,7 +233,7 @@ export default class CredentialService {
         currentDate.getTime() - dateTrashed.getTime()
       );
       const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
-      if (differenceInDays >= 2 && trashedCredentials.length > 0) {
+      if (differenceInDays >= trashDuration && trashedCredentials.length > 0) {
         console.log("Deleting outdated trashed credential");
         await this.deleteCredential(credential.credentialId);
       }
@@ -273,11 +271,13 @@ export default class CredentialService {
       return 0;
     }
   }
-  async favoriteCredentialById(credentialId: any, isFavorited: boolean) { 
-    window.ipcRenderer.send("favoriteCredentialById", { credentialId, isFavorited });
-
+  async favoriteCredentialById(credentialId: any, isFavorited: boolean) {
+    window.ipcRenderer.send("favoriteCredentialById", {
+      credentialId,
+      isFavorited,
+    });
   }
-  async deleteAllCredentialsByUserId(userId: any) { 
+  async deleteAllCredentialsByUserId(userId: any) {
     window.ipcRenderer.send("deleteAllCredentialsByUserId", userId);
   }
 }

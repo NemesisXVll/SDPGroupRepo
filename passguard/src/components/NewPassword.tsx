@@ -2,9 +2,28 @@ import React, { useEffect, useState } from "react";
 import loginImg from "../assets/icons/common/appLogo.svg";
 import LabelInput from "./Form/LabelInput";
 import Button from "./Form/Button";
-import { useNavigate } from "react-router-dom";
-import { Modal, ModalHeader } from "flowbite-react";
-import { FaCheckCircle } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Tooltip } from "flowbite-react";
+import MPasswdStrength from "./MPasswdStrength";
+import { FcCheckmark } from "react-icons/fc";
+import { HiXMark } from "react-icons/hi2";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { CgDanger } from "react-icons/cg";
+import UserService from "../utils/userService";
+
+const userService = new UserService();
+
+interface PasswordState {
+  upperCase: boolean;
+  lowerCase: boolean;
+  number: boolean;
+  specialChar: boolean;
+  length: boolean;
+  repeatedChar: boolean;
+  sequentialChar: boolean;
+  contextSpecific: boolean;
+}
 
 const NewPassword: React.FC = () => {
   useEffect(() => {
@@ -15,33 +34,105 @@ const NewPassword: React.FC = () => {
   }, []);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [newPassword, setNewPassword] = useState<string>("");
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showConfirmNewPass, setshowConfirmNewPass] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [passwordState, setPasswordState] = useState<PasswordState>({
+    upperCase: false,
+    lowerCase: false,
+    number: false,
+    specialChar: false,
+    length: false,
+    repeatedChar: false,
+    sequentialChar: false,
+    contextSpecific: false,
+  });
 
-  const handleNewPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleNewPasswordChange = (event: any) => {
     setNewPassword(event.target.value);
+    const newPassword = event.target.value;
+
+    const upperCaseRegex = /[A-Z]/;
+    const lowerCaseRegex = /[a-z]/;
+    const numberRegex = /[0-9]/;
+    const specialCharRegex = /[!@#$%^&*]/;
+
+    const upperCase = upperCaseRegex.test(newPassword);
+    const lowerCase = lowerCaseRegex.test(newPassword);
+    const number = numberRegex.test(newPassword);
+    const specialChar = specialCharRegex.test(newPassword);
+    const length = newPassword.length >= 8;
+    const repeatedChar = /(.)\1{2,}/.test(newPassword);
+
+    let sequentialChar = false;
+    let contextSpecific = false;
+
+    for (let i = 0; i < newPassword.length - 2; i++) {
+      if (
+        newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 1) - 1 &&
+        newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 2) - 2
+      ) {
+        sequentialChar = true;
+      }
+    }
+
+    if (newPassword.toLowerCase().includes("passguard")) contextSpecific = true;
+
+    setPasswordStrength(
+      (upperCase && lowerCase ? 1 : 0) +
+        (number ? 1 : 0) +
+        (specialChar ? 1 : 0) +
+        (length ? 1 : 0)
+    );
+
+    setPasswordState({
+      upperCase,
+      lowerCase,
+      number,
+      specialChar,
+      length,
+      repeatedChar,
+      sequentialChar,
+      contextSpecific,
+    });
   };
 
-  const handleConfirmPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleConfirmPasswordChange = (event: any) => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     if (newPassword !== confirmPassword) {
       setErrorMessage("Passwords do not match. Please try again.");
       return;
     }
-    //  add logic to replace the password the password
+
+    if (
+      !passwordState.upperCase ||
+      !passwordState.lowerCase ||
+      !passwordState.number ||
+      !passwordState.specialChar ||
+      !passwordState.length
+    ) {
+      setErrorMessage("Password does not meet the requirements.");
+      return;
+    }
+
+    await userService.updateUserMasterPassword(
+      location.state.user.userId,
+      location.state.user.salt,
+      newPassword
+    );
+
     console.log("Password updated successfully.");
-    setOpenSuccessModal(true);
+
+    navigate("/login", { state: { fromNewPassword: true } });
   };
 
   return (
@@ -55,63 +146,156 @@ const NewPassword: React.FC = () => {
       </div>
       <div className="bg-gray-100 flex flex-col justify-center">
         <form
-          className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+          className="w-[28rem] mx-auto  p-4  border-gray-300  shadow-md bg-white"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl text-center py-4 font-bold font-['Nunito']">
-            Set New Password
+          <h2 className=" font-nunito border-b-4 p-2 mb-3 text-center text-3xl py-4 font-bold ">
+            🔑 Setup New Password
           </h2>
 
-          <LabelInput
-            type="password"
-            required={true}
-            value={newPassword}
-            label="New Password"
-            id="new-password"
-            placeholder="Enter New Password"
-            onChange={handleNewPasswordChange}
-          />
+          <div className="flex-row mt-2 ">
+            <div className="ml-[25rem]">
+              <Tooltip
+                content={
+                  <>
+                    <div className="">
+                      <ul>
+                        <li>To Achieve a Stronger Password</li>
+                        <li className="mb-1 flex items-center">
+                          {!passwordState.sequentialChar ? (
+                            <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                          ) : (
+                            <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                          )}
+                          No Sequential Characters (e.g. 1234)
+                        </li>
+                        <li className="mb-1 flex items-center">
+                          {!passwordState.repeatedChar ? (
+                            <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                          ) : (
+                            <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                          )}
+                          No Repeated Characters (e.g. aaaa)
+                        </li>
+                      </ul>
+                    </div>
+                  </>
+                }
+                arrow={false}
+                placement="top-end"
+              >
+                <IoInformationCircleOutline className="text-black"></IoInformationCircleOutline>
+              </Tooltip>
+            </div>
 
+            <Tooltip
+              placement="bottom"
+              content={
+                <div className="">
+                  <ul>
+                    <li className="mb-1 flex items-center">
+                      {passwordState.upperCase && passwordState.lowerCase ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      Upper & lower case letters
+                    </li>
+                    <li className="mb-1 flex items-center">
+                      {passwordState.specialChar ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A symbol (e.g. #$&)
+                    </li>
+                    <li className="flex items-center">
+                      {passwordState.number ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A number (e.g. 123)
+                    </li>
+                    <li className="mt-1 flex items-center">
+                      {passwordState.length ? (
+                        <FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+                      ) : (
+                        <HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+                      )}
+                      A longer password (min. 8 chars.)
+                    </li>
+                  </ul>
+                </div>
+              }
+            >
+              {/* Password Field */}
+              <div className="w-[25.9rem]">
+                <MPasswdStrength
+                  contextSpecific={passwordState.contextSpecific}
+                  sequentialChar={passwordState.sequentialChar}
+                  repeatedChar={passwordState.repeatedChar}
+                  required={true}
+                  value={newPassword}
+                  strength={passwordStrength}
+                  label="New Password"
+                  id="password"
+                  placeholder=""
+                  onChange={handleNewPasswordChange}
+                ></MPasswdStrength>
+              </div>
+            </Tooltip>
+          </div>
+
+          {/* Confirm Password Field */}
           <LabelInput
-            type="password"
-            required={true}
-            value={confirmPassword}
-            label="Confirm Password"
-            id="confirm-password"
-            placeholder="Re-enter New Password"
             onChange={handleConfirmPasswordChange}
-          />
+            required={true}
+            type={showConfirmNewPass ? "text" : "password"}
+            value={confirmPassword}
+            label="Confirm New Password"
+            id="confirmPassword"
+            placeholder=""
+          >
+            <div className="">
+              {showConfirmNewPass ? (
+                <FiEyeOff
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    setshowConfirmNewPass(!showConfirmNewPass);
+                  }}
+                  size="1.3em"
+                  className="ml-1 text-black
+                  absolute translate-x-[24rem] top-[1.9rem]"
+                />
+              ) : (
+                <FiEye
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    setshowConfirmNewPass(!showConfirmNewPass);
+                  }}
+                  size="1.3em"
+                  className="ml-1 text-black 
+              absolute translate-x-[24rem] top-[1.9rem]"
+                />
+              )}
+            </div>
+          </LabelInput>
 
           {errorMessage && (
-            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+            <div className="flex mt-1">
+              <CgDanger className="w-4 h-5 text-red-500" />
+              <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+            </div>
           )}
 
-          <div className="mt-7">
-            <Button value="Update Password" type="submit">
+          <div className="mt-5">
+            <Button value="Update" type="submit">
               Update Password
             </Button>
           </div>
         </form>
       </div>
-      <Modal
-        dismissible
-        show={openSuccessModal}
-        size="md"
-        popup
-        onClose={() => setOpenSuccessModal(false)}
-      >
-        <Modal.Body className="p-6">
-          <div className="flex justify-center p-2">
-            <FaCheckCircle className="text-5xl text-green-500" />
-          </div>
-          <h1 className="flex justify-center">Password Updated Successfully</h1>
-        </Modal.Body>
-        <div className="mx-6 my-4">
-          <Button onClick={() => navigate("/login", {})}>
-            Go To Login
-          </Button>
-        </div>
-      </Modal>
     </div>
   );
 };
