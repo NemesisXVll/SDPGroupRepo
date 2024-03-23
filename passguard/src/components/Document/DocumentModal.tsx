@@ -136,7 +136,7 @@ function DocumentModal(props: DocumentModalProps) {
                 onChange={handleOnInputChange}
                 defaultValue={"Other"}
               >
-                <option>Driver License</option>
+                <option>Image</option>
                 <option>Passport/ID</option>
                 <option>Bank Card</option>
                 <option>Insurance</option>

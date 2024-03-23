@@ -10,21 +10,21 @@ function EmailSender() {
   
 
   const handleSendEmail = async () => {
-    try {
-      // Fetch the file from the server
-      const response = await fetch('../../prisma/dev.db'); 
-      const fileContentBase64 = await response.text();
+    // try {
+    //   // Fetch the file from the server
+    //   const response = await fetch('../../prisma/dev.db'); 
+    //   const fileContentBase64 = await response.text();
 
-      // Send the email with the attachment
-      await emailjs.send(serviceID, templateID, {
-        to_email: 'khalifa.alsidiq@gmail.com', // with the recipient's email
-        file_content: fileContentBase64, // Base64-encoded file content
-      }, userID);
+    //   // Send the email with the attachment
+    //   await emailjs.send(serviceID, templateID, {
+    //     to_email: 'khalifa.alsidiq@gmail.com', // with the recipient's email
+    //     file_content: fileContentBase64, // Base64-encoded file content
+    //   }, userID);
 
-      console.log('Email sent successfully!');
-    } catch (error) {
-      console.error('Error sending email:', error);
-    }
+    //   console.log('Email sent successfully!');
+    // } catch (error) {
+    //   console.error('Error sending email:', error);
+    // }
   };
 
   return (
