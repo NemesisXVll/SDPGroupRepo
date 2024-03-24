@@ -30,7 +30,7 @@
     "sqlite3": "^5.1.6",
     "twilio": "^5.0.1",
     "vite-tsconfig-paths": "^4.2.1",
-    "zxcvbn": "^4.4.2"
+    "zxcvbn": "github:NemesisXVll/zxcvbn"
   },
   "build": {
     "appId": "your.id",
