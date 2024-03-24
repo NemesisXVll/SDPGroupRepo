@@ -66,6 +66,7 @@ const Login: React.FC = () => {
         navigate("/home", { state: { user, expanded: true } });
       }
     } else {
+      setPassword("");
       console.log("Login failed");
       setLoginTries((loginTries) => loginTries + 1);
       setErrorMessage("Incorrect email or password. Please try again.");
@@ -155,6 +156,7 @@ const Login: React.FC = () => {
             <LabelInput
               type="text"
               required={true}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
               label="Email"
               id="email"
@@ -164,6 +166,7 @@ const Login: React.FC = () => {
             <LabelInput
               type={showPassword ? "text" : "password"}
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required={true}
               label="Password"
               id="password"

@@ -10,6 +10,8 @@ import { CiCircleChevLeft } from "react-icons/ci";
 import { AiTwotoneMail } from "react-icons/ai";
 import LabelInput from "../Form/LabelInput";
 import UserService from "../../utils/userService";
+import { error } from "console";
+import { CgDanger } from "react-icons/cg";
 
 const userService = new UserService();
 
@@ -29,6 +31,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   );
   const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -41,14 +44,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
 
+    console.log(props.fromLoc);
+
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
       navigate("/new-password", { state: { user, fromForgetPass: true } });
-    }
-
-    if (location.pathname === "/otp") {
+    } else if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
         firstName: user.state.firstName,
         lastName: user.state.lastName,
@@ -65,7 +68,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       navigate("/login", { state: { fromSecurityQuestion: true } });
     }
 
-    if (location.pathname === "/settings") {
+    if (props.fromLoc === "changeEmail") {
       setShowSecQuestion(false);
       setShowNewEmail(true);
     }
@@ -73,6 +76,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
   async function handleSubmitNewEmail(event: any): Promise<void> {
     event.preventDefault();
+
+    const isEmailFound = await userService.findUserByEmail(email);
+
+    if (isEmailFound) {
+      console.log("Email found");
+      setErrorMessage("Email already exists");
+      return;
+    }
 
     await userService.getUserDataById(user.userId).then((res: any) => {
       navigate("/otp", {
@@ -178,9 +189,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           )}
 
         {showNewEmail && (
-          <div className="flex flex-col justify-center pb-3">
+          <div className="flex flex-col justify-center pb-10">
             <form
-              className="max-w-[400px] w-full mx-auto  p-4 shadow-md"
+              className="max-w-[360px] w-full mx-auto"
               onSubmit={handleSubmitNewEmail} // Prevent form submission
             >
               <div className="flex justify-center items-center">
@@ -211,7 +222,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 ></LabelInput>
               </div>
 
-              <div className="mt-10">
+              {errorMessage && (
+                <div className="flex mt-1">
+                  <CgDanger className="w-4 h-5 text-red-500" />
+                  <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+                </div>
+              )}
+
+              <div className="mt-7">
                 <Button type="submit" value="sendVerification">
                   Send verification code
                 </Button>

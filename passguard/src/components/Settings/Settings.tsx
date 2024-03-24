@@ -29,6 +29,13 @@ const Settings = (props: SettingsProps) => {
     window.onpopstate = function () {
       window.history.pushState(null, "", "/login");
     };
+
+    if (location.state.accountEmailChange) {
+      setOpenToast(true);
+      setTimeout(() => {
+        setOpenToast(false);
+      }, 3000);
+    }
   }, []);
 
   const location = useLocation();
@@ -149,7 +156,9 @@ const Settings = (props: SettingsProps) => {
                     <div className="ml-3 text-sm font-normal">
                       {deleteOption === "wipeCredentials"
                         ? "Credentials deleted Successfully"
-                        : "Documents deleted Successfully"}{" "}
+                        : location.state?.accountEmailChange
+                          ? "Account email changed successfully"
+                          : "Documents deleted Successfully"}
                     </div>
                     <Toast.Toggle />
                   </Toast>

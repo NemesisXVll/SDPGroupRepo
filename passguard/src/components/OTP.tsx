@@ -123,7 +123,7 @@ const OTPVerification: React.FC = () => {
           user.salt,
           user.masterPassword
         );
-        navigate("/settings", { state: { user: updatedUser, expanded: true } });
+        navigate("/settings", { state: { user: updatedUser, expanded: true, accountEmailChange: true } });
       } else if (location.state.fromForgetOTP === true) {
         setShowModal(true);
       } else {
@@ -190,7 +190,7 @@ const OTPVerification: React.FC = () => {
         </div>
       </div>
 
-      {showModal && <SecurityQuestion fromLoc={"forgetPassEmailOTP"} openModal={true} closeModal={handleCloseModal}></SecurityQuestion>}
+      {showModal && <SecurityQuestion fromLoc={location.state.fromForgetOTP ? "forgetPassEmailOTP" : ""} openModal={true} closeModal={handleCloseModal} />}
     </>
   );
 };

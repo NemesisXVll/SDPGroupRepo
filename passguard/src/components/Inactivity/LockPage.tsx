@@ -32,10 +32,16 @@ function LockPage() {
     const user = await unlock(password, location.state.user.userId);
     if (user) {
       console.log("User logged in");
-      navigate(location.state.beforeLockLocation, {
-        replace: true,
-        state: { user, expanded: location.state.expanded },
-      });
+      if (location.state.clickedLockBTN === true) {
+        navigate("/home", {
+          state: { user, expanded: location.state.expanded },
+        });
+      } else {
+        navigate(location.state.beforeLockLocation, {
+          replace: true,
+          state: { user, expanded: location.state.expanded },
+        });
+      }
     } else {
       console.log("Login failed");
       setErrorMessage("Incorrect password. Please try again.");

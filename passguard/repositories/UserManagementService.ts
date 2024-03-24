@@ -180,6 +180,7 @@ export default class UserManagementService {
   }
 
   async updateUserById(userId: any, data: any) {
+    console.log("");
     const encryptedData = encryptData(data.data, data.masterPassword);
     try {
       const updatedUser = await prisma.user.update({
