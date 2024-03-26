@@ -29,7 +29,7 @@ interface PasswordState {
 }
 
 type ManageUserProfileProps = {
-  userUpdated?: () => void;
+  userPasswordUpdated?: () => void;
 };
 
 const ManagePassword = (props: ManageUserProfileProps) => {
@@ -105,8 +105,8 @@ const ManagePassword = (props: ManageUserProfileProps) => {
 
     navigate("/settings", { state: { user: updatedUser, expanded: true } });
 
-    if (props.userUpdated) {
-      props.userUpdated();
+    if (props.userPasswordUpdated) {
+      props.userPasswordUpdated();
     }
 
     closeModal();

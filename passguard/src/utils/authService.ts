@@ -66,8 +66,6 @@ export const SignUp = async (data: SignUpData): Promise<any> => {
       });
     });
 
-    console.log("userData: ", userData);
-
     if (userData) {
       console.log("User already exists");
       return -1;
@@ -79,7 +77,6 @@ export const SignUp = async (data: SignUpData): Promise<any> => {
           resolve(parsedData);
         });
       });
-      console.log("createdUser: ", createdUser);
       console.log("Account created successfully!");
       return createdUser;
     }

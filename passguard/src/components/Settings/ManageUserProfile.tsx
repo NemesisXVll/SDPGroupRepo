@@ -5,7 +5,7 @@ import UserService from "../../utils/userService";
 import LabelInput from "../Form/LabelInput";
 import Button from "../Form/Button";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheck, FaCheckCircle } from "react-icons/fa";
 import { CgDanger } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
@@ -247,19 +247,15 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
       </Card>
 
       {successFulUserToast && (
-        <div className="absolute top-1/2 start-1/2 transform -translate-y-[30rem] -translate-x-1/2">
-          <div className="p-2 sm:p-4">
-            <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-                <HiCheck className="h-5 w-5" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Account Updated Successfully
-              </div>
-              <Toast.Toggle />
-            </Toast>
+        <Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
+          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+            <FaCheck className="h-5 w-5" />
           </div>
-        </div>
+          <div className="ml-3 text-sm font-normal">
+            Account Updated Successfully
+          </div>
+          <Toast.Toggle />
+        </Toast>
       )}
     </>
   );

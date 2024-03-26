@@ -27,7 +27,7 @@ CREATE TABLE "Credential" (
     "isTrashed" BOOLEAN NOT NULL DEFAULT false,
     "dateTrashed" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "Credential_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Credential_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -35,7 +35,7 @@ CREATE TABLE "SecurityQuestion" (
     "securityQuestionId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "data" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "SecurityQuestion_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "SecurityQuestion_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -43,7 +43,7 @@ CREATE TABLE "Trash" (
     "trashId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "dateTempDeleted" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "credentialId" INTEGER NOT NULL,
-    CONSTRAINT "Trash_credentialId_fkey" FOREIGN KEY ("credentialId") REFERENCES "Credential" ("credentialId") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Trash_credentialId_fkey" FOREIGN KEY ("credentialId") REFERENCES "Credential" ("credentialId") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -55,7 +55,7 @@ CREATE TABLE "Document" (
     "category" TEXT NOT NULL,
     "dateCreated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "Document_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Document_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("userId") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateIndex
