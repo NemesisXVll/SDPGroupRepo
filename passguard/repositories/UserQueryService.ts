@@ -78,8 +78,8 @@ export default class UserQueryService {
   }
 
   //List All Security Questions for a user id
-  async listSecurityQuestionsByUserId(userId: any) {
-    return prisma.securityQuestion.findMany({
+  async getSecurityQuestionByUserId(userId: any) {
+    return prisma.securityQuestion.findFirst({
       where: { userId: userId },
     });
   }

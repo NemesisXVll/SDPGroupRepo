@@ -32,6 +32,11 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [firstQuestion, setFirstQuestion] = useState<string>("");
+  const [secondQuestion, setSecondQuestion] = useState<string>("");
+  const [firstQuestionAnswer, setFirstQuestionAnswer] = useState<string>("");
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [secondQuestionAnswer, setSecondQuestionAnswer] = useState<string>("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -41,16 +46,23 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
     };
   }, []);
 
+  async function verifySecQuestionAnswers() {
+    const isVerified = await userService.verifySecQuestionAnswers(user.userId,firstQuestionAnswer,secondQuestionAnswer);
+    console.log(isVerified)
+    setIsVerified(isVerified);
+  }
+
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
-
-    console.log(props.fromLoc);
-
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
-      navigate("/new-password", { state: { user, fromForgetPass: true } });
+      //Function verify answer
+      verifySecQuestionAnswers();
+      if(isVerified){
+        navigate("/new-password", { state: { user, fromForgetPass: true } });
+      }
     } else if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
         firstName: user.state.firstName,
@@ -61,6 +73,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
         picture: user.state.picture,
       });
       if (signUpResult) {
+        const secQuestionObj = {
+          firstQuestion: firstQuestion,
+          firstQuestionAnswer: firstQuestionAnswer,
+          secondQuestion: secondQuestion,
+          secondQuestionAnswer: secondQuestionAnswer,
+        };
+        await userService.createQuestion(signUpResult.userId,signUpResult.salt, secQuestionObj);
         setOpenSuccessModal(true);
       } else {
         console.log("Sign up failed");
@@ -69,9 +88,11 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
     }
 
     if (props.fromLoc === "changeEmail") {
+      //Check if input of sec question is like hashed password
       setShowSecQuestion(false);
       setShowNewEmail(true);
     }
+
   }
 
   async function handleSubmitNewEmail(event: any): Promise<void> {
@@ -134,7 +155,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
                 {/* Security Questions */}
                 <div className="mt-4">
-                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setFirstQuestion(event.target.value)}
+                    name="firstQuestion"
+                    id="firstQuestion-select">
                     <option id="Q1">
                       name of a college you applied to but didn’t attend?
                     </option>
@@ -149,12 +172,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
+                    onChange={(event) => setFirstQuestionAnswer(event.target.value)}
                     className="w-full p-2 border rounded mb-4 "
                     placeholder="Your answer"
                     id="answer1"
                   />
 
-                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setSecondQuestion(event.target.value)} >
                     <option id="Q4">
                       What was your maths teacher's surname in your 8th year of
                       school?
@@ -168,6 +192,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
+                    onChange={(event) => setSecondQuestionAnswer(event.target.value)}
                     className="w-full p-2 border rounded mb-4"
                     placeholder="Your answer"
                     id="answer2"

@@ -40,7 +40,7 @@ export const checkEmail = async (email: string): Promise<boolean> => {
   }
 };
 
-export const SignUp = async (data: SignUpData): Promise<boolean> => {
+export const SignUp = async (data: SignUpData): Promise<any> => {
   const { email, masterPassword, confirmPassword, ...rest } = data;
 
   const filteredData = {
@@ -66,20 +66,27 @@ export const SignUp = async (data: SignUpData): Promise<boolean> => {
       });
     });
 
+    console.log("userData: ", userData);
+
     if (userData) {
       console.log("User already exists");
-      return false;
+      return -1;
     } else {
-      window.ipcRenderer.send("createUser", filteredData);
+      const createdUser: any = await new Promise((resolve) => {
+        window.ipcRenderer.send("createUserRequest", filteredData);
+        window.ipcRenderer.once("createUserResponse", (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        });
+      });
+      console.log("createdUser: ", createdUser);
       console.log("Account created successfully!");
-      return true;
+      return createdUser;
     }
   } catch (error) {
     console.error("Error during SignUp:", error);
-    return false;
+    return -1;
   }
-
-  return false;
 };
 
 export const unlock = async (

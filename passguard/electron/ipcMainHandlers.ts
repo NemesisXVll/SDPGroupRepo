@@ -77,8 +77,11 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
-  ipcMain.on("createUser", async (event, arg) => {
-    await userManagementService.createUser(arg);
+  ipcMain.on("createUserRequest", async (event, arg) => {
+    event.sender.send(
+      "createUserResponse",
+      JSON.stringify(await userManagementService.createUser(arg))
+    );
   });
 
   ipcMain.on("deleteUserRequest", async (event, arg) => {
@@ -158,6 +161,21 @@ export const registerIPCMainHandlers = () => {
     );
   });
 };
+
+ipcMain.on("createQuestionRequest", async (event, arg) => {
+  event.sender.send(
+    "createQuestionResponse",
+    JSON.stringify(await userManagementService.createSecurityQuestion(arg.userId,arg.salt, arg.secQuestionObj))
+  );
+});
+
+ipcMain.on("getSecurityQuestionByUserIdRequest", async (event, arg) => {
+  event.sender.send(
+    "getSecurityQuestionByUserIdResponse",
+    JSON.stringify(await userQueryService.getSecurityQuestionByUserId(arg)
+    ));
+});
+
 
 ipcMain.on("createDocument", async (event, arg) => {
   await userManagementService.createDocument(arg);

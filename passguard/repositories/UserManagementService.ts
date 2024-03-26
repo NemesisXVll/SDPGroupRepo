@@ -422,10 +422,16 @@ export default class UserManagementService {
   }
 
   //-------------------------Security Question Model-------------------------//
-  async createSecurityQuestion(securityQuestion: any) {
+  async createSecurityQuestion(userId: any , salt: any ,securityQuestionObj: any) {
     try {
+      console.log(securityQuestionObj.firstQuestionAnswer,salt)
+      securityQuestionObj.firstQuestionAnswer = await hashPassword(securityQuestionObj.firstQuestionAnswer, salt);
+      securityQuestionObj.secondQuestionAnswer = await hashPassword(securityQuestionObj.secondQuestionAnswer, salt);
       const newSecurityQuestion = await prisma.securityQuestion.create({
-        data: securityQuestion,
+        data: {
+          userId: userId,
+          data: JSON.stringify(securityQuestionObj),
+        },
       });
       return newSecurityQuestion;
     } catch (error) {

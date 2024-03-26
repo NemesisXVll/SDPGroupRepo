@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 export default class UserService {
   async getUserDataById(userId: number) {
     try {
@@ -128,6 +130,67 @@ export default class UserService {
     } catch (error) {
       console.error("Error changing user preferences", error);
       return {};
+    }
+  }
+
+  async createQuestion (userId: number, salt: any, secQuestionObj: any) {
+    try {
+      const dataObj = {
+        userId: userId,
+        salt: salt,
+        secQuestionObj: secQuestionObj,
+      };
+
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("createQuestionRequest", dataObj);
+        window.ipcRenderer.once(
+          "createQuestionResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error creating question", error);
+      return {};
+    }
+  }
+
+  async findSecurityQuestionByUserId(userId: any) {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("getSecurityQuestionByUserIdRequest", userId);
+        window.ipcRenderer.once(
+          "getSecurityQuestionByUserIdResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
+      });
+    } catch (error) {
+      console.error("Error finding user's security question", error);
+      return {};
+    }
+  }
+
+  async verifySecQuestionAnswers (userId: number, firstQuestionAnswer: any, secondQuestionAnswer: any) {
+    try{
+
+      const userSecurityQuestion : any = await this.findSecurityQuestionByUserId(userId);
+      const data = JSON.parse(userSecurityQuestion.data);
+
+      if (bcrypt.compareSync(firstQuestionAnswer, data.firstQuestionAnswer) && bcrypt.compareSync(secondQuestionAnswer, data.secondQuestionAnswer)) {
+        return true; //Unlock successful
+      } else {
+        return false; //Incorrect password
+      }
+
+
+    }catch(error){
+      console.error("Error verifying security answers", error);
+      return false;
     }
   }
 }
