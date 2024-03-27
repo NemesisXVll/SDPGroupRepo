@@ -16,6 +16,7 @@ type CardProps = {
   isTrashed: boolean;
   onClick: MouseEventHandler<HTMLDivElement>;
   onUpdateClick: (key: React.Key) => void;
+  onShareClick: (key: React.Key) => void;
   onDeleteClick: (key: React.Key) => void;
   onRecoverClick: (key: React.Key) => void;
   onPermanentRemoveClick: (key: React.Key) => void;
@@ -63,6 +64,7 @@ const Card = (props: CardProps) => {
           </h3>
           <Kebab
             onUpdateClick={() => props.onUpdateClick(props.index)}
+            onShareClick={() => props.onShareClick(props.index)}
             onDeleteClick={() => props.onDeleteClick(props.index)}
             onRecoverClick={() => props.onRecoverClick(props.index)}
             onPermanentRemoveClick={() =>

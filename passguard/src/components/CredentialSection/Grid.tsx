@@ -54,6 +54,9 @@ const Grid = (props: GridProps) => {
   ) => {
     props.onCardClick(credentialData, updateClicked);
   };
+  const handleShareClick = (credentialData: CredentialData) => {
+    credentialService.shareCredential(credentialData);
+   }
 
   const handleDeleteClick = (credentialId: number) => {
     credentialService.trashCredentialById(credentialId);
@@ -182,6 +185,7 @@ const Grid = (props: GridProps) => {
         <Card
           onClick={() => handleCardClick(item, false)}
           onUpdateClick={() => handleCardClick(item, true)}
+          onShareClick={() => handleShareClick(item)}
           onDeleteClick={() => handleDeleteClick(item.credentialId)}
           onRecoverClick={() => handleRecoverClick(item.credentialId)}
           onPermanentRemoveClick={() =>
