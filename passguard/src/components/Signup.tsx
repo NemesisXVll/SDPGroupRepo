@@ -12,199 +12,214 @@ import { HiXMark } from "react-icons/hi2";
 import { CgDanger } from "react-icons/cg";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { CiCircleChevLeft } from "react-icons/ci";
+import zxcvbn from "zxcvbn";
 
 interface State {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  picture: string;
-  showConfirmPassword: boolean;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+	picture: string;
+	showConfirmPassword: boolean;
 }
 
 interface PasswordState {
-  upperCase: boolean;
-  lowerCase: boolean;
-  number: boolean;
-  specialChar: boolean;
-  length: boolean;
-  repeatedChar: boolean;
-  sequentialChar: boolean;
-  contextSpecific: boolean;
+	upperCase: boolean;
+	lowerCase: boolean;
+	number: boolean;
+	specialChar: boolean;
+	length: boolean;
+	repeatedChar: boolean;
+	sequentialChar: boolean;
+	contextSpecific: boolean;
+	frequentPasswords: boolean;
 }
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [passwordStrength, setPasswordStrength] = useState<number>(0);
 
-  const [state, setState] = useState<State>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    picture: "",
-    showConfirmPassword: false,
-  });
-  const [passwordState, setPasswordState] = useState<PasswordState>({
-    upperCase: false,
-    lowerCase: false,
-    number: false,
-    specialChar: false,
-    length: false,
-    repeatedChar: false,
-    sequentialChar: false,
-    contextSpecific: false,
-  });
+	const [state, setState] = useState<State>({
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		picture: "",
+		showConfirmPassword: false,
+	});
+	const [passwordState, setPasswordState] = useState<PasswordState>({
+		upperCase: false,
+		lowerCase: false,
+		number: false,
+		specialChar: false,
+		length: false,
+		repeatedChar: false,
+		sequentialChar: false,
+		contextSpecific: false,
+		frequentPasswords: false,
+	});
 
-  function handleFileInput(event: any): void {
-    if (event.target.files[0].size > 1000000) {
-      setErrorMessage("File size is too large");
-      return;
-    }
-    setErrorMessage("");
+	function handleFileInput(event: any): void {
+		if (event.target.files[0].size > 1000000) {
+			setErrorMessage("File size is too large");
+			return;
+		}
+		setErrorMessage("");
 
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      setState({
-        ...state,
-        [event.target.id]: reader.result,
-      });
-    });
-    reader.readAsDataURL(event.target.files[0]);
-  }
+		const reader = new FileReader();
+		reader.addEventListener("load", () => {
+			setState({
+				...state,
+				[event.target.id]: reader.result,
+			});
+		});
+		reader.readAsDataURL(event.target.files[0]);
+	}
 
-  const toggleConfirmPasswordVisibility = () => {
-    setState((prevState) => ({
-      ...prevState,
-      showConfirmPassword: !prevState.showConfirmPassword,
-    }));
-  };
+	const toggleConfirmPasswordVisibility = () => {
+		setState((prevState) => ({
+			...prevState,
+			showConfirmPassword: !prevState.showConfirmPassword,
+		}));
+	};
 
-  const handleSignUpClick = async (event: any) => {
-    event.preventDefault();
+	const handleSignUpClick = async (event: any) => {
+		event.preventDefault();
 
-    const lettersOnlyRegex = /^[A-Za-z]+$/;
-    if (
-      !lettersOnlyRegex.test(state.firstName) ||
-      !lettersOnlyRegex.test(state.lastName)
-    ) {
-      setErrorMessage("First and Last Name must contain only letters.");
-      return;
-    }
+		const lettersOnlyRegex = /^[A-Za-z]+$/;
+		if (
+			!lettersOnlyRegex.test(state.firstName) ||
+			!lettersOnlyRegex.test(state.lastName)
+		) {
+			setErrorMessage("First and Last Name must contain only letters.");
+			return;
+		}
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(state.email)) {
-      setErrorMessage("Invalid email format.");
-      return;
-    }
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(state.email)) {
+			setErrorMessage("Invalid email format.");
+			return;
+		}
 
-    if (state.password !== state.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
-      return;
-    }
+		if (state.password !== state.confirmPassword) {
+			setErrorMessage("Passwords do not match.");
+			return;
+		}
 
-    if (
-      !passwordState.upperCase ||
-      !passwordState.lowerCase ||
-      !passwordState.number ||
-      !passwordState.specialChar ||
-      !passwordState.length
-    ) {
-      setErrorMessage("Password does not meet the requirements.");
-      return;
-    }
+		if (
+			!passwordState.upperCase ||
+			!passwordState.lowerCase ||
+			!passwordState.number ||
+			!passwordState.specialChar ||
+			!passwordState.length
+		) {
+			setErrorMessage("Password does not meet the requirements.");
+			return;
+		}
 
-    if (errorMessage === "File size is too large") {
-      return;
-    }
+		if (errorMessage === "File size is too large") {
+			return;
+		}
 
-    checkEmail(state.email).then((result) => {
-      if (result) {
-        setErrorMessage("Email already exists");
-      } else {
-        navigate("/otp", {
-          state: {
-            user: { state },
-            fromSignup: true,
-          },
-        });
-      }
-    });
-  };
+		checkEmail(state.email).then((result) => {
+			if (result) {
+				setErrorMessage("Email already exists");
+			} else {
+				navigate("/otp", {
+					state: {
+						user: { state },
+						fromSignup: true,
+					},
+				});
+			}
+		});
+	};
 
-  function handleLoginClick(): void {
-    navigate("/login", { replace: true });
-  }
+	function handleLoginClick(): void {
+		navigate("/login", { replace: true });
+	}
 
-  function handleOnPasswordChange(event: any): void {
-    const newPassword = event.target.value;
-    setState((prevState) => ({
-      ...prevState,
-      password: newPassword,
-    }));
+	function handleOnPasswordChange(event: any): void {
+		const newPassword = event.target.value;
+		setState((prevState) => ({
+			...prevState,
+			password: newPassword,
+		}));
 
-    const upperCaseRegex = /[A-Z]/;
-    const lowerCaseRegex = /[a-z]/;
-    const numberRegex = /[0-9]/;
-    const specialCharRegex = /[!@#$%^&*]/;
+		const upperCaseRegex = /[A-Z]/;
+		const lowerCaseRegex = /[a-z]/;
+		const numberRegex = /[0-9]/;
+		const specialCharRegex = /[!@#$%^&*]/;
 
-    const upperCase = upperCaseRegex.test(newPassword);
-    const lowerCase = lowerCaseRegex.test(newPassword);
-    const number = numberRegex.test(newPassword);
-    const specialChar = specialCharRegex.test(newPassword);
-    const length = newPassword.length >= 8;
-    const repeatedChar = /(.)\1{2,}/.test(newPassword);
+		const upperCase = upperCaseRegex.test(newPassword);
+		const lowerCase = lowerCaseRegex.test(newPassword);
+		const number = numberRegex.test(newPassword);
+		const specialChar = specialCharRegex.test(newPassword);
+		const length = newPassword.length >= 8;
+		const repeatedChar = /(.)\1{2,}/.test(newPassword);
 
-    let sequentialChar = false;
-    let contextSpecific = false;
+		let zxcvbnDictionary: boolean = false;
+		const patternArr = zxcvbn(newPassword).sequence;
+		for (const index in patternArr) {
+			if (
+				patternArr[index].pattern === "dictionary" ||
+				patternArr[index].guesses_log10 < 12
+			) {
+				zxcvbnDictionary = true;
+			}
+		}
 
-    for (let i = 0; i < newPassword.length - 2; i++) {
-      if (
-        newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 1) - 1 &&
-        newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 2) - 2
-      ) {
-        sequentialChar = true;
-      }
-    }
+		let sequentialChar = false;
+		let contextSpecific = false;
 
-    if (state.firstName !== "") {
-      if (newPassword.toLowerCase().includes(state.firstName.toLowerCase()))
-        contextSpecific = true;
-    }
-    if (state.lastName !== "") {
-      if (newPassword.toLowerCase().includes(state.lastName.toLowerCase()))
-        contextSpecific = true;
-    }
-    if (state.email !== "") {
-      if (newPassword.toLowerCase().includes(state.email.toLowerCase()))
-        contextSpecific = true;
-    }
-    if (newPassword.toLowerCase().includes("passguard")) contextSpecific = true;
+		for (let i = 0; i < newPassword.length - 2; i++) {
+			if (
+				newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 1) - 1 &&
+				newPassword.charCodeAt(i) === newPassword.charCodeAt(i + 2) - 2
+			) {
+				sequentialChar = true;
+			}
+		}
 
-    setPasswordStrength(
-      (upperCase && lowerCase ? 1 : 0) +
-        (number ? 1 : 0) +
-        (specialChar ? 1 : 0) +
-        (length ? 1 : 0)
-    );
+		if (state.firstName !== "") {
+			if (newPassword.toLowerCase().includes(state.firstName.toLowerCase()))
+				contextSpecific = true;
+		}
+		if (state.lastName !== "") {
+			if (newPassword.toLowerCase().includes(state.lastName.toLowerCase()))
+				contextSpecific = true;
+		}
+		if (state.email !== "") {
+			if (newPassword.toLowerCase().includes(state.email.toLowerCase()))
+				contextSpecific = true;
+		}
+		if (newPassword.toLowerCase().includes("passguard")) contextSpecific = true;
 
-    setPasswordState({
-      upperCase,
-      lowerCase,
-      number,
-      specialChar,
-      length,
-      repeatedChar,
-      sequentialChar,
-      contextSpecific,
-    });
-  }
+		setPasswordStrength(
+			(upperCase && lowerCase ? 1 : 0) +
+				(number ? 1 : 0) +
+				(specialChar ? 1 : 0) +
+				(length ? 1 : 0)
+		);
 
-  return (
+		setPasswordState({
+			upperCase,
+			lowerCase,
+			number,
+			specialChar,
+			length,
+			repeatedChar,
+			sequentialChar,
+			contextSpecific,
+			frequentPasswords: zxcvbnDictionary,
+		});
+	}
+
+	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
 			<div className="hidden sm:block">
 				<img
@@ -284,8 +299,8 @@ const Signup: React.FC = () => {
 										<div className="">
 											<ul>
 												<li className="font-bold">
-													<span className="text-green-400">Suggestions:</span> To
-													Achieve a Stronger Password
+													<span className="text-green-400">Suggestions:</span>{" "}
+													To Achieve a Stronger Password
 												</li>
 												<li className="mb-1 flex items-center">
 													{!passwordState.sequentialChar ? (
@@ -311,6 +326,14 @@ const Signup: React.FC = () => {
 													)}
 													No Context Specific Characters (e.g. service name,
 													username)
+												</li>
+												<li className="mb-1 flex items-center">
+													{!passwordState.frequentPasswords ? (
+														<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
+													) : (
+														<HiXMark className="me-2 h-5 w-5 text-gray-300 dark:text-gray-400" />
+													)}
+													No Common Phrases or Easily Guessable Words (e.g. names)
 												</li>
 											</ul>
 										</div>
@@ -412,18 +435,18 @@ const Signup: React.FC = () => {
                   absolute translate-x-[24rem] top-[1.9rem]"
 									/>
 								</Tooltip>
-              ) : (
-                  <Tooltip
+							) : (
+								<Tooltip
 									content={"Show"}
 									className="absolute -translate-x-[1.3rem]"
 								>
-								<FiEye
-									onClick={toggleConfirmPasswordVisibility}
-									size="1.3em"
-									className="ml-1 text-black
+									<FiEye
+										onClick={toggleConfirmPasswordVisibility}
+										size="1.3em"
+										className="ml-1 text-black
               absolute translate-x-[24rem] top-[1.9rem]"
-								/>
-                  </Tooltip>
+									/>
+								</Tooltip>
 							)}
 						</div>
 					</LabelInput>
