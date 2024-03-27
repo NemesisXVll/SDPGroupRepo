@@ -10,6 +10,7 @@ import SignOutBTN from "./Form/Button";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import Button from "./Form/Button";
 import { IoExitOutline } from "react-icons/io5";
+import { CiLock } from "react-icons/ci";
 
 const userService = new UserService();
 
@@ -111,6 +112,34 @@ function Navbar(props: NavbarProps) {
               ))}
             </ul>
           </NavbarContext.Provider>
+
+          {expanded ? (
+            <Button
+              value="lockApp"
+              type="button"
+              onClick={() =>
+                navigate("/lock", {
+                  state: { user, expanded: expanded, clickedLockBTN: true },
+                })
+              }
+              style="bg-white text-black hover:bg-yellow-400 w-[11rem] ml-[3.3rem] mb-2"
+            >
+              Lock App
+            </Button>
+          ) : (
+            <CiLock
+              onClick={() =>
+                navigate("/lock", {
+                  state: { user, expanded: expanded, clickedLockBTN: true },
+                })
+              }
+              className="relative flex items-center  w-10 h-10 mb-2 ml-3 p-1
+                        font-medium rounded-md cursor-pointer
+                        text-white border-b-2 border-gray-700
+                        hover:bg-yellow-400 hover:text-black
+                          group  transition-all duration-100"
+            ></CiLock>
+          )}
 
           <div className="border-t border-gray-700 flex p-3">
             <img

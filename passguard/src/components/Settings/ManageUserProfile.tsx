@@ -1,14 +1,15 @@
-import { Card, FileInput, Modal } from "flowbite-react";
+import { Card, FileInput, Modal, Toast } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../utils/userService";
 import LabelInput from "../Form/LabelInput";
 import Button from "../Form/Button";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheck, FaCheckCircle } from "react-icons/fa";
 import { CgDanger } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
+import { HiCheck } from "react-icons/hi2";
 
 const userService = new UserService();
 
@@ -27,9 +28,10 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
     picture: "",
   });
   const [showSaveButton, setShowSaveButton] = useState(false);
+  const [successFulUserToast, setSuccessFulUserToast] =
+    useState<boolean>(false);
   const [showUpdateButton, setShowUpdateButton] = useState(true);
   const [cancelBTNFlag, setCancelBTNFlag] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [editable, setEditable] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,6 +40,10 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
       setUserData(data);
     });
   }, [cancelBTNFlag]);
+
+  setTimeout(() => {
+    setSuccessFulUserToast(false);
+  }, 3000);
 
   function handleOnChange(event: any): void {
     setUserData({ ...userData, [event.target.id]: event.target.value });
@@ -96,7 +102,7 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
       user.masterPassword
     );
 
-    setShowModal(true);
+    setSuccessFulUserToast(true);
 
     if (props.userUpdated) {
       props.userUpdated();
@@ -240,29 +246,17 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
         </div>
       </Card>
 
-      <Modal
-        show={showModal}
-        size="md"
-        popup
-        onClose={() => setShowModal(false)}
-      >
-        <Modal.Body className="mt-9">
-          <div className="flex justify-center p-3">
-            <FaCheckCircle className="text-5xl text-green-500" />
+      {successFulUserToast && (
+        <Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
+          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+            <FaCheck className="h-5 w-5" />
           </div>
-          <h1 className="flex justify-center">Account Updated Successfully</h1>
-        </Modal.Body>
-        <div className="mx-6 my-4">
-          <Button
-            value="Login"
-            onClick={() => {
-              setShowModal(false);
-            }}
-          >
-            Close
-          </Button>
-        </div>
-      </Modal>
+          <div className="ml-3 text-sm font-normal">
+            Account Updated Successfully
+          </div>
+          <Toast.Toggle />
+        </Toast>
+      )}
     </>
   );
 };

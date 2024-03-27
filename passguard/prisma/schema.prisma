@@ -46,7 +46,7 @@ model Credential {
 model SecurityQuestion {
   securityQuestionId Int    @id @default(autoincrement())
   data               String //Question, HashedAnswer (As An Encrypted JSON)
-  User               User   @relation(fields: [userId], references: [userId])
+  User               User   @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId             Int //Foreign key
 }
 

@@ -42,12 +42,24 @@ const Settings = (props: SettingsProps) => {
   );
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [deleteOption, setDeleteOption] = useState("");
-  const [openToast, setOpenToast] = useState(false);
+  const [userPasswordUpdated, setUserPasswordUpdated] = useState(false);
+  const [openToast, setOpenToast] = useState<boolean>(false);
 
-  function handleUserUpdated() {
-    console.log("User updated");
-    setUserUpdatedFlag(!userUpdatedFlag);
-  }
+  useEffect(() => {
+    if (
+      location.state?.accountEmailChange ||
+      location.state?.updatedUserPassword
+    ) {
+      console.log(
+        location.state.accountEmailChange,
+        location.state.updatedUserPassword
+      );
+      setOpenToast(true);
+      setTimeout(() => {
+        setOpenToast(false);
+      }, 3000);
+    }
+  }, []);
 
   const handleWipeAllCredentials = () => {
     const credentialService = new CredentialService();
@@ -70,6 +82,15 @@ const Settings = (props: SettingsProps) => {
       setOpenToast(false);
     }, 3000);
   };
+
+  const handleUserPasswordUpdated = () => {
+    setUserPasswordUpdated(true);
+    setOpenToast(true);
+    setTimeout(() => {
+      setOpenToast(false);
+    }, 3000);
+  };
+
   const handleSendEmail = async () => {
     // Define your emailjs service IDs and user ID
     const serviceID = "service_3ojecjd"; // Your service ID
@@ -123,12 +144,15 @@ const Settings = (props: SettingsProps) => {
             </div>
             <Tabs aria-label="Default tabs" style="default">
               <Tabs.Item title="Manage Profile" icon={HiUserCircle}>
-                <UserProfile userUpdated={handleUserUpdated}></UserProfile>
+                <UserProfile
+                  userUpdated={() => setUserUpdatedFlag(!userUpdatedFlag)}
+                ></UserProfile>
               </Tabs.Item>
+
               <Tabs.Item title="Security" icon={CiLock}>
                 <div className="">
                   <ManagePassword
-                    userUpdated={props.userUpdated}
+                    userPasswordUpdated={handleUserPasswordUpdated}
                   ></ManagePassword>
                   <Autolock></Autolock>
 
@@ -136,24 +160,12 @@ const Settings = (props: SettingsProps) => {
                   <OtpDropDown></OtpDropDown>
                 </div>
               </Tabs.Item>
+
               <Tabs.Item
                 title="Manage Credentials"
                 className=""
                 icon={GrStorage}
               >
-                {openToast && (
-                  <Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
-                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-                      <FaCheck className="h-5 w-5" />
-                    </div>
-                    <div className="ml-3 text-sm font-normal">
-                      {deleteOption === "wipeCredentials"
-                        ? "Credentials deleted Successfully"
-                        : "Documents deleted Successfully"}{" "}
-                    </div>
-                    <Toast.Toggle />
-                  </Toast>
-                )}
                 <h2 className="m-2 font-bold text-lg">Credentials</h2>
                 <TrashDuration></TrashDuration>
                 <div className="p-5  flex items-center justify-between  rounded-b-none bg-gray-100 border border-gray-200 shadow-md">
@@ -232,6 +244,24 @@ const Settings = (props: SettingsProps) => {
                 </div>
               </Tabs.Item>
             </Tabs>
+
+            {openToast && (
+              <Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
+                <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                  <FaCheck className="h-5 w-5" />
+                </div>
+                <div className="ml-3 text-sm font-normal">
+                  {deleteOption === "wipeCredentials"
+                    ? "Credentials deleted Successfully"
+                    : location.state?.accountEmailChange
+                      ? "Email updated Successfully"
+                      : userPasswordUpdated
+                        ? "Password updated Successfully"
+                        : "Documents deleted Successfully"}
+                </div>
+                <Toast.Toggle />
+              </Toast>
+            )}
           </div>
         </div>
       </div>

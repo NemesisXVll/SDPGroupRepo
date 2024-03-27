@@ -35,6 +35,7 @@ const ManageEmail = () => {
 
       {openModal && (
         <SecurityQuestion
+          fromLoc="changeEmail"
           closeModal={handleModals}
           openModal={openModal}
         ></SecurityQuestion>

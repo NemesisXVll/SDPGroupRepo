@@ -10,6 +10,8 @@ import { CiCircleChevLeft } from "react-icons/ci";
 import { AiTwotoneMail } from "react-icons/ai";
 import LabelInput from "../Form/LabelInput";
 import UserService from "../../utils/userService";
+import { error } from "console";
+import { CgDanger } from "react-icons/cg";
 
 const userService = new UserService();
 
@@ -29,6 +31,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   );
   const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [firstQuestion, setFirstQuestion] = useState<string>("");
+  const [secondQuestion, setSecondQuestion] = useState<string>("");
+  const [firstQuestionAnswer, setFirstQuestionAnswer] = useState<string>("");
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [secondQuestionAnswer, setSecondQuestionAnswer] = useState<string>("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -38,17 +46,24 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
     };
   }, []);
 
+  async function verifySecQuestionAnswers() {
+    const isVerified = await userService.verifySecQuestionAnswers(user.userId,firstQuestionAnswer,secondQuestionAnswer);
+    console.log(isVerified)
+    setIsVerified(isVerified);
+  }
+
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
-
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
-      navigate("/new-password", { state: { user, fromForgetPass: true } });
-    }
-
-    if (location.pathname === "/otp") {
+      //Function verify answer
+      verifySecQuestionAnswers();
+      if(isVerified){
+        navigate("/new-password", { state: { user, fromForgetPass: true } });
+      }
+    } else if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
         firstName: user.state.firstName,
         lastName: user.state.lastName,
@@ -58,6 +73,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
         picture: user.state.picture,
       });
       if (signUpResult) {
+        const secQuestionObj = {
+          firstQuestion: firstQuestion,
+          firstQuestionAnswer: firstQuestionAnswer,
+          secondQuestion: secondQuestion,
+          secondQuestionAnswer: secondQuestionAnswer,
+        };
+        await userService.createQuestion(signUpResult.userId,signUpResult.salt, secQuestionObj);
         setOpenSuccessModal(true);
       } else {
         console.log("Sign up failed");
@@ -65,14 +87,24 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       navigate("/login", { state: { fromSecurityQuestion: true } });
     }
 
-    if (location.pathname === "/settings") {
+    if (props.fromLoc === "changeEmail") {
+      //Check if input of sec question is like hashed password
       setShowSecQuestion(false);
       setShowNewEmail(true);
     }
+
   }
 
   async function handleSubmitNewEmail(event: any): Promise<void> {
     event.preventDefault();
+
+    const isEmailFound = await userService.findUserByEmail(email);
+
+    if (isEmailFound) {
+      console.log("Email found");
+      setErrorMessage("Email already exists");
+      return;
+    }
 
     await userService.getUserDataById(user.userId).then((res: any) => {
       navigate("/otp", {
@@ -123,7 +155,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
                 {/* Security Questions */}
                 <div className="mt-4">
-                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setFirstQuestion(event.target.value)}
+                    name="firstQuestion"
+                    id="firstQuestion-select">
                     <option id="Q1">
                       name of a college you applied to but didn’t attend?
                     </option>
@@ -138,12 +172,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
+                    onChange={(event) => setFirstQuestionAnswer(event.target.value)}
                     className="w-full p-2 border rounded mb-4 "
                     placeholder="Your answer"
                     id="answer1"
                   />
 
-                  <select className="w-full p-2 border rounded mb-2 text-sm">
+                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setSecondQuestion(event.target.value)} >
                     <option id="Q4">
                       What was your maths teacher's surname in your 8th year of
                       school?
@@ -157,6 +192,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
+                    onChange={(event) => setSecondQuestionAnswer(event.target.value)}
                     className="w-full p-2 border rounded mb-4"
                     placeholder="Your answer"
                     id="answer2"
@@ -178,9 +214,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           )}
 
         {showNewEmail && (
-          <div className="flex flex-col justify-center pb-3">
+          <div className="flex flex-col justify-center pb-10">
             <form
-              className="max-w-[400px] w-full mx-auto  p-4 shadow-md"
+              className="max-w-[360px] w-full mx-auto"
               onSubmit={handleSubmitNewEmail} // Prevent form submission
             >
               <div className="flex justify-center items-center">
@@ -211,7 +247,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 ></LabelInput>
               </div>
 
-              <div className="mt-10">
+              {errorMessage && (
+                <div className="flex mt-1">
+                  <CgDanger className="w-4 h-5 text-red-500" />
+                  <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+                </div>
+              )}
+
+              <div className="mt-7">
                 <Button type="submit" value="sendVerification">
                   Send verification code
                 </Button>

@@ -39,12 +39,9 @@ function DocumentCard(props: DocumentCardProps) {
               relative flex cursor-pointer flex-col justify-end 
               rounded-3xl hover:scale-105 transition-all duration-300 w-52 max-w-xs`}
       >
-        <div
-          className="rounded-2xl bg-white shadow-lg border-2 h-72"
-          onDoubleClick={() => setOpenModal(!openModal)}
-        >
+        <div className="rounded-2xl bg-white shadow-lg border-2 h-72">
           <div className="TopOfCard flex items-center justify-between border-b-2 p-2">
-            <div>
+            <div onClick={() => setOpenModal(!openModal)}>
               <h3 className="font-nunito break-words text-sm font-bold">
                 {props.name}
               </h3>
@@ -78,7 +75,7 @@ function DocumentCard(props: DocumentCardProps) {
                       value="Cancel"
                       onClick={() => setOpenDeleteModal(false)}
                     >
-                    Cancel
+                      Cancel
                     </Button>
                     <Button value="confirmsignout" onClick={handleClickOnYes}>
                       Delete
@@ -90,14 +87,22 @@ function DocumentCard(props: DocumentCardProps) {
           </div>
 
           {/* how to display all file types? */}
-          <div className="flex items-center justify-center">
+          <div
+            className="flex items-center justify-center"
+            onClick={() => setOpenModal(!openModal)}
+          >
             {props.type === "application/pdf" ? (
               <embed
                 src={props.path + `#page=1`}
                 className="overflow-hidden border-none w-44 h-44 mt-1"
+                onClick={() => setOpenModal(!openModal)}
               ></embed>
             ) : (
-              <img src={props.path} className="w-44 h-44 mt-1" />
+              <img
+                src={props.path}
+                className="w-44 h-44 mt-1"
+                onClick={() => setOpenModal(!openModal)}
+              />
             )}
           </div>
 
@@ -127,9 +132,14 @@ function DocumentCard(props: DocumentCardProps) {
                 <embed
                   src={props.path}
                   className="w-screen h-screen overflow-hidden"
+                  onClick={() => setOpenModal(!openModal)}
                 ></embed>
               ) : (
-                <img src={props.path + `#toolbar=0`} className="w-screen" />
+                <img
+                  src={props.path + `#toolbar=0`}
+                  className="w-screen"
+                  onClick={() => setOpenModal(!openModal)}
+                />
               )}
             </div>
           </Modal.Body>
