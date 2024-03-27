@@ -19,6 +19,7 @@ import Autolock from "./Autolock";
 import OtpDropDown from "./OtpDropDown";
 import TrashDuration from "./TrashDuration";
 import SecurityQuestion from "../SecurityQuestion/SecurityQuestion";
+import BackupPref from "./BackupPref";
 
 type SettingsProps = {
   userUpdated?: any;
@@ -156,6 +157,7 @@ const Settings = (props: SettingsProps) => {
 
                   <h2 className="m-2 font-bold text-lg">Preferences</h2>
                   <OtpDropDown></OtpDropDown>
+                  <BackupPref></BackupPref>
                 </div>
               </Tabs.Item>
 

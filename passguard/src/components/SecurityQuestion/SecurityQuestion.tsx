@@ -117,7 +117,6 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           signUpResult.salt,
           secQuestionObj
         );
-        setOpenSuccessModal(true);
       } else {
         console.log("Sign up failed");
       }
@@ -252,7 +251,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                     onClick={handleOnClick}
                     value="createAccount"
                   >
-                    Create Account
+                    {props.fromLoc === "forgetPassEmailOTP" ||
+                    props.fromLoc === "forgetPassSMSOTP" ||
+                    props.fromLoc === "wipeAccount" ||
+                    props.fromLoc === "wipeCredentials" ||
+                    props.fromLoc === "wipeDocuments" ||
+                    props.fromLoc === "changeEmail"
+                      ? "Continue"
+                      : "Create Account"}
                   </Button>
                 </div>
               </form>

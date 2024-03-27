@@ -41,8 +41,8 @@ const SMS: React.FC = () => {
       setUserPhone("+97450119029");
     } else {
       console.log("NOT FROM SIGNUP");
+      console.log("USER:", user.userId);
       userService.getUserDataById(user.userId).then((data: any) => {
-        console.log(data.phone);
         setUserPhone(data.phone);
       });
     }
@@ -99,11 +99,7 @@ const SMS: React.FC = () => {
       //CHANGE
       console.log("OTP is correct");
       setMessage("OTP is correct");
-      if (location.state.fromSignup === true) {
-        navigate("/security-question", {
-          state: { user, expanded: true },
-        });
-      } else if (location.state.fromForgetOTP === true) {
+      if (location.state.fromForgetOTP === true) {
         setShowModal(true);
       } else if (location.state.wipeCredentials) {
         const credentialService = new CredentialService();

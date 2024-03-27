@@ -149,6 +149,7 @@ export default class UserManagementService {
         theme: "light",
         loginOtp: "email",
         forgetPassOtp: "email",
+        backUpDuration: "none",
       });
 
       const newUser = await prisma.user.create({
@@ -418,10 +419,20 @@ export default class UserManagementService {
   }
 
   //-------------------------Security Question Model-------------------------//
-  async createSecurityQuestion(userId: any , salt: any ,securityQuestionObj: any) {
+  async createSecurityQuestion(
+    userId: any,
+    salt: any,
+    securityQuestionObj: any
+  ) {
     try {
-      securityQuestionObj.firstQuestionAnswer = await hashPassword(securityQuestionObj.firstQuestionAnswer, salt);
-      securityQuestionObj.secondQuestionAnswer = await hashPassword(securityQuestionObj.secondQuestionAnswer, salt);
+      securityQuestionObj.firstQuestionAnswer = await hashPassword(
+        securityQuestionObj.firstQuestionAnswer,
+        salt
+      );
+      securityQuestionObj.secondQuestionAnswer = await hashPassword(
+        securityQuestionObj.secondQuestionAnswer,
+        salt
+      );
       const newSecurityQuestion = await prisma.securityQuestion.create({
         data: {
           userId: userId,

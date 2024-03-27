@@ -4,7 +4,6 @@ import loginImg from "../assets/icons/common/appLogo.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import InputOTP from "./EmailOTP/InputOTP";
-import { FcPrevious } from "react-icons/fc";
 import { CiCircleChevLeft } from "react-icons/ci";
 import SecurityQuestion from "./SecurityQuestion/SecurityQuestion";
 import CredentialService from "../utils/credentialService";
@@ -64,6 +63,15 @@ const OTPVerification: React.FC = () => {
     const otp = randomValues.map((value) => value % 10).join("");
     return otp;
   };
+
+  useEffect(() => {
+    //NEEDS EXPLANATION
+    const interval = setInterval(() => {
+      const newOTP = generateOTP(); //Calling generateOTP function every 10 minutes
+      console.log("New OTP generated:", newOTP);
+    }, 600000);
+    return () => clearInterval(interval);
+  }, []);
 
   const sendOTP = async () => {
     try {
