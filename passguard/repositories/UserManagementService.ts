@@ -160,7 +160,6 @@ export default class UserManagementService {
           preference: preference,
         },
       });
-      // console.log("User created....", newUser);
       return newUser;
     } catch (error) {
       console.error("Error creating user", error);
@@ -180,7 +179,6 @@ export default class UserManagementService {
   }
 
   async updateUserById(userId: any, data: any) {
-    console.log("");
     const encryptedData = encryptData(data.data, data.masterPassword);
     try {
       const updatedUser = await prisma.user.update({
@@ -289,7 +287,6 @@ export default class UserManagementService {
           data: encryptedData,
         },
       });
-      // console.log("credential created....",credential);
       return newCredential;
     } catch (error) {
       throw error;
@@ -350,7 +347,6 @@ export default class UserManagementService {
   }
   async deleteCredentialById(credentialId: number) {
     await this.checkForReusedPasswordOnDeletion(credentialId);
-    console.log("deleting credential", credentialId);
     try {
       const deletedCredential = await prisma.credential.delete({
         where: { credentialId: credentialId },
@@ -424,7 +420,6 @@ export default class UserManagementService {
   //-------------------------Security Question Model-------------------------//
   async createSecurityQuestion(userId: any , salt: any ,securityQuestionObj: any) {
     try {
-      console.log(securityQuestionObj.firstQuestionAnswer,salt)
       securityQuestionObj.firstQuestionAnswer = await hashPassword(securityQuestionObj.firstQuestionAnswer, salt);
       securityQuestionObj.secondQuestionAnswer = await hashPassword(securityQuestionObj.secondQuestionAnswer, salt);
       const newSecurityQuestion = await prisma.securityQuestion.create({

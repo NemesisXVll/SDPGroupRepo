@@ -8,6 +8,8 @@ import { CiCircleChevLeft } from "react-icons/ci";
 import InputOTP from "../components/EmailOTP/InputOTP";
 import { ipcMain } from "electron";
 import SecurityQuestion from "../components/SecurityQuestion/SecurityQuestion";
+import CredentialService from "../utils/credentialService";
+import DocumentService from "../utils/documentService";
 // import twilio from "twilio";
 
 const userService = new UserService();
@@ -40,6 +42,7 @@ const SMS: React.FC = () => {
     } else {
       console.log("NOT FROM SIGNUP");
       userService.getUserDataById(user.userId).then((data: any) => {
+        console.log(data.phone);
         setUserPhone(data.phone);
       });
     }
@@ -90,7 +93,7 @@ const SMS: React.FC = () => {
     }
   };
 
-  const verifyOTP = (enteredOTP: any) => {
+  const verifyOTP = async (enteredOTP: any) => {
     console.log("VERIFYING OTP");
     if (enteredOTP == generatedOTP) {
       //CHANGE
@@ -102,6 +105,21 @@ const SMS: React.FC = () => {
         });
       } else if (location.state.fromForgetOTP === true) {
         setShowModal(true);
+      } else if (location.state.wipeCredentials) {
+        const credentialService = new CredentialService();
+        credentialService.deleteAllCredentialsByUserId(user.userId);
+        navigate("/settings", {
+          state: { user, expanded: true, wipeCredentials: true },
+        });
+      } else if (location.state.wipeDocuments) {
+        const documentService = new DocumentService();
+        documentService.deleteAllDocumentsByUserId(user.userId);
+        navigate("/settings", {
+          state: { user, expanded: true, wipeDocuments: true },
+        });
+      } else if (location.state.wipeAccount) {
+        navigate("/login", { state: { accountDeleted: true } });
+        await userService.deleteUser(user.userId);
       } else {
         navigate("/home", { state: { user, expanded: true } });
       }

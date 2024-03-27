@@ -7,6 +7,8 @@ import InputOTP from "./EmailOTP/InputOTP";
 import { FcPrevious } from "react-icons/fc";
 import { CiCircleChevLeft } from "react-icons/ci";
 import SecurityQuestion from "./SecurityQuestion/SecurityQuestion";
+import CredentialService from "../utils/credentialService";
+import DocumentService from "../utils/documentService";
 
 const userService = new UserService();
 
@@ -56,13 +58,10 @@ const OTPVerification: React.FC = () => {
 
   const generateOTP = (): string => {
     const randomValues = new Uint8Array(6); // 6 bytes for 6 digits
-
     // Populate the array with random values
     crypto.getRandomValues(randomValues);
-
     // Map the random values to digits (0-9)
     const otp = randomValues.map((value) => value % 10).join("");
-
     return otp;
   };
 
@@ -111,9 +110,6 @@ const OTPVerification: React.FC = () => {
       console.log("OTP is correct");
       setMessage("OTP is correct");
       if (location.state.fromSignup === true) {
-        // navigate("/security-question", {
-        //   state: { user, expanded: true },
-        // });
         setShowModal(true);
       } else if (location.state.fromSettings === true) {
         user.data.email = userEmail;
@@ -123,9 +119,30 @@ const OTPVerification: React.FC = () => {
           user.salt,
           user.masterPassword
         );
-        navigate("/settings", { state: { user: updatedUser, expanded: true, accountEmailChange: true } });
+        navigate("/settings", {
+          state: {
+            user: updatedUser,
+            expanded: true,
+            accountEmailChange: true,
+          },
+        });
       } else if (location.state.fromForgetOTP === true) {
         setShowModal(true);
+      } else if (location.state.wipeAccount) {
+        navigate("/login", { state: { accountDeleted: true } });
+        await userService.deleteUser(user.userId);
+      } else if (location.state.wipeCredentials) {
+        const credentialService = new CredentialService();
+        credentialService.deleteAllCredentialsByUserId(user.userId);
+        navigate("/settings", {
+          state: { user, expanded: true, wipeCredentials: true },
+        });
+      } else if (location.state.wipeDocuments) {
+        const documentService = new DocumentService();
+        documentService.deleteAllDocumentsByUserId(user.userId);
+        navigate("/settings", {
+          state: { user, expanded: true, wipeDocuments: true },
+        });
       } else {
         navigate("/home", { state: { user, expanded: true } });
       }
@@ -190,7 +207,13 @@ const OTPVerification: React.FC = () => {
         </div>
       </div>
 
-      {showModal && <SecurityQuestion fromLoc={location.state.fromForgetOTP ? "forgetPassEmailOTP" : ""} openModal={true} closeModal={handleCloseModal} />}
+      {showModal && (
+        <SecurityQuestion
+          fromLoc={location.state.fromForgetOTP ? "forgetPassEmailOTP" : ""}
+          openModal={true}
+          closeModal={handleCloseModal}
+        />
+      )}
     </>
   );
 };
