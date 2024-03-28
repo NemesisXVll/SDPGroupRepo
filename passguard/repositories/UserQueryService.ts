@@ -49,7 +49,6 @@ export default class UserQueryService {
   async getUserPhoneNumberById(userId: any) {
     const data = await this.getUserDataById(userId);
     if (!data) return null;
-    console.log("Data: ", JSON.parse(data).phone);
     return JSON.parse(data).phone;
   }
   async getUserMasterPasswordById(userId: any) {

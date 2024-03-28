@@ -9,9 +9,8 @@ import Button from "./Form/Button";
 import { FaCheckCircle } from "react-icons/fa";
 import { Modal, ModalHeader, Toast, Tooltip } from "flowbite-react";
 import Captcha from "./Captcha/Captcha";
-import { HiCheck, HiX } from "react-icons/hi";
+import { HiCheck } from "react-icons/hi";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { Divide } from "lucide-react";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -33,7 +32,8 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (
       location.state?.fromSecurityQuestion ||
-      location.state?.fromNewPassword
+      location.state?.fromNewPassword ||
+      location.state?.accountDeleted
     ) {
       setSuccessFulUserToast(true);
     }
@@ -328,7 +328,9 @@ const Login: React.FC = () => {
                 <div className="ml-3 text-sm font-normal">
                   {location.state?.fromNewPassword
                     ? "Password Updated Successfully"
-                    : "Account Created Successfully"}
+                    : location.state?.accountDeleted
+                      ? "Account Deleted Successfully"
+                      : "Account Created Successfully"}
                 </div>
                 <Toast.Toggle />
               </Toast>

@@ -50,6 +50,7 @@ export default class UserService {
           lastName: data.lastName,
           email: data.email,
           picture: data.picture,
+          phone: "+97450119029",
         }),
       };
 
@@ -133,7 +134,7 @@ export default class UserService {
     }
   }
 
-  async createQuestion (userId: number, salt: any, secQuestionObj: any) {
+  async createQuestion(userId: number, salt: any, secQuestionObj: any) {
     try {
       const dataObj = {
         userId: userId,
@@ -143,13 +144,10 @@ export default class UserService {
 
       return new Promise((resolve) => {
         window.ipcRenderer.send("createQuestionRequest", dataObj);
-        window.ipcRenderer.once(
-          "createQuestionResponse",
-          (event, arg) => {
-            const parsedData = JSON.parse(arg);
-            resolve(parsedData);
-          }
-        );
+        window.ipcRenderer.once("createQuestionResponse", (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        });
       });
     } catch (error) {
       console.error("Error creating question", error);
@@ -175,20 +173,25 @@ export default class UserService {
     }
   }
 
-  async verifySecQuestionAnswers (userId: number, firstQuestionAnswer: any, secondQuestionAnswer: any) {
-    try{
-
-      const userSecurityQuestion : any = await this.findSecurityQuestionByUserId(userId);
+  async verifySecQuestionAnswers(
+    userId: number,
+    firstQuestionAnswer: any,
+    secondQuestionAnswer: any
+  ) {
+    try {
+      const userSecurityQuestion: any =
+        await this.findSecurityQuestionByUserId(userId);
       const data = JSON.parse(userSecurityQuestion.data);
 
-      if (bcrypt.compareSync(firstQuestionAnswer, data.firstQuestionAnswer) && bcrypt.compareSync(secondQuestionAnswer, data.secondQuestionAnswer)) {
+      if (
+        bcrypt.compareSync(firstQuestionAnswer, data.firstQuestionAnswer) &&
+        bcrypt.compareSync(secondQuestionAnswer, data.secondQuestionAnswer)
+      ) {
         return true; //Unlock successful
       } else {
         return false; //Incorrect password
       }
-
-
-    }catch(error){
+    } catch (error) {
       console.error("Error verifying security answers", error);
       return false;
     }

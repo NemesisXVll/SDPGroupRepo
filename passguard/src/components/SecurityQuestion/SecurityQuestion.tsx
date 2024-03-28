@@ -47,8 +47,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   }, []);
 
   async function verifySecQuestionAnswers() {
-    const isVerified = await userService.verifySecQuestionAnswers(user.userId,firstQuestionAnswer,secondQuestionAnswer);
-    console.log(isVerified)
+    const isVerified = await userService.verifySecQuestionAnswers(
+      user.userId,
+      firstQuestionAnswer,
+      secondQuestionAnswer
+    );
+    console.log(isVerified);
     setIsVerified(isVerified);
   }
 
@@ -58,10 +62,39 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
-      //Function verify answer
       verifySecQuestionAnswers();
-      if(isVerified){
+      if (isVerified) {
         navigate("/new-password", { state: { user, fromForgetPass: true } });
+      }
+    } else if (props.fromLoc === "wipeAccount") {
+      verifySecQuestionAnswers();
+      console.log(JSON.parse(user.preference).forgetPassOtp);
+      if (isVerified) {
+        if (JSON.parse(user.preference).forgetPassOtp === "email") {
+          navigate("/otp", { state: { user, wipeAccount: true } });
+        } else {
+          navigate("/sms", { state: { user, wipeAccount: true } });
+        }
+      }
+    } else if (props.fromLoc === "wipeCredentials") {
+      verifySecQuestionAnswers();
+      console.log(JSON.parse(user.preference).forgetPassOtp);
+      if (isVerified) {
+        if (JSON.parse(user.preference).forgetPassOtp === "email") {
+          navigate("/otp", { state: { user, wipeCredentials: true } });
+        } else {
+          navigate("/sms", { state: { user, wipeCredentials: true } });
+        }
+      }
+    } else if (props.fromLoc === "wipeDocuments") {
+      verifySecQuestionAnswers();
+      console.log(JSON.parse(user.preference).forgetPassOtp);
+      if (isVerified) {
+        if (JSON.parse(user.preference).forgetPassOtp === "email") {
+          navigate("/otp", { state: { user, wipeDocuments: true } });
+        } else {
+          navigate("/sms", { state: { user, wipeDocuments: true } });
+        }
       }
     } else if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
@@ -79,8 +112,11 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           secondQuestion: secondQuestion,
           secondQuestionAnswer: secondQuestionAnswer,
         };
-        await userService.createQuestion(signUpResult.userId,signUpResult.salt, secQuestionObj);
-        setOpenSuccessModal(true);
+        await userService.createQuestion(
+          signUpResult.userId,
+          signUpResult.salt,
+          secQuestionObj
+        );
       } else {
         console.log("Sign up failed");
       }
@@ -92,7 +128,6 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       setShowSecQuestion(false);
       setShowNewEmail(true);
     }
-
   }
 
   async function handleSubmitNewEmail(event: any): Promise<void> {
@@ -155,9 +190,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
                 {/* Security Questions */}
                 <div className="mt-4">
-                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setFirstQuestion(event.target.value)}
+                  <select
+                    className="w-full p-2 border rounded mb-2 text-sm"
+                    onChange={(event) => setFirstQuestion(event.target.value)}
                     name="firstQuestion"
-                    id="firstQuestion-select">
+                    id="firstQuestion-select"
+                  >
                     <option id="Q1">
                       name of a college you applied to but didn’t attend?
                     </option>
@@ -172,13 +210,18 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
-                    onChange={(event) => setFirstQuestionAnswer(event.target.value)}
+                    onChange={(event) =>
+                      setFirstQuestionAnswer(event.target.value)
+                    }
                     className="w-full p-2 border rounded mb-4 "
                     placeholder="Your answer"
                     id="answer1"
                   />
 
-                  <select className="w-full p-2 border rounded mb-2 text-sm" onChange={(event) => setSecondQuestion(event.target.value)} >
+                  <select
+                    className="w-full p-2 border rounded mb-2 text-sm"
+                    onChange={(event) => setSecondQuestion(event.target.value)}
+                  >
                     <option id="Q4">
                       What was your maths teacher's surname in your 8th year of
                       school?
@@ -192,7 +235,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   </select>
                   <input
                     type="text"
-                    onChange={(event) => setSecondQuestionAnswer(event.target.value)}
+                    onChange={(event) =>
+                      setSecondQuestionAnswer(event.target.value)
+                    }
                     className="w-full p-2 border rounded mb-4"
                     placeholder="Your answer"
                     id="answer2"
@@ -206,7 +251,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                     onClick={handleOnClick}
                     value="createAccount"
                   >
-                    Create Account
+                    {props.fromLoc === "forgetPassEmailOTP" ||
+                    props.fromLoc === "forgetPassSMSOTP" ||
+                    props.fromLoc === "wipeAccount" ||
+                    props.fromLoc === "wipeCredentials" ||
+                    props.fromLoc === "wipeDocuments" ||
+                    props.fromLoc === "changeEmail"
+                      ? "Continue"
+                      : "Create Account"}
                   </Button>
                 </div>
               </form>
@@ -263,25 +315,6 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           </div>
         )}
       </Modal>
-
-      {/* <Modal
-        show={openSuccessModal}
-        size="md"
-        popup
-        onClose={() => setOpenSuccessModal(false)}
-      >
-        <Modal.Body className="mt-9">
-          <div className="flex justify-center p-3">
-            <FaCheckCircle className="text-5xl text-green-500" />
-          </div>
-          <h1 className="flex justify-center">Acount Created Successfully</h1>
-        </Modal.Body>
-        <div className="mx-6 my-4">
-          <Button value="Login" onClick={() => navigate("/login", {})}>
-            Go To Login
-          </Button>
-        </div>
-      </Modal> */}
     </>
   );
 };

@@ -18,6 +18,8 @@ import { CiLock } from "react-icons/ci";
 import Autolock from "./Autolock";
 import OtpDropDown from "./OtpDropDown";
 import TrashDuration from "./TrashDuration";
+import SecurityQuestion from "../SecurityQuestion/SecurityQuestion";
+import BackupPref from "./BackupPref";
 
 type SettingsProps = {
   userUpdated?: any;
@@ -34,6 +36,7 @@ const Settings = (props: SettingsProps) => {
   const location = useLocation();
 
   const [expanded, setExpanded] = useState(location.state?.expanded);
+  const [secQuestionModal, setSecQuestionModal] = useState(false);
   const [userUpdatedFlag, setUserUpdatedFlag] = useState(false);
   const { redirect, setRedirect } = AutoRedirectHook(
     JSON.parse(location.state.user.preference).lockDuration,
@@ -48,12 +51,10 @@ const Settings = (props: SettingsProps) => {
   useEffect(() => {
     if (
       location.state?.accountEmailChange ||
-      location.state?.updatedUserPassword
+      location.state?.updatedUserPassword ||
+      location.state?.wipeCredentials ||
+      location.state?.wipeDocuments
     ) {
-      console.log(
-        location.state.accountEmailChange,
-        location.state.updatedUserPassword
-      );
       setOpenToast(true);
       setTimeout(() => {
         setOpenToast(false);
@@ -62,13 +63,15 @@ const Settings = (props: SettingsProps) => {
   }, []);
 
   const handleWipeAllCredentials = () => {
-    const credentialService = new CredentialService();
-    credentialService.deleteAllCredentialsByUserId(location.state?.userId);
+    setOpenDeleteModal(false);
+    setSecQuestionModal(true);
   };
+
   const handleWipeAllDocuments = () => {
-    const documentService = new DocumentService();
-    documentService.deleteAllDocumentsByUserId(location.state?.userId);
+    setOpenDeleteModal(false);
+    setSecQuestionModal(true);
   };
+
   const handleOpenModal = () => {
     setOpenDeleteModal(true);
     if (deleteOption === "wipeCredentials") {
@@ -77,10 +80,6 @@ const Settings = (props: SettingsProps) => {
       handleWipeAllDocuments();
     }
     setOpenDeleteModal(false);
-    setOpenToast(true);
-    setTimeout(() => {
-      setOpenToast(false);
-    }, 3000);
   };
 
   const handleUserPasswordUpdated = () => {
@@ -158,6 +157,7 @@ const Settings = (props: SettingsProps) => {
 
                   <h2 className="m-2 font-bold text-lg">Preferences</h2>
                   <OtpDropDown></OtpDropDown>
+                  <BackupPref></BackupPref>
                 </div>
               </Tabs.Item>
 
@@ -251,13 +251,15 @@ const Settings = (props: SettingsProps) => {
                   <FaCheck className="h-5 w-5" />
                 </div>
                 <div className="ml-3 text-sm font-normal">
-                  {deleteOption === "wipeCredentials"
-                    ? "Credentials deleted Successfully"
-                    : location.state?.accountEmailChange
-                      ? "Email updated Successfully"
-                      : userPasswordUpdated
-                        ? "Password updated Successfully"
-                        : "Documents deleted Successfully"}
+                  {userPasswordUpdated
+                    ? "Password updated Successfully"
+                    : location.state?.wipeCredentials
+                      ? "Credentials deleted Successfully"
+                      : location.state?.accountEmailChange
+                        ? "Email updated Successfully"
+                        : location.state?.wipeDocuments
+                          ? "Documents deleted Successfully"
+                          : ""}
                 </div>
                 <Toast.Toggle />
               </Toast>
@@ -268,7 +270,12 @@ const Settings = (props: SettingsProps) => {
       <Modal
         show={openDeleteModal}
         size="md"
-        onClose={() => setOpenDeleteModal(false)}
+        onClose={() => {
+          setOpenDeleteModal(false);
+          setDeleteOption("");
+          setUserPasswordUpdated(false);
+          setUserPasswordUpdated(false);
+        }}
         popup
         dismissible
       >
@@ -293,6 +300,18 @@ const Settings = (props: SettingsProps) => {
           </div>
         </Modal.Body>
       </Modal>
+
+      {secQuestionModal && (
+        <SecurityQuestion
+          fromLoc={
+            deleteOption === "wipeCredentials"
+              ? "wipeCredentials"
+              : "wipeDocuments"
+          }
+          openModal={true}
+          closeModal={() => setSecQuestionModal(false)}
+        />
+      )}
     </>
   );
 };
