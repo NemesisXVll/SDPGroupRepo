@@ -281,7 +281,4 @@ export default class CredentialService {
 	async deleteAllCredentialsByUserId(userId: any) {
 		window.ipcRenderer.send("deleteAllCredentialsByUserId", userId);
 	}
-  shareCredential(credentialData: CredentialData) {
-    window.ipcRenderer.send("shareCredential", credentialData);
-  }
 }
