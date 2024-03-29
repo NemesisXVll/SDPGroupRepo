@@ -101,8 +101,6 @@ const Settings = (props: SettingsProps) => {
     // const userID = "6igdyzCgketnFP148"; // Your user ID
 
     try {
-      await userService.createBackupDB(location.state.user.userId);
-
       const fileContentBase64 = await userService.createBackupDB(
         location.state.user.userId
       );
