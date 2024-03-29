@@ -20,6 +20,9 @@ import OtpDropDown from "./OtpDropDown";
 import TrashDuration from "./TrashDuration";
 import SecurityQuestion from "../SecurityQuestion/SecurityQuestion";
 import BackupPref from "./BackupPref";
+import UserService from "../../utils/userService";
+
+const userService = new UserService();
 
 type SettingsProps = {
   userUpdated?: any;
@@ -92,21 +95,22 @@ const Settings = (props: SettingsProps) => {
 
   const handleSendEmail = async () => {
     // Define your emailjs service IDs and user ID
-    const serviceID = "service_3ojecjd"; // Your service ID
-    const templateID = "template_sgrb5ri"; // Your template ID
-    const userID = "6igdyzCgketnFP148"; // Your user ID
+    // const serviceID = "service_3ojecjd"; // Your service ID
+    // const templateID = "template_sgrb5ri"; // Your template ID
+    // const userID = "6igdyzCgketnFP148"; // Your user ID
 
     try {
-      // Fetch the file from the server
-      const response = await fetch("../../prisma/dev.db");
-      const fileContentBase64 = await response.text();
+
+      await userService.createBackupDB(location.state.user.userId);
+
+      const fileContentBase64 = await userService.createBackupDB(location.state.user.userId);
 
       // Send the email with the attachment
       // await emailjs.send(
       // 	serviceID,
       // 	templateID,
       // 	{
-      // 		to_email: "khalifa.alsidiq@gmail.com", // with the recipient's email
+      // 		to_email: "bike.rider987@gmail.com", // with the recipient's email
       // 		file_content: fileContentBase64, // Base64-encoded file content
       // 	},
       // 	userID

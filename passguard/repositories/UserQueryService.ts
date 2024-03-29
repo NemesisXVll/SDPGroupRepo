@@ -267,52 +267,6 @@ export default class UserQueryService {
     });
   }
 
-  //-------------------------Trash Model-------------------------//
-  //get trash by trash id
-  async getTrashById(trashId: any) {
-    return await prisma.trash.findUnique({
-      where: {
-        trashId: trashId,
-      },
-    });
-  }
-
-  //get credentials that are temporarily deleted from the database
-  async getTrash() {
-    return await prisma.trash.findMany();
-  }
-
-  //get credentials by date deleted from trash database
-  async getTrashByDate(date: any) {
-    return await prisma.trash.findMany({
-      where: {
-        dateTempDeleted: date,
-      },
-    });
-  }
-
-  //get credentials that are temporarily deleted after a specific date
-  async getTrashAfterDate(date: any) {
-    return await prisma.trash.findMany({
-      where: {
-        dateTempDeleted: {
-          gt: date,
-        },
-      },
-    });
-  }
-
-  //get credentials that are temporarily deleted before a specific date
-  async getTrashBeforeDate(date: any) {
-    return await prisma.trash.findMany({
-      where: {
-        dateTempDeleted: {
-          lt: date,
-        },
-      },
-    });
-  }
-
   //----------------------- Documents Model-------------------------//
   async getDocumentsByUserId(userId: any) {
     const documents = await prisma.document.findMany({

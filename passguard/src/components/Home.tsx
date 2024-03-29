@@ -8,6 +8,11 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CredentialData } from "./CredentialSection/Grid.tsx";
 import AutoRedirectHook from "./Inactivity/AutoRedirectHook.tsx";
+import UserService from "../utils/userService.ts";
+import emailjs from "emailjs-com";
+import { parse } from "path";
+
+const userService = new UserService();
 
 function Home() {
   const location = useLocation();
@@ -19,14 +24,8 @@ function Home() {
     };
   }, []);
 
-  const user = location.state.user;
+  let user = location.state.user;
   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //   	window.addEventListener("popstate", (e) => {
-  //   		window.history.go(1);
-  //   	});
-  //   }, []);
 
   const [showForm, setShowForm] = useState(false);
   const [editInput, setEditInput] = useState(false);
@@ -86,9 +85,60 @@ function Home() {
     setSyncStats((syncStats) => !syncStats);
     setShowForm(false);
   }
-  function handleFavoriteRender(): void { 
+  function handleFavoriteRender(): void {
     setForceGridRender((forceGridRender) => !forceGridRender);
   }
+
+  const sendBackupEmail = async (userEmail: any) => {
+    const serviceID = "service_3ojecjd";
+    const templateID = "template_sgrb5ri";
+    const userID = "6igdyzCgketnFP148";
+
+    try {
+      const backUpFile = await userService.createBackupDB(user.userId);
+
+      await emailjs.send(
+        serviceID,
+        templateID,
+        {
+          to_email: "bike.rider987@gmail.com", // with the recipient's email SHOULD BE WITH USEREMAIL
+          file_content: backUpFile, // Base64-encoded file content
+        },
+        userID
+      );
+
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
+  const checkAndSendBackupEmails = async () => {
+    const userPreference = parseInt(JSON.parse(user.preference).backUpDuration);
+
+    if (Number.isNaN(userPreference))
+      return console.error("No backups will be sent!");
+
+    const lastBackupDate = new Date(user.lastBackupDate);
+    const nextBackupDate: Date = new Date(
+      lastBackupDate.getTime() + userPreference * 24 * 60 * 60 * 1000
+    );
+
+    if (new Date() >= nextBackupDate) {
+      await userService.getUserDataById(user.userId).then(async (data: any) => {
+        console.log("Sending backup to :", data.email);
+        await sendBackupEmail(data.email);
+      });
+
+      const updatedUser = await userService.updateUserBackupDate(user.userId);
+      user = updatedUser;
+      console.log("User backup date updated successfully!");
+    }
+  };
+
+  useEffect(() => {
+    checkAndSendBackupEmails();
+  }, []);
 
   return (
     <>
@@ -115,7 +165,9 @@ function Home() {
               editable={editInput}
               onBTNClick={handleFormBTN}
               forceRender={handleForceRender}
-              favoriteRender={handleFavoriteRender}
+              favoriteRender={() =>
+                setForceGridRender((forceGridRender) => !forceGridRender)
+              }
             ></Form>
           ) : (
             ""

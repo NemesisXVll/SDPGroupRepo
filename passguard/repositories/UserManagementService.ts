@@ -8,6 +8,9 @@ import {
 } from "./Security/Encryption";
 import * as fs from "fs";
 import * as path from "path";
+import sqlite3 from "sqlite3";
+import { PrismaClient } from "@prisma/client";
+import emailjs from "emailjs-com";
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -15,32 +18,6 @@ export default class UserManagementService {
   //Use this example signature --> async createUser() {}
 
   //-------------------------User Model-------------------------//
-  // async signUp(userData: any, userSalt: any) {
-  //   try {
-  //     // Check if a user with the provided USER_DATA already exists
-  //     const existingUser = await prisma.user.findUnique({
-  //       where: { data: userData },
-  //     });
-
-  //     if (existingUser) {
-  //       throw new Error("User with this USER_DATA already exists");
-  //     }
-
-  //     // Create the new user with the provided USER_DATA, USER_SALT, and a default USER_PICTURE
-  //     const user = await prisma.user.create({
-  //       data: {
-  //         data: userData,
-  //         salt: userSalt,
-  //         picture: null, // Replace with the actual picture data if available
-  //       },
-  //     });
-
-  //     return user.userId;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-
   async importDB(dbPath: any) {
     try {
       console.log("Importing DB...");
@@ -49,6 +26,55 @@ export default class UserManagementService {
     } catch (error) {
       console.error("Error importing DB", error);
       return false;
+    }
+  }
+
+  async createBackupDB(userId: any) {
+    const originalDBPath = path.join(__dirname, "../prisma/dev.db");
+    const copiedDBPath = path.join(__dirname, "../prisma/backup.db");
+
+    try {
+      const data = fs.readFileSync(originalDBPath);
+
+      fs.writeFileSync(copiedDBPath, data);
+
+      console.log("Database backup created successfully");
+    } catch (error) {
+      console.error("Error copying database file:", error);
+      return;
+    }
+
+    const prismaBackup = new PrismaClient({
+      datasources: {
+        db: {
+          url: "file:" + copiedDBPath,
+        },
+      },
+    });
+
+    try {
+      const user = await prismaBackup.user.deleteMany({
+        where: { NOT: { userId: userId } },
+      });
+      console.log("Users in backup database:", user);
+    } catch (error) {
+      console.error("Error deleting users from backup database:", error);
+    } finally {
+      await prismaBackup.$disconnect();
+    }
+
+    return fs.readFileSync(copiedDBPath).toString("base64");
+  }
+
+  async updateUserBackupDate(userId: any) {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { userId: userId },
+        data: { lastBackupDate: new Date() },
+      });
+      return updatedUser;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -471,40 +497,6 @@ export default class UserManagementService {
     }
   }
 
-  //-------------------------Trash Model-------------------------//
-  async createTrash(trash: any) {
-    try {
-      const newTrash = await prisma.trash.create({
-        data: trash,
-      });
-      return newTrash;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async deleteTrashById(trashId: any) {
-    try {
-      const deletedTrash = await prisma.trash.delete({
-        where: { trashId: trashId },
-      });
-      return deletedTrash;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async updateTrashById(trashId: any, trash: any) {
-    try {
-      const updatedTrash = await prisma.trash.update({
-        where: { trashId: trashId },
-        data: trash,
-      });
-      return updatedTrash;
-    } catch (error) {
-      throw error;
-    }
-  }
   async checkForReusedPasswordOnCreation(credential?: any) {
     const password = JSON.parse(credential.data).password;
     const allCredentials = await userQueryService.getAllCurrentCredentials();
@@ -603,4 +595,7 @@ export default class UserManagementService {
       }
     }
   }
+}
+function callback(err: NodeJS.ErrnoException) {
+  throw new Error("Function not implemented.");
 }

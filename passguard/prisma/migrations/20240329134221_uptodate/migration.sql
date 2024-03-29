@@ -6,6 +6,7 @@ CREATE TABLE "User" (
     "salt" TEXT,
     "dateCreated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateUpdated" DATETIME NOT NULL,
+    "lastBackupDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "preference" TEXT NOT NULL
 );
 
@@ -39,14 +40,6 @@ CREATE TABLE "SecurityQuestion" (
 );
 
 -- CreateTable
-CREATE TABLE "Trash" (
-    "trashId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "dateTempDeleted" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "credentialId" INTEGER NOT NULL,
-    CONSTRAINT "Trash_credentialId_fkey" FOREIGN KEY ("credentialId") REFERENCES "Credential" ("credentialId") ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- CreateTable
 CREATE TABLE "Document" (
     "documentId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
@@ -60,6 +53,3 @@ CREATE TABLE "Document" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_data_key" ON "User"("data");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Trash_credentialId_key" ON "Trash"("credentialId");

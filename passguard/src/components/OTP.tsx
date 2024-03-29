@@ -65,11 +65,10 @@ const OTPVerification: React.FC = () => {
   };
 
   useEffect(() => {
-    //NEEDS EXPLANATION
     const interval = setInterval(() => {
-      const newOTP = generateOTP(); //Calling generateOTP function every 10 minutes
+      const newOTP = generateOTP(); //Calling generateOTP function every 5 minutes
       console.log("New OTP generated:", newOTP);
-    }, 600000);
+    }, 300000);
     return () => clearInterval(interval);
   }, []);
 
