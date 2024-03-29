@@ -196,4 +196,35 @@ export default class UserService {
       return false;
     }
   }
+
+  async updateUserBackupDate(userId: number) {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("updateUserBackupDateRequest", userId);
+        window.ipcRenderer.once("updateUserBackupDateResponse", (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        });
+      });
+    } catch (error) {
+      console.error("Error updating user backup date", error);
+      return {};
+    }
+  }
+
+  async createBackupDB(userId: number) {
+    try {
+      return new Promise((resolve) => {
+        window.ipcRenderer.send("createBackupDBRequest", userId);
+        window.ipcRenderer.once("createBackupDBResponse", (event, arg) => {
+          const parsedData = JSON.parse(arg);
+          resolve(parsedData);
+        });
+      });
+    } catch (error) {
+      console.error("Error creating backup DB", error);
+      return {};
+    }
+  }
+
 }

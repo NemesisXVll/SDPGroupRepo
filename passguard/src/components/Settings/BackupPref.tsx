@@ -41,6 +41,7 @@ const OtpDropDown = (props: OtpDropDownProps) => {
             onChange={handleBackupDurationChange}
           >
             <option value="none">None</option>
+            <option value="1">1</option>
             <option value="7">7</option>
             <option value="14">14</option>
             <option value="30">30</option>

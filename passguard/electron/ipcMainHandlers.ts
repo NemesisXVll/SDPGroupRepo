@@ -91,12 +91,29 @@ export const registerIPCMainHandlers = () => {
     );
   });
 
+  ipcMain.on("createBackupDBRequest", async (event, arg) => {
+    event.sender.send(
+      "createBackupDBResponse",
+      JSON.stringify(await userManagementService.createBackupDB(arg))
+    );
+  });
+
   ipcMain.on("updateUserPreferenceRequest", async (event, arg) => {
     event.sender.send(
       "updateUserPreferenceResponse",
       JSON.stringify(
-        await userManagementService.updateUserPreferenceById(arg.userId, arg.preference)
+        await userManagementService.updateUserPreferenceById(
+          arg.userId,
+          arg.preference
+        )
       )
+    );
+  });
+
+  ipcMain.on("updateUserBackupDateRequest", async (event, arg) => {
+    event.sender.send(
+      "updateUserBackupDateResponse",
+      JSON.stringify(await userManagementService.updateUserBackupDate(arg))
     );
   });
 
@@ -165,17 +182,22 @@ export const registerIPCMainHandlers = () => {
 ipcMain.on("createQuestionRequest", async (event, arg) => {
   event.sender.send(
     "createQuestionResponse",
-    JSON.stringify(await userManagementService.createSecurityQuestion(arg.userId,arg.salt, arg.secQuestionObj))
+    JSON.stringify(
+      await userManagementService.createSecurityQuestion(
+        arg.userId,
+        arg.salt,
+        arg.secQuestionObj
+      )
+    )
   );
 });
 
 ipcMain.on("getSecurityQuestionByUserIdRequest", async (event, arg) => {
   event.sender.send(
     "getSecurityQuestionByUserIdResponse",
-    JSON.stringify(await userQueryService.getSecurityQuestionByUserId(arg)
-    ));
+    JSON.stringify(await userQueryService.getSecurityQuestionByUserId(arg))
+  );
 });
-
 
 ipcMain.on("createDocument", async (event, arg) => {
   await userManagementService.createDocument(arg);

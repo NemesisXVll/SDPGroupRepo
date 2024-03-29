@@ -16,6 +16,7 @@ model User {
   salt              String?
   dateCreated       DateTime           @default(now())
   dateUpdated       DateTime           @updatedAt
+  lastBackupDate    DateTime           @default(now())
   preference        String //{trashDuration: "", lockDuration: "", theme: "", loginOtp: "", forgetPassOtp: ""}
   documents         Document[]
   credentials       Credential[]
@@ -38,7 +39,6 @@ model Credential {
   isFavourite  Boolean  @default(false)
   isTrashed    Boolean  @default(false)
   dateTrashed  DateTime @default(now())
-  trash        Trash?
   User         User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId       Int //Foreign key
 }
@@ -48,13 +48,6 @@ model SecurityQuestion {
   data               String //Question, HashedAnswer (As An Encrypted JSON)
   User               User   @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId             Int //Foreign key
-}
-
-model Trash {
-  trashId         Int        @id @default(autoincrement())
-  dateTempDeleted DateTime   @default(now())
-  Credential      Credential @relation(fields: [credentialId], references: [credentialId], onDelete: Cascade)
-  credentialId    Int        @unique //Foreign Key
 }
 
 model Document {
