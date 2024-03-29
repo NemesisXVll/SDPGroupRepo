@@ -119,20 +119,7 @@ const OTPVerification: React.FC = () => {
       if (location.state.fromSignup === true) {
         setShowModal(true);
       } else if (location.state.fromSettings === true) {
-        user.data.email = userEmail;
-        const updatedUser = await userService.updateUser(
-          user.id,
-          user.data,
-          user.salt,
-          user.masterPassword
-        );
-        navigate("/settings", {
-          state: {
-            user: updatedUser,
-            expanded: true,
-            accountEmailChange: true,
-          },
-        });
+        updateUserData();
       } else if (location.state.fromForgetOTP === true) {
         setShowModal(true);
       } else if (location.state.wipeAccount) {
@@ -156,6 +143,27 @@ const OTPVerification: React.FC = () => {
     } else {
       console.log("OTP is incorrect");
       setMessage("Wrong OTP entered");
+    }
+  };
+
+  const updateUserData = async () => {
+    try {
+      user.data.email = userEmail;
+      const updatedUser = await userService.updateUser(
+        user.id,
+        user.data,
+        user.salt,
+        user.masterPassword
+      );
+      navigate("/settings", {
+        state: {
+          user: updatedUser,
+          expanded: true,
+          accountEmailChange: true,
+        },
+      });
+    } catch (error) {
+      console.error("Failed to update user:", error);
     }
   };
 

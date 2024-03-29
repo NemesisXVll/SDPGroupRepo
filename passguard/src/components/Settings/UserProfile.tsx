@@ -14,8 +14,8 @@ type UserProfileProps = {
 const UserProfile = (props: UserProfileProps) => {
   return (
     <>
-      <div>
-        <div>
+      <div className={`overflow-y-auto max-h-[100vh] h-[100vh] `}>
+        <div className="pb-[10rem]">
           <ManageUserProfile
             userUpdated={props.userUpdated}
           ></ManageUserProfile>

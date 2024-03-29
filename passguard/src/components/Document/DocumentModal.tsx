@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import DocumentService from "../../utils/documentService";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import LabelInput from "../Form/LabelInput";
 
 const documentService = new DocumentService();
 
@@ -100,7 +101,14 @@ function DocumentModal(props: DocumentModalProps) {
 
             <form>
               <div className="mb-1 block">
-                <Label htmlFor="path" value="Upload File" className="" />
+                <Label
+                  htmlFor="path"
+                  value="Upload File"
+                  className="font-normal font-['Nunito'] pl-1
+         text-gray-700 text-base peer-placeholder-shown:text-base
+          peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
+          peer-focus: peer-focus:text-blue-600 transition-all"
+                />
               </div>
               <FileInput
                 accept=".pdf, image/jpeg, image/png, image/gif, image/svg+xml"
@@ -117,7 +125,7 @@ function DocumentModal(props: DocumentModalProps) {
                 </p>
               </div>
 
-              <div className="mt-2 block">
+              {/* <div className="mt-2 block">
                 <Label htmlFor="name" value="File Name" className="" />
                 <TextInput
                   required={true}
@@ -125,16 +133,43 @@ function DocumentModal(props: DocumentModalProps) {
                   className="w-full"
                   onChange={handleOnInputChange}
                 />
+              </div> */}
+
+              <div
+                className="font-normal font-['Nunito']
+         text-gray-700 text-base peer-placeholder-shown:text-base
+          peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
+          peer-focus: peer-focus:text-blue-600 transition-all"
+              >
+                <LabelInput
+                  required={true}
+                  type="text"
+                  label="File Name"
+                  id="name"
+                  placeholder=""
+                  onChange={handleOnInputChange}
+                ></LabelInput>
               </div>
 
               <div className="mt-2 block">
-                <Label htmlFor="category" value="Category" />
+                <Label
+                  htmlFor="category"
+                  value="Category"
+                  className="font-normal font-['Nunito'] ml-2
+                text-gray-700 text-base peer-placeholder-shown:text-base
+                 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
+                 peer-focus: peer-focus:text-blue-600 transition-all"
+                />
               </div>
               <Select
                 id="category"
                 required
                 onChange={handleOnInputChange}
                 defaultValue={"Other"}
+                className="font-normal font-['Nunito']
+                text-gray-700 text-base peer-placeholder-shown:text-base
+                 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
+                 peer-focus: peer-focus:text-blue-600 transition-all"
               >
                 <option>Image</option>
                 <option>Passport/ID</option>

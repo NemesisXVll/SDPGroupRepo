@@ -32,8 +32,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [firstQuestion, setFirstQuestion] = useState<string>("");
-  const [secondQuestion, setSecondQuestion] = useState<string>("");
+  const [firstQuestion, setFirstQuestion] = useState<string>(
+    "Name of a college you applied to but didn’t attend?"
+  );
+  const [secondQuestion, setSecondQuestion] = useState<string>(
+    "What was your maths teacher's surname in your 8th year of school?"
+  );
   const [firstQuestionAnswer, setFirstQuestionAnswer] = useState<string>("");
   const [secondQuestionAnswer, setSecondQuestionAnswer] = useState<string>("");
   const [email, setEmail] = useState("");
@@ -52,17 +56,15 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       secondQuestionAnswer
     );
     return isVerified;
-   
   }
 
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
-     const isVerified = await verifySecQuestionAnswers();
+    const isVerified = await verifySecQuestionAnswers();
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
-     
       if (isVerified) {
         navigate("/new-password", { state: { user, fromForgetPass: true } });
       }
@@ -194,10 +196,11 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                     className="w-full p-2 border rounded mb-2 text-sm"
                     onChange={(event) => setFirstQuestion(event.target.value)}
                     name="firstQuestion"
+                    value={firstQuestion}
                     id="firstQuestion-select"
                   >
                     <option id="Q1">
-                      name of a college you applied to but didn’t attend?
+                      Name of a college you applied to but didn’t attend?
                     </option>
                     <option id="Q2">
                       {" "}
@@ -220,6 +223,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
                   <select
                     className="w-full p-2 border rounded mb-2 text-sm"
+                    value={secondQuestion}
                     onChange={(event) => setSecondQuestion(event.target.value)}
                   >
                     <option id="Q4">
@@ -227,7 +231,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                       school?
                     </option>
                     <option id="Q5">
-                      name of the first school you remember attending?
+                      Name of the first school you remember attending?
                     </option>
                     <option id="Q6">
                       What was your driving instructor's first name?
