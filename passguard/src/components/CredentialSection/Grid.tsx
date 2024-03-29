@@ -110,12 +110,12 @@ const Grid = (props: GridProps) => {
 				credential_service: credentialData.serviceName,
 			};
 			setTimeout(async () => {
-				// await emailjs.send(
-				// 	"service_3ojecjd",
-				// 	"template_v5syq9y",
-				// 	templateParams,
-				// 	"6igdyzCgketnFP148"
-				// );
+				await emailjs.send(
+					"service_3ojecjd",
+					"template_v5syq9y",
+					templateParams,
+					"6igdyzCgketnFP148"
+				);
 				console.log("Email sent successfully!");
 			}, 500);
 			// console.log("email status", emailjs.send)

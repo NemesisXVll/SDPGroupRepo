@@ -35,7 +35,6 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [firstQuestion, setFirstQuestion] = useState<string>("");
   const [secondQuestion, setSecondQuestion] = useState<string>("");
   const [firstQuestionAnswer, setFirstQuestionAnswer] = useState<string>("");
-  const [isVerified, setIsVerified] = useState<boolean>(false);
   const [secondQuestionAnswer, setSecondQuestionAnswer] = useState<string>("");
   const [email, setEmail] = useState("");
 
@@ -52,17 +51,18 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       firstQuestionAnswer,
       secondQuestionAnswer
     );
-    console.log(isVerified);
-    setIsVerified(isVerified);
+    return isVerified;
+   
   }
 
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
+     const isVerified = await verifySecQuestionAnswers();
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
     ) {
-      verifySecQuestionAnswers();
+     
       if (isVerified) {
         navigate("/new-password", { state: { user, fromForgetPass: true } });
       }
