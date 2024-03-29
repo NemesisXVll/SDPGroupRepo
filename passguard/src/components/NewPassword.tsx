@@ -164,7 +164,7 @@ const NewPassword: React.FC = () => {
 					className="w-[28rem] mx-auto  p-4  border-gray-300  shadow-md bg-white"
 					onSubmit={handleSubmit}
 				>
-					<h2 className=" font-nunito border-b-4 p-2 mb-3 text-center text-3xl py-4 font-bold ">
+					<h2 className=" font-nunito border-b-4 p-2 mb-3 text-center text-3xl py-4 font-bold mb-4">
 						🔑 Setup New Password
 					</h2>
 
@@ -175,7 +175,10 @@ const NewPassword: React.FC = () => {
 									<>
 										<div className="">
 											<ul>
-												<li>To Achieve a Stronger Password</li>
+												<li className="font-bold">
+													<span className="text-green-400">Suggestions:</span>{" "}
+													To Achieve a Stronger Password
+												</li>
 												<li className="mb-1 flex items-center">
 													{!passwordState.sequentialChar ? (
 														<FcCheckmark className="me-2 h-5 w-5 text-green-400 dark:text-green-500" />
@@ -208,7 +211,7 @@ const NewPassword: React.FC = () => {
 								arrow={false}
 								placement="top-end"
 							>
-								<IoInformationCircleOutline className="text-black"></IoInformationCircleOutline>
+								<IoInformationCircleOutline className="text-black mb-2"></IoInformationCircleOutline>
 							</Tooltip>
 						</div>
 
