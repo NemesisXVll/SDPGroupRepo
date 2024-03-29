@@ -10,7 +10,6 @@ import { CredentialData } from "./CredentialSection/Grid.tsx";
 import AutoRedirectHook from "./Inactivity/AutoRedirectHook.tsx";
 import UserService from "../utils/userService.ts";
 import emailjs from "emailjs-com";
-import { parse } from "path";
 
 const userService = new UserService();
 
