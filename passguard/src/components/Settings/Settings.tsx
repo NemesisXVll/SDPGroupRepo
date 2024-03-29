@@ -274,7 +274,7 @@ const Settings = (props: SettingsProps) => {
 												: location.state?.wipeDocuments
 													? "Documents deleted Successfully"
                           : credentialsExported
-                            ? "Credentials exported Successfully"
+                            ? "Data exported Successfully via email"
                             : ""}
 								</div>
 								<Toast.Toggle />
