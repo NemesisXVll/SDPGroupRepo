@@ -130,7 +130,7 @@ const Settings = (props: SettingsProps) => {
   return (
     <>
       {redirect}
-      <div className="app-container h-screen">
+      <div className="app-container h-screen dark:bg-blue-999">
         <div className="navbar">
           <Navbar
             updatedUser={userUpdatedFlag}

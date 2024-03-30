@@ -1,4 +1,4 @@
-import { Card, FileInput, Modal, Toast } from "flowbite-react";
+import { Card, FileInput, Modal, Toast, DarkThemeToggle, Flowbite } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../utils/userService";
@@ -122,143 +122,148 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
   }
 
   return (
-    <>
-      <Card className="max-w-[30rem] mx-auto">
-        <div className="flex flex-col">
-          <div className="flex justify-end">
-            <div>
-              {showUpdateButton ? (
-                <Button value="Update" type="submit" onClick={handleUpdateUser}>
-                  Update
-                </Button>
-              ) : (
-                <Button value="Cancel" type="button" onClick={handleCancelBTN}>
-                  Cancel
-                </Button>
-              )}
-            </div>
-          </div>
+		<>
+			<Flowbite>
+				<DarkThemeToggle />
+			</Flowbite>
 
-          {/* <img
+			<h1 className="text-white dark:text-blue-999">HELLO</h1>
+
+			<Card className="max-w-[30rem] mx-auto">
+				<div className="flex flex-col">
+					<div className="flex justify-end">
+						<div>
+							{showUpdateButton ? (
+								<Button value="Update" type="submit" onClick={handleUpdateUser}>
+									Update
+								</Button>
+							) : (
+								<Button value="Cancel" type="button" onClick={handleCancelBTN}>
+									Cancel
+								</Button>
+							)}
+						</div>
+					</div>
+
+					{/* <img
             alt="User Profile Picture"
             src={userData.picture}
             className="mb-3 rounded-full shadow-lg mx-auto w-36 h-36"
           /> */}
-          <div className="flex items-center justify-center">
-            {editable ? (
-              <label
-                htmlFor="picture"
-                className="relative cursor-pointer w-fit rounded-full hover:opacity-80"
-              >
-                <div className="relative">
-                  <img
-                    alt="User Profile Picture"
-                    src={userData.picture}
-                    className="mb-3 rounded-full shadow-lg mx-auto w-36 h-36"
-                  />
-                  <div className="absolute left-24 bottom-3 right-50 rounded-full bg-black p-1">
-                    <FiEdit className="text-white" />
-                  </div>
-                </div>
-              </label>
-            ) : (
-              <div className="relative">
-                <img
-                  alt="User Profile Picture"
-                  src={userData.picture}
-                  className="mb-3 rounded-full shadow-lg mx-auto w-36 h-36"
-                />
-              </div>
-            )}
-          </div>
-          <FileInput
-            accept="image/jpeg, image/png, image/gif, image/svg+xml"
-            id="picture"
-            className="font-nunito hidden"
-            onChange={handleFileInput}
-          />
-          <div className="mx-auto ">
-            <h1 className="text-lg font-medium text-center text-gray-900 dark:text-white">
-              {userData.firstName} {userData.lastName}
-            </h1>
-            <h5 className="text-xs font-medium text-center text-gray-500 dark:text-white">
-              Date Created: {user.dateCreated.toString().slice(0, 10)}
-            </h5>
-          </div>
+					<div className="flex items-center justify-center">
+						{editable ? (
+							<label
+								htmlFor="picture"
+								className="relative cursor-pointer w-fit rounded-full hover:opacity-80"
+							>
+								<div className="relative">
+									<img
+										alt="User Profile Picture"
+										src={userData.picture}
+										className="mb-3 rounded-full shadow-lg mx-auto w-36 h-36"
+									/>
+									<div className="absolute left-24 bottom-3 right-50 rounded-full bg-black p-1">
+										<FiEdit className="text-white" />
+									</div>
+								</div>
+							</label>
+						) : (
+							<div className="relative">
+								<img
+									alt="User Profile Picture"
+									src={userData.picture}
+									className="mb-3 rounded-full shadow-lg mx-auto w-36 h-36"
+								/>
+							</div>
+						)}
+					</div>
+					<FileInput
+						accept="image/jpeg, image/png, image/gif, image/svg+xml"
+						id="picture"
+						className="font-nunito hidden"
+						onChange={handleFileInput}
+					/>
+					<div className="mx-auto ">
+						<h1 className="text-lg font-medium text-center text-gray-900 dark:text-white">
+							{userData.firstName} {userData.lastName}
+						</h1>
+						<h5 className="text-xs font-medium text-center text-gray-500 dark:text-white">
+							Date Created: {user.dateCreated.toString().slice(0, 10)}
+						</h5>
+					</div>
 
-          <form onSubmit={handleSaveBTN}>
-            <div className="mt-4 flex-row w-96 mx-auto">
-              <LabelInput
-                value={userData.firstName}
-                onChange={handleOnChange}
-                type="text"
-                required={true}
-                viewOnly={!editable}
-                label="First Name"
-                id="firstName"
-              ></LabelInput>
-              <LabelInput
-                value={userData.lastName}
-                onChange={handleOnChange}
-                type="text"
-                required={true}
-                viewOnly={!editable}
-                label="Last Name"
-                id="lastName"
-              ></LabelInput>
-              <LabelInput
-                value={userData.email}
-                onChange={handleFileInput}
-                type="text"
-                viewOnly={true}
-                label="Email"
-                id="email"
-              ></LabelInput>
+					<form onSubmit={handleSaveBTN}>
+						<div className="mt-4 flex-row w-96 mx-auto">
+							<LabelInput
+								value={userData.firstName}
+								onChange={handleOnChange}
+								type="text"
+								required={true}
+								viewOnly={!editable}
+								label="First Name"
+								id="firstName"
+							></LabelInput>
+							<LabelInput
+								value={userData.lastName}
+								onChange={handleOnChange}
+								type="text"
+								required={true}
+								viewOnly={!editable}
+								label="Last Name"
+								id="lastName"
+							></LabelInput>
+							<LabelInput
+								value={userData.email}
+								onChange={handleFileInput}
+								type="text"
+								viewOnly={true}
+								label="Email"
+								id="email"
+							></LabelInput>
 
-              {editable && (
-                <div>
-                  <div className="mb-1 block mt-2"></div>
-                  {/* <FileInput
+							{editable && (
+								<div>
+									<div className="mb-1 block mt-2"></div>
+									{/* <FileInput
                     accept="image/jpeg, image/png, image/gif, image/svg+xml"
                     id="picture"
                     className="font-nunito"
                     onChange={handleFileInput}
                   /> */}
-                </div>
-              )}
-            </div>
+								</div>
+							)}
+						</div>
 
-            {errorMessage && (
-              <div className="flex ml-[6.3rem]">
-                <CgDanger className="w-4 h-5 text-red-500" />
-                <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
-              </div>
-            )}
+						{errorMessage && (
+							<div className="flex ml-[6.3rem]">
+								<CgDanger className="w-4 h-5 text-red-500" />
+								<p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+							</div>
+						)}
 
-            {showSaveButton && (
-              <div className="w-96 mx-auto mt-4">
-                <Button value="Save" type="submit">
-                  Save
-                </Button>
-              </div>
-            )}
-          </form>
-        </div>
-      </Card>
-
-      {successFulUserToast && (
-        <Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-            <FaCheck className="h-5 w-5" />
-          </div>
-          <div className="ml-3 text-sm font-normal">
-            Account Updated Successfully
-          </div>
-          <Toast.Toggle />
-        </Toast>
-      )}
-    </>
-  );
+						{showSaveButton && (
+							<div className="w-96 mx-auto mt-4">
+								<Button value="Save" type="submit">
+									Save
+								</Button>
+							</div>
+						)}
+					</form>
+				</div>
+			</Card>
+			{successFulUserToast && (
+				<Toast className="absolute inset-0 h-14 translate-x-[48rem] translate-y-[7.5rem] flex items-center justify-center">
+					<div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+						<FaCheck className="h-5 w-5" />
+					</div>
+					<div className="ml-3 text-sm font-normal">
+						Account Updated Successfully
+					</div>
+					<Toast.Toggle />
+				</Toast>
+			)}
+		</>
+	);
 };
 
 export default ManageUserProfile;
