@@ -187,9 +187,9 @@ export default class UserService {
         bcrypt.compareSync(firstQuestionAnswer, data.firstQuestionAnswer) &&
         bcrypt.compareSync(secondQuestionAnswer, data.secondQuestionAnswer)
       ) {
-        return true; //Unlock successful
+        return data; //Unlock successful
       } else {
-        return false; //Incorrect password
+        return null; //Incorrect password
       }
     } catch (error) {
       console.error("Error verifying security answers", error);
