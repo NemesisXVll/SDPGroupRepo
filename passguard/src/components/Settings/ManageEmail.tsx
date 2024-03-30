@@ -23,15 +23,17 @@ const ManageEmail = () => {
           </span>
         </div>
 
-        <Button
-          value="changeEmail"
-          style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          Change Account Email
-        </Button>
+        <div className="w-[13rem]">
+          <Button
+            value="changeEmail"
+            style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
+            Change Account Email
+          </Button>
+        </div>
       </div>
 
       {openModal && (

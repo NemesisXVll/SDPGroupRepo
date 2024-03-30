@@ -205,10 +205,10 @@ const ManagePassword = (props: ManageUserProfileProps) => {
           </span>
         </div>
 
-        <div className="">
+        <div className="min-w-[13rem]">
           <Button
             value="changeMasterPassword"
-            style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
+            style="bg-black text-white hover:bg-yellow-400 max-w-[13rem] w-[13rem]"
             onClick={() => setIsModalOpen(true)}
           >
             Change Master Password

@@ -36,13 +36,15 @@ const WipeAccount = (props: WipeAccountProps) => {
             </span>
           </span>
         </div>
-        <Button
-          value="wipeAccount"
-          style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
-          onClick={() => setOpenAssuranceModal(true)}
-        >
-          Wipe Account
-        </Button>
+        <div className="min-w-[13rem]">
+          <Button
+            value="wipeAccount"
+            style="bg-black text-white hover:bg-yellow-400 max-w-[13rem] w-[13rem]"
+            onClick={() => setOpenAssuranceModal(true)}
+          >
+            Wipe Account
+          </Button>
+        </div>
       </div>
 
       {openAssuranceModal && (

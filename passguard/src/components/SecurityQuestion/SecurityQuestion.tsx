@@ -34,6 +34,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [showSecQuestion, setShowSecQuestion] = useState<boolean>(true);
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [firstQuestion, setFirstQuestion] = useState<string>(
     "Name of a college you applied to but didn’t attend?"
   );
@@ -139,9 +140,11 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
     }
 
     if (props.fromLoc === "changeEmail") {
-      //Check if input of sec question is like hashed password
-      setShowSecQuestion(false);
-      setShowNewEmail(true);
+      verifySecQuestionAnswers();
+      if (isVerified) {
+        setShowSecQuestion(false);
+        setShowNewEmail(true);
+      }
     }
 
     setErrorMessage("Incorrect answers. Please try again.");
@@ -154,7 +157,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
     if (isEmailFound) {
       console.log("Email found");
-      setErrorMessage("Email already exists");
+      setEmailErrorMessage("Email already exists");
       return;
     }
 
@@ -319,7 +322,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
               </p>
               <div className="mt-4">
                 <LabelInput
-                  type="text"
+                  type="email"
                   value={email}
                   required={true}
                   label="Email"
@@ -331,10 +334,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 ></LabelInput>
               </div>
 
-              {errorMessage && (
-                <div className="flex mt-1">
+              {emailErrorMessage && (
+                <div className="flex">
                   <CgDanger className="w-4 h-5 text-red-500" />
-                  <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
+                  <p className="text-red-500 text-sm">
+                    &nbsp; {emailErrorMessage}
+                  </p>
                 </div>
               )}
 

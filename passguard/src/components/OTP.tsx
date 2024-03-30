@@ -19,6 +19,7 @@ const OTPVerification: React.FC = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
+  const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [otp, setOTP] = useState("");
   const [message, setMessage] = useState("");
   const [generatedOTP, setGeneratedOTP] = useState<string | null>(null); // Store the generated OTP
@@ -113,7 +114,9 @@ const OTPVerification: React.FC = () => {
   };
 
   const verifyOTP = async (enteredOTP: any) => {
+    if (isOTPVerified) return;
     if (enteredOTP == generatedOTP) {
+      setIsOTPVerified(true);
       console.log("OTP is correct");
       setMessage("OTP is correct");
       if (location.state.fromSignup === true) {

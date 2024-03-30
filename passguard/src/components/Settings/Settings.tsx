@@ -193,17 +193,18 @@ const Settings = (props: SettingsProps) => {
                           </span>
                         </span>
                       </div>
-
-                      <Button
-                        value="wipeCredentials"
-                        style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
-                        onClick={() => {
-                          setOpenDeleteModal(true);
-                          setDeleteOption("wipeCredentials");
-                        }}
-                      >
-                        Wipe All Credentials
-                      </Button>
+                      <div className="min-w-[13rem]">
+                        <Button
+                          value="wipeCredentials"
+                          style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
+                          onClick={() => {
+                            setOpenDeleteModal(true);
+                            setDeleteOption("wipeCredentials");
+                          }}
+                        >
+                          Wipe All Credentials
+                        </Button>
+                      </div>
                     </div>
                     <div className="p-5 flex items-center justify-between  rounded-t-none rounded-b-xl bg-gray-100 border border-gray-200 shadow-md">
                       <div className="flex flex-col">
@@ -218,15 +219,17 @@ const Settings = (props: SettingsProps) => {
                           </span>
                         </span>
                       </div>
-                      <Button
-                        value="Export"
-                        style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
-                        onClick={() => {
-                          handleSendEmail();
-                        }}
-                      >
-                        Export All Data
-                      </Button>
+                      <div className="min-w-[13rem]">
+                        <Button
+                          value="Export"
+                          style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
+                          onClick={() => {
+                            handleSendEmail();
+                          }}
+                        >
+                          Export All Data
+                        </Button>
+                      </div>
                     </div>
                     <h2 className="m-2 font-bold text-lg mt-6">Documents</h2>
                     <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md">
@@ -243,16 +246,18 @@ const Settings = (props: SettingsProps) => {
                           </span>
                         </span>
                       </div>
-                      <Button
-                        value="wipeDocuments"
-                        style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
-                        onClick={() => {
-                          setOpenDeleteModal(true);
-                          setDeleteOption("wipeDocuments");
-                        }}
-                      >
-                        Wipe All Documents
-                      </Button>
+                      <div className="min-w-[13rem]">
+                        <Button
+                          value="wipeDocuments"
+                          style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
+                          onClick={() => {
+                            setOpenDeleteModal(true);
+                            setDeleteOption("wipeDocuments");
+                          }}
+                        >
+                          Wipe All Documents
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
