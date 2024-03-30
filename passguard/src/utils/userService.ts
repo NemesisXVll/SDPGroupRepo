@@ -201,10 +201,13 @@ export default class UserService {
     try {
       return new Promise((resolve) => {
         window.ipcRenderer.send("updateUserBackupDateRequest", userId);
-        window.ipcRenderer.once("updateUserBackupDateResponse", (event, arg) => {
-          const parsedData = JSON.parse(arg);
-          resolve(parsedData);
-        });
+        window.ipcRenderer.once(
+          "updateUserBackupDateResponse",
+          (event, arg) => {
+            const parsedData = JSON.parse(arg);
+            resolve(parsedData);
+          }
+        );
       });
     } catch (error) {
       console.error("Error updating user backup date", error);
@@ -226,5 +229,4 @@ export default class UserService {
       return {};
     }
   }
-
 }

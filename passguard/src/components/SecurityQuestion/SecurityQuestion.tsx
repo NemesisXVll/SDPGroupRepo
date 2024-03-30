@@ -19,6 +19,8 @@ type SecurityQuestionProps = {
   openModal: any;
   closeModal?: () => void;
   fromLoc?: string;
+  isDismissable?: boolean;
+  secQuestionsVerified?: () => void;
 };
 
 const SecurityQuestion = (props: SecurityQuestionProps) => {
@@ -60,7 +62,10 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 
   async function handleOnClick(event: any): Promise<void> {
     event.preventDefault();
-    const isVerified = await verifySecQuestionAnswers();
+    let isVerified = null;
+    if (!(props.fromLoc === "signUp")) {
+      isVerified = await verifySecQuestionAnswers();
+    }
     if (
       props.fromLoc === "forgetPassEmailOTP" ||
       props.fromLoc === "forgetPassSMSOTP"
@@ -98,6 +103,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           navigate("/sms", { state: { user, wipeDocuments: true } });
         }
       }
+    } else if (props.fromLoc === "shareCredential") {
+      verifySecQuestionAnswers();
+      if (isVerified) {
+        console.log("Share Credential Verified");
+        if (props.secQuestionsVerified) {
+          props.secQuestionsVerified();
+        }
+      }
     } else if (location.pathname === "/otp") {
       const signUpResult = await SignUp({
         firstName: user.state.firstName,
@@ -130,6 +143,8 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
       setShowSecQuestion(false);
       setShowNewEmail(true);
     }
+
+    setErrorMessage("Incorrect answers. Please try again.");
   }
 
   async function handleSubmitNewEmail(event: any): Promise<void> {
@@ -173,11 +188,13 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           setShowNewEmail(false);
         }}
       >
-        {location.pathname === "/settings" && <ModalHeader></ModalHeader>}
+        {(location.pathname === "/settings" ||
+          props.fromLoc === "shareCredential") && <ModalHeader></ModalHeader>}
 
         {showSecQuestion &&
           (location.pathname === "/otp" ||
             location.pathname === "/settings" ||
+            props.fromLoc === "shareCredential" ||
             location.pathname === "/sms") && (
             <div className="">
               <form className="w-full mx-auto p-4 shadow-md">
@@ -248,6 +265,15 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="flex">
+                    <CgDanger className="w-4 h-5 text-red-500" />
+                    <p className="text-red-500 text-sm">
+                      &nbsp; {errorMessage}
+                    </p>
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <div className="mt-7">
                   <Button
@@ -262,7 +288,9 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                     props.fromLoc === "wipeDocuments" ||
                     props.fromLoc === "changeEmail"
                       ? "Continue"
-                      : "Create Account"}
+                      : props.fromLoc === "shareCredential"
+                        ? "Send"
+                        : "Create Account"}
                   </Button>
                 </div>
               </form>

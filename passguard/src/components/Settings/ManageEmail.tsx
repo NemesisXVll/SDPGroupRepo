@@ -17,14 +17,15 @@ const ManageEmail = () => {
           <span className="font-semibold pb-2">Change Account Email</span>
           <span className="font-nunito text-gray-500">
             <span className="font-semibold text-sm">
-              Use this feature if you would like to change you PassGuard account email.
+              Use this feature if you would like to change you PassGuard account
+              email.
             </span>
           </span>
         </div>
 
         <Button
           value="changeEmail"
-          style="bg-black text-white hover:bg-yellow-400 w-[13rem]"
+          style="bg-black text-white hover:bg-yellow-400 min-w-[13rem]"
           onClick={() => {
             setIsModalOpen(true);
           }}

@@ -42,12 +42,12 @@ function DocumentCard(props: DocumentCardProps) {
         <div className="rounded-2xl bg-white shadow-lg border-2 h-72">
           <div className="TopOfCard flex items-center justify-between border-b-2 p-2">
             <div onClick={() => setOpenModal(!openModal)}>
-              <h3 className="font-nunito break-words text-sm font-bold">
+              <p className="font-nunito break-words text-sm font-bold">
                 {props.name}
-              </h3>
-              <h3 className="font-nunito font-medium break-words text-xs">
+              </p>
+              <p className="font-nunito font-medium break-words text-xs">
                 {props.category}
-              </h3>
+              </p>
             </div>
 
             <Kebab
@@ -67,9 +67,9 @@ function DocumentCard(props: DocumentCardProps) {
                 {" "}
                 <div className="text-center">
                   <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 dark:text-gray-200" />
-                  <h3 className="mb-5 text-lg font-nunito text-gray-500 dark:text-gray-400">
+                  <p className="mb-5 text-lg font-nunito text-gray-500 dark:text-gray-400">
                     Are you sure you want to permanently delete this document?
-                  </h3>
+                  </p>
                   <div className="flex justify-center gap-4">
                     <Button
                       value="Cancel"

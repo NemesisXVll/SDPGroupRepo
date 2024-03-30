@@ -224,7 +224,13 @@ const OTPVerification: React.FC = () => {
 
       {showModal && (
         <SecurityQuestion
-          fromLoc={location.state.fromForgetOTP ? "forgetPassEmailOTP" : ""}
+          fromLoc={
+            location.state.fromForgetOTP
+              ? "forgetPassEmailOTP"
+              : location.state.fromSignup
+                ? "signUp"
+                : ""
+          }
           openModal={true}
           closeModal={handleCloseModal}
         />

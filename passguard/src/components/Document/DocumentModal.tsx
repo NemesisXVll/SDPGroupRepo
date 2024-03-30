@@ -95,9 +95,9 @@ function DocumentModal(props: DocumentModalProps) {
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
-            <h3 className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">
-              Add Document
-            </h3>
+            <p className="text-xl font-nunito font-bold text-gray-900 dark:text-white text-center">
+              📄 Add Document
+            </p>
 
             <form>
               <div className="mb-1 block">
