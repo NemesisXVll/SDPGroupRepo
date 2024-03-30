@@ -209,20 +209,36 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
 						location.pathname === "/sms") && (
 						<div className="">
 							<form className="w-full mx-auto p-4 shadow-md">
-								<div className="flex items-center justify-center border-b-4">
+						  
+						  {location.pathname === "/otp" ? (
+							  <div className="flex items-center justify-center border-b-4">
 									<h2 className="text-2xl text-center py-2 font-bold font-nunito">
 										📝 Setup Security
 									</h2>
 									<h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
 										&nbsp;Questions
-									</h2>
-								</div>
-
+								  </h2>
+								  </div>
+						  ) : (
+								  <div className="flex items-center justify-center border-b-4">
+									<h2 className="text-2xl text-center py-2 font-bold font-nunito">
+										  🔐 Answer the Security
+									  </h2>
+									  	<h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
+										&nbsp;Questions
+									  </h2>
+									  </div>
+									
+									  
+									  
+							  )}
 								{/* Security Questions */}
-								<div className="mt-7">
-									<p className="text-sm text-gray-600 mb-2">
-										Choose two security questions to answer. (case-insensitive)*
-									</p>
+						  <div className="mt-7">
+							  {location.pathname === "/otp" && (
+								  <p className="text-sm text-gray-600 mb-2">
+									  Choose two security questions to answer. (case-insensitive)*
+								  </p>
+							  )}
 									<div className="border border-gray-300 p-4 rounded-lg shadow-md">
 										<p className="text-gray-800 pt-3 font-medium ">
 											{" "}
