@@ -20,8 +20,9 @@ module.exports = {
 				darkwhite: {
 					999: "#F5F5F5",
 				},
-				darkbg: { //background color for dark mode
-					999:"#010409"
+				darkbg: {
+					//background color for dark mode
+					999: "#010409",
 				},
 				darktext: {
 					// main text color for dark mode
@@ -39,8 +40,12 @@ module.exports = {
 					// border color for dark mode
 					999: "#30363d",
 				},
-				darkinset: { //navbar and input fields
+				darkinset: {
+					//navbar and input fields
 					999: "#0d1117",
+				},
+				darkbuttonblue: {
+					999: "#1f6feb",
 				},
 			},
 		},
