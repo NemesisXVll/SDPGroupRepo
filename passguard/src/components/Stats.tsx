@@ -81,7 +81,7 @@ const Stats = (props: StatsProps) => {
 				</button> */}
 			</div>
 
-			<div className="flex items-center border-b-2 pb-5">
+			<div className="flex items-center border-b-2 pb-5 dark:border-darkborder-999">
 				<div className="flex-row w-60 h-fit m-1">
 					<div className="flex">
 						{weakWidth != 0 ? (
@@ -126,7 +126,7 @@ const Stats = (props: StatsProps) => {
 								{totalWeakPasswords} Weak Passwords
 							</p>
 						</div>
-						<p className="text-xs font-nunito font-light">
+						<p className="text-xs font-nunito  dark:text-darksubtext-999">
 							You should change this
 						</p>
 					</div>
@@ -137,7 +137,7 @@ const Stats = (props: StatsProps) => {
 								{totalReusedPasswords} Reused Passwords
 							</p>
 						</div>
-						<p className="text-xs font-nunito font-light">
+						<p className="text-xs font-nunito  dark:text-darksubtext-999">
 							Create unique password
 						</p>
 					</div>
@@ -148,7 +148,7 @@ const Stats = (props: StatsProps) => {
 								{totalOldPasswords} Old Passwords
 							</p>
 						</div>
-						<p className="text-xs font-nunito font-light">
+						<p className="text-xs font-nunito  dark:text-darksubtext-999">
 							Update your password
 						</p>
 					</div>

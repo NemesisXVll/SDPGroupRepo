@@ -307,17 +307,17 @@ const Grid = (props: GridProps) => {
 
   return (
     <>
-      <div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3">
+      <div className="sticky top-0 bg-neutral-100 z-10 flex items-center justify-start p-4 gap-3 dark:bg-darkbg-999 dark:text-darktext-999">
         <h3 className="text-xl font-medium w-56">
           {credentialsTitle} ({credentialsLength})
         </h3>
-        <div>
-          <div id="search-container" className="relative w-80">
+        <div >
+          <div id="search-container" className="relative w-80 ">
             <input
               id="searchInput"
               type="text"
               placeholder="Search"
-              className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
+              className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600 dark:bg-darkinset-999"
               onClick={handleSearch}
             />
           </div>
