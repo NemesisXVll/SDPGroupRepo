@@ -87,9 +87,9 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 				dismissible
 				// Added to show close button in modal header
 			>
-				<div className="p-4">
+				<div className="p-4 dark:bg-darkcards-999 dark:text-darkwhite-999">
 					<div className="p-2">
-						<h1 className="text-2xl font-nunito font-bold border-b-4">
+						<h1 className="text-2xl font-nunito font-bold border-b-4 dark:border-darkborder-999">
 							Password Generator
 						</h1>
 						<br />
@@ -97,7 +97,7 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							Current Length:{" "}
 							<span className="font-bold text-blue-500">{passwordLength}</span>
 						</h2>
-						<div className="flex justify-center items-center border bg-gray-200 text-blue-500 border-gray-300 p-2 w-full rounded-2xl text-center text-lg font-bold font-nunito">
+						<div className="flex justify-center items-center border bg-gray-200 text-blue-500 border-gray-300 p-2 w-full rounded-2xl text-center text-lg font-bold font-nunito dark:border-darkborder-999 dark:bg-dark-999">
 							{generatedPassword.split("").map((char, index) => (
 								<span key={index} style={getCharacterStyle(char)}>
 									{char}
@@ -112,7 +112,7 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							>
 								<HiOutlineClipboardDocument
 									size="1.3em"
-									className="absolute ml-1 text-black translate-x-[25rem] translate-y-[-0.75rem]"
+									className="absolute ml-1 text-black translate-x-[25rem] translate-y-[-0.75rem] dark:text-darksubtext-999"
 									onClick={() => {
 										navigator.clipboard.writeText(generatedPassword);
 									}}
@@ -120,8 +120,8 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							</Tooltip>
 						</div>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 mb-5 mt-2 ">
-						<span className="font-bold text-blue-500">8</span>
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 mb-5 mt-2 dark:border-darkborder-999">
+						<span className="font-bold text-blue-500 ">8</span>
 						<input
 							type="range"
 							value={passwordLength}
@@ -129,11 +129,11 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							max={30}
 							step={1}
 							onChange={(e) => setPasswordLength(Number(e.target.value))}
-							className="border border-gray-300  w-full ml-2 mr-2 rounded"
+							className="border border-gray-300  w-full ml-2 mr-2 rounded "
 						/>
 						<span className="font-bold text-blue-500">30</span>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
 						<label className="font-nunito font-medium">Include Uppercase</label>
 						<input
 							type="checkbox"
@@ -141,15 +141,17 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							onChange={() => setIncludeUppercase(!includeUppercase)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
-						<label className="font-nunito font-medium">Include <span className="text-purple-500">Lowercase</span></label>
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
+						<label className="font-nunito font-medium">
+							Include <span className="text-purple-500">Lowercase</span>
+						</label>
 						<input
 							type="checkbox"
 							checked={includeLowercase}
 							onChange={() => setIncludeLowercase(!includeLowercase)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2">
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
 						<label className="font-nunito font-medium">
 							Include <span className="text-red-500">Special Symbols</span>
 						</label>
@@ -159,8 +161,10 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							onChange={() => setIncludeSpecialSymbols(!includeSpecialSymbols)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 mb-0">
-						<label className="font-nunito font-medium">Include <span className="text-blue-500">Numbers</span></label>
+					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 mb-0 dark:border-darkborder-999">
+						<label className="font-nunito font-medium">
+							Include <span className="text-blue-500">Numbers</span>
+						</label>
 						<input
 							type="checkbox"
 							checked={includeNumbers}
@@ -168,7 +172,7 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 						/>
 					</div>
 				</div>
-				<div className="w-full flex items-center justify-center p-5">
+				<div className="w-full flex items-center justify-center p-5 dark:bg-darkcards-999">
 					<Button value="GenConfirm" onClick={syncInputField}>
 						Confirm
 					</Button>

@@ -373,7 +373,7 @@ const Grid = (props: GridProps) => {
           </Dropdown>
         </div>
         <Tooltip content="Add a Credential" placement="bottom">
-          <AddButton onClick={props.onAddClick}></AddButton>
+          <AddButton onClick={props.onAddClick} ></AddButton>
         </Tooltip>
 
         <div className="absolute left-[52rem]">
@@ -439,10 +439,10 @@ const Grid = (props: GridProps) => {
         popup
         dismissible
       >
-        <Modal.Header />
-        <Modal.Body>
+        <Modal.Header className="dark:bg-darkbg-999"/>
+        <Modal.Body className="dark:bg-darkbg-999">
           <div className="flex items-center justify-center p-1">
-            <AiTwotoneMail className="text-2xl" />
+            <AiTwotoneMail className="text-2xl dark:text-darksubtext-999" />
             <h3 className="text-2xl p-2 font-nunito font-bold text-gray-900 dark:text-white text-center">
               Share Credential
             </h3>

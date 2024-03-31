@@ -74,7 +74,7 @@ function Form(props: FormProps) {
   return (
     <>
       <aside
-        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen`}
+        className={`items-center flex flex-col border-l border-t  border-opacity-30 overflow-x-hidden overflow-hidden h-screen dark:border-darkborder-999`}
       >
         <TopOfForm
           credential={props.credentialObj}
@@ -85,7 +85,7 @@ function Form(props: FormProps) {
 
         <form
           onSubmit={handleSubmitForm}
-          className=" flex-col p-3 border-t border-opacity-30"
+          className=" flex-col p-3 border-t border-opacity-30 dark:border-darkborder-999"
         >
           <LabelInput
             required={true}

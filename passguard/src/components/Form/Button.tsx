@@ -32,17 +32,17 @@ const Button = (props: FormProps) => {
            props.value === "createAccount" ||
            props.value === "Add" ||
            props.value === "GenPass"
-             ? "bg-black hover:text-black hover:bg-yellow-400 text-white w-full"
+             ? "bg-black hover:text-black hover:bg-yellow-400 text-white w-full dark:bg-blue-500 dark:hover:bg-yellow-400"
              : ""
          }
          ${
            props.value === "Save" || props.value === "Update"
-             ? "bg-blue-500 border hover:bg-yellow-400 text-white w-full dark:bg-darkbuttonblue-999"
+             ? "bg-blue-500 border hover:bg-yellow-400 text-white w-full dark:border-darkborder-999"
              : ""
          }
          ${
            props.value === "Cancel"
-             ? "text-blue-500 border border-gray-400 hover:bg-gray-200 w-full"
+             ? "text-blue-500 border border-gray-400 hover:bg-gray-200 w-full "
              : ""
          }
 					${props.value === "GenConfirm" ? "bg-blue-500 hover:bg-yellow-400 text-white w-full" : ""}

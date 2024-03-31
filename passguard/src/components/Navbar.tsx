@@ -85,7 +85,7 @@ function Navbar(props: NavbarProps) {
                         font-medium rounded-md cursor-pointer
                         text-white
                         hover:bg-yellow-400 hover:text-black
-                          group  border-b-2 border-gray-700 transition-all duration-100
+                          group  border-b-2 border-gray-700 transition-all duration-100 
                         `}
 								>
 									<img src={item.icon} alt={item.name} className="w-6 h-6" />
@@ -122,7 +122,7 @@ function Navbar(props: NavbarProps) {
 									state: { user, expanded: expanded, clickedLockBTN: true },
 								})
 							}
-							style="bg-white text-black hover:bg-yellow-400 w-[11rem] ml-[3.3rem] mb-2"
+							style="bg-white text-black hover:bg-yellow-400 w-[11rem] ml-[3.3rem] mb-2 dark:bg-darkbuttonblue-999 dark:text-darktext-999 dark:hover:bg-yellow-400 dark:hover:text-black"
 						>
 							Lock App
 						</Button>
