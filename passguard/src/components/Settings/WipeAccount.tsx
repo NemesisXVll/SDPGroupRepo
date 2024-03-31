@@ -22,7 +22,7 @@ const WipeAccount = (props: WipeAccountProps) => {
 
   return (
     <>
-      <div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md">
+      <div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999">
         <div className="flex flex-col">
           <span className="font-semibold pb-2">Wipe Account</span>
           <span className="font-nunito text-gray-500">

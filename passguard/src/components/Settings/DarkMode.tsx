@@ -25,7 +25,7 @@ const DarkMode = (props: DarkModeProps) => {
   return (
     <>
       <h2 className="m-2 font-bold text-lg">Appearance</h2>
-      <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md">
+      <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999">
         <div className="flex flex-col">
           <span className="font-semibold pb-2">Theme</span>
           <span className="font-nunito text-gray-500">
