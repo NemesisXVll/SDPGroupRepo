@@ -73,7 +73,9 @@ const Stats = (props: StatsProps) => {
 	return (
 		<div className="w-full p-2 h-fit m-3">
 			<div className="flex">
-				<h5 className="p-1 text-xl font-medium">Password Analysis </h5>
+				<h5 className="p-1 text-xl font-medium dark:text-darktext-999">
+					Password Analysis{" "}
+				</h5>
 				{/* <button onClick={handleRefreshClick}>
 					<img src={refresh} alt="refresh-icon" />
 				</button> */}
@@ -120,7 +122,7 @@ const Stats = (props: StatsProps) => {
 					<div>
 						<div className="flex">
 							<img src={redinfo} alt="info-icon" className="w-4" />
-							<p className="text-sm font-nunito font-bold p-1">
+							<p className="text-sm font-nunito font-bold p-1 dark:text-darktext-999">
 								{totalWeakPasswords} Weak Passwords
 							</p>
 						</div>
@@ -130,8 +132,8 @@ const Stats = (props: StatsProps) => {
 					</div>
 					<div>
 						<div className="flex">
-							<img src={blueinfo} alt="info-icon" className="w-4 mt-0" />
-							<p className="text-sm font-nunito font-bold p-1">
+							<img src={blueinfo} alt="info-icon" className="w-4 mt-0 " />
+							<p className="text-sm font-nunito font-bold p-1 dark:text-darktext-999">
 								{totalReusedPasswords} Reused Passwords
 							</p>
 						</div>
@@ -142,7 +144,7 @@ const Stats = (props: StatsProps) => {
 					<div>
 						<div className="flex">
 							<img src={purpleinfo} alt="info-icon" className="w-4" />
-							<p className="text-sm font-nunito font-bold p-1">
+							<p className="text-sm font-nunito font-bold p-1 dark:text-darktext-999">
 								{totalOldPasswords} Old Passwords
 							</p>
 						</div>

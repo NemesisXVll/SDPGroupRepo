@@ -55,7 +55,7 @@ function Navbar(props: NavbarProps) {
   return (
 		<>
 			<aside className="h-screen ">
-				<nav className="h-full flex flex-col bg-black shadow-sm rounded-tr-2xl dark:bg-gray-800">
+				<nav className="h-full flex flex-col bg-black shadow-sm rounded-tr-2xl dark:bg-darkinset-999">
 					<div className="p-4 pb-2 flex justify-between items-center">
 						<img
 							src={appLogo}
