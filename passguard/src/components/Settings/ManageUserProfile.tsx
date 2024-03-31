@@ -130,12 +130,6 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
 
   return (
     <>
-      <Flowbite>
-        <DarkThemeToggle />
-      </Flowbite>
-
-      <h1 className="text-white dark:text-darktext-999">HELLO</h1>
-
       <Card className="max-w-[30rem] mx-auto dark:bg-darkcards-999">
         <div className="flex flex-col">
           <div className="flex justify-end">

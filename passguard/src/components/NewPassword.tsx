@@ -177,12 +177,12 @@ const NewPassword: React.FC = () => {
           alt="Login visual"
         />
       </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
+      <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
         <form
-          className="w-[28rem] mx-auto  p-4  border-gray-300  shadow-md bg-white"
+          className="w-[28rem] mx-auto  p-4  border-gray-300  shadow-md bg-white dark:bg-darkcards-999 dark:border-darkborder-999"
           onSubmit={handleSubmit}
         >
-          <h2 className=" font-nunito border-b-4 p-2 text-center text-3xl py-4 font-bold mb-4">
+          <h2 className=" font-nunito border-b-4 p-2 text-center text-3xl py-4 font-bold mb-4 dark:text-darktext-999 dark:border-darkborder-999">
             🔑 Setup New Password
           </h2>
 
@@ -238,7 +238,7 @@ const NewPassword: React.FC = () => {
                 arrow={false}
                 placement="top-end"
               >
-                <IoInformationCircleOutline className="text-black mb-2"></IoInformationCircleOutline>
+                <IoInformationCircleOutline className="text-black mb-2 dark:text-darksubtext-999"></IoInformationCircleOutline>
               </Tooltip>
             </div>
 
@@ -323,7 +323,7 @@ const NewPassword: React.FC = () => {
                       setshowConfirmNewPass(!showConfirmNewPass);
                     }}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
 				 absolute translate-x-[24rem] top-[1.9rem]"
                   />
                 </Tooltip>
@@ -338,7 +338,7 @@ const NewPassword: React.FC = () => {
                       setshowConfirmNewPass(!showConfirmNewPass);
                     }}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
               absolute translate-x-[24rem] top-[1.9rem]"
                   />
                 </Tooltip>

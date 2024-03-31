@@ -116,7 +116,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full overflow-hidden ">
         <div className="hidden sm:block">
           <img
             className="w-full h-full object-cover"
@@ -130,25 +130,25 @@ const Login: React.FC = () => {
         ) : (
           ""
         )}
-        <div className="bg-gray-100 flex flex-col justify-center">
+        <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
           <form
-            className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md dark:bg-darkcards-999"
             onSubmit={handleLoginSubmit}
           >
-            <div className="flex items-center justify-center flex-col">
+            <div className="flex items-center justify-center flex-col ">
               <div className="flex">
-                <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+                <h2 className="text-4xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
                   👋 Welcome&nbsp;
                 </h2>
                 <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
                   back&nbsp;
                 </h2>
-                <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+                <h2 className="text-4xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
                   !
                 </h2>
               </div>
 
-              <p className="text-sm text-gray-600 font-nunito">
+              <p className="text-sm text-gray-600 font-nunito dark:text-darksubtext-999">
                 Enter your credential to login
               </p>
             </div>
@@ -181,7 +181,7 @@ const Login: React.FC = () => {
                     <FiEyeOff
                       onClick={() => setShowPassword(!showPassword)}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
                                       absolute translate-x-[20.8rem] top-[1.9rem]"
                     />
                   </Tooltip>
@@ -193,7 +193,7 @@ const Login: React.FC = () => {
                     <FiEye
                       onClick={() => setShowPassword(!showPassword)}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
                                       absolute translate-x-[20.8rem] top-[1.9rem]"
                     />
                   </Tooltip>
@@ -212,7 +212,7 @@ const Login: React.FC = () => {
               <a
                 onClick={handleForgotPassword}
                 href="#"
-                className="text-indigo-600 text-sm hover:text-indigo-500 font-nunito font-semibold"
+                className="text-blue-500 text-sm hover:text-blue-700 font-nunito font-semibold"
               >
                 Forgot Password?
               </a>
@@ -229,9 +229,9 @@ const Login: React.FC = () => {
               <a
                 onClick={handleCreateAccount}
                 href="#"
-                className="text-indigo-600 text-sm hover:text-indigo-500  font-nunito font-semibold"
+                className="text-blue-500 text-sm hover:text-blue-700 ml-1 font-nunito font-semibold"
               >
-                &nbsp; Create an account
+                Create an account
               </a>
             </p>
             <div className="flex items-center justify-center mr-6 mt-1">
@@ -246,15 +246,15 @@ const Login: React.FC = () => {
                 className="absolute -translate-x-[0.3rem] translate-y-[1rem]"
                 arrow={false}
               >
-                <IoInformationCircleOutline className="text-sm text-black mr-1" />
+                <IoInformationCircleOutline className="text-sm text-black mr-1 dark:text-darksubtext-999" />
               </Tooltip>
               <p className="text-center text-gray-600 text-sm font-normal font-nunito">
                 Import your Passguard Data
                 <a
                   onClick={handleImportClick}
-                  className="text-indigo-600 text-sm hover:text-indigo-500 hover:cursor-pointer font-nunito cursor-default font-semibold"
+                  className="text-blue-500 hover:text-blue-700 text-sm ml-1 hover:cursor-pointer font-nunito cursor-default font-semibold"
                 >
-                  &nbsp; Import
+                  Import
                 </a>
                 <input
                   type="file"

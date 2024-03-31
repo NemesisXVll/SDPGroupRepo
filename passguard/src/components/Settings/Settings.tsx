@@ -305,7 +305,7 @@ const Settings = (props: SettingsProps) => {
         <Modal.Body className="dark:bg-darkcards-999">
           {" "}
           <div className="text-center">
-            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 dark:text-gray-200" />
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500  dark:text-red-500" />
             <h3 className="mb-5 text-lg font-nunito text-gray-500 dark:text-gray-400">
               {deleteOption === "wipeCredentials"
                 ? "Are you sure you want to permanently delete all credentials?"

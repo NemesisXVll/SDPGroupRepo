@@ -6,6 +6,7 @@ import Button from "../Form/Button";
 import LabelInput from "../Form/LabelInput";
 import { CgDanger } from "react-icons/cg";
 
+
 type CaptchaProps = {
   modalVal: boolean;
   closeModal: () => void;
@@ -99,9 +100,10 @@ const Captcha = (props: CaptchaProps) => {
         size="md"
         onClose={() => props.closeModal()}
         popup
+        className="dark:bg-darkcards-999"
       >
-        <div className="bg-white rounded-lg shadow-md p-4 font-['Nunito'] text-gray-800 w-full max-w-lg mx-auto">
-          <h1 className="text-xl font-bold text-gray-800 mb-6 text-center font-['Nunito']">
+        <div className="shadow-md p-4  w-full max-w-lg mx-auto dark:bg-darkcards-999">
+          <h1 className="text-xl font-bold text-gray-800 mb-6 text-center font-['Nunito'] dark:text-darktext-999">
             Enter the Code Below
           </h1>
           <div className="mb-3 flex justify-center mx-auto gap-2">
@@ -110,26 +112,24 @@ const Captcha = (props: CaptchaProps) => {
               ref={captchaCanvasRef}
               width="200"
               height="80"
-              className="text-center bg-gray-900 border-2 border-gray-300 rounded-md shadow-md mb-3"
+              className="text-center bg-gray-900 border-2 border-gray-300 rounded-md shadow-md dark:bg-darkbg-999"
             ></canvas>
             <button
               type="button"
               ref={ref}
-              className="items-center justify-center h-fit p-1 mt-6 flex rounded-md hover: transition-all"
+              className=" items-center bg-gradient-to-r rounded-3xl h-10 mt-5
+              hover:bg-gradient-to-bl focus:outline-none  text-base 
+              leading-normal tracking-tight font-semibold text-center
+               transition-all duration-200 ease-out justify-center px-4 py-2 min-w-[8rem] 
+                border border-gray-400 
+               bg-black hover:text-black hover:bg-yellow-400 text-white dark:bg-blue-500 dark:hover:bg-yellow-400"
               id="refresh-captcha"
               onClick={() => handleRefreshCaptchaClick()}
             >
-              <div
-                className={`inline-flex items-center text-white bg-gradient-to-r rounded-3xl
-                hover:bg-gradient-to-bl focus:outline-none hover:text-black text-base 
-                leading-normal tracking-tight font-semibold text-center
-                 transition-all duration-200 ease-out justify-center px-2 py-2
-                ${"from-cyan-500 to-blue-500"}
-                duration-[400ms]
-                `}
-              >
-                <FcRefresh className="w-5 h-5" />
-                <h1 className="text-sm">Generate Captcha</h1>
+              <div className={`flex`}>
+                <FcRefresh className="w-5 h-5 " />
+                <h1 className="text-sm">Generate Captcha</h1>{" "}
+                {/* MIGHT NEED MODIFICAION*/}
               </div>
             </button>
           </div>
@@ -154,7 +154,7 @@ const Captcha = (props: CaptchaProps) => {
             </div>
 
             <div className="mx-auto w-72">
-              <Button value="Login" type="submit">
+              <Button value="Save" type="submit">
                 Continue
               </Button>
             </div>

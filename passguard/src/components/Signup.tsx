@@ -228,14 +228,14 @@ const Signup: React.FC = () => {
           alt="Signup visual"
         />
       </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
-        <form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md">
+      <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
+        <form className="max-w-[400px] min-w-[450px] w-full mx-auto bg-white p-4 shadow-md dark:bg-darkcards-999">
           <CiCircleChevLeft
-            className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+            className="w-8 h-8 hover:text-blue-500 cursor-pointer dark:text-darkbuttonblue-999 dark:hover:text-yellow-400"
             onClick={() => navigate("/login", {})}
           ></CiCircleChevLeft>
           <div className="flex items-center justify-center">
-            <h2 className="text-4xl text-center py-2 font-bold font-nunito">
+            <h2 className="text-4xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
               📝 Sign
             </h2>
             <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
@@ -343,7 +343,7 @@ const Signup: React.FC = () => {
                 arrow={false}
                 placement="top-end"
               >
-                <IoInformationCircleOutline className="text-black mb-1"></IoInformationCircleOutline>
+                <IoInformationCircleOutline className="text-black mb-1 dark:text-darksubtext-999"></IoInformationCircleOutline>
               </Tooltip>
             </div>
             <Tooltip
@@ -432,7 +432,7 @@ const Signup: React.FC = () => {
                   <FiEyeOff
                     onClick={toggleConfirmPasswordVisibility}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
                   absolute translate-x-[24rem] top-[1.9rem]"
                   />
                 </Tooltip>
@@ -444,7 +444,7 @@ const Signup: React.FC = () => {
                   <FiEye
                     onClick={toggleConfirmPasswordVisibility}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
               absolute translate-x-[24rem] top-[1.9rem]"
                   />
                 </Tooltip>
@@ -455,13 +455,13 @@ const Signup: React.FC = () => {
           <div className="mb-1 block mt-5">
             <label
               htmlFor="picture"
-              className="p-1 font-normal font-['Nunito']
+              className="p-1 font-normal font-['Nunito'] dark:text-darksubtext-999
          text-gray-700 text-base peer-placeholder-shown:text-base
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
           peer-focus: peer-focus:text-blue-600 transition-all"
             >
               Upload Profile Picture{" "}
-              <span className="text-gray-500">(Optional)</span>
+              <span className="text-gray-500 ">(Optional)</span>
             </label>
           </div>
           <FileInput
@@ -471,8 +471,8 @@ const Signup: React.FC = () => {
             onChange={handleFileInput}
           />
           <div className="flex items-center">
-            <IoInformationCircleOutline className="mt-[0.3rem] text-red-500 "></IoInformationCircleOutline>
-            <p className="text-gray-500 text-sm mt-1 ml-2zz">
+            <IoInformationCircleOutline className="mt-[0.3rem] text-red-500 dark:text-darksubtext-999"></IoInformationCircleOutline>
+            <p className="text-gray-500 text-sm mt-1  dark:text-darksubtext-999">
               Files allowed (jpg, jpeg, gif, png, svg), Max Size: 1MB
             </p>
           </div>
@@ -495,14 +495,14 @@ const Signup: React.FC = () => {
             </Button>
           </div>
 
-          <p className="text-center text-sm text-gray-600 mt-8 font-normal font-['Nunito']">
+          <p className="text-center text-sm text-gray-600 mt-8 font-normal font-['Nunito'] dark:text-darksubtext-999">
             Already have an account?
             <a
               onClick={handleLoginClick}
               href="#"
-              className="text-indigo-600 text-sm hover:text-indigo-500 font-normal font-['Nunito']"
+              className="text-blue-500 text-sm hover:text-blue-700 ml-1 font-normal font-['Nunito'] "
             >
-              &nbsp; Login
+              Login
             </a>
           </p>
         </form>

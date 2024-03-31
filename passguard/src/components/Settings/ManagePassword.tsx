@@ -227,10 +227,10 @@ const ManagePassword = (props: ManageUserProfileProps) => {
       >
         <Modal.Body className="dark:bg-darkcards-999">
           <form
-            className="w-[28rem] mx-auto  p-4  border-gray-300 dark:border-darkborder-999 "
+            className="w-[28rem] mx-auto p-4 border-gray-300 dark:border-darkborder-999 "
             onSubmit={handleSubmit}
           >
-            <h2 className="text-2xl font-nunito font-bold border-b-4 p-2 mb-4 dark:text-darktext-999">
+            <h2 className="text-2xl font-nunito font-bold border-b-4 p-2 mb-4 dark:text-darktext-999 dark:border-darkborder-999">
               🔑 Setup New Password
             </h2>
             <LabelInput

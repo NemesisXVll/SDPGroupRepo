@@ -55,31 +55,31 @@ const ForgetOTP: React.FC = () => {
             alt="Login visual"
           />
         </div>
-        <div className="bg-gray-100 flex flex-col justify-center">
+        <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
           <form
-            className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md dark:bg-darkcards-999"
             onSubmit={(e) => {
               e.preventDefault();
               checkEmail(false);
-            }} // Prevent form submission
+            }}
           >
             <CiCircleChevLeft
-              className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+              className="w-8 h-8 hover:text-blue-500 cursor-pointer dark:text-darkbuttonblue-999 dark:hover:text-yellow-400"
               onClick={() => navigate("/login", {})}
             ></CiCircleChevLeft>
             <div className="flex justify-center items-center">
-              <AiTwotoneMail className="text-4xl" />
+              <AiTwotoneMail className="text-4xl dark:text-darkbg-999" />
 
               <div className="flex items-center justify-center">
-                <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito">
+                <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito dark:text-darktext-999">
                   Enter your&nbsp;
                 </h2>
                 <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
-                  email&nbsp;
+                  email
                 </h2>
               </div>
             </div>
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-gray-600 dark:text-darksubtext-999">
               We will send you a verification code to reset your password.
             </p>
             <div className="mt-4">
