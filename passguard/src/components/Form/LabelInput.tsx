@@ -4,51 +4,51 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { Tooltip } from "flowbite-react";
 import redinfo from "../../assets/icons/stats/redinfo.svg";
 type LabelInputProps = {
-	type?: string;
-	required?: boolean;
-	label?: string;
-	value?: string;
-	onChange?: React.ChangeEventHandler<HTMLInputElement>;
-	id?: string;
-	placeholder?: string;
-	children?: React.ReactNode;
-	viewOnly?: boolean;
-	status?: boolean;
+  type?: string;
+  required?: boolean;
+  label?: string;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  id?: string;
+  placeholder?: string;
+  children?: React.ReactNode;
+  viewOnly?: boolean;
+  status?: boolean;
 };
 const LabelInput = (props: LabelInputProps) => {
-	const [value, setValue] = useState(props.value ? props.value : "");
-	const [isHTTPS, setIsHTTPS] = useState(
-		props.value?.includes("http") ? true : false
-	);
-	const [TooltipClicked, setTooltipClicked] = useState(false);
+  const [value, setValue] = useState(props.value ? props.value : "");
+  const [isHTTPS, setIsHTTPS] = useState(
+    props.value?.includes("http") ? true : false
+  );
+  const [TooltipClicked, setTooltipClicked] = useState(false);
 
-	const handleTooltipClick = () => {
-		setTooltipClicked(true);
-		setTimeout(() => {
-			setTooltipClicked(false);
-		}, 900);
-	};
+  const handleTooltipClick = () => {
+    setTooltipClicked(true);
+    setTimeout(() => {
+      setTooltipClicked(false);
+    }, 900);
+  };
 
-	useEffect(() => {
-		setValue(props.value ? props.value : "");
-		setIsHTTPS(props.value?.includes("http") ? true : false);
-	}, [props.value]);
+  useEffect(() => {
+    setValue(props.value ? props.value : "");
+    setIsHTTPS(props.value?.includes("http") ? true : false);
+  }, [props.value]);
 
-	const handleOnChange = (e: any) => {
-		setValue(e.target.value);
-		props.onChange ? props.onChange(e) : "";
-	};
+  const handleOnChange = (e: any) => {
+    setValue(e.target.value);
+    props.onChange ? props.onChange(e) : "";
+  };
 
-	return (
-		<div className="mt-1 relative border-gray-300 flex items-center">
-			<input
-				id={props.id}
-				name={props.id}
-				value={value}
-				required={props.required}
-				type={props.type}
-				maxLength={props.id === "credentialTitle" ? 25 : 100}
-				className={`pl-2 pr-8 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400
+  return (
+    <div className="mt-1 relative border-gray-300 flex items-center">
+      <input
+        id={props.id}
+        name={props.id}
+        value={value}
+        required={props.required}
+        type={props.type}
+        maxLength={props.id === "credentialTitle" ? 25 : 100}
+        className={`pl-2 pr-8 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400 dark:bg-darkinset-999 dark:text-darksubtext-999 dark:border-darkborder-999
         ${props.viewOnly ? "bg-gray-200 text-gray-500" : "text-black"} ${props.status == false ? "border-red-500" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 dark:text-darkwhite-999`}

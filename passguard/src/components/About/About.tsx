@@ -27,7 +27,7 @@ const Settings = (props: SettingsProps) => {
   return (
     <>
       {redirect}
-      <div className="app-container h-screen">
+      <div className="app-container h-screen dark:bg-darkbg-999">
         <div className="navbar">
           <Navbar
             isExpanded={expanded}
@@ -40,10 +40,10 @@ const Settings = (props: SettingsProps) => {
             <div className="flex">
               <Label
                 value="About"
-                className="flex p-1 text-xl font-medium mb-2"
+                className="flex p-1 text-xl font-medium mb-2 dark:text-darktext-999"
                 color="dark"
               />
-              <GrCircleQuestion className="h-5 w-5 mt-[0.45rem]" />
+              <GrCircleQuestion className="h-5 w-5 mt-[0.45rem] dark:text-darktext-999" />
             </div>
           </div>
         </div>

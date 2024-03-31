@@ -130,7 +130,7 @@ const Settings = (props: SettingsProps) => {
   return (
     <>
       {redirect}
-      <div className="app-container h-screen dark:bg-blue-999">
+      <div className="app-container h-screen dark:bg-darkbg-999 dark:text-darktext-999">
         <div className="navbar">
           <Navbar
             updatedUser={userUpdatedFlag}
@@ -139,12 +139,12 @@ const Settings = (props: SettingsProps) => {
           />
         </div>
 
-        <div className="TopOfDocument border-b-2">
+        <div className="TopOfDocument border-b-2 dark:border-darkborder-999">
           <div className="p-2 m-3 TopOfDocument">
             <div className="flex">
               <Label
                 value=" ⚙ Settings"
-                className="flex p-1 text-xl font-medium mb-2"
+                className="flex p-1 text-xl font-medium mb-2 dark:text-darktext-999"
                 color="dark"
               />
             </div>
