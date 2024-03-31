@@ -24,10 +24,10 @@ const Autolock = (props: AutolockProps) => {
 
   return (
 		<>
-			<div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md">
+			<div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
 				<div className="flex flex-col">
-					<span className="font-semibold pb-2">Autolock</span>
-					<span className="font-nunito text-gray-500">
+					<span className="font-semibold pb-2 dark:text-darktext-999">Autolock</span>
+					<span className="font-nunito text-gray-500 dark:text-darksubtext-999">
 						<span className="font-semibold text-sm">
 							Specify how long before the application locks automatically.{" "}
 							<span className="font-bold">(✅ Recommended)</span>

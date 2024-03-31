@@ -22,23 +22,23 @@ const WipeAccount = (props: WipeAccountProps) => {
 
   return (
     <>
-      <div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999">
+      <div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
         <div className="flex flex-col">
-          <span className="font-semibold pb-2">Wipe Account</span>
-          <span className="font-nunito text-gray-500">
-            <span className="font-nunito text-gray-500">
-              <span className="text-red-500 text-sm font-bold">
-                ⚠️ Warning:
-              </span>{" "}
-              <span className="font-semibold text-sm">
-                This action is irreversible.
-              </span>
+          <span className="font-semibold pb-2 dark:text-darktext-999">
+            Wipe Account
+          </span>
+
+          <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
+            <span className="text-red-500 text-sm font-bold">⚠️ Warning:</span>{" "}
+            <span className="font-semibold text-sm">
+              This action is irreversible.
             </span>
           </span>
         </div>
+
         <div className="min-w-[13rem]">
           <Button
-            value="wipeAccount"
+            value="Add"
             style="bg-black text-white hover:bg-yellow-400 max-w-[13rem] w-[13rem]"
             onClick={() => setOpenAssuranceModal(true)}
           >
@@ -53,9 +53,10 @@ const WipeAccount = (props: WipeAccountProps) => {
           size="md"
           onClose={() => setOpenAssuranceModal(false)}
           popup
+          className="dark:bg-darkcards-999"
         >
-          <Modal.Header />
-          <Modal.Body>
+          <Modal.Header className="dark:bg-darkcards-999" />
+          <Modal.Body className="dark:bg-darkcards-999">
             {" "}
             <div className="text-center">
               <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 dark:text-red-500" />

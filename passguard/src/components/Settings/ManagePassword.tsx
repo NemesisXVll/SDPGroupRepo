@@ -193,12 +193,14 @@ const ManagePassword = (props: ManageUserProfileProps) => {
 
   return (
     <>
-      <h2 className="m-2 font-bold text-lg">Security</h2>
-      <div className="p-5 flex items-center justify-between rounded-b-none rounded-xl bg-gray-100 border border-gray-200 shadow-md">
+      <h2 className="m-2 font-bold text-lg dark:text-darktext-999">Security</h2>
+      <div className="p-5 flex items-center justify-between rounded-b-none rounded-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
         <div className="flex flex-col">
-          <span className="font-semibold pb-2">Change Master Password</span>
-          <span className="font-nunito text-gray-500">
-            <span className="font-semibold text-sm">
+          <span className="font-semibold pb-2 dark:text-darktext-999">
+            Change Master Password
+          </span>
+          <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
+            <span className="font-semibold text-sm ">
               Use this feature to change the main password used to access your
               account.
             </span>
@@ -207,7 +209,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
 
         <div className="min-w-[13rem]">
           <Button
-            value="changeMasterPassword"
+            value="Add"
             style="bg-black text-white hover:bg-yellow-400 max-w-[13rem] w-[13rem]"
             onClick={() => setIsModalOpen(true)}
           >
@@ -216,13 +218,19 @@ const ManagePassword = (props: ManageUserProfileProps) => {
         </div>
       </div>
 
-      <Modal show={isModalOpen} onClose={closeModal} size="xl" dismissible>
-        <Modal.Body>
+      <Modal
+        show={isModalOpen}
+        onClose={closeModal}
+        size="xl"
+        dismissible
+        className="dark:bg-darkcards-999"
+      >
+        <Modal.Body className="dark:bg-darkcards-999">
           <form
-            className="w-[28rem] mx-auto  p-4  border-gray-300 "
+            className="w-[28rem] mx-auto  p-4  border-gray-300 dark:border-darkborder-999 "
             onSubmit={handleSubmit}
           >
-            <h2 className="text-2xl font-nunito font-bold border-b-4 p-2 mb-4">
+            <h2 className="text-2xl font-nunito font-bold border-b-4 p-2 mb-4 dark:text-darktext-999">
               🔑 Setup New Password
             </h2>
             <LabelInput
@@ -248,7 +256,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
                         setshowCurrentPass(!showCurrentPass);
                       }}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
 				 absolute translate-x-[24rem] top-[1.9rem]"
                     />
                   </Tooltip>
@@ -263,7 +271,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
                         setshowCurrentPass(!showCurrentPass);
                       }}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
               absolute translate-x-[24rem] top-[1.9rem]"
                     />
                   </Tooltip>
@@ -271,7 +279,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
               </div>
             </LabelInput>
 
-            <div className="flex-row mt-2">
+            <div className="flex-row mt-2 ">
               <div className="ml-[25rem]">
                 <Tooltip
                   content={
@@ -323,7 +331,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
                   arrow={false}
                   placement="top-end"
                 >
-                  <IoInformationCircleOutline className="text-black mb-1"></IoInformationCircleOutline>
+                  <IoInformationCircleOutline className="text-black mb-1 dark:text-darksubtext-999"></IoInformationCircleOutline>
                 </Tooltip>
               </div>
 
@@ -410,7 +418,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
                         setshowConfirmNewPass(!showConfirmNewPass);
                       }}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
 				 absolute translate-x-[24rem] top-[1.9rem]"
                     />
                   </Tooltip>
@@ -425,7 +433,7 @@ const ManagePassword = (props: ManageUserProfileProps) => {
                         setshowConfirmNewPass(!showConfirmNewPass);
                       }}
                       size="1.3em"
-                      className="ml-1 text-black
+                      className="ml-1 text-black dark:text-darksubtext-999
               absolute translate-x-[24rem] top-[1.9rem]"
                     />
                   </Tooltip>

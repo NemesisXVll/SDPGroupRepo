@@ -61,6 +61,7 @@ function DocumentCard(props: DocumentCardProps) {
 							onClose={() => setOpenDeleteModal(false)}
 							popup
 							dismissible
+							className="dark:bg-darkcards-999"
 						>
 							<Modal.Header className="dark:bg-darkcards-999" />
 							<Modal.Body className="dark:bg-darkcards-999">
@@ -117,7 +118,8 @@ function DocumentCard(props: DocumentCardProps) {
 			</div>
 
 			{openModal ? (
-				<Modal show={openModal} onClose={() => setOpenModal(false)} dismissible>
+				<Modal show={openModal} onClose={() => setOpenModal(false)} dismissible
+				className="dark:bg-darkcards-999">
 					<Modal.Header className="font-nunito font-medium break-words text-sm dark:bg-darkcards-999 dark:border-darkborder-999">
 						{props.name} - {props.category}
 					</Modal.Header>

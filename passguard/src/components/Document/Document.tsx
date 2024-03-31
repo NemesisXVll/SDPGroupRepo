@@ -201,6 +201,7 @@ const Document = (props: DocumentProps) => {
 				size="md"
 				popup
 				onClose={() => setOpenWarningModal(false)}
+				className="dark:bg-darkcards-999"
 			>
 				<Modal.Header className="p-5 dark:bg-darkcards-999">
 					<p className="text-center dark:text-darktext-999">

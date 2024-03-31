@@ -24,11 +24,15 @@ const DarkMode = (props: DarkModeProps) => {
 
   return (
     <>
-      <h2 className="m-2 font-bold text-lg">Appearance</h2>
-      <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999">
+      <h2 className="m-2 font-bold text-lg dark:text-darktext-999">
+        Appearance
+      </h2>
+      <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
         <div className="flex flex-col">
-          <span className="font-semibold pb-2">Theme</span>
-          <span className="font-nunito text-gray-500">
+          <span className="font-semibold pb-2 dark:text-darktext-999">
+            Theme
+          </span>
+          <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
             <span className="font-semibold text-sm">
               Theme changes PassGuard appearance to the theme chosen.
             </span>
@@ -36,7 +40,7 @@ const DarkMode = (props: DarkModeProps) => {
         </div>
         <div className="">
           <select
-            className=" bg-gray-900 text-white font-medium rounded-lg w-[13rem] dark border-none"
+            className=" bg-gray-900 text-white font-medium rounded-lg w-[13rem] dark border-none dark:text-darktext-999"
             name="theme"
             id="theme-select"
             value={preference.theme}

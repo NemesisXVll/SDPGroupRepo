@@ -23,10 +23,10 @@ const OtpDropDown = (props: OtpDropDownProps) => {
 
 	return (
 		<>
-			<div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md">
+			<div className="p-5 flex items-center justify-between rounded-t-none rounded-b-3xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
 				<div className="flex flex-col">
-					<span className="font-semibold pb-2">Backup Duration</span>
-					<span className="font-nunito text-gray-500">
+					<span className="font-semibold pb-2 dark:text-darktext-999">Backup Duration</span>
+					<span className="font-nunito text-gray-500 dark:text-darksubtext-999">
 						<span className="font-semibold text-sm">
 							Choose the duration for automatic backup of your data (This sends
 							an encrypted backup of your data to your email address).
@@ -35,7 +35,7 @@ const OtpDropDown = (props: OtpDropDownProps) => {
 				</div>
 				<div className="">
 					<select
-						className=" bg-gray-900 text-white font-medium rounded-lg w-[13rem] dark border-none"
+						className=" bg-gray-900 text-white font-medium rounded-lg w-[13rem] dark border-none dark:text-darktext-999"
 						name="forgetPassOTP"
 						id="forgetPassOTP-select"
 						value={preference.backUpDuration}

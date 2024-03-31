@@ -179,23 +179,23 @@ const Settings = (props: SettingsProps) => {
                   <div className="pb-[10rem]">
                     <h2 className="m-2 font-bold text-lg">Credentials</h2>
                     <TrashDuration></TrashDuration>
-                    <div className="p-5  flex items-center justify-between  rounded-b-none bg-gray-100 border border-gray-200 shadow-md">
+                    <div className="p-5  flex items-center justify-between  rounded-b-none bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
                       <div className="flex flex-col">
-                        <span className="font-semibold pb-2">
+                        <span className="font-semibold pb-2 dark:text-darktext-999">
                           Remove All Credentials
                         </span>
                         <span className="font-nunito text-gray-500">
                           <span className="text-red-500 font-bold text-sm">
                             ⚠️ Warning:
                           </span>{" "}
-                          <span className="font-semibold text-sm">
+                          <span className="font-semibold text-sm dark:text-darksubtext-999">
                             This action is irreversible.
                           </span>
                         </span>
                       </div>
                       <div className="min-w-[13rem]">
                         <Button
-                          value="wipeCredentials"
+                          value="Add"
                           style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
                           onClick={() => {
                             setOpenDeleteModal(true);
@@ -206,12 +206,12 @@ const Settings = (props: SettingsProps) => {
                         </Button>
                       </div>
                     </div>
-                    <div className="p-5 flex items-center justify-between  rounded-t-none rounded-b-xl bg-gray-100 border border-gray-200 shadow-md">
+                    <div className="p-5 flex items-center justify-between  rounded-t-none rounded-b-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
                       <div className="flex flex-col">
-                        <span className="font-semibold pb-2">
+                        <span className="font-semibold pb-2 dark:text-darktext-999">
                           Export Your Data
                         </span>
-                        <span className="font-nunito text-gray-500">
+                        <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
                           <span className="font-semibold text-sm">
                             Send all your data to your email as an encrypted
                             file (This file can be imported back to Passguard's
@@ -221,7 +221,7 @@ const Settings = (props: SettingsProps) => {
                       </div>
                       <div className="min-w-[13rem]">
                         <Button
-                          value="Export"
+                          value="Add"
                           style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
                           onClick={() => {
                             handleSendEmail();
@@ -232,23 +232,23 @@ const Settings = (props: SettingsProps) => {
                       </div>
                     </div>
                     <h2 className="m-2 font-bold text-lg mt-6">Documents</h2>
-                    <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md">
+                    <div className="p-5 flex items-center justify-between  rounded-xl bg-gray-100 border border-gray-200 shadow-md dark:border-darkborder-999 dark:bg-darkcards-999">
                       <div className="flex flex-col">
-                        <span className="font-semibold pb-2">
+                        <span className="font-semibold pb-2 dark:text-darktext-999">
                           Remove All Documents
                         </span>
                         <span className="font-nunito text-gray-500">
                           <span className="text-red-500 text-sm font-bold">
                             ⚠️ Warning:
                           </span>{" "}
-                          <span className="font-semibold text-sm">
+                          <span className="font-semibold text-sm dark:text-darksubtext-999">
                             This action is irreversible.
                           </span>
                         </span>
                       </div>
                       <div className="min-w-[13rem]">
                         <Button
-                          value="wipeDocuments"
+                          value="Add"
                           style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
                           onClick={() => {
                             setOpenDeleteModal(true);
@@ -299,9 +299,10 @@ const Settings = (props: SettingsProps) => {
         }}
         popup
         dismissible
+        className="dark:bg-darkcards-999"
       >
-        <Modal.Header />
-        <Modal.Body>
+        <Modal.Header className="dark:bg-darkcards-999" />
+        <Modal.Body className="dark:bg-darkcards-999">
           {" "}
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 dark:text-gray-200" />

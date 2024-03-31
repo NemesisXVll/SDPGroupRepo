@@ -35,7 +35,7 @@ const Settings = (props: SettingsProps) => {
           />
         </div>
 
-        <div className="TopOfDocument border-b-2">
+        <div className="TopOfDocument border-b-2 dark:border-darkborder-999">
           <div className="p-2 m-3 TopOfDocument">
             <div className="flex">
               <Label
