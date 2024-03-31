@@ -121,104 +121,106 @@ const Document = (props: DocumentProps) => {
   }
 
   return (
-    <>
-      {redirect}
-      <div className="app-container h-screen">
-        <div className="navbar">
-          <Navbar
-            isExpanded={expanded}
-            handleExpand={(expanded) => setExpanded(expanded)}
-          />
-        </div>
+		<>
+			{redirect}
+			<div className="app-container h-screen dark:bg-darkbg-999">
+				<div className="navbar">
+					<Navbar
+						isExpanded={expanded}
+						handleExpand={(expanded) => setExpanded(expanded)}
+					/>
+				</div>
 
-        <div className="TopOfDocument border-b-2">
-          <div className="p-2 m-3 TopOfDocument">
-            <div className="flex">
-              <CgFileDocument className="mt-2  text-xl" />
-              <Label
-                value="Documents"
-                className="flex p-1 font-medium mb-2 text-xl"
-                color="dark"
-              />
-            </div>
+				<div className="TopOfDocument border-b-2 dark:bg-darkbg-999 dark:text-darktext-999 dark:border-darkborder-999">
+					<div className="p-2 m-3 TopOfDocument">
+						<div className="flex">
+							<CgFileDocument className="mt-2  text-xl" />
+							<Label
+								value="Documents"
+								className="flex p-1 font-medium mb-2 text-xl"
+								color="dark"
+							/>
+						</div>
 
-            {openModal ? (
-              <DocumentModal
-                warningModal={handleWarningModal}
-                closeModal={handleModals}
-                modalVal={openModal}
-              ></DocumentModal>
-            ) : (
-              ""
-            )}
+						{openModal ? (
+							<DocumentModal
+								warningModal={handleWarningModal}
+								closeModal={handleModals}
+								modalVal={openModal}
+							></DocumentModal>
+						) : (
+							""
+						)}
 
-            <div className="w-fit ml-1">
-              <Button onClick={handleAddDocument} value="Add Document">
-                <FaPlus className="mr-1" />
-                Add Document
-              </Button>
-            </div>
-          </div>
-        </div>
+						<div className="w-fit ml-1">
+							<Button onClick={handleAddDocument} value="Add Document">
+								<FaPlus className="mr-1" />
+								Add Document
+							</Button>
+						</div>
+					</div>
+				</div>
 
-        <div className="credentials overflow-auto ml-4 mt-8 overflow-x-hidden">
-          <div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3 bg-neutral-100">
-            <p className="text-xl font-medium w-56">
-              My Documents ({documentsLength})
-            </p>
-            <div>
-              <div id="search-container" className="relative w-80">
-                <input
-                  id="searchInput"
-                  type="text"
-                  placeholder="Search"
-                  onClick={handleSearch}
-                  className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600"
-                />
-              </div>
-              <div className="absolute left-[52rem]">
-                {showDeleteToast && (
-                  <Toast>
-                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                      <HiX className="h-5 w-5 text-red-500" />
-                    </div>
-                    <div className="ml-3 text-sm font-nunito">
-                      Document has been deleted.
-                    </div>
-                    <Toast.Toggle />
-                  </Toast>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="cards p-3 gap-5">{injectCard()}</div>
-        </div>
-      </div>
+				<div className="credentials overflow-auto ml-4 mt-8 overflow-x-hidden dark:bg-darkbg-999">
+					<div className="sticky top-0 z-10 flex items-center justify-start p-4 gap-3 bg-neutral-100 dark:bg-darkbg-999 dark:text-darktext-999">
+						<p className="text-xl font-medium w-56">
+							My Documents ({documentsLength})
+						</p>
+						<div>
+							<div id="search-container" className="relative w-80 ">
+								<input
+									id="searchInput"
+									type="text"
+									placeholder="Search"
+									onClick={handleSearch}
+									className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600 dark:bg-darkinset-999 dark:border-darkborder-999"
+								/>
+							</div>
+							<div className="absolute left-[52rem]">
+								{showDeleteToast && (
+									<Toast>
+										<div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+											<HiX className="h-5 w-5 text-red-500" />
+										</div>
+										<div className="ml-3 text-sm font-nunito">
+											Document has been deleted.
+										</div>
+										<Toast.Toggle />
+									</Toast>
+								)}
+							</div>
+						</div>
+					</div>
+					<div className="cards p-3 gap-5">{injectCard()}</div>
+				</div>
+			</div>
 
-      <Modal
-        dismissible
-        show={openWarningModal}
-        size="md"
-        popup
-        onClose={() => setOpenWarningModal(false)}
-      >
-        <Modal.Header className="p-5">
-          <p className="text-center">⚠️ Delete Source File</p>
-        </Modal.Header>
-        <Modal.Body>
-          <p className="font-nunito">
-            PassGuard will keep an encrypted copy of this file in your vault.
-            For added security, delete the source file from your computer.
-          </p>
-        </Modal.Body>
-        <div className="mx-6 my-2">
-          <Button value="Save" onClick={() => setOpenWarningModal(false)}>
-            Close
-          </Button>
-        </div>
-      </Modal>
-    </>
-  );
+			<Modal
+				dismissible
+				show={openWarningModal}
+				size="md"
+				popup
+				onClose={() => setOpenWarningModal(false)}
+			>
+				<Modal.Header className="p-5 dark:bg-darkcards-999">
+					<p className="text-center dark:text-darktext-999">
+						⚠️ Delete Source File
+					</p>
+				</Modal.Header>
+				<Modal.Body className="dark:bg-darkcards-999">
+					<p className="font-nunito dark:text-darksubtext-999">
+						PassGuard will keep an encrypted copy of this file in your vault.
+						For added security, delete the source file from your computer.
+					</p>
+					<div className="mx-6 my-2 pt-5">
+						<Button value="Save" onClick={() => setOpenWarningModal(false)}>
+							Close
+						</Button>
+					</div>
+				</Modal.Body>
+			</Modal>
+		</>
+	);
 };
 
 export default Document;

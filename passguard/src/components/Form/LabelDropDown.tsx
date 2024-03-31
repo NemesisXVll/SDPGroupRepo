@@ -35,12 +35,12 @@ const LabelDropDown = (props: LabelDropDownProps) => {
          text-sm placeholder-transparent
          ${props.viewOnly ? "bg-gray-200 text-gray-500" : " text-black"}
          rounded-lg justify-start items-start gap-14 inline-flex
-          focus:outline-none focus:border-blue-600 border-2`}
+          focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 dark:text-darkwhite-999`}
 				placeholder={props.placeholder}
 			/>
 			<label
 				htmlFor={props.id}
-				className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
+				className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito'] dark:text-darktext-999"
 			>
 				{props.label}
 			</label>

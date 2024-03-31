@@ -45,48 +45,48 @@ const Card = (props: CardProps) => {
     return "bg-green-500";
   };
   return (
-    <div
-      id={props.id}
-      className={`relative ${credentialStatus()}
+		<div
+			id={props.id}
+			className={`relative ${credentialStatus()}
       flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:scale-105 transition-all duration-300`}
-      onClick={props.onClick}
-    >
-      <img
-        src={props.picture}
-        className="w-16 translate-x-32 translate-y-10"
-        alt="logo"
-      />
+			onClick={props.onClick}
+		>
+			<img
+				src={props.picture}
+				className="w-16 translate-x-32 translate-y-10"
+				alt="logo"
+			/>
 
-      <div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl">
-        <div className="flex items-center justify-between p-4 h-12">
-          <h3 className="font-nunito font-medium break-words text-sm">
-            {props.title}
-          </h3>
-          <Kebab
-            onUpdateClick={() => props.onUpdateClick(props.index)}
-            onShareClick={() => props.onShareClick(props.index)}
-            onDeleteClick={() => props.onDeleteClick(props.index)}
-            onRecoverClick={() => props.onRecoverClick(props.index)}
-            onPermanentRemoveClick={() =>
-              props.onPermanentRemoveClick(props.index)
-            }
-            isTrashed={props.isTrashed}
-          ></Kebab>
-        </div>
-        <div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">
-          <p className="text-xs font-medium font-nunito break-words">
-            {props.username}
-          </p>
-          <p className="text-xs font-nunito font-light break-words">
-            Created: {props.dateCreated}
-          </p>
-          <p className="text-xs font-nunito font-light break-words">
-            Last updated: {props.dateUpdated}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+			<div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl dark:bg-darkcards-999 dark:text-darkwhite-999 dark:border dark:border-darkborder-999">
+				<div className="flex items-center justify-between p-4 h-12">
+					<h3 className="font-nunito font-medium break-words text-sm">
+						{props.title}
+					</h3>
+					<Kebab
+						onUpdateClick={() => props.onUpdateClick(props.index)}
+						onShareClick={() => props.onShareClick(props.index)}
+						onDeleteClick={() => props.onDeleteClick(props.index)}
+						onRecoverClick={() => props.onRecoverClick(props.index)}
+						onPermanentRemoveClick={() =>
+							props.onPermanentRemoveClick(props.index)
+						}
+						isTrashed={props.isTrashed}
+					></Kebab>
+				</div>
+				<div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">
+					<p className="text-xs font-medium font-nunito break-words">
+						{props.username}
+					</p>
+					<p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
+						Created: {props.dateCreated}
+					</p>
+					<p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
+						Last updated: {props.dateUpdated}
+					</p>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Card;

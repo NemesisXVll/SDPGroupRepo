@@ -51,7 +51,7 @@ const LabelInput = (props: LabelInputProps) => {
 				className={`pl-2 pr-8 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400
         ${props.viewOnly ? "bg-gray-200 text-gray-500" : "text-black"} ${props.status == false ? "border-red-500" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
-         placeholder-transparent focus:outline-none focus:border-blue-600 border-2`}
+         placeholder-transparent focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 dark:text-darkwhite-999`}
 				placeholder={props.placeholder}
 				onChange={handleOnChange}
 				readOnly={props.viewOnly}
@@ -69,7 +69,7 @@ const LabelInput = (props: LabelInputProps) => {
 				className="p-1 mt-4 absolute left-1 -top-6 font-normal font-['Nunito']
          text-gray-800 text-base peer-placeholder-shown:text-base
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
-          peer-focus:-top-6 peer-focus:text-blue-600 transition-all"
+          peer-focus:-top-6 peer-focus:text-blue-600 transition-all dark:text-darktext-999"
 			>
 				{props.label}
 			</label>
@@ -83,7 +83,7 @@ const LabelInput = (props: LabelInputProps) => {
 				>
 					<HiOutlineClipboardDocument
 						size="1.3em"
-						className="absolute text-black translate-x-60"
+						className="absolute text-black translate-x-60 dark:text-darksubtext-999"
 						onClick={() => {
 							{
 								handleTooltipClick();
@@ -98,7 +98,7 @@ const LabelInput = (props: LabelInputProps) => {
 				<Tooltip content={"Redirect"} className="-translate-x-5">
 					<HiOutlineExternalLink
 						size="1.3em"
-						className="absolute text-black translate-x-60 top-7"
+						className="absolute text-black translate-x-60 top-7 dark:text-darksubtext-999"
 						onClick={() => {
 							isHTTPS
 								? window.open(
