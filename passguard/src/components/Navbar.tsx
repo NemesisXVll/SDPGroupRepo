@@ -102,7 +102,7 @@ function Navbar(props: NavbarProps) {
                             absolute left-full rounded-md px-2 py-1 ml-6 z-20
                             bg-gray-200 text-black text-sm
                             invisible opacity-20 -translate-x-3 transition-all
-                            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
+                            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 dark:bg-darkcards-999 dark:text-darktext-999
                             `}
 										>
 											{item.name}

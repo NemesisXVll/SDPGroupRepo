@@ -78,7 +78,7 @@ const Kebab: React.FC<KebabProps> = (props: KebabProps) => {
 				<p className={`${isOpen.Kebab ? "cross active" : "cross"}`}>x</p>
 				<figure></figure>
 				<ul
-					className={`bg-black rounded-lg w-fit ${
+					className={`bg-black rounded-lg w-fit dark:bg-darkinset-999 ${
 						isOpen.Kebab ? "dropdown active" : "dropdown"
 					}`}
 				>
