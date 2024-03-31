@@ -29,7 +29,7 @@ module.exports = {
 				},
 				darksubtext: {
 					// sub text color for dark mode
-					999: "##848d97",
+					999: "#848d97",
 				},
 				darkcards: {
 					// card background color for dark mode
