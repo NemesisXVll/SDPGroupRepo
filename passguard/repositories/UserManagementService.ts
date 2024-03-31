@@ -363,7 +363,7 @@ export default class UserManagementService {
       try {
         const recoveredCredential = await prisma.credential.update({
           where: { credentialId: credentialId },
-          data: { isTrashed: false },
+          data: { isTrashed: false, isReused: false},
         });
         return recoveredCredential;
       } catch (error) {

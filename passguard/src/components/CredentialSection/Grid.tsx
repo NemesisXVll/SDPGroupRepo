@@ -317,7 +317,7 @@ const Grid = (props: GridProps) => {
               id="searchInput"
               type="text"
               placeholder="Search"
-              className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600 dark:bg-darkinset-999"
+              className="font-nunito ml-2 w-full h-8 p-4 text-s rounded-xl border-2 transition-all duration-300 shadow-md focus:shadow-lg focus:outline-none focus:border-blue-600 dark:bg-darkinset-999 dark:border-darkborder-999"
               onClick={handleSearch}
             />
           </div>
@@ -419,7 +419,7 @@ const Grid = (props: GridProps) => {
         <div className="absolute left-[53rem]">
           {showRecoverToast && (
             <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-red-800 dark:text-red-200">
+              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
                 <HiCheck className="h-5 w-5" />
               </div>
               <div className="ml-3 text-sm font-normal">
@@ -439,8 +439,8 @@ const Grid = (props: GridProps) => {
         popup
         dismissible
       >
-        <Modal.Header className="dark:bg-darkbg-999"/>
-        <Modal.Body className="dark:bg-darkbg-999">
+        <Modal.Header className="dark:bg-darkcards-999"/>
+        <Modal.Body className="dark:bg-darkcards-999">
           <div className="flex items-center justify-center p-1">
             <AiTwotoneMail className="text-2xl dark:text-darksubtext-999" />
             <h3 className="text-2xl p-2 font-nunito font-bold text-gray-900 dark:text-white text-center">
