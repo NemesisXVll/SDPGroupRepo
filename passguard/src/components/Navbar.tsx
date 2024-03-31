@@ -5,7 +5,7 @@ import { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../utils/userService";
 import Kebab from "./CredentialSection/Kebab";
-import { DarkThemeToggle, Modal, Tooltip } from "flowbite-react";
+import { DarkThemeToggle, Flowbite, Modal, Tooltip } from "flowbite-react";
 import SignOutBTN from "./Form/Button";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import Button from "./Form/Button";
@@ -18,6 +18,16 @@ type NavbarProps = {
   updatedUser?: any;
   isExpanded?: boolean;
   handleExpand?: (expandedVal: any) => void;
+};
+
+type ThemeMode = "light";
+
+declare const useThemeMode: () => {
+  mode: ThemeMode;
+  computedMode: ThemeMode; // "light" | "dark"
+  setMode: (mode: ThemeMode) => void;
+  toggleMode: () => void;
+  clearMode: () => void;
 };
 
 const NavbarContext = createContext<any>(null);
@@ -130,13 +140,15 @@ function Navbar(props: NavbarProps) {
                 ></CiLock>
               </Tooltip>
               <Tooltip content={"Toggle Dark Mode"}>
-                <DarkThemeToggle
-                  className="relative flex items-center  w-10 h-10 mb-2
+              <Flowbite>
+                  <DarkThemeToggle
+                    className="relative flex items-center  w-10 h-10 mb-2
 						font-medium rounded-md cursor-pointer
 						text-white border-b-2 border-gray-700
 						hover:bg-gray-700 
 						group  transition-all duration-100"
-                />
+                  />
+                </Flowbite>
               </Tooltip>
             </div>
           ) : (

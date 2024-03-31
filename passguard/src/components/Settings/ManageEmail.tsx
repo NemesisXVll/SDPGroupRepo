@@ -25,7 +25,7 @@ const ManageEmail = () => {
           </span>
         </div>
 
-        <div className="w-[13rem]">
+        <div className="min-w-[13rem]">
           <Button
             value="Add"
             style="bg-black text-white hover:bg-yellow-400 w-[13rem] max-w-[13rem]"
