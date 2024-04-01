@@ -75,8 +75,10 @@ const NewPassword: React.FC = () => {
     const patternArr = zxcvbn(newPassword).sequence;
     for (const index in patternArr) {
       if (
-        patternArr[index].pattern === "dictionary" ||
-        patternArr[index].guesses_log10 < 12
+        (patternArr[index].pattern === "dictionary" ||
+          patternArr[index].pattern === "bruteforce" ||
+          patternArr[index].guesses_log10 < 12) &&
+        newPassword.length > 4
       ) {
         zxcvbnDictionary = true;
       }

@@ -132,9 +132,12 @@ const ManagePassword = (props: ManageUserProfileProps) => {
     const patternArr = zxcvbn(newPassword).sequence;
     for (const index in patternArr) {
       if (
-        patternArr[index].pattern === "dictionary" ||
-        patternArr[index].guesses_log10 < 12
+        (patternArr[index].pattern === "dictionary" ||
+          patternArr[index].pattern === "bruteforce" ||
+          patternArr[index].guesses_log10 < 12) &&
+        newPassword.length > 4
       ) {
+        console.log(patternArr[index]);
         zxcvbnDictionary = true;
       }
     }
@@ -163,7 +166,6 @@ const ManagePassword = (props: ManageUserProfileProps) => {
             contextSpecific = true;
         }
         if (data.email !== "") {
-          console.log(data.email);
           if (newPassword.toLowerCase().includes(data.email.toLowerCase()))
             contextSpecific = true;
         }
