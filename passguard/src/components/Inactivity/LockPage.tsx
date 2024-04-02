@@ -77,12 +77,12 @@ function LockPage() {
             alt="Login visual"
           />
         </div>
-        <div className="bg-gray-100 flex flex-col justify-center">
+        <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
           <form
-            className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            className="max-w-[400px] min-w-[400px] w-full mx-auto bg-white p-4 shadow-md dark:bg-darkcards-999"
             onSubmit={handleUnlockSubmit}
           >
-            <h2 className="text-xl text-center py-6 font-bold font-['Nunito']">
+            <h2 className="text-xl text-center py-6 font-bold font-['Nunito'] dark:text-darktext-999">
               App Locked due to Inactivity
             </h2>
             <div className="flex justify-center">
@@ -103,14 +103,14 @@ function LockPage() {
                   <FiEyeOff
                     onClick={() => setShowPassword(!showPassword)}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
                   absolute translate-x-[20.8rem] top-[1.9rem]"
                   />
                 ) : (
                   <FiEye
                     onClick={() => setShowPassword(!showPassword)}
                     size="1.3em"
-                    className="ml-1 text-black
+                    className="ml-1 text-black dark:text-darksubtext-999
                   absolute translate-x-[20.8rem] top-[1.9rem]"
                   />
                 )}
