@@ -611,6 +611,3 @@ export default class UserManagementService {
     }
   }
 }
-function callback(err: NodeJS.ErrnoException) {
-  throw new Error("Function not implemented.");
-}
