@@ -139,33 +139,33 @@ const SMS: React.FC = () => {
             alt="Login visual"
           />
         </div>
-        <div className="bg-gray-100 flex flex-col justify-center">
+        <div className="bg-gray-100 flex flex-col justify-center dark:bg-darkbg-999">
           <form
-            className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md"
+            className="max-w-[400px] w-full mx-auto bg-white p-4 shadow-md dark:bg-darkcards-999"
             onSubmit={(e) => {
               e.preventDefault();
             }} // Prevent form submission
           >
             <CiCircleChevLeft
-              className="w-8 h-8 hover:text-indigo-600 cursor-pointer"
+              className="w-8 h-8 hover:text-blue-500 cursor-pointer dark:text-darkbuttonblue-999 dark:hover:text-yellow-400"
               onClick={() => navigate("/login", {})}
             ></CiCircleChevLeft>
             <div className="flex items-center justify-center">
-              <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito">
+              <h2 className="text-4xl text-center pl-2 py-2 font-bold font-nunito dark:text-darktext-999">
                 💬OTP&nbsp;
               </h2>
               <h2 className="text-4xl text-center py-2 font-bold font-nunito text-yellow-400">
                 Verification&nbsp;
               </h2>
             </div>
-            <div className="bg-green-400 h-10 flex justify-center items-center shadow-sm rounded-md">
-              <p className="text-sm text-center">
+            <div className="bg-green-400 h-10 flex justify-center items-center shadow-sm rounded-md dark:bg-darkinset-999">
+              <p className="text-sm text-center dark:text-darksubtext-999">
                 We've sent a verification code to {"+974 50****29"}
               </p>
             </div>
             <InputOTP onOtpChange={(otp) => verifyOTP(otp)} />
             {message && <p className="text-red-500 text-center">{message}</p>}
-            <p className="text-sm  mt-2 text-center">
+            <p className="text-sm  mt-2 text-center dark:text-darksubtext-999">
               Didn't receive OTP code?
             </p>
             <div className="text-center">

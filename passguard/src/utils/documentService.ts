@@ -45,12 +45,4 @@ export default class DocumentService {
   async deleteAllDocumentsByUserId(userId: number) { 
     window.ipcRenderer.send("deleteAllDocumentsByUserId", userId);
   }
-  convertStringToInt(value: string): number | null {
-    const parsedValue = parseInt(value, 10);
-    // Check if parsing was successful
-    if (isNaN(parsedValue)) {
-      return null; // Return null if the conversion fails
-    }
-    return parsedValue;
-  }
 }

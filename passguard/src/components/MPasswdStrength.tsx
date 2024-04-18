@@ -25,7 +25,7 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
   const [score, setScore] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleShowPassword = (e: any) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
