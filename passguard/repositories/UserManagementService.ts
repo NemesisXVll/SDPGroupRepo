@@ -4,13 +4,11 @@ import {
   encryptData,
   hashPassword,
   generateSalt,
-  decryptData,
+  
 } from "./Security/Encryption";
 import * as fs from "fs";
 import * as path from "path";
-import sqlite3 from "sqlite3";
 import { PrismaClient } from "@prisma/client";
-import emailjs from "emailjs-com";
 
 const userQueryService = new UserQueryService();
 export default class UserManagementService {
@@ -294,9 +292,18 @@ export default class UserManagementService {
 
     return updatedUser;
   }
-
+  async userExists(userId: any) { 
+    if (await userQueryService.findUserById(userId) == null) return false;
+    return true;
+  }
+  async credentialExists(credentialId: any) { 
+    if (await userQueryService.getCredentialById(credentialId) == null) return false;
+    return true;
+  }
   //-------------------------Credential Model-------------------------//
   async createCredential(credential: any) {
+    if (!await this.userExists(credential.userId))
+      throw new Error("User not found");
     //need to take user id here
     const isReused = await this.checkForReusedPasswordOnCreation(credential); //pass userid and credential
     const masterPassword = await userQueryService.getUserMasterPasswordById(
@@ -372,6 +379,7 @@ export default class UserManagementService {
     }
   }
   async deleteCredentialById(credentialId: number) {
+    if(!await this.credentialExists(credentialId)) throw new Error("Credential not found");
     await this.checkForReusedPasswordOnDeletion(credentialId);
     try {
       const deletedCredential = await prisma.credential.delete({
@@ -385,6 +393,7 @@ export default class UserManagementService {
   }
 
   async updateCredentialById(credentialId: any, credential: any) {
+    if(!await this.credentialExists(credentialId)) throw new Error("Credential not found");
     const stillReused = await this.checkForReusedPasswordOnUpdate(credential);
     const masterPassword = await userQueryService.getUserMasterPasswordById(
       credential.userId
@@ -611,6 +620,4 @@ export default class UserManagementService {
     }
   }
 }
-function callback(err: NodeJS.ErrnoException) {
-  throw new Error("Function not implemented.");
-}
+

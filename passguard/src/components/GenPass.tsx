@@ -133,7 +133,10 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 						/>
 						<span className="font-bold text-blue-500">30</span>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
+					<div
+						className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999"
+						onClick={() => setIncludeUppercase(!includeUppercase)}
+					>
 						<label className="font-nunito font-medium">Include Uppercase</label>
 						<input
 							type="checkbox"
@@ -141,7 +144,10 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							onChange={() => setIncludeUppercase(!includeUppercase)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
+					<div
+						className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999"
+						onClick={() => setIncludeLowercase(!includeLowercase)}
+					>
 						<label className="font-nunito font-medium">
 							Include <span className="text-purple-500">Lowercase</span>
 						</label>
@@ -151,7 +157,10 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							onChange={() => setIncludeLowercase(!includeLowercase)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999">
+					<div
+						className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 dark:border-darkborder-999"
+						onClick={() => setIncludeSpecialSymbols(!includeSpecialSymbols)}
+					>
 						<label className="font-nunito font-medium">
 							Include <span className="text-red-500">Special Symbols</span>
 						</label>
@@ -161,7 +170,10 @@ const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 							onChange={() => setIncludeSpecialSymbols(!includeSpecialSymbols)}
 						/>
 					</div>
-					<div className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 mb-0 dark:border-darkborder-999">
+					<div
+						className="flex justify-between items-center p-2 border rounded-lg border-gray-400 m-2 mb-0 dark:border-darkborder-999"
+						onClick={() => setIncludeNumbers(!includeNumbers)}
+					>
 						<label className="font-nunito font-medium">
 							Include <span className="text-blue-500">Numbers</span>
 						</label>
