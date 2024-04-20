@@ -163,11 +163,12 @@ const Settings = (props: SettingsProps) => {
               </span>
               <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
                 <span className="font-semibold text-sm">
-                PassGuard protects your confidentiality in multiple ways:
+                PassGuard protects your confidentiality through multiple features:
               <br></br>
-              Offline Database: all of your passwords are saved on your device (offline), therefore requiring no internet connection to access them. <br></br>
+              - Offline Database: all of your passwords are saved on your device (offline), therefore requiring no internet connection to access them. <br></br>
               Only YOU can see them.<br></br>
-              App locking: PassGuard gets automatically locked in case of inactivity to prevent suspiscious physical access to your account.
+              - App locking: PassGuard gets automatically locked in case of inactivity to prevent suspiscious physical access to your account.<br></br>
+            
                 </span>
               </span>
             </div>
@@ -181,8 +182,8 @@ const Settings = (props: SettingsProps) => {
               </span>
               <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
                 <span className="font-semibold text-sm">
-                Encryption: All passwords are encrypted using AES-128 algorithm <br></br>
-              Multi-Factor Authentication (MFA): all critical actions (logging in, changing password,...) requires an OTP sent either via email or SMS. 
+                - Encryption: All passwords are encrypted using AES-128 algorithm <br></br>
+                - Multi-Factor Authentication (MFA): all critical actions (logging in, changing password,...) requires an OTP sent either via email or SMS. 
                 </span>
               </span>
             </div>
@@ -196,14 +197,15 @@ const Settings = (props: SettingsProps) => {
               </span>
               <span className="font-nunito text-gray-500 dark:text-darksubtext-999">
                 <span className="font-semibold text-sm">
-                PassGuard uses a user-friendly UI, offering a better experience to the user
+                PassGuard uses a user-friendly UI, following best recommendation fora better user experience.
 
                 </span>
               </span>
+              
             </div>
           </div>
 
-
+          <br></br><br></br>
 
         </div>
 
