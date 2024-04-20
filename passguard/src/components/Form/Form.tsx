@@ -5,6 +5,7 @@ import PasswordStrength from "./PasswordStrength.tsx";
 import TopOfForm from "./TopOfForm.tsx";
 import { useState } from "react";
 import CredentialService from "../../utils/credentialService.ts";
+import { serviceNames } from "../../data/dropdownItems.tsx";
 
 const credentialService = new CredentialService();
 
@@ -34,6 +35,7 @@ function Form(props: FormProps) {
     serviceType: "",
     serviceName: "",
   });
+
   const handleCancelBTN = (e: any) => {
     e.preventDefault();
     props.onBTNClick(false);
@@ -151,10 +153,20 @@ function Form(props: FormProps) {
           <LabelInput
             type="text"
             label="Login Page URL"
-            value={props.credentialObj ? props.credentialObj.url : ""}
+            value={
+              props.credentialObj?.url
+                ? props.credentialObj?.url
+                : serviceNames.find(
+                    (service: any) =>
+                      service.name ===
+                      (props.credentialObj?.serviceName
+                        ? props.credentialObj?.serviceName
+                        : formData.serviceName)
+                  )?.url || ""
+            }
             id="loginPageUrl"
             viewOnly={!props.editable}
-            placeholder=""
+            placeholder={" "}
           ></LabelInput>
 
           <div className="flex justify-between mt-16 px-1">

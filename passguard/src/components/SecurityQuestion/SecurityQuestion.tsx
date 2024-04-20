@@ -31,8 +31,12 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [showNewEmail, setShowNewEmail] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
-  const [firstQuestion, setFirstQuestion] = useState<string>("");
-  const [secondQuestion, setSecondQuestion] = useState<string>("");
+  const [firstQuestion, setFirstQuestion] = useState<string>(
+    "Name of a college you applied to but didn’t attend?"
+  );
+  const [secondQuestion, setSecondQuestion] = useState<string>(
+    "What was your maths teacher's surname in your 8th year of school?"
+  );
   const [firstQuestionAnswer, setFirstQuestionAnswer] = useState<string>();
   const [secondQuestionAnswer, setSecondQuestionAnswer] = useState<string>("");
   const [email, setEmail] = useState("");

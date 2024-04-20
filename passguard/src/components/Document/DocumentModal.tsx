@@ -100,7 +100,7 @@ function DocumentModal(props: DocumentModalProps) {
               📄 Add Document
             </p>
 
-            <form className="">
+            <form className="" onSubmit={handleAddDocument}>
               <div className="mb-1 block">
                 <Label
                   htmlFor="path"
@@ -191,11 +191,7 @@ function DocumentModal(props: DocumentModalProps) {
               )}
 
               <div className="w-full mt-6">
-                <AddButton
-                  onClick={handleAddDocument}
-                  type="button"
-                  value="Save"
-                >
+                <AddButton type="submit" value="Save">
                   Add
                 </AddButton>
               </div>

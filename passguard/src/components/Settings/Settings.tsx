@@ -38,6 +38,8 @@ const Settings = (props: SettingsProps) => {
 
   const location = useLocation();
 
+  console.log(location.state.user);
+
   const [expanded, setExpanded] = useState(location.state?.expanded);
   const [secQuestionModal, setSecQuestionModal] = useState(false);
   const [credentialsExported, setCredentialsExported] = useState(false);
@@ -95,26 +97,32 @@ const Settings = (props: SettingsProps) => {
   };
 
   const handleSendEmail = async () => {
-    // Define your emailjs service IDs and user ID
-    // const serviceID = "service_3ojecjd"; // Your service ID
-    // const templateID = "template_sgrb5ri"; // Your template ID
-    // const userID = "6igdyzCgketnFP148"; // Your user ID
+    //Define your emailjs service IDs and user ID
+    const serviceID = "service_3ojecjd"; // Your service ID
+    const templateID = "template_sgrb5ri"; // Your template ID
+    const userID = "6igdyzCgketnFP148"; // Your user ID
 
     try {
       const fileContentBase64 = await userService.createBackupDB(
         location.state.user.userId
       );
 
-      // Send the email with the attachment
-      // await emailjs.send(
-      // 	serviceID,
-      // 	templateID,
-      // 	{
-      // 		to_email: "bike.rider987@gmail.com", // with the recipient's email
-      // 		file_content: fileContentBase64, // Base64-encoded file content
-      // 	},
-      // 	userID
-      // );
+      // await userService
+      //   .getUserDataById(location.state.user.userId)
+      //   .then(async (data: any) => {
+      //     const email = data.email;
+      //     //Send the email with the attachment
+      //     await emailjs.send(
+      //       serviceID,
+      //       templateID,
+      //       {
+      //         to_email: email,
+      //         file_content: fileContentBase64, // Base64-encoded file content
+      //       },
+      //       userID
+      //     );
+      //   });
+
       setCredentialsExported(true);
       setOpenToast(true);
       setTimeout(() => {
