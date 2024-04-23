@@ -56,6 +56,7 @@ export const serviceNames = [
     name: "Facebook",
     image: facebookLogo,
     card: facebookCard,
+    url: "https://www.facebook.com/",
     Description:
       "A popular social networking platform for connecting with friends and family, sharing updates, and joining groups.",
   },
@@ -64,6 +65,7 @@ export const serviceNames = [
     name: "Twitter",
     image: twitterLogo,
     card: twitterCard,
+    url: "https://twitter.com/",
     Description:
       "A microblogging platform for sharing short messages, links, and multimedia with a global audience.",
   },
@@ -72,6 +74,7 @@ export const serviceNames = [
     name: "Instagram",
     image: instaLogo,
     card: instagramCard,
+    url: "https://www.instagram.com/",
     Description:
       "A photo and video sharing platform with features like Stories, Reels, and IGTV.",
   },
@@ -80,6 +83,7 @@ export const serviceNames = [
     name: "LinkedIn",
     image: linkedInLogo,
     card: linkedinCard,
+    url: "https://www.linkedin.com/",
     Description:
       "A professional networking platform for connecting with colleagues, job searching, and business networking.",
   },
@@ -88,6 +92,7 @@ export const serviceNames = [
     name: "Snapchat",
     image: snapchatLogo,
     card: snapchatCard,
+    url: "https://www.snapchat.com/",
     Description:
       "A multimedia messaging app known for its temporary photo and video sharing, Stories, and filters.",
   },
@@ -96,6 +101,7 @@ export const serviceNames = [
     name: "Pinterest",
     image: pinterestLogo,
     card: pinterestCard,
+    url: "https://www.pinterest.com/",
     Description:
       "A visual discovery and bookmarking platform for finding and organizing ideas, recipes, and inspiration.",
   },
@@ -104,6 +110,7 @@ export const serviceNames = [
     name: "TikTok",
     image: tiktokLogo,
     card: tiktokCard,
+    url: "https://www.tiktok.com/",
     Description:
       "A short-form video sharing app where users can create and watch entertaining videos.",
   },
@@ -112,6 +119,7 @@ export const serviceNames = [
     name: "WhatsApp",
     image: whatsAppLogo,
     card: whatsappCard,
+    url: "https://www.whatsapp.com/",
     Description:
       "A messaging app for text and voice communication, as well as sharing photos, videos, and documents.",
   },
@@ -120,6 +128,7 @@ export const serviceNames = [
     name: "Blackboard",
     image: blackBoardLogo,
     card: blackboardCard,
+    url: "https://www.blackboard.com/",
     Description:
       "A virtual learning environment and course management system for online education.",
   },
@@ -128,6 +137,7 @@ export const serviceNames = [
     name: "Other",
     image: otherLogo,
     card: otherCard,
+    url: "",
     Description: "",
   },
 ];
