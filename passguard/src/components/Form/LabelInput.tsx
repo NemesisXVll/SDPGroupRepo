@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import  React, { useEffect, useState } from "react";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { Tooltip } from "flowbite-react";
 import redinfo from "../../assets/icons/stats/redinfo.svg";
+import CredentialService from "../../utils/credentialService";
+
+const credentialService = new CredentialService();
+
 type LabelInputProps = {
   type?: string;
   required?: boolean;
@@ -14,6 +18,14 @@ type LabelInputProps = {
   children?: React.ReactNode;
   viewOnly?: boolean;
   status?: boolean;
+  autofill?: {
+    credentialId: string;
+    title: string;
+    serviceName: string;
+    serviceType: string;
+    data: string;
+    url: string;
+  };
 };
 const LabelInput = (props: LabelInputProps) => {
   const [value, setValue] = useState(props.value ? props.value : "");
@@ -99,18 +111,21 @@ const LabelInput = (props: LabelInputProps) => {
           <HiOutlineExternalLink
             size="1.3em"
             className="absolute text-black translate-x-60 top-7 dark:text-darksubtext-999"
-            onClick={() => {
-              isHTTPS
-                ? window.open(
-                    props.value,
-                    "MyWindow",
-                    "width=1200 ,height=800 "
-                  )
-                : window.open(
-                    "https://" + props.value,
-                    "MyWindow",
-                    "width=1200 ,height=800 "
-                  );
+            onClick={async() => {
+              // isHTTPS
+              //   ? window.open(
+              //       props.value,
+              //       "MyWindow",
+              //       "width=1200 ,height=800 "
+              //     )
+              //   : window.open(
+              //       "https://" + props.value,
+              //       "MyWindow",
+              //       "width=1200 ,height=800 "
+              //     );
+              //  await fillLoginForm(props.value,'username','password');
+              if(props.autofill?.url && props.autofill?.data)
+              credentialService.autofillCredentialById(props.autofill?.url,JSON.parse(props.autofill?.data).userName,JSON.parse(props.autofill?.data).password);
             }}
           />
         </Tooltip>

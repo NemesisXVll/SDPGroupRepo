@@ -164,6 +164,7 @@ function Form(props: FormProps) {
                         : formData.serviceName)
                   )?.url || ""
             }
+            autofill={props.credentialObj}
             id="loginPageUrl"
             viewOnly={!props.editable}
             placeholder={" "}
