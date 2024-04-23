@@ -1,5 +1,5 @@
 import "../App.css";
-import "primereact/resources/primereact.css"; // core css
+import "primereact/resources/primereact.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home.tsx";
 import Login from "./Login.tsx";
@@ -12,7 +12,6 @@ import NewPassword from "./NewPassword.tsx";
 import Settings from "./Settings/Settings.tsx";
 import About from "./About/About.tsx";
 import SMS from "../Sms/SMS.tsx";
-import { DarkThemeToggle, Flowbite } from "flowbite-react";
 function App() {
   return (
     <>

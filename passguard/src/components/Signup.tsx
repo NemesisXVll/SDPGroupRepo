@@ -90,7 +90,7 @@ const Signup: React.FC = () => {
   const handleSignUpClick = async (event: any) => {
     event.preventDefault();
 
-    const lettersOnlyRegex = /^[A-Za-z]+$/;
+    const lettersOnlyRegex = /^[A-Za-z\s]+$/;
     if (
       !lettersOnlyRegex.test(state.firstName) ||
       !lettersOnlyRegex.test(state.lastName)

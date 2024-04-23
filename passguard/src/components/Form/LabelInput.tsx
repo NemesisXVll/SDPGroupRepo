@@ -71,7 +71,7 @@ const LabelInput = (props: LabelInputProps) => {
           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 
           peer-focus:-top-6 peer-focus:text-blue-600 transition-all dark:text-darktext-999"
       >
-        {props.label}
+        {props.required ? `*${props.label} ` : props.label}
       </label>
       {props.children ? (
         props.children

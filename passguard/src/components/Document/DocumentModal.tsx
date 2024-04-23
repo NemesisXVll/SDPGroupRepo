@@ -66,8 +66,7 @@ function DocumentModal(props: DocumentModalProps) {
         return;
       }
       setPathErrorMessage("");
-
-      //File Input Type (might require changing)
+      
       formData.type = event.target.files[0].type;
 
       const reader = new FileReader();

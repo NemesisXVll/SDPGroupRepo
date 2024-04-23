@@ -349,7 +349,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           <div className="flex flex-col justify-center pb-10 dark:bg-darkcards-999">
             <form
               className="max-w-[360px] w-full mx-auto"
-              onSubmit={handleSubmitNewEmail} // Prevent form submission
+              onSubmit={handleSubmitNewEmail}
             >
               <div className="flex justify-center items-center">
                 <AiTwotoneMail className="text-4xl" />

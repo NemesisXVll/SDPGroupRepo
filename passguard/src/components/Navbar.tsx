@@ -193,7 +193,7 @@ function Navbar(props: NavbarProps) {
             />
             <div
               className={`
-                    flex justify-between items-center
+                    flex justify-between items-center 
                     overflow-hidden transition-all ${
                       expanded ? "w-52 ml-3" : "w-0"
                     }
@@ -205,11 +205,14 @@ function Navbar(props: NavbarProps) {
                 </h4>
                 <span className="text-xs text-gray-600">{data.email}</span>
               </div>
-              <Tooltip content="Signout" placement="bottom" className="ml-3">
-                <IoExitOutline
-                  className="text-white ml-8 w-24 h-7 hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
+              <Tooltip content="Signout" placement="bottom" className="">
+                <div>
+                  <IoExitOutline
+                  className="text-white w-24 h-7 hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
                   onClick={() => setOpenModal(true)}
                 ></IoExitOutline>
+                </div>
+                
               </Tooltip>
             </div>
           </div>

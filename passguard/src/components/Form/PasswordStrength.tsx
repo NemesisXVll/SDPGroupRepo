@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import zxcvbn from "zxcvbn"; // A library for estimating password strength
+import zxcvbn from "zxcvbn";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { IoInformationCircleOutline } from "react-icons/io5";
@@ -38,7 +38,6 @@ const PasswordStrength = (props: PasswordProps) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    // Use the zxcvbn library to estimate the password strength
     const result = zxcvbn(newPassword);
     setScore(result.score);
 
@@ -59,20 +58,6 @@ const PasswordStrength = (props: PasswordProps) => {
       setTooltipClicked(false);
     }, 900);
   };
-  // const infoIcon = () => {
-  //   return (
-  //     <>
-  //       <p>Recommendations:</p>
-  // 			<List className="w-fit text-white">
-  // 				<List.Item>At least 8 characters</List.Item>
-  // 				<List.Item>At least one lowercase character</List.Item>
-  // 				<List.Item>At least one uppercase character</List.Item>
-  // 				<List.Item>At least one number</List.Item>
-  // 				<List.Item>At least one special character</List.Item>
-  // 			</List>
-  // 		</>
-  // 	);
-  // };
 
   return (
     <div className="">
@@ -118,18 +103,10 @@ const PasswordStrength = (props: PasswordProps) => {
           htmlFor={props.id}
           className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito'] dark:text-darktext-999"
         >
-          {props.label}
+          {"*"+props.label}
         </label>
 
         <div>
-          {/* Help in position and what content to put! */}
-          {/* <Tooltip
-            content={<>{infoIcon()}</>}
-            arrow={false}
-            placement="left-end"
-          >
-            <IoInformationCircleOutline className="absolute text-black translate-x-[15.5rem] -translate-y-[1.9rem]"></IoInformationCircleOutline>
-          </Tooltip> */}
 
           {showPassword ? (
             <Tooltip
@@ -213,7 +190,6 @@ const PasswordStrength = (props: PasswordProps) => {
                     : ""}
         </span>
       </div>
-      {/* {feedback && <li className="text-xs text-gray-500 mt-1 w-16">{feedback}</li>} */}
       <div className="-mx-1 pl-1 w-full">
         <div className="px-1 grid grid-cols-4 gap-1">
           {Array.from({ length: 4 }).map((_, i) => (

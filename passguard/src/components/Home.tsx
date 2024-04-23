@@ -1,5 +1,5 @@
 import "../App.css";
-import "primereact/resources/primereact.css"; // core css
+import "primereact/resources/primereact.css";
 import Form from "./Form/Form.tsx";
 import Navbar from "./Navbar.tsx";
 import Stats from "./Stats.tsx";
@@ -13,7 +13,11 @@ import emailjs from "emailjs-com";
 
 const userService = new UserService();
 
-function Home() {
+type HomeProps = {
+  userUpdated?: any;
+};
+
+const Home = (props: HomeProps) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -24,6 +28,7 @@ function Home() {
   }, []);
 
   let user = location.state.user;
+
   const navigate = useNavigate();
 
   const [showForm, setShowForm] = useState(false);
@@ -37,6 +42,9 @@ function Home() {
     JSON.parse(location.state.user.preference).lockDuration,
     undefined,
     expanded
+  );
+  const [clipBoardClr, setClipBoardClr] = useState(
+    parseInt(JSON.parse(user.preference).clipBoardClr)
   );
 
   const handleNotifyStats = (): void => {
@@ -128,7 +136,6 @@ function Home() {
         console.log("Sending backup to :", data.email);
         await sendBackupEmail(data.email);
       });
-
       const updatedUser = await userService.updateUserBackupDate(user.userId);
       user = updatedUser;
       console.log("User backup date updated successfully!");
@@ -136,8 +143,29 @@ function Home() {
   };
 
   useEffect(() => {
+    if (clipBoardClr === 1 || clipBoardClr === 2) {
+      const intervalId = setInterval(
+        async () => {
+          try {
+            await navigator.clipboard.writeText("");
+            console.log("Clipboard cleared successfully!");
+          } catch (error) {
+            console.error("Error clearing clipboard:", error);
+          }
+        },
+        clipBoardClr * 60 * 1000
+      );
+      return () => clearInterval(intervalId);
+    }
+  }, [clipBoardClr]);
+
+  useEffect(() => {
     checkAndSendBackupEmails();
   }, []);
+
+  function handleGridAreaClick(event: any): void {
+    setShowForm(false);
+  }
 
   return (
     <>
@@ -173,7 +201,10 @@ function Home() {
           )}
         </div>
 
-        <div className="credentials overflow-auto ml-4 mt-3">
+        <div
+          className="credentials overflow-auto ml-4 mt-3"
+          onClick={handleGridAreaClick}
+        >
           <Grid
             forceRender={forceGridRender}
             userId={user.userId}
@@ -186,6 +217,6 @@ function Home() {
       </div>
     </>
   );
-}
+};
 
 export default Home;

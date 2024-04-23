@@ -10,7 +10,7 @@ type PasswordGeneratorModalProps = {
 const PasswordGeneratorModal = (props: PasswordGeneratorModalProps) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [generatedPassword, setGeneratedPassword] = useState("");
-	const [passwordLength, setPasswordLength] = useState(12); // Default password length
+	const [passwordLength, setPasswordLength] = useState(12);
 	const [includeUppercase, setIncludeUppercase] = useState(true);
 	const [includeLowercase, setIncludeLowercase] = useState(true);
 	const [includeSpecialSymbols, setIncludeSpecialSymbols] = useState(true);

@@ -32,7 +32,6 @@ function LockPage() {
       JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
     );
     const { email, password } = data;
-    // Call the login function from authService
     const user = await unlock(password, location.state.user.userId);
     if (loginTries >= 2 && !user) {
       setOpenModal(true);

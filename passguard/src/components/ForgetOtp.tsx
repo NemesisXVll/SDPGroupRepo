@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import emailjs from 'emailjs-com';
 import loginImg from "../assets/icons/common/appLogo.svg";
 import { useNavigate } from "react-router-dom";
 import LabelInput from "./Form/LabelInput";

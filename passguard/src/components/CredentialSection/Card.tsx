@@ -1,6 +1,9 @@
 import twitterCard from "./testCardItems";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useState } from "react";
 import Kebab from "./Kebab";
+import { Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import Button from "../Form/Button";
 
 type CardProps = {
   index: React.Key;
@@ -22,6 +25,8 @@ type CardProps = {
   onPermanentRemoveClick: (key: React.Key) => void;
 };
 const Card = (props: CardProps) => {
+  const [openTrashModal, setOpenModal] = useState(false);
+
   const credentialStatus = (): string => {
     if (props.isWeak) {
       if (props.isReused && props.isOld) {
@@ -44,49 +49,84 @@ const Card = (props: CardProps) => {
     }
     return "bg-green-500";
   };
-  return (
-		<div
-			id={props.id}
-			className={`relative ${credentialStatus()}
-      flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:scale-105 transition-all duration-300`}
-			onClick={props.onClick}
-		>
-			<img
-				src={props.picture}
-				className="w-16 translate-x-32 translate-y-10"
-				alt="logo"
-			/>
 
-			<div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl dark:bg-darkcards-999 dark:text-darkwhite-999 dark:border dark:border-darkborder-999">
-				<div className="flex items-center justify-between p-4 h-12">
-					<h3 className="font-nunito font-medium break-words text-sm">
-						{props.title}
-					</h3>
-					<Kebab
-						onUpdateClick={() => props.onUpdateClick(props.index)}
-						onShareClick={() => props.onShareClick(props.index)}
-						onDeleteClick={() => props.onDeleteClick(props.index)}
-						onRecoverClick={() => props.onRecoverClick(props.index)}
-						onPermanentRemoveClick={() =>
-							props.onPermanentRemoveClick(props.index)
-						}
-						isTrashed={props.isTrashed}
-					></Kebab>
-				</div>
-				<div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">
-					<p className="text-xs font-medium font-nunito break-words">
-						{props.username}
-					</p>
-					<p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
-						Created: {props.dateCreated}
-					</p>
-					<p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
-						Last updated: {props.dateUpdated}
-					</p>
-				</div>
-			</div>
-		</div>
-	);
+  function handleTrashCredential(event: any): void {
+    props.onDeleteClick(props.index);
+  }
+
+  return (
+    <>
+      <div
+        id={props.id}
+        className={`relative ${credentialStatus()}
+      flex cursor-pointer h-48 w-52 max-w-xs flex-col justify-end rounded-3xl hover:scale-105 transition-all duration-300`}
+        onClick={props.onClick}
+      >
+        <img
+          src={props.picture}
+          className="w-16 translate-x-32 translate-y-10"
+          alt="logo"
+        />
+
+        <div className="rounded-2xl h-36 w-full bg-neutral-100 shadow-2xl dark:bg-darkcards-999 dark:text-darkwhite-999 dark:border dark:border-darkborder-999">
+          <div className="flex items-center justify-between p-4 h-12">
+            <h3 className="font-nunito font-medium break-words text-sm">
+              {props.title}
+            </h3>
+            <Kebab
+              onUpdateClick={() => props.onUpdateClick(props.index)}
+              onShareClick={() => props.onShareClick(props.index)}
+              onDeleteClick={() => {
+                setOpenModal(true);
+              }}
+              onRecoverClick={() => props.onRecoverClick(props.index)}
+              onPermanentRemoveClick={() =>
+                props.onPermanentRemoveClick(props.index)
+              }
+              isTrashed={props.isTrashed}
+            ></Kebab>
+          </div>
+          <div className=" flex flex-col text-center items-center justify-center gap-1 h-24 ">
+            <p className="text-xs font-medium font-nunito break-words">
+              {props.username}
+            </p>
+            <p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
+              Created: {props.dateCreated}
+            </p>
+            <p className="text-xs font-nunito font-light break-words dark:text-darksubtext-999">
+              Last updated: {props.dateUpdated}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <Modal
+        show={openTrashModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header className="dark:bg-darkcards-999" />
+        <Modal.Body className="dark:bg-darkcards-999">
+          {" "}
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-red-500" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to trash this credential?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button value="Cancel" onClick={() => setOpenModal(false)}>
+                Cancel
+              </Button>
+              <Button value="confirmsignout" onClick={handleTrashCredential}>
+                Trash
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
 };
 
 export default Card;
