@@ -73,6 +73,7 @@ const Captcha = (props: CaptchaProps) => {
 
   function handleContinueBTN(event: any): void {
     event.preventDefault();
+    setCaptchaInput('')
     if (
       captchaInput !== captchaCode ||
       captchaInput === "" ||

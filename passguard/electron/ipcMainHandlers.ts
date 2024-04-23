@@ -1,8 +1,10 @@
 import { ipcMain } from "electron";
 import UserManagementService from "../repositories/UserManagementService";
 import UserQueryService from "../repositories/UserQueryService";
+import Autofill from "../repositories/autofill";
 const userManagementService = new UserManagementService();
 const userQueryService = new UserQueryService();
+const autofill = new Autofill();
 import fetch from "node-fetch";
 
 export const registerIPCMainHandlers = () => {
@@ -222,6 +224,10 @@ ipcMain.on("deleteAllCredentialsByUserId", async (event, arg) => {
 });
 ipcMain.on("deleteAllDocumentsByUserId", async (event, arg) => {
   await userManagementService.deleteAllDocumentsByUserId(arg);
+});
+ipcMain.on("autofillCredentialByIdRequest", async (event, arg) => { 
+  console.log("AUTOFILLING CREDENTIAL", arg);
+  await autofill.fillLoginForm(arg.loginurl, arg.username, arg.password);
 });
 ipcMain.on("sendSMS", async (event, arg) => {
   console.log("SENDING SMS");

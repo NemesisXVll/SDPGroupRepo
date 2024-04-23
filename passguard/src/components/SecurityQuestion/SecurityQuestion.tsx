@@ -38,6 +38,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+    console.log("DATA:",location.pathname,props.fromLoc);
     window.history.pushState(null, "", "/login");
     window.onpopstate = function () {
       window.history.pushState(null, "", "/login");
@@ -114,7 +115,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
           props.secQuestionsVerified();
         }
       }
-    } else if (location.pathname === "/otp") {
+    } else if (location.pathname === "/otp" && firstQuestionAnswer && secondQuestionAnswer) {
       console.log("from OTP");
       const signUpResult = await SignUp({
         firstName: user.state.firstName,
@@ -181,220 +182,232 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
   }
 
   return (
-    <>
-      <Modal
-        show={openSuccessModal}
-        size="2xl"
-        popup
-        onClose={() => {
-          if (props.closeModal) {
-            props.closeModal();
-          }
-          setShowSecQuestion(true);
-          setShowNewEmail(false);
-        }}
-        className="dark:bg-darkcards-999"
-      >
-        {(location.pathname === "/settings" ||
-          props.fromLoc === "shareCredential") && (
-          <ModalHeader className="dark:bg-darkcards-999"></ModalHeader>
-        )}
+		<>
+			<Modal
+				show={openSuccessModal}
+				size="2xl"
+				popup
+				onClose={() => {
+					if (props.closeModal) {
+						props.closeModal();
+					}
+					setShowSecQuestion(true);
+					setShowNewEmail(false);
+				}}
+				className="dark:bg-darkcards-999"
+			>
+				{(location.pathname === "/settings" ||
+					props.fromLoc === "shareCredential") && (
+					<ModalHeader className="dark:bg-darkcards-999"></ModalHeader>
+				)}
 
-        {showSecQuestion &&
-          (location.pathname === "/otp" ||
-            location.pathname === "/settings" ||
-            props.fromLoc === "shareCredential" ||
-            location.pathname === "/sms") && (
-            <div className="">
-              <form className="w-full mx-auto p-4 shadow-md dark:bg-darkcards-999">
-                {location.pathname === "/otp" ? (
-                  <div className="flex items-center justify-center border-b-4 dark:border-darkborder-999">
-                    <h2 className="text-2xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
-                      📝 Setup Security
-                    </h2>
-                    <h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
-                      &nbsp;Questions
-                    </h2>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center border-b-4 dark:border-darkborder-999">
-                    <h2 className="text-2xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
-                      🔐 Answer the Security
-                    </h2>
-                    <h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
-                      &nbsp;Questions
-                    </h2>
-                  </div>
-                )}
-                {/* Security Questions */}
-                <div className="mt-7">
-                  {location.pathname === "/otp" && (
-                    <p className="text-sm text-gray-600 mb-2 dark:text-darksubtext-999">
-                      Choose two security questions to answer.
-                      (case-insensitive)*
-                    </p>
-                  )}
-                  <div className="border border-gray-300 p-4 rounded-lg shadow-md dark:border-darkborder-999">
-                    <p className="text-gray-800 pt-3 font-medium dark:text-darktext-999">
-                      {" "}
-                      Select Question 1
-                    </p>
-                    <select
-                      placeholder="Select a question"
-                      className="w-full bg-gray-900 text-white border rounded-lg  font-medium mb-1 mt-3 text-center dark:border-darkborder-999 dark:text-darksubtext-999"
-                      onChange={(event) => setFirstQuestion(event.target.value)}
-                      name="firstQuestion"
-                      value={firstQuestion}
-                      id="firstQuestion-select"
-                      disabled={location.pathname === "/otp" ? false : true}
-                    >
-                      <option id="Q1">
-                        Name of a college you applied to but didn’t attend?
-                      </option>
-                      <option id="Q2">
-                        {" "}
-                        What was the name of your first stuffed toy?
-                      </option>
-                      <option id="Q3">
-                        Where was the destination of your most memorable school
-                        field trip?
-                      </option>
-                    </select>
-                    <LabelInput
-                      type="text"
-                      onChange={(event) =>
-                        setFirstQuestionAnswer(event.target.value)
-                      }
-                      placeholder="Answer"
-                      label="Answer"
-                      id="answer1"
-                      required={true}
-                    />
-                  </div>
+				{showSecQuestion &&
+					(location.pathname === "/otp" ||
+						location.pathname === "/settings" ||
+						props.fromLoc === "shareCredential" ||
+						location.pathname === "/sms") && (
+						<div className="">
+							<form className="w-full mx-auto p-4 shadow-md dark:bg-darkcards-999">
+								{location.pathname === "/otp" &&
+								props.fromLoc != "forgetPassEmailOTP" ? (
+									<div className="flex items-center justify-center border-b-4 dark:border-darkborder-999">
+										<h2 className="text-2xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
+											📝 Setup Security
+										</h2>
+										<h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
+											&nbsp;Questions
+										</h2>
+									</div>
+								) : (
+									<div className="flex items-center justify-center border-b-4 dark:border-darkborder-999">
+										<h2 className="text-2xl text-center py-2 font-bold font-nunito dark:text-darktext-999">
+											🔐 Answer the Security
+										</h2>
+										<h2 className="text-2xl text-center py-2 font-bold font-nunito text-yellow-400">
+											&nbsp;Questions
+										</h2>
+									</div>
+								)}
+								{/* Security Questions */}
+								<div className="mt-7">
+									{location.pathname === "/otp" &&
+										props.fromLoc != "forgetPassEmailOTP" && (
+											<p className="text-sm text-gray-600 mb-2 dark:text-darksubtext-999">
+												Choose two security questions to answer.
+												(case-insensitive)*
+											</p>
+										)}
+									<div className="border border-gray-300 p-4 rounded-lg shadow-md dark:border-darkborder-999">
+										<p className="text-gray-800 pt-3 font-medium dark:text-darktext-999">
+											{" "}
+											Select Question 1
+										</p>
+										<select
+											placeholder="Select a question"
+											className="w-full bg-gray-900 text-white border rounded-lg  font-medium mb-1 mt-3 text-center dark:border-darkborder-999 dark:text-darksubtext-999"
+											onChange={(event) => setFirstQuestion(event.target.value)}
+											name="firstQuestion"
+											value={firstQuestion}
+											id="firstQuestion-select"
+											disabled={
+												location.pathname === "/otp" &&
+												props.fromLoc != "forgetPassEmailOTP"
+													? false
+													: true
+											}
+										>
+											<option id="Q1">
+												Name of a college you applied to but didn’t attend?
+											</option>
+											<option id="Q2">
+												{" "}
+												What was the name of your first stuffed toy?
+											</option>
+											<option id="Q3">
+												Where was the destination of your most memorable school
+												field trip?
+											</option>
+										</select>
+										<LabelInput
+											type="text"
+											onChange={(event) =>
+												setFirstQuestionAnswer(event.target.value)
+											}
+											placeholder="Answer"
+											label="Answer"
+											id="answer1"
+											required={true}
+										/>
+									</div>
 
-                  <div className="border border-gray-300 p-4 rounded-lg mt-3 shadow-md dark:border-darkborder-999">
-                    <p className="text-gray-800 pt-3 font-medium dark:text-darktext-999">
-                      {" "}
-                      Select Question 2
-                    </p>
-                    <select
-                      className="w-full p-2 bg-gray-900  text-white border font-medium rounded-lg mb-1 mt-3 text-center dark:border-darkborder-999 dark:text-darksubtext-999"
-                      value={secondQuestion}
-                      onChange={(event) =>
-                        setSecondQuestion(event.target.value)
-                      }
-                      disabled={location.pathname === "/otp" ? false : true}
-                    >
-                      <option id="Q4">
-                        What was your maths teacher's surname in your 8th year
-                        of school?
-                      </option>
-                      <option id="Q5">
-                        Name of the first school you remember attending?
-                      </option>
-                      <option id="Q6">
-                        What was your driving instructor's first name?
-                      </option>
-                    </select>
-                    <LabelInput
-                      type="text"
-                      onChange={(event) =>
-                        setSecondQuestionAnswer(event.target.value)
-                      }
-                      label="Answer"
-                      placeholder="Answer"
-                      id="answer2"
-                      required={true}
-                    />
-                  </div>
-                </div>
+									<div className="border border-gray-300 p-4 rounded-lg mt-3 shadow-md dark:border-darkborder-999">
+										<p className="text-gray-800 pt-3 font-medium dark:text-darktext-999">
+											{" "}
+											Select Question 2
+										</p>
+										<select
+											className="w-full p-2 bg-gray-900  text-white border font-medium rounded-lg mb-1 mt-3 text-center dark:border-darkborder-999 dark:text-darksubtext-999"
+											value={secondQuestion}
+											onChange={(event) =>
+												setSecondQuestion(event.target.value)
+											}
+											disabled={
+												location.pathname === "/otp" &&
+												props.fromLoc != "forgetPassEmailOTP"
+													? false
+													: true
+											}
+										>
+											<option id="Q4">
+												What was your maths teacher's surname in your 8th year
+												of school?
+											</option>
+											<option id="Q5">
+												Name of the first school you remember attending?
+											</option>
+											<option id="Q6">
+												What was your driving instructor's first name?
+											</option>
+										</select>
+										<LabelInput
+											type="text"
+											onChange={(event) =>
+												setSecondQuestionAnswer(event.target.value)
+											}
+											label="Answer"
+											placeholder="Answer"
+											id="answer2"
+											required={true}
+										/>
+									</div>
+								</div>
 
-                {errorMessage && (
-                  <div className="flex ">
-                    <CgDanger className="w-4 h-5 text-red-500 " />
-                    <p className="text-red-500 text-sm">
-                      &nbsp; {errorMessage}
-                    </p>
-                  </div>
-                )}
+								{errorMessage && (
+									<div className="flex ">
+										<CgDanger className="w-4 h-5 text-red-500 " />
+										<p className="text-red-500 text-sm">
+											&nbsp; {errorMessage}
+										</p>
+									</div>
+								)}
 
-                {/* Submit Button */}
-                <div className="mt-7">
-                  <Button
-                    type="submit"
-                    onClick={handleOnClick}
-                    value="createAccount"
-                  >
-                    {props.fromLoc === "forgetPassEmailOTP" ||
-                    props.fromLoc === "forgetPassSMSOTP" ||
-                    props.fromLoc === "wipeAccount" ||
-                    props.fromLoc === "wipeCredentials" ||
-                    props.fromLoc === "wipeDocuments" ||
-                    props.fromLoc === "changeEmail"
-                      ? "Continue"
-                      : props.fromLoc === "shareCredential"
-                        ? "Send"
-                        : "Create Account"}
-                  </Button>
-                </div>
-              </form>
-            </div>
-          )}
+								{/* Submit Button */}
+								<div className="mt-7">
+									<Button
+										type="submit"
+										onClick={handleOnClick}
+										value="createAccount"
+									>
+										{props.fromLoc === "forgetPassEmailOTP" ||
+										props.fromLoc === "forgetPassSMSOTP" ||
+										props.fromLoc === "wipeAccount" ||
+										props.fromLoc === "wipeCredentials" ||
+										props.fromLoc === "wipeDocuments" ||
+										props.fromLoc === "changeEmail"
+											? "Continue"
+											: props.fromLoc === "shareCredential"
+												? "Send"
+												: "Create Account"}
+									</Button>
+								</div>
+							</form>
+						</div>
+					)}
 
-        {showNewEmail && (
-          <div className="flex flex-col justify-center pb-10 dark:bg-darkcards-999">
-            <form
-              className="max-w-[360px] w-full mx-auto"
-              onSubmit={handleSubmitNewEmail} // Prevent form submission
-            >
-              <div className="flex justify-center items-center">
-                <AiTwotoneMail className="text-4xl" />
-                <div className="flex items-center justify-center">
-                  <h2 className="text-3xl text-center pl-2 py-2 font-bold font-nunito dark:text-darktext-999">
-                    Enter your new&nbsp;
-                  </h2>
-                  <h2 className="text-3xl text-center py-2 font-bold font-nunito text-yellow-400">
-                    email&nbsp;
-                  </h2>
-                </div>
-              </div>
-              <p className="text-center text-sm text-gray-600 dark:text-darksubtext-999">
-                We will send you a verification code to verify your email.
-              </p>
-              <div className="mt-4">
-                <LabelInput
-                  type="email"
-                  value={email}
-                  required={true}
-                  label="Email"
-                  id="email"
-                  placeholder=""
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                ></LabelInput>
-              </div>
+				{showNewEmail && (
+					<div className="flex flex-col justify-center pb-10 dark:bg-darkcards-999">
+						<form
+							className="max-w-[360px] w-full mx-auto"
+							onSubmit={handleSubmitNewEmail} // Prevent form submission
+						>
+							<div className="flex justify-center items-center">
+								<AiTwotoneMail className="text-4xl" />
+								<div className="flex items-center justify-center">
+									<h2 className="text-3xl text-center pl-2 py-2 font-bold font-nunito dark:text-darktext-999">
+										Enter your new&nbsp;
+									</h2>
+									<h2 className="text-3xl text-center py-2 font-bold font-nunito text-yellow-400">
+										email&nbsp;
+									</h2>
+								</div>
+							</div>
+							<p className="text-center text-sm text-gray-600 dark:text-darksubtext-999">
+								We will send you a verification code to verify your email.
+							</p>
+							<div className="mt-4">
+								<LabelInput
+									type="email"
+									value={email}
+									required={true}
+									label="Email"
+									id="email"
+									placeholder=""
+									onChange={(e) => {
+										setEmail(e.target.value);
+									}}
+								></LabelInput>
+							</div>
 
-              {emailErrorMessage && (
-                <div className="flex">
-                  <CgDanger className="w-4 h-5 text-red-500" />
-                  <p className="text-red-500 text-sm">
-                    &nbsp; {emailErrorMessage}
-                  </p>
-                </div>
-              )}
+							{emailErrorMessage && (
+								<div className="flex">
+									<CgDanger className="w-4 h-5 text-red-500" />
+									<p className="text-red-500 text-sm">
+										&nbsp; {emailErrorMessage}
+									</p>
+								</div>
+							)}
 
-              <div className="mt-7">
-                <Button type="submit" value="sendVerification">
-                  Send verification code
-                </Button>
-              </div>
-            </form>
-          </div>
-        )}
-      </Modal>
-    </>
-  );
+							<div className="mt-7">
+								<Button type="submit" value="sendVerification">
+									Send verification code
+								</Button>
+							</div>
+						</form>
+					</div>
+				)}
+			</Modal>
+		</>
+	);
 };
 
 export default SecurityQuestion;

@@ -152,6 +152,7 @@ function Form(props: FormProps) {
             type="text"
             label="Login Page URL"
             value={props.credentialObj ? props.credentialObj.url : ""}
+            autofill={props.credentialObj}
             id="loginPageUrl"
             viewOnly={!props.editable}
             placeholder=""
