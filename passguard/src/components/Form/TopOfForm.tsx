@@ -47,9 +47,9 @@ function TopOfForm(props: any) {
               serviceNames.find(
                 (service: any) =>
                   service.name ===
-                  (props.credential.serviceName
-                    ? props.credential.serviceName
-                    : props.data.serviceName)
+                  (props.data.serviceName
+                    ? props.data.serviceName
+                    : props.credential.serviceName)
               )?.image || serviceNames[9].image
             }
             `}

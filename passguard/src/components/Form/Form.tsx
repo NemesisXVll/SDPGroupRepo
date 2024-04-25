@@ -47,7 +47,6 @@ function Form(props: FormProps) {
 
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
-
     if (!props.editable) {
       handleEditClick(e);
       return;
@@ -154,15 +153,9 @@ function Form(props: FormProps) {
             type="text"
             label="Login Page URL"
             value={
-              props.credentialObj?.url
-                ? props.credentialObj?.url
-                : serviceNames.find(
-                    (service: any) =>
-                      service.name ===
-                      (props.credentialObj?.serviceName
-                        ? props.credentialObj?.serviceName
-                        : formData.serviceName)
-                  )?.url || ""
+              serviceNames.find(
+                (service: any) => service.name === formData.serviceName
+              )?.url || props.credentialObj?.url
             }
             autofill={props.credentialObj}
             id="loginPageUrl"
@@ -172,7 +165,7 @@ function Form(props: FormProps) {
 
           <div className="flex justify-between mt-16 px-1">
             <div className="mr-1">
-              <Button value="Cancel" onClick={handleCancelBTN}>
+              <Button value="Cancel" type="button" onClick={handleCancelBTN}>
                 Cancel
               </Button>
             </div>

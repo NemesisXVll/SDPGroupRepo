@@ -25,7 +25,8 @@ type CardProps = {
   onPermanentRemoveClick: (key: React.Key) => void;
 };
 const Card = (props: CardProps) => {
-  const [openTrashModal, setOpenModal] = useState(false);
+  const [openPermanentRemoveModal, setOpenPermanentRemoveModal] =
+    useState(false);
 
   const credentialStatus = (): string => {
     if (props.isWeak) {
@@ -54,6 +55,10 @@ const Card = (props: CardProps) => {
     props.onDeleteClick(props.index);
   }
 
+  function handlePermanentRemoveCredential(event: any): void {
+    props.onPermanentRemoveClick(props.index);
+  }
+
   return (
     <>
       <div
@@ -77,12 +82,10 @@ const Card = (props: CardProps) => {
               onUpdateClick={() => props.onUpdateClick(props.index)}
               onShareClick={() => props.onShareClick(props.index)}
               onDeleteClick={() => {
-                setOpenModal(true);
+                props.onDeleteClick(props.index);
               }}
               onRecoverClick={() => props.onRecoverClick(props.index)}
-              onPermanentRemoveClick={() =>
-                props.onPermanentRemoveClick(props.index)
-              }
+              onPermanentRemoveClick={() => setOpenPermanentRemoveModal(true)}
               isTrashed={props.isTrashed}
             ></Kebab>
           </div>
@@ -101,9 +104,9 @@ const Card = (props: CardProps) => {
       </div>
 
       <Modal
-        show={openTrashModal}
+        show={openPermanentRemoveModal}
         size="md"
-        onClose={() => setOpenModal(false)}
+        onClose={() => setOpenPermanentRemoveModal(false)}
         popup
       >
         <Modal.Header className="dark:bg-darkcards-999" />
@@ -112,14 +115,20 @@ const Card = (props: CardProps) => {
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-red-500" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to trash this credential?
+              Are you sure you want to permanently delete this credential?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button value="Cancel" onClick={() => setOpenModal(false)}>
+              <Button
+                value="Cancel"
+                onClick={() => setOpenPermanentRemoveModal(false)}
+              >
                 Cancel
               </Button>
-              <Button value="confirmsignout" onClick={handleTrashCredential}>
-                Trash
+              <Button
+                value="confirmsignout"
+                onClick={handlePermanentRemoveCredential}
+              >
+                Delete
               </Button>
             </div>
           </div>

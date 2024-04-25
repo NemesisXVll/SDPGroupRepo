@@ -9,7 +9,9 @@ import { DarkThemeToggle, Flowbite, Modal, Tooltip } from "flowbite-react";
 import SignOutBTN from "./Form/Button";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import Button from "./Form/Button";
+import PasswordGeneratorModal from "./GenPass";
 import { IoExitOutline } from "react-icons/io5";
+import { MdPassword } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 
 const userService = new UserService();
@@ -35,6 +37,7 @@ function Navbar(props: NavbarProps) {
   const [expanded, setExpanded] = useState(props.isExpanded);
   const [data, setData] = useState<any>({});
   const [openModal, setOpenModal] = useState(false);
+  const [openGenPassModal, setOpenGenPassModal] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,6 +63,11 @@ function Navbar(props: NavbarProps) {
   function handleSignoutBTN(event: any): void {
     setOpenModal(false);
     navigate("/login");
+  }
+
+  function handleOnGeneratePasswordClick(): void {
+    console.log("Generate Password Clicked");
+    setOpenGenPassModal(true);
   }
 
   return (
@@ -123,6 +131,52 @@ function Navbar(props: NavbarProps) {
             </ul>
           </NavbarContext.Provider>
 
+          <ul className="px-3">
+            <li
+              onClick={(event: any) => {
+                event.preventDefault();
+                handleOnGeneratePasswordClick();
+              }}
+              className={`
+                        relative flex items-center py-3 px-3 my-1
+                        font-medium rounded-md cursor-pointer
+                        text-white
+                        hover:bg-yellow-400 hover:text-black
+                          group  border-b-2 border-gray-700 transition-all duration-100 
+                        `}
+            >
+              <MdPassword className="w-6 h-6"></MdPassword>
+              <span
+                className={`overflow-hidden transition-all ${
+                  expanded ? "w-52 ml-3" : "w-0"
+                }`}
+              >
+                {"Generate Password"}
+              </span>
+              {!expanded && (
+                <div
+                  className={`
+                            absolute left-full rounded-md px-2 py-1 ml-6 z-20
+                            bg-gray-200 text-black text-sm
+                            invisible opacity-20 -translate-x-3 transition-all
+                            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 dark:bg-darkcards-999 dark:text-darktext-999
+                            `}
+                >
+                  {"Generate Password"}
+                </div>
+              )}
+            </li>
+          </ul>
+
+          {openGenPassModal && (
+            <PasswordGeneratorModal
+              openModal={true}
+              closeModal={() => {
+                setOpenGenPassModal(false);
+              }}
+            ></PasswordGeneratorModal>
+          )}
+
           {expanded ? (
             <div className="flex justify-evenly ">
               <Tooltip content={"Lock"} placement="top">
@@ -140,7 +194,7 @@ function Navbar(props: NavbarProps) {
                 ></CiLock>
               </Tooltip>
               <Tooltip content={"Toggle Dark Mode"}>
-              <Flowbite>
+                <Flowbite>
                   <DarkThemeToggle
                     className="relative flex items-center  w-10 h-10 mb-2
 						font-medium rounded-md cursor-pointer
@@ -208,11 +262,10 @@ function Navbar(props: NavbarProps) {
               <Tooltip content="Signout" placement="bottom" className="">
                 <div>
                   <IoExitOutline
-                  className="text-white w-24 h-7 hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
-                  onClick={() => setOpenModal(true)}
-                ></IoExitOutline>
+                    className="text-white w-24 h-7 hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
+                    onClick={() => setOpenModal(true)}
+                  ></IoExitOutline>
                 </div>
-                
               </Tooltip>
             </div>
           </div>
