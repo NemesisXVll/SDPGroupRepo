@@ -28,31 +28,29 @@
 import { BrowserWindow } from "electron";
 
 export default class Autofill {
-	async fillLoginForm(loginUrl: any, username: any, password: any) {
-		try {
-			// Create a new BrowserWindow
-			const mainWindow = new BrowserWindow({
-				width: 1124,
-				height: 680,
-				autoHideMenuBar: true,
-				webPreferences: {
-					// nodeIntegration: true, // Enable Node.js integration in the renderer process
-				},
-			});
+  async fillLoginForm(loginUrl: any, username: any, password: any) {
+    try {
+      // Create a new BrowserWindow
+      const mainWindow = new BrowserWindow({
+        width: 1124,
+        height: 680,
+        autoHideMenuBar: true,
+        webPreferences: {
+          // nodeIntegration: true, // Enable Node.js integration in the renderer process
+        },
+      });
 
-			console.log("at electron loginUrl", loginUrl);
-			console.log("at electron username", username);
-			console.log("at electron password", password);
+      console.log("at electron loginUrl", loginUrl);
+      console.log("at electron username", username);
+      console.log("at electron password", password);
 
-			// Load the login URL
-			mainWindow.loadURL(
-				"https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252Faccount%26feature%3Dredirect_login&hl=en&ifkv=ARZ0qKKkByQFDDVOtcckrHHArrkFARnFFv7ILfImaD44n4ycC6HEPLNisvb0kLwsRHh2DgbQNTTA&passive=true&service=youtube&uilel=3&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-670738750%3A1713550691197669&theme=mn&ddm=0"
-			);
+      // Load the login URL
+      mainWindow.loadURL(loginUrl);
 
-			// Wait for the DOM to be ready
-			mainWindow.webContents.on("dom-ready", () => {
-				// Inject JavaScript to fill username and password fields
-				mainWindow.webContents.executeJavaScript(`
+      // Wait for the DOM to be ready
+      mainWindow.webContents.on("dom-ready", () => {
+        // Inject JavaScript to fill username and password fields
+        mainWindow.webContents.executeJavaScript(`
         // Function to wait for an element to be available
         const waitForElement = (selector, timeout = 10000) => {
             return new Promise((resolve, reject) => {
@@ -125,11 +123,11 @@ export default class Autofill {
         // Call fillLoginForm function
         fillLoginForm();
     `);
-			});
-		} catch (error) {
-			console.error("ERR: ", error);
-		}
-	}
+      });
+    } catch (error) {
+      console.error("ERR: ", error);
+    }
+  }
 }
 
 /*Working URLs

@@ -258,7 +258,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
         )}
 
         {showSecQuestion && location.pathname !== "/otp" && (
-          <label className="relative inline-flex cursor-pointer select-none items-center py-2">
+          <label className="relative inline-flex cursor-pointer select-none items-center py-2 dark:bg-darkcards-999">
             <input
               id="masterPasswordCheckbox"
               type="checkbox"
@@ -267,7 +267,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
             <span className="label flex items-center text-sm font-medium text-black pr-2">
               <Tooltip content={"Master Password"}>🔑</Tooltip>
             </span>
-            <label className="relative inline-flex items-center cursor-pointer slider duration-200">
+            <label className="relative inline-flex items-center cursor-pointer slider duration-200 ">
               <input
                 id="securityQuestionCheckbox"
                 type="checkbox"
@@ -278,14 +278,14 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 }
               />
               <div
-                className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full
-                    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
-                    peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]
-                    after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600"
+                className="w-11 h-6 bg-gray-200 dark:bg-darkbg-999 peer-focus:outline-none peer-focus:ring-4 rounded-full 
+                peer dark:border-darkborder-999 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
+                peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]
+                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"
               ></div>
-              <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+              <span className="ms-3 text-sm font-medium text-gray-900 dark:text-darktext-999"></span>
             </label>
-            <span className="label flex items-center text-sm font-medium text-black">
+            <span className="label flex items-center text-sm font-medium text-black ">
               <Tooltip content={"Security Question"}>🔐</Tooltip>
             </span>
           </label>
