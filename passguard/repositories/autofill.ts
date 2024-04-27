@@ -83,12 +83,12 @@ export default class Autofill {
                 if (nextButton && usernameInput) {
                     // Fill in the username field
 					console.log("inpitting name")
-                    usernameInput.value = 'nemes';
+                    usernameInput.value = '${username}';
                     // Dispatch input and change events
                     usernameInput.dispatchEvent(new Event('input', { bubbles: true }));
                     usernameInput.dispatchEvent(new Event('change', { bubbles: true }));
                    
-					nextButton.click();
+					// nextButton.click();
 				
 
                     // Wait for the password input field to become available
