@@ -196,7 +196,6 @@ const Document = (props: DocumentProps) => {
 			</div>
 
 			<Modal
-				dismissible
 				show={openWarningModal}
 				size="md"
 				popup

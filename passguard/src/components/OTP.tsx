@@ -101,12 +101,12 @@ const OTPVerification: React.FC = () => {
         message: newOTP,
       };
 
-      // await emailjs.send(
-      //   "service_3ojecjd",
-      //   "template_nsdnz0c",
-      //   templateParams,
-      //   "6igdyzCgketnFP148"
-      // );
+      await emailjs.send(
+        "service_3ojecjd",
+        "template_nsdnz0c",
+        templateParams,
+        "6igdyzCgketnFP148"
+      );
     } catch (error) {
       console.error("Failed to send OTP:", error);
       setMessage("Failed to send OTP");

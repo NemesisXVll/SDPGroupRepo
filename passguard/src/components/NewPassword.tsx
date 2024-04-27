@@ -285,7 +285,6 @@ const NewPassword: React.FC = () => {
                 </div>
               }
             >
-              {/* Password Field */}
               <div className="w-[25.9rem]">
                 <MPasswdStrength
                   contextSpecific={passwordState.contextSpecific}
@@ -303,7 +302,6 @@ const NewPassword: React.FC = () => {
             </Tooltip>
           </div>
 
-          {/* Confirm Password Field */}
           <LabelInput
             onChange={handleConfirmPasswordChange}
             required={true}

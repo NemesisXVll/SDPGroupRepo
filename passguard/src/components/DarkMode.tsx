@@ -1,5 +1,5 @@
 import "../App.css";
-import "primereact/resources/primereact.css"; // core css
+import "primereact/resources/primereact.css";
 import { IoSunnyOutline } from "react-icons/io5";
 import { IoMoonOutline } from "react-icons/io5";
 

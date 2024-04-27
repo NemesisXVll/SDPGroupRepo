@@ -75,13 +75,11 @@ const ManagePassword = (props: ManageUserProfileProps) => {
     }
 
     if (!(await unlock(currentPassword, user.userId))) {
-      //For checking if the current password is actually the user's current password
       setErrorMessage("Current password is incorrect");
       return;
     }
 
     if (await unlock(newPassword, user.userId)) {
-      //For checking if the new password is the same as the current password, then it shouldnt be allowed
       setErrorMessage("New password is like the current password");
       return;
     }

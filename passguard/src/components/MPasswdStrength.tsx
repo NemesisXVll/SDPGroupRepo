@@ -53,7 +53,6 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
     }
 
     let strengthCount = 0;
-    // console.log(zxcvbn(password)); //FOR SCORE
 
     const fulfilledConditionsCount = [
       atLeastOneUppercaseLetter(password),
@@ -69,19 +68,6 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
     if (fulfilledConditionsCount >= 3) {
       strengthCount++;
     }
-
-    // if (
-    //   atLeastOneUppercaseLetter(password) &&
-    //   atLeastOneLowercaseLetter(password)
-    // ) {
-    //   strengthCount++;
-    // }
-    // if (atLeastOneNumber(password)) {
-    //   strengthCount++;
-    // }
-    // if (atLeastOneSpecialChar(password)) {
-    //   strengthCount++;
-    // }
 
     if (
       atLeastOneLowercaseLetter(password) &&
@@ -175,7 +161,7 @@ const MPasswordStrength = (props: MPasswordStrengthProps) => {
           htmlFor={props.id}
           className="ml-1 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito']"
         >
-          {props.label}
+          {"*"+props.label}
         </label>
 
         <div className="">

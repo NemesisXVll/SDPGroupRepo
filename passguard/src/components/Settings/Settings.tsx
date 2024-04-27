@@ -21,6 +21,7 @@ import TrashDuration from "./TrashDuration";
 import SecurityQuestion from "../SecurityQuestion/SecurityQuestion";
 import BackupPref from "./BackupPref";
 import UserService from "../../utils/userService";
+import ClipboardClr from "./ClipboardClr";
 
 const userService = new UserService();
 
@@ -37,8 +38,6 @@ const Settings = (props: SettingsProps) => {
   }, []);
 
   const location = useLocation();
-
-  console.log(location.state.user);
 
   const [expanded, setExpanded] = useState(location.state?.expanded);
   const [secQuestionModal, setSecQuestionModal] = useState(false);
@@ -97,7 +96,6 @@ const Settings = (props: SettingsProps) => {
   };
 
   const handleSendEmail = async () => {
-    //Define your emailjs service IDs and user ID
     const serviceID = "service_3ojecjd"; // Your service ID
     const templateID = "template_sgrb5ri"; // Your template ID
     const userID = "6igdyzCgketnFP148"; // Your user ID
@@ -107,27 +105,28 @@ const Settings = (props: SettingsProps) => {
         location.state.user.userId
       );
 
-      // await userService
-      //   .getUserDataById(location.state.user.userId)
-      //   .then(async (data: any) => {
-      //     const email = data.email;
-      //     //Send the email with the attachment
-      //     await emailjs.send(
-      //       serviceID,
-      //       templateID,
-      //       {
-      //         to_email: email,
-      //         file_content: fileContentBase64, // Base64-encoded file content
-      //       },
-      //       userID
-      //     );
-      //   });
+      console.log("File content:", fileContentBase64);
 
-      setCredentialsExported(true);
-      setOpenToast(true);
-      setTimeout(() => {
-        setOpenToast(false);
-      }, 3000);
+      let userEmail;
+
+      await userService
+        .getUserDataById(location.state.user.userId)
+        .then((res: any) => {
+          userEmail = res.email;
+        });
+
+      //Send the email with the attachment
+      await emailjs.send(
+        serviceID,
+        templateID,
+        {
+          to_email: userEmail, // with the recipient's email
+          file_content: fileContentBase64, // Base64-encoded file content
+        },
+        userID
+      );
+
+      console.log("Email sent successfully!");
       // Here you can update the state or UI to reflect the success
     } catch (error) {
       console.error("Error sending email:", error);
@@ -169,6 +168,7 @@ const Settings = (props: SettingsProps) => {
                     <ManagePassword
                       userPasswordUpdated={handleUserPasswordUpdated}
                     ></ManagePassword>
+                    <ClipboardClr></ClipboardClr>
                     <Autolock></Autolock>
 
                     <h2 className="m-2 font-bold text-lg">Preferences</h2>

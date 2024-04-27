@@ -36,11 +36,9 @@ const OtpInput: React.FC<OtpInputProps> = ({ length = 6, onOtpChange }) => {
   };
 
   useEffect(() => {
-    // Check if all digits are entered
     const isAllDigitsEntered = otp.every((digit) => digit !== "");
     setAllDigitsEntered(isAllDigitsEntered);
 
-    // If all digits are entered, send the OTP
     if (isAllDigitsEntered) {
       onOtpChange(otp.join(""));
     }

@@ -1,11 +1,6 @@
 import prisma from "../client";
 import UserQueryService from "./UserQueryService";
-import {
-  encryptData,
-  hashPassword,
-  generateSalt,
-  
-} from "./Security/Encryption";
+import { encryptData, hashPassword, generateSalt } from "./Security/Encryption";
 import * as fs from "fs";
 import * as path from "path";
 import { PrismaClient } from "@prisma/client";
@@ -174,6 +169,7 @@ export default class UserManagementService {
         loginOtp: "email",
         forgetPassOtp: "email",
         backUpDuration: "none",
+        clipBoardClr: "none",
       });
 
       const newUser = await prisma.user.create({
@@ -292,17 +288,18 @@ export default class UserManagementService {
 
     return updatedUser;
   }
-  async userExists(userId: any) { 
-    if (await userQueryService.findUserById(userId) == null) return false;
+  async userExists(userId: any) {
+    if ((await userQueryService.findUserById(userId)) == null) return false;
     return true;
   }
-  async credentialExists(credentialId: any) { 
-    if (await userQueryService.getCredentialById(credentialId) == null) return false;
+  async credentialExists(credentialId: any) {
+    if ((await userQueryService.getCredentialById(credentialId)) == null)
+      return false;
     return true;
   }
   //-------------------------Credential Model-------------------------//
   async createCredential(credential: any) {
-    if (!await this.userExists(credential.userId))
+    if (!(await this.userExists(credential.userId)))
       throw new Error("User not found");
     //need to take user id here
     const isReused = await this.checkForReusedPasswordOnCreation(credential); //pass userid and credential
@@ -370,7 +367,7 @@ export default class UserManagementService {
       try {
         const recoveredCredential = await prisma.credential.update({
           where: { credentialId: credentialId },
-          data: { isTrashed: false, isReused: false},
+          data: { isTrashed: false, isReused: false },
         });
         return recoveredCredential;
       } catch (error) {
@@ -379,7 +376,8 @@ export default class UserManagementService {
     }
   }
   async deleteCredentialById(credentialId: number) {
-    if(!await this.credentialExists(credentialId)) throw new Error("Credential not found");
+    if (!(await this.credentialExists(credentialId)))
+      throw new Error("Credential not found");
     await this.checkForReusedPasswordOnDeletion(credentialId);
     try {
       const deletedCredential = await prisma.credential.delete({
@@ -393,7 +391,8 @@ export default class UserManagementService {
   }
 
   async updateCredentialById(credentialId: any, credential: any) {
-    if(!await this.credentialExists(credentialId)) throw new Error("Credential not found");
+    if (!(await this.credentialExists(credentialId)))
+      throw new Error("Credential not found");
     const stillReused = await this.checkForReusedPasswordOnUpdate(credential);
     const masterPassword = await userQueryService.getUserMasterPasswordById(
       credential.userId
@@ -621,4 +620,3 @@ export default class UserManagementService {
   }
   
 }
-

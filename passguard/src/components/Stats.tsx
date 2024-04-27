@@ -76,9 +76,6 @@ const Stats = (props: StatsProps) => {
 				<h5 className="p-1 text-xl font-medium dark:text-darktext-999">
 					Password Analysis{" "}
 				</h5>
-				{/* <button onClick={handleRefreshClick}>
-					<img src={refresh} alt="refresh-icon" />
-				</button> */}
 			</div>
 
 			<div className="flex items-center border-b-2 pb-5 dark:border-darkborder-999">

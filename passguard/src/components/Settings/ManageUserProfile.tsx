@@ -82,8 +82,8 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
     event.preventDefault();
     console.log("Save button clicked");
     if (
-      userData.firstName.match(/[^a-zA-Z]/) ||
-      userData.lastName.match(/[^a-zA-Z]/)
+      userData.firstName.match(/[^a-zA-Z\s]/) ||
+      userData.lastName.match(/[^a-zA-Z\s]/)
     ) {
       setErrorMessage(
         "First Name and Last Name cannot contain numbers or symbols"
@@ -233,7 +233,7 @@ const ManageUserProfile = (props: ManageUserProfileProps) => {
             </div>
 
             {errorMessage && (
-              <div className="flex ml-[6.3rem]">
+              <div className="flex">
                 <CgDanger className="w-4 h-5 text-red-500" />
                 <p className="text-red-500 text-sm">&nbsp; {errorMessage}</p>
               </div>

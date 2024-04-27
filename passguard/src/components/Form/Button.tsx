@@ -9,11 +9,6 @@ type FormProps = {
   children?: React.ReactNode;
 };
 
-// interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-//   hasIcon?: boolean;
-
-// }
-
 const Button = (props: FormProps) => {
   return (
     <button

@@ -107,18 +107,22 @@ function DocumentCard(props: DocumentCardProps) {
 						)}
 					</div>
 
-					{/* <div className="absolute w-36 bottom-2 ml-8">
-						<div className="">
-							<Button value="Login" onClick={() => setOpenModal(!openModal)}>
-								View
-							</Button>
+						{props.type === "application/pdf" ? (
+							<div className="absolute w-36 bottom-2 ml-8">
+							<div className="">
+								<Button value="Login" onClick={() => setOpenModal(!openModal)}>
+									View
+								</Button>
+							</div>
 						</div>
-					</div> */}
+						) : (
+							""
+						)}
 				</div>
 			</div>
 
 			{openModal ? (
-				<Modal show={openModal} onClose={() => setOpenModal(false)} dismissible
+				<Modal show={openModal} onClose={() => setOpenModal(false)}
 				className="dark:bg-darkcards-999">
 					<Modal.Header className="font-nunito font-medium break-words text-sm dark:bg-darkcards-999 dark:border-darkborder-999">
 						{props.name} - {props.category}
