@@ -32,6 +32,8 @@ import battlenetLogo from "../assets/icons/form/battlenetLogo.svg";
 import battlenetCard from "../assets/icons/common/battlenetCard.svg";
 import pearsonCard from "../assets/icons/common/pearsonCard.svg";
 import pearsonLogo from "../assets/icons/form/pearsonLogo.svg";
+import zoomCard from "../assets/icons/common/zoomCard.svg";
+import zoomLogo from "../assets/icons/form/zoomLogo.svg";
 
 export const serviceTypes = [
   {
@@ -213,6 +215,14 @@ export const serviceNames = [
   },
   {
     id: 17,
+    name: "Zoom",
+    image: zoomLogo,
+    card: zoomCard,
+    url: "https://zoom.us/signin#/login",
+    Description: "Zoom",
+  },
+  {
+    id: 18,
     name: "Other",
     image: otherLogo,
     card: otherCard,

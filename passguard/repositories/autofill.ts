@@ -141,6 +141,7 @@ https://github.com/login
 https://www.chess.com/login
 https://eu.account.battle.net/login/en-us/
 https://login.pearson.com/v1/piapi/piui/signin?client_id=dN4bOBG0sGO9c9HADrifwQeqma5vjREy
+https://zoom.us/signin#/login
 
 
 
