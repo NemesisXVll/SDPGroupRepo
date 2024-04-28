@@ -132,10 +132,16 @@ export default class Autofill {
 
 /*Working URLs
 https://linkedin.com/login
-https://sts.qu.edu.qa/adfs/ls/?SAMLRequest=fZFPb8IwDMW%2FSuR7mzaFDiIKYkNoSExUtOywCwrFhUglhThF%2B%2Fjr%2BKOxC5dIVuz37N8bjL4PFTujJV2bBEI%2FAIamqLfa7BJY5VOvB6PhgNShEkc5btzeLPHUIDnWDhqS158EGmtkrUiTNOqAJF0hs%2FHHXAo%2FkEdbu7qoK2BjIrSutXqrDTUHtBnasy5wtZwnsHfuSJJzrFBZ0y7gnxoft41%2FUly1zt6vF788WbbgqtKK%2BDqMxDoENmlX0ka5yxl3JXL0qLEtiVfEgU1rW%2BDlmARKVRECm00SUFEXd71SxLsNipcoELGK4n6hI70pd5vWZEapItJn%2FBsjanBmyCnjEhCB6HhBxwv7eRjLSMig64u4%2FwUsvSF41eaK9hmvzbWJ5Huep166yHJgn%2FeI2ga4BSIv7vYxiefC6o4fhk9gD%2Fij%2BvBW%2Fk9%2F%2BAM%3D&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=gnwpGfVcSpNIQ7BEBQ4RTgmHZD4aKcjCzF%2FhGxenk7RR1MPKJU%2BQO5U%2F6daEW8rYDhOjSD4z9g9odEJhbsqKqDplqNmuXwYdgBV4O8VPRI9zxVrIv6Lw3d%2Ft5sK3TRjOK8Flro773oijYrrqhJbH1W12ICvhIpljRSbO2wp82pmfGMt%2Fh20PRh6d%2BZ8JOOZmfSZa0omxAr293h5EdDBmp3hT6CqUufW7731TZkLXzngIBqGMQkAjoh8cHoV88QJllxcxs4dl%2FSa5bJ9TRfh7Q1yZoF1XenkM810lj39OLpR5CFuXuNwmVatFkily7QmXiQJsD15Bo4MDnTafPqU%2FkA%3D%3D
 https://www.facebook.com/
-"https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&sgfl=gh&ru=https%3A%2F%2Fwww.ebay.com%2F"
-"https://www.paypal.com/signin"
+https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&sgfl=gh&ru=https%3A%2F%2Fwww.ebay.com%2F
+https://www.paypal.com/signin
+https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fs%3Fk%3Da%2Bmazon%2Bcom%26adgrpid%3D127260490003%26hvadid%3D585479351039%26hvdev%3Dc%26hvlocphy%3D1011785%26hvnetw%3Dg%26hvqmt%3Db%26hvrand%3D6590575389762096706%26hvtargid%3Dkwd-321362582074%26hydadcr%3D27983_14525522%26tag%3Dhydglogoo-20%26ref%3Dnav_signin&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0
+https://www.reddit.com/login
+https://github.com/login
+https://www.chess.com/login
+https://eu.account.battle.net/login/en-us/
+https://login.pearson.com/v1/piapi/piui/signin?client_id=dN4bOBG0sGO9c9HADrifwQeqma5vjREy
+
 
 
 */

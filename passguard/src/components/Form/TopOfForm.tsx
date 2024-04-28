@@ -50,7 +50,7 @@ function TopOfForm(props: any) {
                   (props.data.serviceName
                     ? props.data.serviceName
                     : props.credential.serviceName)
-              )?.image || serviceNames[9].image
+              )?.image || serviceNames[serviceNames.length-1].image
             }
             `}
             alt="image description"
