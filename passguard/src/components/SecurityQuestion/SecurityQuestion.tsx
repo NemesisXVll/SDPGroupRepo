@@ -273,9 +273,10 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 type="checkbox"
                 className="sr-only peer"
                 checked={isSecurityQuestionChecked}
-                onChange={(e: any) =>
-                  setIsSecurityQuestionChecked(e.target.checked)
-                }
+                onChange={(e: any) => {
+                  setIsSecurityQuestionChecked(e.target.checked);
+                  setErrorMessage("");
+                }}
               />
               <div
                 className="w-11 h-6 bg-gray-200 dark:bg-darkbg-999 peer-focus:outline-none peer-focus:ring-4 rounded-full 
@@ -462,7 +463,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 )}
 
                 {errorMessage && (
-                  <div className="flex ">
+                  <div className="flex mt-1">
                     <CgDanger className="w-4 h-5 text-red-500 " />
                     <p className="text-red-500 text-sm">
                       &nbsp; {errorMessage}
@@ -471,7 +472,7 @@ const SecurityQuestion = (props: SecurityQuestionProps) => {
                 )}
 
                 {/* Submit Button */}
-                <div className="mt-7">
+                <div className="mt-2">
                   <Button
                     type="submit"
                     onClick={handleOnClick}

@@ -58,10 +58,26 @@ export const serviceTypes = [
   },
   {
     id: 6,
-    value: "Gaming Software",
+    value: "Entertainment",
   },
   {
     id: 7,
+    value: "Shopping",
+  },
+  {
+    id: 8,
+    value: "Streaming Platform",
+  },
+  {
+    id: 9,
+    value: "Work Account",
+  },
+  {
+    id: 10,
+    value: "Travel and Hospitality",
+  },
+  {
+    id: 11,
     value: "Other",
   },
 ];
@@ -76,26 +92,26 @@ export const serviceNames = [
     Description:
       "A popular social networking platform for connecting with friends and family, sharing updates, and joining groups.",
   },
-  {
-    //DOESNT AUTOFILL
-    id: 2,
-    name: "Twitter",
-    image: twitterLogo,
-    card: twitterCard,
-    url: "https://twitter.com/i/flow/login",
-    Description:
-      "A microblogging platform for sharing short messages, links, and multimedia with a global audience.",
-  },
-  {
-    //DOESNT AUTOFILL
-    id: 3,
-    name: "Instagram",
-    image: instaLogo,
-    card: instagramCard,
-    url: "https://www.instagram.com/accounts/login/",
-    Description:
-      "A photo and video sharing platform with features like Stories, Reels, and IGTV.",
-  },
+  // {
+  //   //DOESNT AUTOFILL
+  //   id: 2,
+  //   name: "Twitter",
+  //   image: twitterLogo,
+  //   card: twitterCard,
+  //   url: "https://twitter.com/i/flow/login",
+  //   Description:
+  //     "A microblogging platform for sharing short messages, links, and multimedia with a global audience.",
+  // },
+  // {
+  //   //DOESNT AUTOFILL
+  //   id: 3,
+  //   name: "Instagram",
+  //   image: instaLogo,
+  //   card: instagramCard,
+  //   url: "https://www.instagram.com/accounts/login/",
+  //   Description:
+  //     "A photo and video sharing platform with features like Stories, Reels, and IGTV.",
+  // },
   {
     id: 4,
     name: "LinkedIn",
@@ -105,46 +121,46 @@ export const serviceNames = [
     Description:
       "A professional networking platform for connecting with colleagues, job searching, and business networking.",
   },
-  {
-    //IT SAYS EMPTY INPUT FIELD
-    id: 5,
-    name: "Snapchat",
-    image: snapchatLogo,
-    card: snapchatCard,
-    url: "https://accounts.snapchat.com/accounts/v2/login",
-    Description:
-      "A multimedia messaging app known for its temporary photo and video sharing, Stories, and filters.",
-  },
-  {
-    //DOESNT AUTOFILL
-    id: 6,
-    name: "Pinterest",
-    image: pinterestLogo,
-    card: pinterestCard,
-    url: "https://www.pinterest.com/login/",
-    Description:
-      "A visual discovery and bookmarking platform for finding and organizing ideas, recipes, and inspiration.",
-  },
-  {
-    //DOESNT AUTOFILL
-    id: 7,
-    name: "TikTok",
-    image: tiktokLogo,
-    card: tiktokCard,
-    url: "https://www.tiktok.com/login/phone-or-email/email",
-    Description:
-      "A short-form video sharing app where users can create and watch entertaining videos.",
-  },
-  {
-    //DOESNT AUTOFILL (sometimes yes sometimes no)
-    id: 8,
-    name: "Blackboard",
-    image: blackBoardLogo,
-    card: blackboardCard,
-    url: "https://sts.qu.edu.qa/adfs/ls/?SAMLRequest=fVHBbsIwDP2VyPc2bYCNRRTEhtCQmEC07LALyoKBoDaFOEX7%2FJUCGrtwcWTl%2BT37vd7gp8jZCR2Z0iYQhxEwtLpcG7tNYJmNgy4M%2Bj1SRS4Oclj5nV3gsULyrB60JC8%2FCVTOylKRIWlVgSS9lunwYypFGMmDK32pyxzYkAidr6XeSktVgS5FdzIal4tpAjvvDyQ5xxyVs%2FUC4bEKcV2FR8VVrRyctXhT0nTGVW4U8VXcEqsY2KheyVjlmzNuTOTpnmO9IZ4TBzYuncbmmAQ2KicENhkloOK26KiOwH1rHe%2Bf9zEKrbXR57fztK1BNFdE5oR%2FY0QVTix5ZX0CIhLtIGoHopvFLRnFstUJXyLxBWx%2BteDV2Iu1j%2Fz6voBIvmfZPJjP0gzY5y2iGgDXQGSj7u6TeEysbvZD%2F4HZPX7P3r%2B2%2F9Pv%2FwI%3D&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=uICNw2Sx1OzrnOZfXVOAQTu8aeWPPXXV0nPIKXLh4vAHSGOVYDbrBZOLCDu5UBpn4wmcYYfEi2DgMiyzG5N%2BxdqmA9m17YRlMYTJDbMzL2M5SFiu2ZDh6FUupc6ictJP2cYhyBKgkkH%2FRkA32cw9x4zANnzIXhj17WJU0jf42hgQKpZ0bgQ8LgruwLmV3gwtQvCv90dnKS1Z%2B6AUA5JIl1tdTYqw4l4dXSO7XOhjZZ9fXc1S5IUNt9Ry%2B8x3JVwpwnYZf1BnvhwEYY4RUnfM00W5Iay%2B7iPrQdtNM%2BBWukR4r%2BD2XEVTWbiTJJhmXMzlfHlG8i0AczeumH4f8IHJ1w%3D%3D&client-request-id=9ea64e06-1737-4ac1-220c-0080010c00df&pullStatus=0",
-    Description:
-      "A virtual learning environment and course management system for online education.",
-  },
+  // {
+  //   //IT SAYS EMPTY INPUT FIELD
+  //   id: 5,
+  //   name: "Snapchat",
+  //   image: snapchatLogo,
+  //   card: snapchatCard,
+  //   url: "https://accounts.snapchat.com/accounts/v2/login",
+  //   Description:
+  //     "A multimedia messaging app known for its temporary photo and video sharing, Stories, and filters.",
+  // },
+  // {
+  //   //DOESNT AUTOFILL
+  //   id: 6,
+  //   name: "Pinterest",
+  //   image: pinterestLogo,
+  //   card: pinterestCard,
+  //   url: "https://www.pinterest.com/login/",
+  //   Description:
+  //     "A visual discovery and bookmarking platform for finding and organizing ideas, recipes, and inspiration.",
+  // },
+  // {
+  //   //DOESNT AUTOFILL
+  //   id: 7,
+  //   name: "TikTok",
+  //   image: tiktokLogo,
+  //   card: tiktokCard,
+  //   url: "https://www.tiktok.com/login/phone-or-email/email",
+  //   Description:
+  //     "A short-form video sharing app where users can create and watch entertaining videos.",
+  // },
+  // {
+  //   //DOESNT AUTOFILL (sometimes yes sometimes no)
+  //   id: 8,
+  //   name: "Blackboard",
+  //   image: blackBoardLogo,
+  //   card: blackboardCard,
+  //   url: "https://sts.qu.edu.qa/adfs/ls/?SAMLRequest=fVHBbsIwDP2VyPc2bYCNRRTEhtCQmEC07LALyoKBoDaFOEX7%2FJUCGrtwcWTl%2BT37vd7gp8jZCR2Z0iYQhxEwtLpcG7tNYJmNgy4M%2Bj1SRS4Oclj5nV3gsULyrB60JC8%2FCVTOylKRIWlVgSS9lunwYypFGMmDK32pyxzYkAidr6XeSktVgS5FdzIal4tpAjvvDyQ5xxyVs%2FUC4bEKcV2FR8VVrRyctXhT0nTGVW4U8VXcEqsY2KheyVjlmzNuTOTpnmO9IZ4TBzYuncbmmAQ2KicENhkloOK26KiOwH1rHe%2Bf9zEKrbXR57fztK1BNFdE5oR%2FY0QVTix5ZX0CIhLtIGoHopvFLRnFstUJXyLxBWx%2BteDV2Iu1j%2Fz6voBIvmfZPJjP0gzY5y2iGgDXQGSj7u6TeEysbvZD%2F4HZPX7P3r%2B2%2F9Pv%2FwI%3D&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=uICNw2Sx1OzrnOZfXVOAQTu8aeWPPXXV0nPIKXLh4vAHSGOVYDbrBZOLCDu5UBpn4wmcYYfEi2DgMiyzG5N%2BxdqmA9m17YRlMYTJDbMzL2M5SFiu2ZDh6FUupc6ictJP2cYhyBKgkkH%2FRkA32cw9x4zANnzIXhj17WJU0jf42hgQKpZ0bgQ8LgruwLmV3gwtQvCv90dnKS1Z%2B6AUA5JIl1tdTYqw4l4dXSO7XOhjZZ9fXc1S5IUNt9Ry%2B8x3JVwpwnYZf1BnvhwEYY4RUnfM00W5Iay%2B7iPrQdtNM%2BBWukR4r%2BD2XEVTWbiTJJhmXMzlfHlG8i0AczeumH4f8IHJ1w%3D%3D&client-request-id=9ea64e06-1737-4ac1-220c-0080010c00df&pullStatus=0",
+  //   Description:
+  //     "A virtual learning environment and course management system for online education.",
+  // },
   {
     id: 9,
     name: "Amazon",
