@@ -75,8 +75,11 @@ export default class CredentialService {
 		const oldPass = await this.getPasswordByCredentialId(credentialId);
 
 		//Check if password has been updated
-		if (oldPass != credentialObj.password)
+		let isPasswordUpdated = false
+		if (oldPass != credentialObj.password) {
 			credentialObj.dateUpdated = new Date().toISOString();
+			isPasswordUpdated = true;
+		}
 		else credentialObj.dateUpdated = oldCredential.dateUpdated;
 
 		const data = {
@@ -97,6 +100,7 @@ export default class CredentialService {
 				)?.image || serviceNames[9].image,
 			userId: this.convertStringToInt(credentialObj.userId),
 			dateUpdated: credentialObj.dateUpdated,
+			isOld: !isPasswordUpdated
 		};
 
 		// console.log(data);
@@ -195,7 +199,7 @@ export default class CredentialService {
 		loginurl: any,
 		username: any,
 		password: any
-  ): Promise<any> {
+	): Promise<any> {
 		window.ipcRenderer.send("autofillCredentialByIdRequest", {
 			loginurl,
 			username,
@@ -230,7 +234,7 @@ export default class CredentialService {
 				currentDate.getTime() - dateSaved.getTime()
 			);
 			const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
-			if (differenceInDays >= 1 && credential.isOld == false) {
+			if (differenceInDays >= 90 && credential.isOld == false) {
 				await this.updateCredentialValidity(credential.credentialId);
 			}
 		}

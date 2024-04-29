@@ -45,7 +45,7 @@ const Card = (props: CardProps) => {
       } else if (!props.isOld && !props.isWeak) {
         return "bg-gradient-to-r from-sky-700 to-green-500";
       }
-    } else if (props.isWeak) {
+    } else if (props.isOld) {
       return "bg-purple-500";
     }
     return "bg-green-500";
