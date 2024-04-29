@@ -48,6 +48,7 @@ type GridProps = {
   onAddClick: () => void;
   onFormSubmit: boolean;
   notifyStats: () => void;
+  showForm: (e: any) => void;
 };
 
 const Grid = (props: GridProps) => {
@@ -155,6 +156,7 @@ const Grid = (props: GridProps) => {
     setSync((sync) => !sync);
     console.log("Syncing", sync);
     props.notifyStats();
+    props.showForm(false);
   };
 
   const handlePermanentRemoveClick = (credentialId: number) => {
@@ -183,6 +185,7 @@ const Grid = (props: GridProps) => {
     });
     setCurrentCredentials(updatedCredentials);
     props.notifyStats();
+    props.showForm(false);
   };
 
   const handleSearch = () => {
@@ -284,7 +287,7 @@ const Grid = (props: GridProps) => {
           picture={
             serviceNames.find(
               (service: any) => service.name === item.serviceName
-            )?.card || serviceNames[9].card
+            )?.card || serviceNames[serviceNames.length - 1].card
           }
         ></Card>
       ));
@@ -309,7 +312,7 @@ const Grid = (props: GridProps) => {
         <h3 className="text-xl font-medium w-56">
           {credentialsTitle} ({credentialsLength})
         </h3>
-        <div >
+        <div>
           <div id="search-container" className="relative w-80 ">
             <input
               id="searchInput"
@@ -371,7 +374,7 @@ const Grid = (props: GridProps) => {
           </Dropdown>
         </div>
         <Tooltip content="Add a Credential" placement="bottom">
-          <AddButton onClick={props.onAddClick} ></AddButton>
+          <AddButton onClick={props.onAddClick}></AddButton>
         </Tooltip>
 
         <div className="absolute left-[52rem]">
@@ -437,7 +440,7 @@ const Grid = (props: GridProps) => {
         popup
         dismissible
       >
-        <Modal.Header className="dark:bg-darkcards-999"/>
+        <Modal.Header className="dark:bg-darkcards-999" />
         <Modal.Body className="dark:bg-darkcards-999">
           <div className="flex items-center justify-center p-1">
             <AiTwotoneMail className="text-2xl dark:text-darksubtext-999" />

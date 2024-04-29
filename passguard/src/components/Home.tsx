@@ -206,6 +206,7 @@ const Home = (props: HomeProps) => {
           onClick={handleGridAreaClick}
         >
           <Grid
+            showForm={(val: any) => setShowForm(val)}
             forceRender={forceGridRender}
             userId={user.userId}
             onCardClick={handleCardClickInApp}

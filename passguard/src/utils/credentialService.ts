@@ -38,7 +38,7 @@ export default class CredentialService {
 			picture:
 				serviceNames.find(
 					(service: any) => service.name === credentialObj.serviceName
-				)?.image || serviceNames[9].image,
+				)?.image || serviceNames[serviceNames.length-1].image,
 			userId: this.convertStringToInt(credentialObj.userId),
 		};
 
@@ -97,7 +97,7 @@ export default class CredentialService {
 			picture:
 				serviceNames.find(
 					(service: any) => service.name === credentialObj.serviceName
-				)?.image || serviceNames[9].image,
+				)?.image || serviceNames[serviceNames.length-1].image,
 			userId: this.convertStringToInt(credentialObj.userId),
 			dateUpdated: credentialObj.dateUpdated,
 			isOld: !isPasswordUpdated

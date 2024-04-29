@@ -74,9 +74,9 @@ const PasswordStrength = (props: PasswordProps) => {
           autoComplete={props.label}
           className={`mt-5 peer h-10 w-full pl-2 pr-[3.5rem]
            text-gray-900 placeholder-transparent text-sm
-           ${props.viewOnly ? "bg-slate-100" : ""}
+           ${props.viewOnly ? "bg-slate-100 text-gray-500" : "text-black dark:text-darktext-999"}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex border-gray-400
-           focus:outline-none dark:bg-darkinset-999 dark:text-darkwhite-999 dark:border-darkborder-999
+           focus:outline-none dark:bg-darkinset-999  dark:border-darkborder-999 dark:text-darksubtext-999
            ${
              score <= 0 && password.length > 0
                ? "border border-red-500"
@@ -103,7 +103,7 @@ const PasswordStrength = (props: PasswordProps) => {
           htmlFor={props.id}
           className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-base peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito'] dark:text-darktext-999"
         >
-          {"*"+props.label}
+          {props.required && !props.viewOnly ? `${props.label}*` : props.label}
         </label>
 
         <div>
@@ -111,35 +111,35 @@ const PasswordStrength = (props: PasswordProps) => {
           {showPassword ? (
             <Tooltip
               content={"Hide"}
-              className="-translate-x-[2.9rem] text-center"
+              className="-translate-x-[2.6rem] text-center"
             >
               <FiEyeOff
                 onClick={handleShowPassword}
                 size="1.3em"
-                className="absolute text-black translate-x-[13.6rem] dark:text-darksubtext-999"
+                className="absolute text-black translate-x-[14rem] dark:text-darksubtext-999"
               />
             </Tooltip>
           ) : (
             <Tooltip
               content={"Show"}
-              className="-translate-x-[2.9rem] text-center"
+              className="-translate-x-[2.6rem] text-center"
             >
               <FiEye
                 onClick={handleShowPassword}
                 size="1.3em"
-                className="absolute text-black translate-x-[13.6rem] dark:text-darksubtext-999"
+                className="absolute text-black translate-x-[14rem] dark:text-darksubtext-999"
               />
             </Tooltip>
           )}
 
           <Tooltip
             content={TooltipClicked ? "Copied!" : "Copy"}
-            trigger="hover"
-            className="absolute -translate-x-[1.3rem]"
+            trigger="hover" 
+            className="absolute -translate-x-[1.25rem]"
           >
             <HiOutlineClipboardDocument
               size="1.3em"
-              className="absolute ml-1 text-black translate-x-[14.7rem] dark:text-darksubtext-999"
+              className="absolute ml-1 text-black translate-x-[15.1rem] dark:text-darksubtext-999"
               onClick={() => {
                 {
                   handleTooltipClick();
