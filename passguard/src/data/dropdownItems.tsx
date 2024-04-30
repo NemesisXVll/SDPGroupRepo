@@ -113,7 +113,7 @@ export const serviceNames = [
   //     "A photo and video sharing platform with features like Stories, Reels, and IGTV.",
   // },
   {
-    id: 4,
+    id: 2,
     name: "LinkedIn",
     image: linkedInLogo,
     card: linkedinCard,
@@ -162,7 +162,7 @@ export const serviceNames = [
   //     "A virtual learning environment and course management system for online education.",
   // },
   {
-    id: 9,
+    id: 3,
     name: "Amazon",
     image: amazonLogo,
     card: amazonCard,
@@ -171,7 +171,7 @@ export const serviceNames = [
       "An online marketplace for shopping, selling, and streaming entertainment.",
   },
   {
-    id: 10,
+    id: 4,
     name: "Ebay",
     image: ebayLogo,
     card: ebayCard,
@@ -180,7 +180,7 @@ export const serviceNames = [
       "An online auction and shopping website for buying and selling a wide variety of goods.",
   },
   {
-    id: 11,
+    id: 5,
     name: "PayPal",
     image: paypalLogo,
     card: paypalCard,
@@ -189,7 +189,7 @@ export const serviceNames = [
       "An online payment platform for sending and receiving money securely.",
   },
   {
-    id: 12,
+    id: 6,
     name: "Reddit",
     image: redditLogo,
     card: redditCard,
@@ -198,7 +198,7 @@ export const serviceNames = [
       "A social news aggregation, web content rating, and discussion website.",
   },
   {
-    id: 13,
+    id: 7,
     name: "Github",
     image: githubLogo,
     card: githubCard,
@@ -206,7 +206,7 @@ export const serviceNames = [
     Description: "Github",
   },
   {
-    id: 14,
+    id: 8,
     name: "Chess",
     image: chessLogo,
     card: chessCard,
@@ -214,7 +214,7 @@ export const serviceNames = [
     Description: "Chess.com",
   },
   {
-    id: 15,
+    id: 9,
     name: "Battle Net",
     image: battlenetLogo,
     card: battlenetCard,
@@ -222,7 +222,7 @@ export const serviceNames = [
     Description: "Battle Net",
   },
   {
-    id: 16,
+    id: 10,
     name: "Pearson",
     image: pearsonLogo,
     card: pearsonCard,
@@ -230,7 +230,7 @@ export const serviceNames = [
     Description: "Pearson",
   },
   {
-    id: 17,
+    id: 11,
     name: "Zoom",
     image: zoomLogo,
     card: zoomCard,
@@ -238,7 +238,7 @@ export const serviceNames = [
     Description: "Zoom",
   },
   {
-    id: 18,
+    id: 12,
     name: "Other",
     image: otherLogo,
     card: otherCard,
