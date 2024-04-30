@@ -85,7 +85,13 @@ const LabelDropDown = (props: LabelDropDownProps) => {
         <Select
           id={props.id}
           name={props.id}
-          value={value}
+          value={
+            value
+              ? value
+              : props.list === "serviceNames"
+                ? serviceNames[serviceNames.length - 1].name
+                : serviceTypes[serviceTypes.length - 1].value
+          }
           onChange={handleOnChange}
           className={`
 		max-h-[200px] h-10 w-full font-normal font-['Nunito'] rounded-xl text-sm focus:text-blue-600 dark:bg-darkbg-999 dark:text-darkwhite-999

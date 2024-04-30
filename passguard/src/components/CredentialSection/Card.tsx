@@ -56,6 +56,7 @@ const Card = (props: CardProps) => {
   }
 
   function handlePermanentRemoveCredential(event: any): void {
+    setOpenPermanentRemoveModal(false);
     props.onPermanentRemoveClick(props.index);
   }
 
@@ -85,7 +86,9 @@ const Card = (props: CardProps) => {
                 props.onDeleteClick(props.index);
               }}
               onRecoverClick={() => props.onRecoverClick(props.index)}
-              onPermanentRemoveClick={() => setOpenPermanentRemoveModal(true)}
+              onPermanentRemoveClick={() => {
+                setOpenPermanentRemoveModal(true);
+              }}
               isTrashed={props.isTrashed}
             ></Kebab>
           </div>

@@ -159,8 +159,8 @@ const Grid = (props: GridProps) => {
     props.showForm(false);
   };
 
-  const handlePermanentRemoveClick = (credentialId: number) => {
-    credentialService.deleteCredential(credentialId);
+  const handlePermanentRemoveClick = async (credentialId: number) => {
+    await credentialService.deleteCredential(credentialId);
     setShowPermanentRemoveToast(true);
     setTimeout(() => {
       setShowPermanentRemoveToast(false);
