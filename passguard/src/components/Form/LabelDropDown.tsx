@@ -1,4 +1,3 @@
-import { Select } from "flowbite-react";
 import { serviceNames, serviceTypes } from "../../data/dropdownItems";
 import React, { useState } from "react";
 
@@ -23,7 +22,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
 
   return (
     <div className="mt-1 relative border-gray-300 hover:text-blue-300">
-      {/* <input
+      <input
         id={props.id}
         name={props.id}
         list={props.list}
@@ -38,20 +37,16 @@ const LabelDropDown = (props: LabelDropDownProps) => {
          rounded-lg justify-start items-start gap-14 inline-flex
           focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 dark:text-darkwhite-999`}
         placeholder={props.placeholder}
-      /> */}
+      />
       <label
         htmlFor={props.id}
-        className="pl-2 mt-4 font-normal font-['Nunito']
-		text-gray-800 text-base
-		focus:text-blue-600 transition-all dark:text-darktext-999"
+        className="p-1 mt-4 absolute left-1 -top-6 text-gray-600 text-md peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-blue-600 transition-all font-normal font-['Nunito'] dark:text-darktext-999"
       >
         {props.label}
       </label>
-      {/* <datalist
+      <datalist
         id={props.list}
-        className="p-1 mt-2 absolute left-1 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base
-		 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5
-		  peer-focus:text-blue-600 transition-all max-h-40 overflow-y-auto"
+        className="p-1 mt-2 absolute left-1 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-blue-600 transition-all"
       >
         {props.list === "serviceNames"
           ? serviceNames.map((service) => (
@@ -64,52 +59,7 @@ const LabelDropDown = (props: LabelDropDownProps) => {
                 {service.value}
               </option>
             ))}
-      </datalist> */}
-      {props.viewOnly ? (
-        <input
-          id={props.id}
-          name={props.id}
-          value={value}
-          type={props.type}
-          maxLength={props.id === "serviceType" ? 25 : 100}
-          readOnly={props.viewOnly}
-          onChange={handleOnChange}
-          className={`
-		  p-0 m-0 pl-2 h-10 w-full bg-opacity-50 border-gray-400 dark:text-darksubtext-999
-        ${props.viewOnly ? "bg-gray-200 text-gray-500 " : "text-black"}
-        rounded-lg  text-sm
-        focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 `}
-          placeholder={props.placeholder}
-        />
-      ) : (
-        <Select
-          id={props.id}
-          name={props.id}
-          value={
-            value
-              ? value
-              : props.list === "serviceNames"
-                ? serviceNames[serviceNames.length - 1].name
-                : serviceTypes[serviceTypes.length - 1].value
-          }
-          onChange={handleOnChange}
-          className={`
-		max-h-[200px] h-10 w-full font-normal font-['Nunito'] rounded-xl text-sm focus:text-blue-600 dark:bg-darkbg-999 dark:text-darkwhite-999
-		  `}
-        >
-          {props.list === "serviceNames"
-            ? serviceNames.map((service) => (
-                <option key={service.id} value={service.name}>
-                  {service.name}
-                </option>
-              ))
-            : serviceTypes.map((service) => (
-                <option key={service.id} value={service.value}>
-                  {service.value}
-                </option>
-              ))}
-        </Select>
-      )}
+      </datalist>
     </div>
   );
 };
