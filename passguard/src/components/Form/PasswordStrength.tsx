@@ -72,7 +72,7 @@ const PasswordStrength = (props: PasswordProps) => {
           placeholder={" "}
           onChange={handlePasswordChange}
           autoComplete={props.label}
-          className={`mt-5 peer h-10 w-full pl-2 pr-[3.5rem]
+          className={`mt-5 peer h-10 w-full pl-2 pr-12
            text-gray-900 placeholder-transparent text-sm
            ${props.viewOnly ? "bg-slate-100 text-gray-500" : "text-black dark:text-darktext-999"}
            rounded-lg border-2 justify-start items-start gap-14 inline-flex border-gray-400
@@ -111,7 +111,7 @@ const PasswordStrength = (props: PasswordProps) => {
           {showPassword ? (
             <Tooltip
               content={"Hide"}
-              className="-translate-x-[2.6rem] text-center"
+              className="-translate-x-[2.3rem] text-center"
             >
               <FiEyeOff
                 onClick={handleShowPassword}
@@ -122,7 +122,7 @@ const PasswordStrength = (props: PasswordProps) => {
           ) : (
             <Tooltip
               content={"Show"}
-              className="-translate-x-[2.6rem] text-center"
+              className="-translate-x-[2.3rem] text-center"
             >
               <FiEye
                 onClick={handleShowPassword}
@@ -135,7 +135,7 @@ const PasswordStrength = (props: PasswordProps) => {
           <Tooltip
             content={TooltipClicked ? "Copied!" : "Copy"}
             trigger="hover" 
-            className="absolute -translate-x-[1.25rem]"
+            className="absolute -translate-x-4"
           >
             <HiOutlineClipboardDocument
               size="1.3em"

@@ -68,7 +68,7 @@ const LabelInput = (props: LabelInputProps) => {
                 ? 31
                 : 100
         }
-        className={`p-0 m-0 pl-2 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400
+        className={`p-0 m-0 pl-2 mt-5 pr-6 peer h-10 w-full  bg-opacity-50 border-gray-400
         ${props.viewOnly ? "bg-gray-200 text-gray-500" : "text-black dark:text-darktext-999"} ${props.status == false ? "border-red-500" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
          placeholder-transparent focus:outline-none focus:border-blue-600 border-2 dark:bg-darkinset-999 dark:border-darkborder-999 `}
@@ -99,7 +99,7 @@ const LabelInput = (props: LabelInputProps) => {
         <Tooltip
           content={TooltipClicked ? "Copied!" : "Copy"}
           trigger="hover"
-          className="absolute -translate-x-[1.2rem]"
+          className="absolute -translate-x-[0.8rem]"
         >
           <HiOutlineClipboardDocument
             size="1.3em"
@@ -115,7 +115,7 @@ const LabelInput = (props: LabelInputProps) => {
           />
         </Tooltip>
       ) : props.id === "loginPageUrl" ? (
-        <Tooltip content={"Redirect"} className="-translate-x-5">
+        <Tooltip content={"Redirect"} className="-translate-x-4" placement="top">
           <HiOutlineExternalLink
             size="1.3em"
             className="absolute text-black translate-x-[15.4rem] top-7 dark:text-darksubtext-999"
