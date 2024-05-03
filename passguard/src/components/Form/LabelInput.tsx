@@ -1,4 +1,4 @@
-import  React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { Tooltip } from "flowbite-react";
@@ -59,9 +59,15 @@ const LabelInput = (props: LabelInputProps) => {
         value={value}
         required={props.required}
         type={props.type}
-        maxLength={props.id === "credentialTitle" ? 25 
-        : props.id === "userName" ? 36 :
-         100}
+        maxLength={
+          props.id === "credentialTitle"
+            ? 25
+            : props.id === "userName"
+              ? 36
+              : props.id === "email"
+                ? 31
+                : 100
+        }
         className={`p-0 m-0 pl-2 mt-5 peer h-10 w-full  bg-opacity-50 border-gray-400
         ${props.viewOnly ? "bg-gray-200 text-gray-500" : "text-black dark:text-darktext-999"} ${props.status == false ? "border-red-500" : ""}
         rounded-lg justify-start items-start gap-14 inline-flex text-sm
@@ -113,7 +119,7 @@ const LabelInput = (props: LabelInputProps) => {
           <HiOutlineExternalLink
             size="1.3em"
             className="absolute text-black translate-x-[15.4rem] top-7 dark:text-darksubtext-999"
-            onClick={async() => {
+            onClick={async () => {
               // isHTTPS
               //   ? window.open(
               //       props.value,
@@ -126,8 +132,12 @@ const LabelInput = (props: LabelInputProps) => {
               //       "width=1200 ,height=800 "
               //     );
               //  await fillLoginForm(props.value,'username','password');
-              if(props.autofill?.url && props.autofill?.data)
-              credentialService.autofillCredentialById(props.autofill?.url,JSON.parse(props.autofill?.data).userName,JSON.parse(props.autofill?.data).password);
+              if (props.autofill?.url && props.autofill?.data)
+                credentialService.autofillCredentialById(
+                  props.autofill?.url,
+                  JSON.parse(props.autofill?.data).userName,
+                  JSON.parse(props.autofill?.data).password
+                );
             }}
           />
         </Tooltip>

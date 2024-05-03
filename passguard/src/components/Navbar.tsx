@@ -260,9 +260,9 @@ function Navbar(props: NavbarProps) {
                 <span className="text-xs text-gray-600">{data.email}</span>
               </div>
               <Tooltip content="Signout" placement="bottom" className="">
-                <div>
+                <div className="w-min">
                   <IoExitOutline
-                    className="text-white w-24 h-7 hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
+                    className="text-white w-min h-6  hover:text-yellow-400 hover:prompt-2 transition-all duration-300 cursor-pointer"
                     onClick={() => setOpenModal(true)}
                   ></IoExitOutline>
                 </div>
